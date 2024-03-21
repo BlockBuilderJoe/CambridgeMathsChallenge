@@ -1,14 +1,19 @@
-import { world, BlockPermutation} from "@minecraft/server";
+import { ButtonPushAfterEventSignal, Vector2, Vector3, world } from "@minecraft/server";
 
-let overworld = world.getDimension("overworld");
+const overworld = world.getDimension("overworld");
 
-world.beforeEvents.playerBreakBlock.subscribe((event) => {
+function checkBlock(location: Vector3, blockType: string) {
+  const block = overworld.getBlock(location);
+  if(!block) {
+    world.sendMessage(`Block not found at ${location.x}, ${location.y}, ${location.z}`);
+    return false;
+  }
   
-  let block = event.block;
-  let player = event.player;
-
-  let grass = block.permutation.matches("prismarine");
-  player.sendMessage('The block is grass ' + grass);
-  player.sendMessage('The block type is ' + JSON.stringify(event));
+  const result = block.permutation.matches(blockType);
+  world.sendMessage(`The block at ${location.x}, ${location.y}, ${location.z} is ${blockType}: ${result}`);
+  return result;
 }
-);
+
+world.afterEvents.buttonPush.subscribe((event) => {
+  checkBlock({x: -13, y: -60, z: 93}, "prismarine");
+});
