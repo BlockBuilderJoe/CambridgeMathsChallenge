@@ -19,6 +19,6 @@ export function outputTotal(total: number, location: Vector3){
     }
   }
 
-  export async function clearAnswer() {
-    overworld.runCommandAsync("fill -14 -57 93 -8 -57 93 air replace");
+  export async function clearAnswer(start: Vector3, end: Vector3) {
+    overworld.runCommandAsync(`fill ${start} ${end} air replace`);
   }

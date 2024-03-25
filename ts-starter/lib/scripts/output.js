@@ -18,9 +18,9 @@ export function outputTotal(total, location) {
         location.x -= 1;
     }
 }
-export function clearAnswer() {
+export function clearAnswer(start, end) {
     return __awaiter(this, void 0, void 0, function* () {
-        overworld.runCommandAsync("fill -14 -57 93 -8 -57 93 air replace");
+        overworld.runCommandAsync(`fill ${start} ${end} air replace`);
     });
 }
 //# sourceMappingURL=output.js.map

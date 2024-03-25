@@ -4,11 +4,12 @@ import { world as world4 } from "@minecraft/server";
 // scripts/input.ts
 import { BlockPermutation, world } from "@minecraft/server";
 var overworld = world.getDimension("overworld");
-function getInput(digit0, digit1, digit2) {
-  let digit0Value = getNumberValue(digit0);
-  let digit1Value = getNumberValue(digit1);
-  let digit2Value = getNumberValue(digit2);
-  let combinedString = "" + digit0Value + digit1Value + digit2Value;
+function getInput(digits) {
+  let combinedString = "";
+  for (let digit of digits) {
+    let digitValue = getNumberValue(digit);
+    combinedString += digitValue;
+  }
   let combinedNumber = parseInt(combinedString);
   return combinedNumber;
 }
@@ -28,6 +29,9 @@ function getBlockValue(location) {
   return { block, permutation };
 }
 
+// scripts/calculator.ts
+import { world as world3 } from "@minecraft/server";
+
 // scripts/output.ts
 import { BlockPermutation as BlockPermutation2, world as world2 } from "@minecraft/server";
 var overworld2 = world2.getDimension("overworld");
@@ -46,29 +50,8 @@ function outputTotal(total, location) {
     location.x -= 1;
   }
 }
-async function clearAnswer() {
-  overworld2.runCommandAsync("fill -14 -57 93 -8 -57 93 air replace");
-}
-
-// scripts/calculator.ts
-import { world as world3 } from "@minecraft/server";
-function calculateTotal(leftvalue, rightvalue) {
-  let { block, permutation } = getBlockValue({ x: -11, y: -59, z: 93 });
-  if (permutation?.matches("cut_copper")) {
-    let total = leftvalue + rightvalue;
-    return total;
-  } else if (permutation?.matches("raw_gold_block")) {
-    let total = leftvalue - rightvalue;
-    return total;
-  } else if (permutation?.matches("gold_block")) {
-    let total = leftvalue * rightvalue;
-    return total;
-  } else if (permutation?.matches("cobblestone")) {
-    let total = leftvalue / rightvalue;
-    return total;
-  } else {
-    world3.sendMessage("Add a +, -, *, or / block to the center to perform an operation.");
-  }
+async function clearAnswer(start, end) {
+  overworld2.runCommandAsync(`fill ${start} ${end} air replace`);
 }
 
 // scripts/numberHandler.ts
@@ -91,20 +74,56 @@ function roundToDigits(num, digits) {
   }
 }
 
+// scripts/calculator.ts
+function calculateTotal(leftvalue, rightvalue) {
+  let { block, permutation } = getBlockValue({ x: -11, y: -59, z: 93 });
+  world3.sendMessage("The sum is:");
+  if (permutation?.matches("cut_copper")) {
+    world3.sendMessage(leftvalue + "+" + rightvalue);
+    let total = leftvalue + rightvalue;
+    return total;
+  } else if (permutation?.matches("raw_gold_block")) {
+    world3.sendMessage(leftvalue + "-" + rightvalue);
+    let total = leftvalue - rightvalue;
+    return total;
+  } else if (permutation?.matches("gold_block")) {
+    world3.sendMessage(leftvalue + "*" + rightvalue);
+    let total = leftvalue * rightvalue;
+    return total;
+  } else if (permutation?.matches("cobblestone")) {
+    world3.sendMessage(leftvalue + "/" + rightvalue);
+    let total = leftvalue / rightvalue;
+    return total;
+  } else {
+    world3.sendMessage("Add a +, -, *, or / block to the center to perform an operation.");
+  }
+}
+async function calculate() {
+  await clearAnswer({ x: -14, y: -57, z: 93 }, { x: -8, y: -57, z: 93 });
+  let leftInput = getInput([{ x: -14, y: -59, z: 93 }, { x: -13, y: -59, z: 93 }, { x: -12, y: -59, z: 93 }]);
+  let rightInput = getInput([{ x: -10, y: -59, z: 93 }, { x: -9, y: -59, z: 93 }, { x: -8, y: -59, z: 93 }]);
+  let total = calculateTotal(leftInput, rightInput);
+  if (total !== null && total !== void 0) {
+    let roundedTotal = roundToDigits(total, 6);
+    outputTotal(roundedTotal, { x: -8, y: -57, z: 93 });
+    world3.sendMessage("The total is:");
+    if (roundedTotal === total) {
+      world3.sendMessage(`${total}.`);
+    } else {
+      world3.sendMessage(`${total} and has been rounded to ${roundedTotal}.`);
+    }
+  } else {
+    world3.sendMessage("Please input a number.");
+  }
+}
+
 // scripts/main.ts
 var overworld3 = world4.getDimension("overworld");
 world4.afterEvents.buttonPush.subscribe(async (event) => {
-  await clearAnswer();
-  let leftInput = getInput({ x: -14, y: -59, z: 93 }, { x: -13, y: -59, z: 93 }, { x: -12, y: -59, z: 93 });
-  let rightInput = getInput({ x: -10, y: -59, z: 93 }, { x: -9, y: -59, z: 93 }, { x: -8, y: -59, z: 93 });
-  let total = calculateTotal(leftInput, rightInput);
-  if (total) {
-    let roundedTotal = roundToDigits(total, 6);
-    outputTotal(roundedTotal, { x: -8, y: -57, z: 93 });
-    if (roundedTotal === total) {
-      world4.sendMessage(`The total is ${total}.`);
-    } else {
-      world4.sendMessage(`The total is ${total} and has been rounded to ${roundedTotal}.`);
+  switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
+    case "-11,-60,94": {
+      calculate();
+      break;
     }
   }
 });
