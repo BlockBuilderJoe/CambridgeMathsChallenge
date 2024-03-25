@@ -120,8 +120,28 @@ async function calculate() {
 // scripts/fraction.ts
 import { world as world4 } from "@minecraft/server";
 async function fraction1() {
-  await clearAnswer({ x: -26, y: -59, z: 93 }, { x: -21, y: -59, z: 93 });
-  world4.sendMessage("Hello, World!");
+  await clearAnswer({ x: -26, y: -59, z: 93 }, { x: -23, y: -59, z: 93 });
+  let numerator = getInput([{ x: -28, y: -57, z: 93 }]);
+  let denominator = getInput([{ x: -28, y: -59, z: 93 }]);
+  let input = getInput([{ x: -26, y: -57, z: 93 }, { x: -25, y: -57, z: 93 }, { x: -24, y: -57, z: 93 }]);
+  world4.sendMessage("The fraction is:");
+  world4.sendMessage(numerator + "/" + denominator + " of " + input);
+  let fraction = calculateFraction(numerator, denominator);
+  let result = fraction * input;
+  world4.sendMessage("The Output is:");
+  let roundedFraction = roundToDigits(result, 3);
+  if (result === roundedFraction) {
+    world4.sendMessage("" + roundedFraction);
+  } else {
+    world4.sendMessage("" + result + " which has been rounded to " + roundedFraction);
+  }
+  outputTotal(roundedFraction, { x: -23, y: -59, z: 93 });
+}
+function calculateFraction(numerator, denominator) {
+  if (denominator === 0) {
+    world4.sendMessage("The denominator cannot be 0. Please input a different number.");
+  }
+  return numerator / denominator;
 }
 
 // scripts/main.ts
