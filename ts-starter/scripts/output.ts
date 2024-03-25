@@ -20,5 +20,5 @@ export function outputTotal(total: number, location: Vector3){
   }
 
   export async function clearAnswer(start: Vector3, end: Vector3) {
-    overworld.runCommandAsync(`fill ${start} ${end} air replace`);
+    overworld.runCommandAsync(`fill ${start.x} ${start.y} ${start.z} ${end.x} ${end.y} ${end.z} air replace`);
   }

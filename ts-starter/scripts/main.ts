@@ -12,5 +12,9 @@ world.afterEvents.buttonPush.subscribe(async(event) => {
       calculate();
       break;
     }
+    case "-27,-60,94": {
+      fraction1();
+      break;
+    }
   }
 });

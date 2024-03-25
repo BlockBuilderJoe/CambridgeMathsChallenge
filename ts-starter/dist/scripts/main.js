@@ -1,5 +1,5 @@
 // scripts/main.ts
-import { world as world4 } from "@minecraft/server";
+import { world as world5 } from "@minecraft/server";
 
 // scripts/input.ts
 import { BlockPermutation, world } from "@minecraft/server";
@@ -51,7 +51,7 @@ function outputTotal(total, location) {
   }
 }
 async function clearAnswer(start, end) {
-  overworld2.runCommandAsync(`fill ${start} ${end} air replace`);
+  overworld2.runCommandAsync(`fill ${start.x} ${start.y} ${start.z} ${end.x} ${end.y} ${end.z} air replace`);
 }
 
 // scripts/numberHandler.ts
@@ -117,12 +117,23 @@ async function calculate() {
   }
 }
 
+// scripts/fraction.ts
+import { world as world4 } from "@minecraft/server";
+async function fraction1() {
+  await clearAnswer({ x: -26, y: -59, z: 93 }, { x: -21, y: -59, z: 93 });
+  world4.sendMessage("Hello, World!");
+}
+
 // scripts/main.ts
-var overworld3 = world4.getDimension("overworld");
-world4.afterEvents.buttonPush.subscribe(async (event) => {
+var overworld3 = world5.getDimension("overworld");
+world5.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
     case "-11,-60,94": {
       calculate();
+      break;
+    }
+    case "-27,-60,94": {
+      fraction1();
       break;
     }
   }
