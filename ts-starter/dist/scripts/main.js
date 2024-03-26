@@ -1,5 +1,5 @@
 // scripts/main.ts
-import { world as world5 } from "@minecraft/server";
+import { world as world6 } from "@minecraft/server";
 
 // scripts/input.ts
 import { BlockPermutation, world } from "@minecraft/server";
@@ -120,7 +120,9 @@ async function calculate() {
 // scripts/fraction.ts
 import { world as world4 } from "@minecraft/server";
 async function fraction1() {
-  await clearAnswer({ x: -26, y: -59, z: 93 }, { x: -23, y: -59, z: 93 });
+  let outputRight = { x: -22, y: -59, z: 93 };
+  let outputLeft = { x: -26, y: -59, z: 93 };
+  await clearAnswer(outputRight, outputLeft);
   let numerator = getInput([{ x: -28, y: -57, z: 93 }]);
   let denominator = getInput([{ x: -28, y: -59, z: 93 }]);
   let input = getInput([{ x: -26, y: -57, z: 93 }, { x: -25, y: -57, z: 93 }, { x: -24, y: -57, z: 93 }]);
@@ -129,13 +131,13 @@ async function fraction1() {
   let fraction = calculateFraction(numerator, denominator);
   let result = fraction * input;
   world4.sendMessage("The Output is:");
-  let roundedFraction = roundToDigits(result, 3);
+  let roundedFraction = roundToDigits(result, 4);
   if (result === roundedFraction) {
     world4.sendMessage("" + roundedFraction);
   } else {
     world4.sendMessage("" + result + " which has been rounded to " + roundedFraction);
   }
-  outputTotal(roundedFraction, { x: -23, y: -59, z: 93 });
+  outputTotal(roundedFraction, outputRight);
 }
 function calculateFraction(numerator, denominator) {
   if (denominator === 0) {
@@ -144,9 +146,36 @@ function calculateFraction(numerator, denominator) {
   return numerator / denominator;
 }
 
+// scripts/ratio.ts
+import { world as world5 } from "@minecraft/server";
+async function ratio1() {
+  let output1 = { x: -42, y: -59, z: 93 };
+  let output2 = { x: -40, y: -59, z: 93 };
+  world5.sendMessage("Calculating the ratio of pink to yellow blocks.");
+  let ratioInput = [{ x: -37, y: -58, z: 93 }, { x: -39, y: -60, z: 93 }, { x: -38, y: -60, z: 93 }, { x: -37, y: -60, z: 93 }, { x: -36, y: -60, z: 93 }, { x: -35, y: -60, z: 93 }, { x: -38, y: -59, z: 93 }, { x: -37, y: -59, z: 93 }, { x: -36, y: -59, z: 93 }];
+  let { pink, yellow } = calculateRatio(ratioInput);
+  world5.sendMessage("The ratio is:");
+  world5.sendMessage(pink + ":" + yellow);
+  outputTotal(pink, output1);
+  outputTotal(yellow, output2);
+}
+function calculateRatio(ratioInput) {
+  let yellow = 0;
+  let pink = 0;
+  for (let i = 0; i < ratioInput.length; i++) {
+    let { block, permutation } = getBlockValue(ratioInput[i]);
+    if (permutation?.matches("yellow_concrete")) {
+      yellow++;
+    } else if (permutation?.matches("pink_concrete")) {
+      pink++;
+    }
+  }
+  return { pink, yellow };
+}
+
 // scripts/main.ts
-var overworld3 = world5.getDimension("overworld");
-world5.afterEvents.buttonPush.subscribe(async (event) => {
+var overworld3 = world6.getDimension("overworld");
+world6.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
     case "-11,-60,94": {
       calculate();
@@ -154,6 +183,10 @@ world5.afterEvents.buttonPush.subscribe(async (event) => {
     }
     case "-27,-60,94": {
       fraction1();
+      break;
+    }
+    case "-40,-60,94": {
+      ratio1();
       break;
     }
   }

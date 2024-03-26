@@ -1,6 +1,7 @@
 import { world } from "@minecraft/server";
 import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
+import { ratio1 } from "./ratio";
 
 
 const overworld = world.getDimension("overworld");
@@ -14,6 +15,10 @@ world.afterEvents.buttonPush.subscribe(async(event) => {
     }
     case "-27,-60,94": {
       fraction1();
+      break;
+    }
+    case "-40,-60,94": {
+      ratio1();
       break;
     }
   }

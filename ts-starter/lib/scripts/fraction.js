@@ -5,7 +5,9 @@ import { roundToDigits } from "./numberHandler";
 //calculates the fraction of a number
 export function fraction1() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield clearAnswer({ x: -26, y: -59, z: 93 }, { x: -23, y: -59, z: 93 });
+        let outputRight = { x: -22, y: -59, z: 93 };
+        let outputLeft = { x: -26, y: -59, z: 93 };
+        yield clearAnswer(outputRight, outputLeft);
         let numerator = getInput([{ x: -28, y: -57, z: 93 }]);
         let denominator = getInput([{ x: -28, y: -59, z: 93 }]);
         let input = getInput([{ x: -26, y: -57, z: 93 }, { x: -25, y: -57, z: 93 }, { x: -24, y: -57, z: 93 }]);
@@ -14,14 +16,14 @@ export function fraction1() {
         let fraction = calculateFraction(numerator, denominator);
         let result = fraction * input;
         world.sendMessage("The Output is:");
-        let roundedFraction = roundToDigits(result, 3);
+        let roundedFraction = roundToDigits(result, 4);
         if (result === roundedFraction) {
             world.sendMessage('' + roundedFraction);
         }
         else {
             world.sendMessage('' + result + " which has been rounded to " + roundedFraction);
         }
-        outputTotal(roundedFraction, { x: -23, y: -59, z: 93 });
+        outputTotal(roundedFraction, outputRight);
     });
 }
 function calculateFraction(numerator, denominator) {

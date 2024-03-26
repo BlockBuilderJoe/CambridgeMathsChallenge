@@ -1,6 +1,6 @@
 import { BlockPermutation, world } from "@minecraft/server";
 let overworld = world.getDimension("overworld");
-//combines 3 digits into a single number
+//combines multiple digits into a single number
 export function getInput(digits) {
     let combinedString = '';
     for (let digit of digits) {
