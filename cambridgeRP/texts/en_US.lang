@@ -14,3 +14,4 @@ tile.blockbuilders:symbol_divide.name=Divide
 tile.blockbuilders:symbol_subtract.name=Subtract
 tile.blockbuilders:symbol_equals.name=Equals
 tile.blockbuilders:symbol_decimalpoint.name=Decimal Point
+tile.blockbuilders:symbol_colon.name=Colon
