@@ -7,22 +7,22 @@ import { roundToDigits } from "./numberHandler";
 function calculateTotal(leftvalue, rightvalue) {
     let { block, permutation } = getBlockValue({ x: -11, y: -59, z: 93 });
     world.sendMessage("The sum is:");
-    if (permutation === null || permutation === void 0 ? void 0 : permutation.matches("cut_copper")) {
+    if (permutation === null || permutation === void 0 ? void 0 : permutation.matches("blockbuilders:symbol_plus")) {
         world.sendMessage(leftvalue + "+" + rightvalue);
         let total = leftvalue + rightvalue;
         return total;
     }
-    else if (permutation === null || permutation === void 0 ? void 0 : permutation.matches("raw_gold_block")) {
+    else if (permutation === null || permutation === void 0 ? void 0 : permutation.matches("blockbuilders:symbol_subtract")) {
         world.sendMessage(leftvalue + "-" + rightvalue);
         let total = leftvalue - rightvalue;
         return total;
     }
-    else if (permutation === null || permutation === void 0 ? void 0 : permutation.matches("gold_block")) {
+    else if (permutation === null || permutation === void 0 ? void 0 : permutation.matches("blockbuilders:symbol_times")) {
         world.sendMessage(leftvalue + "*" + rightvalue);
         let total = leftvalue * rightvalue;
         return total;
     }
-    else if (permutation === null || permutation === void 0 ? void 0 : permutation.matches("cobblestone")) {
+    else if (permutation === null || permutation === void 0 ? void 0 : permutation.matches("blockbuilders:symbol_divide")) {
         world.sendMessage(leftvalue + "/" + rightvalue);
         let total = leftvalue / rightvalue;
         return total;

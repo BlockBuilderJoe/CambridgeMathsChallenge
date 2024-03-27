@@ -8,11 +8,11 @@ export function outputTotal(total, location) {
     for (let i = 0; i < totalString.length; i++) {
         let { block, permutation } = getBlockValue(location);
         if (totalString[i] === '.') {
-            blockName = "anvil";
+            blockName = "blockbuilders:symbol_decimalpoint";
         }
         else {
             let digit = parseInt(totalString[i]);
-            blockName = "element_" + digit;
+            blockName = "blockbuilders:number_" + digit;
         }
         block === null || block === void 0 ? void 0 : block.setPermutation(BlockPermutation.resolve(blockName));
         location.x -= 1;

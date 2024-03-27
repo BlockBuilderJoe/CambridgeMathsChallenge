@@ -16,11 +16,11 @@ function getInput(digits) {
 function getNumberValue(location) {
   let { block, permutation } = getBlockValue(location);
   for (let i = 0; i < 10; i++) {
-    if (permutation?.matches("element_" + i)) {
+    if (permutation?.matches("blockbuilders:number_" + i)) {
       return i;
     }
   }
-  block?.setPermutation(BlockPermutation.resolve("element_0"));
+  block?.setPermutation(BlockPermutation.resolve("blockbuilders:number_0"));
   return 0;
 }
 function getBlockValue(location) {
@@ -41,10 +41,10 @@ function outputTotal(total, location) {
   for (let i = 0; i < totalString.length; i++) {
     let { block, permutation } = getBlockValue(location);
     if (totalString[i] === ".") {
-      blockName = "anvil";
+      blockName = "blockbuilders:symbol_decimalpoint";
     } else {
       let digit = parseInt(totalString[i]);
-      blockName = "element_" + digit;
+      blockName = "blockbuilders:number_" + digit;
     }
     block?.setPermutation(BlockPermutation2.resolve(blockName));
     location.x -= 1;
@@ -78,19 +78,19 @@ function roundToDigits(num, digits) {
 function calculateTotal(leftvalue, rightvalue) {
   let { block, permutation } = getBlockValue({ x: -11, y: -59, z: 93 });
   world3.sendMessage("The sum is:");
-  if (permutation?.matches("cut_copper")) {
+  if (permutation?.matches("blockbuilders:symbol_plus")) {
     world3.sendMessage(leftvalue + "+" + rightvalue);
     let total = leftvalue + rightvalue;
     return total;
-  } else if (permutation?.matches("raw_gold_block")) {
+  } else if (permutation?.matches("blockbuilders:symbol_subtract")) {
     world3.sendMessage(leftvalue + "-" + rightvalue);
     let total = leftvalue - rightvalue;
     return total;
-  } else if (permutation?.matches("gold_block")) {
+  } else if (permutation?.matches("blockbuilders:symbol_times")) {
     world3.sendMessage(leftvalue + "*" + rightvalue);
     let total = leftvalue * rightvalue;
     return total;
-  } else if (permutation?.matches("cobblestone")) {
+  } else if (permutation?.matches("blockbuilders:symbol_divide")) {
     world3.sendMessage(leftvalue + "/" + rightvalue);
     let total = leftvalue / rightvalue;
     return total;

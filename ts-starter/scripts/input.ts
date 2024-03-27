@@ -17,11 +17,11 @@ export function getInput(digits: Vector3[]): number {
 function getNumberValue(location: Vector3) {
     let {block, permutation} = getBlockValue(location);
     for (let i = 0; i < 10; i++) {//check for element_0 to element_9
-        if (permutation?.matches("element_" + i)) {
+        if (permutation?.matches("blockbuilders:number_" + i)) {
           return i;
         }
       }
-      block?.setPermutation(BlockPermutation.resolve("element_0")); //if no match is found, default to element_0
+      block?.setPermutation(BlockPermutation.resolve("blockbuilders:number_0")); //if no match is found, default to element_0
       return 0; //if no match is found, return 0
     }
 

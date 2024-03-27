@@ -14,11 +14,11 @@ export function getInput(digits) {
 function getNumberValue(location) {
     let { block, permutation } = getBlockValue(location);
     for (let i = 0; i < 10; i++) { //check for element_0 to element_9
-        if (permutation === null || permutation === void 0 ? void 0 : permutation.matches("element_" + i)) {
+        if (permutation === null || permutation === void 0 ? void 0 : permutation.matches("blockbuilders:number_" + i)) {
             return i;
         }
     }
-    block === null || block === void 0 ? void 0 : block.setPermutation(BlockPermutation.resolve("element_0")); //if no match is found, default to element_0
+    block === null || block === void 0 ? void 0 : block.setPermutation(BlockPermutation.resolve("blockbuilders:number_0")); //if no match is found, default to element_0
     return 0; //if no match is found, return 0
 }
 //gets the block and permutation of a block at a specific location
