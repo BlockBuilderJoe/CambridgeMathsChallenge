@@ -4,7 +4,7 @@
 	"padding": 8,
 	"num_mip_levels": 4,
 	"texture_data": {
-		"symbol_coloon": {
+		"symbol_colon": {
 			"textures": "textures/blocks/symbol_colon.png"
 		},
 		"symbol_decimalpoint": {
