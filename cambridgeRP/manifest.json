@@ -1,0 +1,24 @@
+{
+	"format_version": 2,
+	"header": {
+		"name": "Cambridge Numbers",
+		"description": "Cambridge Numbers Resource Pack",
+		"uuid": "6ee981a4-cda7-30c0-8bd6-92a2357cd7a4",
+		"version": [1, 0, 0],
+		"min_engine_version": [1, 16, 0]
+	},
+	"metadata": {
+		"authors": ["Blockbuilders", "Ella Meldrum"],
+		"generated_with": {
+			"blockbench_block_wizard": ["1.2.2"]
+		}
+	},
+	"modules": [
+		{
+			"description": "Cambridge Numbers",
+			"type": "resources",
+			"uuid": "b53bedc0-3b7a-e6a2-3764-bb221bef9280",
+			"version": [1, 0, 0]
+		}
+	]
+}

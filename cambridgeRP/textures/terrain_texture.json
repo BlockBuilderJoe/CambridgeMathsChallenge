@@ -1,0 +1,56 @@
+{
+	"resource_pack_name": "vanilla",
+	"texture_name": "atlas.terrain",
+	"padding": 8,
+	"num_mip_levels": 4,
+	"texture_data": {
+		"symbol_decimalpoint": {
+			"textures": "textures/blocks/symbol_decimalpoint.png"
+		},
+		"symbol_equals": {
+			"textures": "textures/blocks/symbol_equals.png"
+		},
+		"symbol_subtract": {
+			"textures": "textures/blocks/symbol_subtract.png"
+		},
+		"symbol_divide": {
+			"textures": "textures/blocks/symbol_divide.png"
+		},
+		"symbol_times": {
+			"textures": "textures/blocks/symbol_times.png"
+		},
+		"symbol_plus": {
+			"textures": "textures/blocks/symbol_plus.png"
+		},
+		"number_0": {
+			"textures": "textures/blocks/number_0.png"
+		},
+		"number_9": {
+			"textures": "textures/blocks/number_9.png"
+		},
+		"number_8": {
+			"textures": "textures/blocks/number_8.png"
+		},
+		"number_7": {
+			"textures": "textures/blocks/number_7.png"
+		},
+		"number_6": {
+			"textures": "textures/blocks/number_6.png"
+		},
+		"number_5": {
+			"textures": "textures/blocks/number_5.png"
+		},
+		"number_4": {
+			"textures": "textures/blocks/number_4.png"
+		},
+		"number_3": {
+			"textures": "textures/blocks/number_3.png"
+		},
+		"number_2": {
+			"textures": "textures/blocks/number_2.png"
+		},
+		"number_1": {
+			"textures": "textures/blocks/number_1.png"
+		}
+	}
+}

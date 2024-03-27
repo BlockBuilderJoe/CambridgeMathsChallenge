@@ -1,0 +1,30 @@
+{
+	"format_version": 2,
+	"header": {
+		"name": "Cambridge Numbers",
+		"description": "Cambridge Numbers Behavior Pack",
+		"uuid": "ac0316a5-8f3b-176f-de6a-892882d0b6cb",
+		"version": [1, 0, 0],
+		"min_engine_version": [1, 16, 0]
+	},
+	"metadata": {
+		"authors": ["Blockbuilders", "Ella Meldrum"],
+		"generated_with": {
+			"blockbench_block_wizard": ["1.2.2"]
+		}
+	},
+	"modules": [
+		{
+			"description": "Behavior",
+			"version": [1, 0, 0],
+			"uuid": "828676e8-93f9-4dc3-f720-09ed5d4697ac",
+			"type": "data"
+		}
+	],
+	"dependencies": [
+		{
+			"uuid": "6ee981a4-cda7-30c0-8bd6-92a2357cd7a4",
+			"version": [1, 0, 0]
+		}
+	]
+}

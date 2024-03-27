@@ -1,0 +1,16 @@
+tile.blockbuilders:number_1.name=Number One
+tile.blockbuilders:number_2.name=Number Two
+tile.blockbuilders:number_3.name=Number Three
+tile.blockbuilders:number_4.name=Number Four
+tile.blockbuilders:number_5.name=Number Five
+tile.blockbuilders:number_6.name=Number Six
+tile.blockbuilders:number_7.name=Number Seven
+tile.blockbuilders:number_8.name=Number Eight
+tile.blockbuilders:number_9.name=Number Nine
+tile.blockbuilders:number_0.name=Number Zero
+tile.blockbuilders:symbol_plus.name=Plus
+tile.blockbuilders:symbol_times.name=Times
+tile.blockbuilders:symbol_divide.name=Divide
+tile.blockbuilders:symbol_subtract.name=Subtract
+tile.blockbuilders:symbol_equals.name=Equals
+tile.blockbuilders:symbol_decimalpoint.name=Decimal Point
