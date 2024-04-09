@@ -190,10 +190,28 @@ function calculateRatio(ratioInput) {
   return { pink, yellow };
 }
 
-// scripts/test.ts
-import { world as world6 } from "@minecraft/server";
-
 // scripts/scaler.ts
+import { world as world6 } from "@minecraft/server";
+var overworld3 = world6.getDimension("overworld");
+async function scale() {
+  world6.sendMessage("Scaling the shape");
+  overworld3.runCommandAsync("fill 6 -60 122 39 -35 154 air");
+  overworld3.runCommandAsync("fill 6 -35 122 39 -30 154 air");
+  const blocks = await getCube({ x: 8, y: -60, z: 119 }, { x: 10, y: -57, z: 121 });
+  let shape = [];
+  let scaleFactor = getInput([{ x: 6, y: -58, z: 116 }]);
+  for (const block of blocks) {
+    if (block.permutation?.matches("white_concrete")) {
+      let location = { x: block.block?.x, y: block.block?.y, z: block.block?.z };
+      shape.push(location);
+    }
+  }
+  let scaledShape = await scaleShape(shape, scaleFactor);
+  for (const block of scaledShape) {
+    let scaledz = block.z + 6;
+    setBlock({ x: block.x, y: block.y, z: scaledz }, "white_concrete");
+  }
+}
 async function scaleShape(shape, scaleFactor) {
   const scaledShape = [];
   const basePoint = shape.reduce((min, block) => ({
@@ -223,27 +241,6 @@ async function scaleShape(shape, scaleFactor) {
   return scaledShape;
 }
 
-// scripts/test.ts
-var overworld3 = world6.getDimension("overworld");
-async function test() {
-  overworld3.runCommandAsync("fill 6 -60 122 39 -35 154 air");
-  overworld3.runCommandAsync("fill 6 -35 122 39 -30 154 air");
-  const blocks = await getCube({ x: 8, y: -60, z: 119 }, { x: 10, y: -57, z: 121 });
-  let shape = [];
-  let scaleFactor = getInput([{ x: 6, y: -58, z: 116 }]);
-  for (const block of blocks) {
-    if (block.permutation?.matches("white_concrete")) {
-      let location = { x: block.block?.x, y: block.block?.y, z: block.block?.z };
-      shape.push(location);
-    }
-  }
-  let scaledShape = await scaleShape(shape, scaleFactor);
-  for (const block of scaledShape) {
-    let scaledz = block.z + 6;
-    setBlock({ x: block.x, y: block.y, z: scaledz }, "white_concrete");
-  }
-}
-
 // scripts/main.ts
 var overworld4 = world7.getDimension("overworld");
 world7.afterEvents.buttonPush.subscribe(async (event) => {
@@ -261,7 +258,7 @@ world7.afterEvents.buttonPush.subscribe(async (event) => {
       break;
     }
     case "5,-60,117": {
-      test();
+      scale();
       break;
     }
   }

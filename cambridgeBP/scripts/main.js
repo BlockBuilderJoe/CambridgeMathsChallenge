@@ -13,6 +13,19 @@ function getInput(digits) {
   let combinedNumber = parseInt(combinedString);
   return combinedNumber;
 }
+async function getCube(pos1, pos2) {
+  const blocks = [];
+  for (let x3 = pos1.x; x3 <= pos2.x; x3++) {
+    for (let y3 = pos1.y; y3 <= pos2.y; y3++) {
+      for (let z3 = pos1.z; z3 <= pos2.z; z3++) {
+        const location = { x: x3, y: y3, z: z3 };
+        const blockValue = getBlockValue(location);
+        blocks.push(blockValue);
+      }
+    }
+  }
+  return blocks;
+}
 function getNumberValue(location) {
   let { block, permutation } = getBlockValue(location);
   for (let i = 0; i < 10; i++) {
@@ -49,6 +62,10 @@ function outputTotal(total, location) {
     block?.setPermutation(BlockPermutation2.resolve(blockName));
     location.x -= 1;
   }
+}
+function setBlock(location, blockName) {
+  let { block } = getBlockValue(location);
+  block?.setPermutation(BlockPermutation2.resolve(blockName));
 }
 async function clearAnswer(start, end) {
   overworld2.runCommandAsync(`fill ${start.x} ${start.y} ${start.z} ${end.x} ${end.y} ${end.z} air replace`);
@@ -173,14 +190,59 @@ function calculateRatio(ratioInput) {
   return { pink, yellow };
 }
 
-// scripts/test.ts
+// scripts/scaler.ts
 import { world as world6 } from "@minecraft/server";
-function test() {
-  world6.sendMessage("This is a test");
+var overworld3 = world6.getDimension("overworld");
+async function scale() {
+  world6.sendMessage("Scaling the shape");
+  overworld3.runCommandAsync("fill 6 -60 122 39 -35 154 air");
+  overworld3.runCommandAsync("fill 6 -35 122 39 -30 154 air");
+  const blocks = await getCube({ x: 8, y: -60, z: 119 }, { x: 10, y: -57, z: 121 });
+  let shape = [];
+  let scaleFactor = getInput([{ x: 6, y: -58, z: 116 }]);
+  for (const block of blocks) {
+    if (block.permutation?.matches("white_concrete")) {
+      let location = { x: block.block?.x, y: block.block?.y, z: block.block?.z };
+      shape.push(location);
+    }
+  }
+  let scaledShape = await scaleShape(shape, scaleFactor);
+  for (const block of scaledShape) {
+    let scaledz = block.z + 6;
+    setBlock({ x: block.x, y: block.y, z: scaledz }, "white_concrete");
+  }
+}
+async function scaleShape(shape, scaleFactor) {
+  const scaledShape = [];
+  const basePoint = shape.reduce((min, block) => ({
+    x: Math.min(min.x, block.x),
+    y: Math.min(min.y, block.y),
+    z: Math.min(min.z, block.z)
+  }), shape[0]);
+  for (const block of shape) {
+    const relativePos = {
+      x: block.x - basePoint.x,
+      y: block.y - basePoint.y,
+      z: block.z - basePoint.z
+    };
+    for (let i = 0; i < scaleFactor; i++) {
+      for (let j = 0; j < scaleFactor; j++) {
+        for (let k = 0; k < scaleFactor; k++) {
+          const scaledBlock = {
+            x: basePoint.x + relativePos.x * scaleFactor + i,
+            y: basePoint.y + relativePos.y * scaleFactor + j,
+            z: basePoint.z + relativePos.z * scaleFactor + k
+          };
+          scaledShape.push(scaledBlock);
+        }
+      }
+    }
+  }
+  return scaledShape;
 }
 
 // scripts/main.ts
-var overworld3 = world7.getDimension("overworld");
+var overworld4 = world7.getDimension("overworld");
 world7.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
     case "-11,-60,94": {
@@ -195,8 +257,8 @@ world7.afterEvents.buttonPush.subscribe(async (event) => {
       ratio1();
       break;
     }
-    case "-53,-60,94": {
-      test();
+    case "5,-60,117": {
+      scale();
       break;
     }
   }

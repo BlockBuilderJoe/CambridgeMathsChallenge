@@ -2,7 +2,7 @@ import { world } from "@minecraft/server";
 import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
-import { test } from "./test";
+import { scale } from "./scaler";
 
 const overworld = world.getDimension("overworld");
 
@@ -22,7 +22,7 @@ world.afterEvents.buttonPush.subscribe(async(event) => {
       break;
     }
     case "5,-60,117": {
-      test();
+      scale();
       break;
     }
   }

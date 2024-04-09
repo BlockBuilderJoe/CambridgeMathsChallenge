@@ -2,7 +2,7 @@ import { world } from "@minecraft/server";
 import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
-import { test } from "./test";
+import { scale } from "./scaler";
 const overworld = world.getDimension("overworld");
 world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
     //tests for the location of the button and runs the correct function.
@@ -20,7 +20,7 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
             break;
         }
         case "5,-60,117": {
-            test();
+            scale();
             break;
         }
     }
