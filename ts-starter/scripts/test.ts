@@ -6,8 +6,9 @@ import { getInput } from "./input";
 
 let overworld = world.getDimension("overworld");
 export async function test() {
-  overworld.runCommand("fill 6 -60 122 25 -51 136 air")
-  const blocks = await getCube({x: 8, y: -60, z: 118}, {x: 10, y: -57, z: 120});
+  overworld.runCommandAsync("fill 6 -60 122 39 -35 154 air");
+  overworld.runCommandAsync("fill 6 -35 122 39 -30 154 air");
+  const blocks = await getCube({x: 8, y: -60, z: 119}, {x: 10, y: -57, z: 121});
   let shape = []
   let scaleFactor = getInput([{x: 6, y: -58, z: 116}]);
 

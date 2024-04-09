@@ -196,11 +196,25 @@ import { world as world6 } from "@minecraft/server";
 // scripts/scaler.ts
 async function scaleShape(shape, scaleFactor) {
   const scaledShape = [];
+  const basePoint = shape.reduce((min, block) => ({
+    x: Math.min(min.x, block.x),
+    y: Math.min(min.y, block.y),
+    z: Math.min(min.z, block.z)
+  }), shape[0]);
   for (const block of shape) {
+    const relativePos = {
+      x: block.x - basePoint.x,
+      y: block.y - basePoint.y,
+      z: block.z - basePoint.z
+    };
     for (let i = 0; i < scaleFactor; i++) {
       for (let j = 0; j < scaleFactor; j++) {
         for (let k = 0; k < scaleFactor; k++) {
-          const scaledBlock = { x: block.x + i, y: block.y + j, z: block.z + k };
+          const scaledBlock = {
+            x: basePoint.x + relativePos.x * scaleFactor + i,
+            y: basePoint.y + relativePos.y * scaleFactor + j,
+            z: basePoint.z + relativePos.z * scaleFactor + k
+          };
           scaledShape.push(scaledBlock);
         }
       }
@@ -212,8 +226,9 @@ async function scaleShape(shape, scaleFactor) {
 // scripts/test.ts
 var overworld3 = world6.getDimension("overworld");
 async function test() {
-  overworld3.runCommand("fill 6 -60 122 25 -51 136 air");
-  const blocks = await getCube({ x: 8, y: -60, z: 118 }, { x: 10, y: -57, z: 120 });
+  overworld3.runCommandAsync("fill 6 -60 122 39 -35 154 air");
+  overworld3.runCommandAsync("fill 6 -35 122 39 -30 154 air");
+  const blocks = await getCube({ x: 8, y: -60, z: 119 }, { x: 10, y: -57, z: 121 });
   let shape = [];
   let scaleFactor = getInput([{ x: 6, y: -58, z: 116 }]);
   for (const block of blocks) {
