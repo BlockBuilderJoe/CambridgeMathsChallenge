@@ -19,8 +19,7 @@ export async function getCube(pos1: Vector3, pos2: Vector3) {
   const blocks = [];
   //world.sendMessage("pos1 = " + pos1.x + "," + pos1.y + "," + pos1.z);
   //world.sendMessage("pos2 = " + pos2.x + "," + pos2.y + "," + pos2.z);
-  try {
-    for(let x3 = pos1.x; x3 <= pos2.x; x3++) {
+  for(let x3 = pos1.x; x3 <= pos2.x; x3++) {
         for(let y3 = pos1.y; y3 <= pos2.y; y3++) {
             for(let z3 = pos1.z; z3 <= pos2.z; z3++) {
                 const location = {x: x3, y: y3, z: z3};
@@ -28,10 +27,8 @@ export async function getCube(pos1: Vector3, pos2: Vector3) {
                 blocks.push(blockValue);
             }
         }
-    }
-  } catch (error) {
-    world.sendMessage('An error occurred:   ' + error);
   }
+ 
   return blocks;
 }
 

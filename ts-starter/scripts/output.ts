@@ -19,6 +19,11 @@ export function outputTotal(total: number, location: Vector3){
     }
   }
 
+  export function setBlock(location: Vector3, blockName: string){
+    let {block} = getBlockValue(location);
+    block?.setPermutation(BlockPermutation.resolve(blockName));
+  }
+
   export async function clearAnswer(start: Vector3, end: Vector3) {
     overworld.runCommandAsync(`fill ${start.x} ${start.y} ${start.z} ${end.x} ${end.y} ${end.z} air replace`);
   }

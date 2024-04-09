@@ -18,6 +18,10 @@ export function outputTotal(total, location) {
         location.x -= 1;
     }
 }
+export function setBlock(location, blockName) {
+    let { block } = getBlockValue(location);
+    block === null || block === void 0 ? void 0 : block.setPermutation(BlockPermutation.resolve(blockName));
+}
 export function clearAnswer(start, end) {
     return __awaiter(this, void 0, void 0, function* () {
         overworld.runCommandAsync(`fill ${start.x} ${start.y} ${start.z} ${end.x} ${end.y} ${end.z} air replace`);
