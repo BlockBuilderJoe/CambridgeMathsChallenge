@@ -1,5 +1,5 @@
 // scripts/main.ts
-import { world as world6 } from "@minecraft/server";
+import { world as world7 } from "@minecraft/server";
 
 // scripts/input.ts
 import { BlockPermutation, world } from "@minecraft/server";
@@ -173,9 +173,15 @@ function calculateRatio(ratioInput) {
   return { pink, yellow };
 }
 
+// scripts/test.ts
+import { world as world6 } from "@minecraft/server";
+function test() {
+  world6.sendMessage("This is a test");
+}
+
 // scripts/main.ts
-var overworld3 = world6.getDimension("overworld");
-world6.afterEvents.buttonPush.subscribe(async (event) => {
+var overworld3 = world7.getDimension("overworld");
+world7.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
     case "-11,-60,94": {
       calculate();
@@ -187,6 +193,10 @@ world6.afterEvents.buttonPush.subscribe(async (event) => {
     }
     case "-40,-60,94": {
       ratio1();
+      break;
+    }
+    case "-53,-60,94": {
+      test();
       break;
     }
   }

@@ -1,5 +1,5 @@
 // scripts/main.ts
-import { world as world6 } from "@minecraft/server";
+import { world as world7 } from "@minecraft/server";
 
 // scripts/input.ts
 import { BlockPermutation, world } from "@minecraft/server";
@@ -12,6 +12,23 @@ function getInput(digits) {
   }
   let combinedNumber = parseInt(combinedString);
   return combinedNumber;
+}
+async function getCube(pos1, pos2) {
+  const blocks = [];
+  try {
+    for (let x3 = pos1.x; x3 <= pos2.x; x3++) {
+      for (let y3 = pos1.y; y3 <= pos2.y; y3++) {
+        for (let z3 = pos1.z; z3 <= pos2.z; z3++) {
+          const location = { x: x3, y: y3, z: z3 };
+          const blockValue = getBlockValue(location);
+          blocks.push(blockValue);
+        }
+      }
+    }
+  } catch (error) {
+    world.sendMessage("An error occurred:   " + error);
+  }
+  return blocks;
 }
 function getNumberValue(location) {
   let { block, permutation } = getBlockValue(location);
@@ -173,9 +190,24 @@ function calculateRatio(ratioInput) {
   return { pink, yellow };
 }
 
+// scripts/test.ts
+import { world as world6 } from "@minecraft/server";
+async function test() {
+  world6.sendMessage("This is a test");
+  const blocks = await getCube({ x: 8, y: -60, z: 118 }, { x: 10, y: -57, z: 120 });
+  let shape = [];
+  for (const block of blocks) {
+    if (block.permutation?.matches("white_concrete")) {
+      let location = { x: block.block?.x, y: block.block?.y, z: block.block?.z };
+      world6.sendMessage("white_concrete at " + block.block?.x + "," + block.block?.y + "," + block.block?.z);
+      shape.push(location);
+    }
+  }
+}
+
 // scripts/main.ts
-var overworld3 = world6.getDimension("overworld");
-world6.afterEvents.buttonPush.subscribe(async (event) => {
+var overworld3 = world7.getDimension("overworld");
+world7.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
     case "-11,-60,94": {
       calculate();
@@ -187,6 +219,10 @@ world6.afterEvents.buttonPush.subscribe(async (event) => {
     }
     case "-40,-60,94": {
       ratio1();
+      break;
+    }
+    case "5,-60,117": {
+      test();
       break;
     }
   }
