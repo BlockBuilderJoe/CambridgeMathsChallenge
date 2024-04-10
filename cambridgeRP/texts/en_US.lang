@@ -15,3 +15,8 @@ tile.blockbuilders:symbol_subtract.name=Subtract
 tile.blockbuilders:symbol_equals.name=Equals
 tile.blockbuilders:symbol_decimalpoint.name=Decimal Point
 tile.blockbuilders:symbol_colon.name=Colon
+tile.concrete.red.name=Half
+tile.concrete.pink.name=Third
+tile.concrete.blue.name=Sixth
+tile.concrete.yellow.name=Quarter
+
