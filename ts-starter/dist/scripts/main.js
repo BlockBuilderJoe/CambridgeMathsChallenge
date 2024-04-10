@@ -1,5 +1,5 @@
 // scripts/main.ts
-import { world as world7 } from "@minecraft/server";
+import { world as world7, BlockPermutation as BlockPermutation4 } from "@minecraft/server";
 
 // scripts/input.ts
 import { BlockPermutation, world } from "@minecraft/server";
@@ -263,5 +263,27 @@ world7.afterEvents.buttonPush.subscribe(async (event) => {
     }
   }
 });
+function cuisenaire(event, blockName, rodLength) {
+  for (let i = 0; i < rodLength; i++) {
+    event.block.north(i)?.setPermutation(BlockPermutation4.resolve(blockName));
+  }
+}
+world7.afterEvents.playerPlaceBlock.subscribe(
+  async (event) => {
+    world7.sendMessage(`Block placed at ${event.block.location.x},${event.block.location.y},${event.block.location.z}`);
+    switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
+      case "-1,-61,89": {
+        if (event.block.permutation?.matches("red_concrete")) {
+          world7.sendMessage("Congratulations! You placed a 1/2 rod!");
+          cuisenaire(event, "red_concrete", 6);
+        } else {
+          world7.sendMessage("Not quite! It needs to be a 1/2 rod");
+          event.block.setPermutation(BlockPermutation4.resolve("lava"));
+        }
+        break;
+      }
+    }
+  }
+);
 
 //# sourceMappingURL=../debug/main.js.map
