@@ -12,7 +12,7 @@ setblock 3 -62 79 allow
 
 gamemode a @a
 clear @p
+give @p green_concrete 10
+give @p purple_concrete 10
 give @p red_concrete 10
-give @p pink_concrete 10
-give @p yellow_concrete 10
-give @p blue_concrete 10
+give @p brown_concrete 10

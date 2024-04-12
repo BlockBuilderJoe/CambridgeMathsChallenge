@@ -193,26 +193,35 @@ function calculateRatio(ratioInput) {
 // scripts/scaler.ts
 import { world as world6 } from "@minecraft/server";
 var overworld3 = world6.getDimension("overworld");
+var glass = ["magenta", "orange", "light_blue", "yellow", "lime", "pink", "gray", "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black", "white"];
+async function resetArea() {
+  await overworld3.runCommandAsync("fill 20 -60 153 32 -40 221 air replace");
+  await overworld3.runCommandAsync("fill 20 -40 153 32 -20 221 air replace");
+  await overworld3.runCommandAsync("fill 20 -20 153 32 0 221 air replace");
+  await overworld3.runCommandAsync("clone -49 -60 151 -47 -23 175 21 -60 153 replace");
+}
 async function scale() {
-  world6.sendMessage("Scaling the shape");
-  overworld3.runCommandAsync("fill 6 -60 122 39 -35 154 air");
-  overworld3.runCommandAsync("fill 6 -35 122 39 -30 154 air");
-  const blocks = await getCube({ x: 8, y: -60, z: 119 }, { x: 10, y: -57, z: 121 });
+  await resetArea();
+  const blocks = await getCube({ x: 13, y: -60, z: 142 }, { x: 13, y: -51, z: 148 });
   let shape = [];
-  let scaleFactor = getInput([{ x: 6, y: -58, z: 116 }]);
+  let scaleFactor = getInput([{ x: 12, y: -58, z: 149 }]);
   for (const block of blocks) {
-    if (block.permutation?.matches("white_concrete")) {
-      let location = { x: block.block?.x, y: block.block?.y, z: block.block?.z };
-      shape.push(location);
+    for (const colour of glass) {
+      if (block.permutation?.matches(colour + "_stained_glass")) {
+        let location = { x: block.block?.x, y: block.block?.y, z: block.block?.z, colour };
+        shape.push(location);
+      }
+    }
+    let scaledShape = await scaleShape(shape, scaleFactor, "yz");
+    for (const block2 of scaledShape) {
+      let offset_z = block2.z + 15;
+      let offset_x = block2.x + 10;
+      let offset_y = block2.y + 5;
+      setBlock({ x: offset_x, y: offset_y, z: offset_z }, block2.colour + "_stained_glass");
     }
   }
-  let scaledShape = await scaleShape(shape, scaleFactor);
-  for (const block of scaledShape) {
-    let scaledz = block.z + 6;
-    setBlock({ x: block.x, y: block.y, z: scaledz }, "white_concrete");
-  }
 }
-async function scaleShape(shape, scaleFactor) {
+async function scaleShape(shape, scaleFactor, axes) {
   const scaledShape = [];
   const basePoint = shape.reduce((min, block) => ({
     x: Math.min(min.x, block.x),
@@ -225,13 +234,14 @@ async function scaleShape(shape, scaleFactor) {
       y: block.y - basePoint.y,
       z: block.z - basePoint.z
     };
-    for (let i = 0; i < scaleFactor; i++) {
-      for (let j = 0; j < scaleFactor; j++) {
-        for (let k = 0; k < scaleFactor; k++) {
+    for (let i = axes.includes("x") ? 0 : scaleFactor - 1; i < scaleFactor; i++) {
+      for (let j = axes.includes("y") ? 0 : scaleFactor - 1; j < scaleFactor; j++) {
+        for (let k = axes.includes("z") ? 0 : scaleFactor - 1; k < scaleFactor; k++) {
           const scaledBlock = {
-            x: basePoint.x + relativePos.x * scaleFactor + i,
-            y: basePoint.y + relativePos.y * scaleFactor + j,
-            z: basePoint.z + relativePos.z * scaleFactor + k
+            x: basePoint.x + (axes.includes("x") ? relativePos.x * scaleFactor + i : relativePos.x),
+            y: basePoint.y + (axes.includes("y") ? relativePos.y * scaleFactor + j : relativePos.y),
+            z: basePoint.z + (axes.includes("z") ? relativePos.z * scaleFactor + k : relativePos.z),
+            colour: block.colour
           };
           scaledShape.push(scaledBlock);
         }
@@ -243,13 +253,15 @@ async function scaleShape(shape, scaleFactor) {
 
 // scripts/rod.ts
 import { BlockPermutation as BlockPermutation4, world as world7 } from "@minecraft/server";
+var overworld4 = world7.getDimension("overworld");
 function cuisenaire(event, blockName, rodLength, successMessage, failureMessage) {
   if (event.block.permutation?.matches(blockName)) {
-    world7.sendMessage(successMessage);
+    overworld4.runCommand("title @p actionbar " + successMessage);
     for (let i = 0; i < rodLength; i++) {
       event.block.north(i)?.setPermutation(BlockPermutation4.resolve(blockName));
     }
   } else {
+    overworld4.runCommand("title @p actionbar " + failureMessage);
     world7.sendMessage(failureMessage);
     event.block.setPermutation(BlockPermutation4.resolve("lava"));
   }
@@ -283,35 +295,31 @@ world8.afterEvents.playerPlaceBlock.subscribe(
   async (event) => {
     switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
       case "-1,-61,89": {
-        cuisenaire(event, "red_concrete", 6, "Correct! You made a 1/2 rod!", "Not quite! It needs to be a 1/2 rod");
+        cuisenaire(event, "green_concrete", 6, "Correct! 6 is half of 12", "That is not half of 12!");
         break;
       }
       case "-1,-61,83": {
-        cuisenaire(event, "red_concrete", 6, "Well done you made a whole from two halves.", "Not quite! It needs to be a 1/2 rod");
+        cuisenaire(event, "green_concrete", 6, "Well done you made a 12 from two 6 rods.", "That is not half of 12!");
         break;
       }
       case "1,-61,89": {
-        cuisenaire(event, "pink_concrete", 4, "Correct! You made a 1/3 rod!", "Not quite! It needs to be a 1/3 rod");
-        break;
-      }
-      case "1,-61,85": {
-        cuisenaire(event, "pink_concrete", 4, "Well done you 2/3 out of two 1/3.", "Not quite! It needs to be a 1/3 rod");
+        cuisenaire(event, "brown_concrete", 8, "Correct! 8 is two thirds of 12.", "Not quite, what is two thirds of 12?");
         break;
       }
       case "1,-61,81": {
-        cuisenaire(event, "pink_concrete", 4, "Well done you made it whole.", "Not quite! It needs to be a 1/3 rod");
+        cuisenaire(event, "purple_concrete", 4, "Well done you made 12 by adding 8 to 4.", "Nope, what is one third of 12?");
         break;
       }
       case "3,-61,89": {
-        cuisenaire(event, "red_concrete", 6, "Correct you are halfway there!", "Not quite! It needs to be a 1/2 rod");
+        cuisenaire(event, "green_concrete", 6, "Correct you are halfway there!", "Not quite! What is half of 12?");
         break;
       }
       case "3,-61,83": {
-        cuisenaire(event, "pink_concrete", 4, "A third plus a half you are now at 10 blocks", "Not quite! It needs to be a 1/3 rod");
+        cuisenaire(event, "purple_concrete", 4, "Almost there only two to go!", "Not quite! What is one third of 12?");
         break;
       }
       case "3,-61,79": {
-        cuisenaire(event, "blue_concrete", 2, "Well done you made a whole.", "Not quite! It needs to be a 1/6 rod");
+        cuisenaire(event, "red_concrete", 2, "Well done you made 12 by adding 6 + 4 + 2.", "Not quite! It needs to be 1/6 of 12.");
         break;
       }
     }
