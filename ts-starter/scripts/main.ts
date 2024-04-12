@@ -2,7 +2,7 @@ import { world } from "@minecraft/server";
 import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
-import { scale } from "./scaler";
+import { scale, resetArea } from "./scaler";
 import { cuisenaire } from "./rod";
 
 //listens for the button push event.
@@ -20,8 +20,12 @@ world.afterEvents.buttonPush.subscribe(async(event) => {
       ratio1();
       break;
     }
-    case "5,-60,117": {
+    case "-3,-60,154": {
       scale();
+      break;
+    }
+    case "-3,-60,153": {
+      await resetArea();
       break;
     }
     case "-3,-60,90": {

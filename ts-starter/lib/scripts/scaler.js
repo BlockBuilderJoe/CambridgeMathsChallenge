@@ -4,18 +4,9 @@ import { setBlock } from "./output";
 import { getInput } from "./input";
 let overworld = world.getDimension("overworld");
 let glass = ["magenta", "orange", "light_blue", "yellow", "lime", "pink", "gray", "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black", "white"];
-function resetArea() {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield overworld.runCommandAsync("fill 20 -60 153 32 -40 221 air replace");
-        yield overworld.runCommandAsync("fill 20 -40 153 32 -20 221 air replace");
-        yield overworld.runCommandAsync("fill 20 -20 153 32 0 221 air replace");
-        yield overworld.runCommandAsync("clone -49 -60 151 -47 -23 175 21 -60 153 replace");
-    });
-}
 export function scale() {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b, _c, _d;
-        yield resetArea();
         const blocks = yield getCube({ x: 13, y: -60, z: 142 }, { x: 13, y: -51, z: 148 });
         let shape = [];
         let scaleFactor = getInput([{ x: 12, y: -58, z: 149 }]);
@@ -34,6 +25,15 @@ export function scale() {
                 setBlock({ x: offset_x, y: offset_y, z: offset_z }, block.colour + "_stained_glass");
             }
         }
+    });
+}
+export function resetArea() {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield overworld.runCommandAsync("fill 20 -60 153 32 -40 221 air replace");
+        yield overworld.runCommandAsync("fill 20 -40 153 32 -20 221 air replace");
+        yield overworld.runCommandAsync("fill 20 -20 153 32 0 221 air replace");
+        yield overworld.runCommandAsync("fill 20 0 153 32 30 221 air replace");
+        yield overworld.runCommandAsync("clone -49 -60 151 -47 -23 175 21 -60 153 replace");
     });
 }
 export function scaleShape(shape, scaleFactor, axes) {
