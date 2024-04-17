@@ -70,6 +70,18 @@ function setBlock(location, blockName) {
 async function clearAnswer(start, end) {
   overworld2.runCommandAsync(`fill ${start.x} ${start.y} ${start.z} ${end.x} ${end.y} ${end.z} air replace`);
 }
+function cycleNumberBlock(clickEvent) {
+  for (let i = 0; i < 9; i++) {
+    if (clickEvent.brokenBlockPermutation?.matches("blockbuilders:number_" + i)) {
+      let nextNumber = i + 1;
+      let blockname = "blockbuilders:number_" + nextNumber;
+      clickEvent.block.setPermutation(BlockPermutation2.resolve(blockname));
+    }
+    if (clickEvent.brokenBlockPermutation?.matches("blockbuilders:number_9")) {
+      clickEvent.block.setPermutation(BlockPermutation2.resolve("blockbuilders:number_0"));
+    }
+  }
+}
 
 // scripts/numberHandler.ts
 function roundToDigits(num, digits) {
@@ -326,6 +338,20 @@ world8.afterEvents.playerPlaceBlock.subscribe(
         cuisenaire(event, "red_concrete", 2, "Well done you made 12 by adding 6 + 4 + 2.", "Not quite! It needs to be 1/6 of 12.");
         break;
       }
+    }
+  }
+);
+world8.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
+  let hand_item = clickEvent.itemStackAfterBreak?.typeId;
+  if (hand_item === "minecraft:stick") {
+    cycleNumberBlock(clickEvent);
+  }
+});
+world8.afterEvents.itemUse.subscribe(
+  (eventData) => {
+    let player = eventData.source;
+    if (eventData.itemStack.typeId == "minecraft:stick") {
+      player.sendMessage("Right click");
     }
   }
 );

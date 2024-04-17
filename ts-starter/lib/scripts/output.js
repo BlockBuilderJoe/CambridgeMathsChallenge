@@ -27,4 +27,17 @@ export function clearAnswer(start, end) {
         overworld.runCommandAsync(`fill ${start.x} ${start.y} ${start.z} ${end.x} ${end.y} ${end.z} air replace`);
     });
 }
+export function cycleNumberBlock(clickEvent) {
+    var _a, _b;
+    for (let i = 0; i < 9; i++) { //check for element_0 toplement_8
+        if ((_a = clickEvent.brokenBlockPermutation) === null || _a === void 0 ? void 0 : _a.matches("blockbuilders:number_" + i)) {
+            let nextNumber = i + 1;
+            let blockname = "blockbuilders:number_" + nextNumber;
+            clickEvent.block.setPermutation(BlockPermutation.resolve(blockname));
+        }
+        if ((_b = clickEvent.brokenBlockPermutation) === null || _b === void 0 ? void 0 : _b.matches("blockbuilders:number_9")) {
+            clickEvent.block.setPermutation(BlockPermutation.resolve("blockbuilders:number_0"));
+        }
+    }
+}
 //# sourceMappingURL=output.js.map

@@ -4,6 +4,7 @@ import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
 import { scale, resetArea } from "./scaler";
 import { cuisenaire } from "./rod";
+import { cycleNumberBlock } from "./output";
 //listens for the button push event.
 world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
     switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
@@ -65,4 +66,18 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0
         }
     }
 }));
+world.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
+    var _a;
+    let hand_item = (_a = clickEvent.itemStackAfterBreak) === null || _a === void 0 ? void 0 : _a.typeId; //gets the item in the players hand
+    if (hand_item === "minecraft:stick") {
+        cycleNumberBlock(clickEvent);
+    }
+});
+//right click
+world.afterEvents.itemUse.subscribe((eventData) => {
+    let player = eventData.source; // Get the player that waved the wand
+    if (eventData.itemStack.typeId == "minecraft:stick") { //tests for the wand.
+        player.sendMessage("Right click"); //sends a message to the player
+    }
+});
 //# sourceMappingURL=main.js.map

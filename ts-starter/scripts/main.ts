@@ -1,9 +1,10 @@
-import { world } from "@minecraft/server";
+import { BlockPermutation, world } from "@minecraft/server";
 import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
 import { scale, resetArea } from "./scaler";
 import { cuisenaire } from "./rod";
+import { cycleNumberBlock } from "./output";
 
 //listens for the button push event.
 world.afterEvents.buttonPush.subscribe(async(event) => {
@@ -68,5 +69,21 @@ world.afterEvents.playerPlaceBlock.subscribe(async(event) => {
 }}
   );
 
+
+
+world.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
+  let hand_item = clickEvent.itemStackAfterBreak?.typeId; //gets the item in the players hand
+  if (hand_item === "minecraft:stick") {
+    cycleNumberBlock(clickEvent);
+  }
+});
+//right click
+world.afterEvents.itemUse.subscribe((eventData) => {
+  let player = eventData.source; // Get the player that waved the wand
+  if (eventData.itemStack.typeId == "minecraft:stick") { //tests for the wand.
+    player.sendMessage("Right click"); //sends a message to the player
+  }
+}
+);
 
 
