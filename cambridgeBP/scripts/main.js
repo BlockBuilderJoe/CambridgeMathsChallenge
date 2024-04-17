@@ -1,5 +1,5 @@
 // scripts/main.ts
-import { world as world8 } from "@minecraft/server";
+import { world as world9 } from "@minecraft/server";
 
 // scripts/input.ts
 import { BlockPermutation, world } from "@minecraft/server";
@@ -69,6 +69,18 @@ function setBlock(location, blockName) {
 }
 async function clearAnswer(start, end) {
   overworld2.runCommandAsync(`fill ${start.x} ${start.y} ${start.z} ${end.x} ${end.y} ${end.z} air replace`);
+}
+function cycleNumberBlock(clickEvent) {
+  for (let i = 0; i < 9; i++) {
+    if (clickEvent.brokenBlockPermutation?.matches("blockbuilders:number_" + i)) {
+      let nextNumber = i + 1;
+      let blockname = "blockbuilders:number_" + nextNumber;
+      clickEvent.block.setPermutation(BlockPermutation2.resolve(blockname));
+    }
+    if (clickEvent.brokenBlockPermutation?.matches("blockbuilders:number_9")) {
+      clickEvent.block.setPermutation(BlockPermutation2.resolve("blockbuilders:number_0"));
+    }
+  }
 }
 
 // scripts/numberHandler.ts
@@ -254,21 +266,70 @@ async function scaleShape(shape, scaleFactor, axes) {
 // scripts/rod.ts
 import { BlockPermutation as BlockPermutation4, world as world7 } from "@minecraft/server";
 var overworld4 = world7.getDimension("overworld");
-function cuisenaire(event, blockName, rodLength, successMessage, failureMessage) {
+function cuisenaire(event, blockName, rodLength, successMessage) {
+  let extend = true;
   if (event.block.permutation?.matches(blockName)) {
     overworld4.runCommand("title @p actionbar " + successMessage);
     for (let i = 0; i < rodLength; i++) {
-      event.block.north(i)?.setPermutation(BlockPermutation4.resolve(blockName));
+      if (event.block.east(i)?.permutation?.matches("sandstone")) {
+        world7.sendMessage("It's gone over a whole rod length!");
+        event.block.setPermutation(BlockPermutation4.resolve("grass"));
+        extend = false;
+        break;
+      } else {
+        event.block.east(i)?.setPermutation(BlockPermutation4.resolve(blockName));
+      }
     }
-  } else {
-    overworld4.runCommand("title @p actionbar " + failureMessage);
-    world7.sendMessage(failureMessage);
-    event.block.setPermutation(BlockPermutation4.resolve("lava"));
+    if (extend == true) {
+      extendRods(event, blockName, rodLength);
+    }
+  }
+}
+function extendRods(event, blockName, rodLength) {
+  for (let i = 0; i < 10; i++) {
+    if (event.block.south(i)?.permutation?.matches("sandstone") || event.block.south(i)?.permutation?.matches("white_concrete")) {
+      break;
+    } else {
+      for (let j = 0; j < rodLength; j++) {
+        event.block.south(i)?.setPermutation(BlockPermutation4.resolve(blockName));
+        event.block.south(i)?.east(j)?.setPermutation(BlockPermutation4.resolve(blockName));
+      }
+    }
+  }
+  for (let i = 0; i < 9; i++) {
+    if (event.block.north(i)?.permutation?.matches("sandstone") || event.block.north(i)?.permutation?.matches("white_concrete")) {
+      break;
+    } else {
+      for (let j = 0; j < rodLength; j++) {
+        event.block.north(i)?.setPermutation(BlockPermutation4.resolve(blockName));
+        event.block.north(i)?.east(j)?.setPermutation(BlockPermutation4.resolve(blockName));
+      }
+    }
+  }
+}
+
+// scripts/grid.ts
+import { world as world8 } from "@minecraft/server";
+var overworld5 = world8.getDimension("overworld");
+async function square(location) {
+  overworld5.runCommandAsync("fill " + location.x + " " + location.y + " " + location.z + " " + (location.x + 11) + " " + location.y + " " + (location.z + 11) + " sandstone");
+  overworld5.runCommandAsync("fill " + (location.x + 1) + " " + location.y + " " + (location.z + 1) + " " + (location.x + 10) + " " + location.y + " " + (location.z + 10) + " grass replace");
+  overworld5.runCommandAsync("fill " + (location.x + 1) + " " + (location.y + 1) + " " + (location.z + 1) + " " + (location.x + 10) + " " + (location.y + 1) + " " + (location.z + 10) + " tallgrass replace");
+  overworld5.runCommandAsync("fill " + (location.x + 1) + " " + (location.y + 2) + " " + (location.z + 1) + " " + (location.x + 10) + " " + (location.y + 2) + " " + (location.z + 10) + " air replace");
+}
+async function grid(location) {
+  for (let i = 0; i < 5; i++) {
+    for (let j = 0; j < 5; j++) {
+      let offset_x = location.x + i * 11;
+      let offset_z = location.z + j * 11;
+      const squareLocation = { x: offset_x, y: location.y, z: offset_z };
+      await square(squareLocation);
+    }
   }
 }
 
 // scripts/main.ts
-world8.afterEvents.buttonPush.subscribe(async (event) => {
+world9.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
     case "-11,-60,94": {
       calculate();
@@ -291,41 +352,37 @@ world8.afterEvents.buttonPush.subscribe(async (event) => {
       break;
     }
     case "-3,-60,90": {
-      world8.getDimension("overworld").runCommand("function lava");
+      world9.getDimension("overworld").runCommand("function lava");
+      break;
+    }
+    case "606,-60,995": {
+      await grid({ x: 608, y: -61, z: 995 });
+      break;
     }
   }
 });
-world8.afterEvents.playerPlaceBlock.subscribe(
-  async (event) => {
-    switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
-      case "-1,-61,89": {
-        cuisenaire(event, "green_concrete", 6, "Correct! 6 is half of 12", "That is not half of 12!");
-        break;
-      }
-      case "-1,-61,83": {
-        cuisenaire(event, "green_concrete", 6, "Well done you made a 12 from two 6 rods.", "That is not half of 12!");
-        break;
-      }
-      case "1,-61,89": {
-        cuisenaire(event, "brown_concrete", 8, "Correct! 8 is two thirds of 12.", "Not quite, what is two thirds of 12?");
-        break;
-      }
-      case "1,-61,81": {
-        cuisenaire(event, "purple_concrete", 4, "Well done you made 12 by adding 8 to 4.", "Nope, what is one third of 12?");
-        break;
-      }
-      case "3,-61,89": {
-        cuisenaire(event, "green_concrete", 6, "Correct you are halfway there!", "Not quite! What is half of 12?");
-        break;
-      }
-      case "3,-61,83": {
-        cuisenaire(event, "purple_concrete", 4, "Almost there only two to go!", "Not quite! What is one third of 12?");
-        break;
-      }
-      case "3,-61,79": {
-        cuisenaire(event, "red_concrete", 2, "Well done you made 12 by adding 6 + 4 + 2.", "Not quite! It needs to be 1/6 of 12.");
-        break;
-      }
+world9.afterEvents.playerPlaceBlock.subscribe(async (event) => {
+  if (event.block.permutation?.matches("red_concrete")) {
+    cuisenaire(event, "red_concrete", 2, "Placed two blocks");
+  } else if (event.block.permutation?.matches("green_concrete")) {
+    cuisenaire(event, "green_concrete", 6, "Placed six blocks");
+  } else if (event.block.permutation?.matches("purple_concrete")) {
+    cuisenaire(event, "purple_concrete", 4, "Placed four blocks");
+  } else if (event.block.permutation?.matches("blue_concrete")) {
+    cuisenaire(event, "blue_concrete", 3, "Placed three blocks");
+  }
+});
+world9.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
+  let hand_item = clickEvent.itemStackAfterBreak?.typeId;
+  if (hand_item === "minecraft:stick") {
+    cycleNumberBlock(clickEvent);
+  }
+});
+world9.afterEvents.itemUse.subscribe(
+  async (eventData) => {
+    let player = eventData.source;
+    if (eventData.itemStack.typeId === "minecraft:stick") {
+      player.sendMessage("Right click");
     }
   }
 );

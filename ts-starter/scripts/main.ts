@@ -5,6 +5,7 @@ import { ratio1 } from "./ratio";
 import { scale, resetArea } from "./scaler";
 import { cuisenaire } from "./rod";
 import { cycleNumberBlock } from "./output";
+import { grid } from "./grid";
 
 //listens for the button push event.
 world.afterEvents.buttonPush.subscribe(async(event) => {
@@ -30,46 +31,32 @@ world.afterEvents.buttonPush.subscribe(async(event) => {
       break;
     }
     case "-3,-60,90": {
-      world.getDimension("overworld").runCommand("function lava")
+      world.getDimension("overworld").runCommand("function lava");
+      break;
     }
+    case "606,-60,995": {
+      await grid({x: 608, y: -61, z: 995});
+      break;
   }
+}
 });
+
 
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe(async(event) => {
-  switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
-    case "-1,-61,89": { 
-      cuisenaire(event, "green_concrete", 6, "Correct! 6 is half of 12", "That is not half of 12!");
-      break;
-    }
-    case "-1,-61,83": { 
-      cuisenaire(event, "green_concrete", 6, "Well done you made a 12 from two 6 rods.", "That is not half of 12!");
-      break;
-    }
-    case "1,-61,89": {
-      cuisenaire(event, "brown_concrete", 8, "Correct! 8 is two thirds of 12.", "Not quite, what is two thirds of 12?");
-      break;
-    }
-    case "1,-61,81": {
-      cuisenaire(event, "purple_concrete", 4, "Well done you made 12 by adding 8 to 4.", "Nope, what is one third of 12?");
-      break;
-    }
-    case "3,-61,89": {
-      cuisenaire(event, "green_concrete", 6, "Correct you are halfway there!", "Not quite! What is half of 12?");
-      break;
-    }
-    case "3,-61,83": {
-      cuisenaire(event, "purple_concrete", 4, "Almost there only two to go!", "Not quite! What is one third of 12?");
-      break;
-    }
-    case "3,-61,79": {
-      cuisenaire(event, "red_concrete", 2, "Well done you made 12 by adding 6 + 4 + 2.", "Not quite! It needs to be 1/6 of 12.");
-      break;
-    }
-}}
-  );
-
-
+  if (event.block.permutation?.matches("red_concrete")) {
+    cuisenaire(event, "red_concrete", 2, "Placed two blocks");
+  }
+  else if (event.block.permutation?.matches("green_concrete")) {
+    cuisenaire(event, "green_concrete", 6, "Placed six blocks");
+  }
+  else if (event.block.permutation?.matches("purple_concrete")) {
+    cuisenaire(event, "purple_concrete", 4, "Placed four blocks");
+  }
+  else if (event.block.permutation?.matches("blue_concrete")) {
+    cuisenaire(event, "blue_concrete", 3, "Placed three blocks");
+  }
+  });
 
 world.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId; //gets the item in the players hand
@@ -78,9 +65,9 @@ world.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
   }
 });
 //right click
-world.afterEvents.itemUse.subscribe((eventData) => {
+world.afterEvents.itemUse.subscribe(async (eventData) => {
   let player = eventData.source; // Get the player that waved the wand
-  if (eventData.itemStack.typeId == "minecraft:stick") { //tests for the wand.
+  if (eventData.itemStack.typeId === "minecraft:stick") { //tests for the wand.
     player.sendMessage("Right click"); //sends a message to the player
   }
 }
