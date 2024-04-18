@@ -6,6 +6,7 @@ import { scale, resetArea } from "./scaler";
 import { cuisenaire } from "./rod";
 import { cycleNumberBlock } from "./output";
 import { grid } from "./grid";
+import { facing } from "./playerFacing";
 
 //listens for the button push event.
 world.afterEvents.buttonPush.subscribe(async(event) => {
@@ -34,7 +35,7 @@ world.afterEvents.buttonPush.subscribe(async(event) => {
       world.getDimension("overworld").runCommand("function lava");
       break;
     }
-    case "606,-60,995": {
+    case "608,-59,1007": {
       await grid({x: 608, y: -61, z: 995});
       break;
   }
@@ -44,17 +45,21 @@ world.afterEvents.buttonPush.subscribe(async(event) => {
 
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe(async(event) => {
+  let viewDirection = event.player.getViewDirection();
+  let direction = await facing(viewDirection);
+  world.sendMessage(direction);
+  
   if (event.block.permutation?.matches("red_concrete")) {
-    cuisenaire(event, "red_concrete", 2, "Placed two blocks");
+    cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction);
   }
   else if (event.block.permutation?.matches("green_concrete")) {
-    cuisenaire(event, "green_concrete", 6, "Placed six blocks");
+    cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction);
   }
   else if (event.block.permutation?.matches("purple_concrete")) {
-    cuisenaire(event, "purple_concrete", 4, "Placed four blocks");
+    cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction);
   }
   else if (event.block.permutation?.matches("blue_concrete")) {
-    cuisenaire(event, "blue_concrete", 3, "Placed three blocks");
+    cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction);
   }
   });
 

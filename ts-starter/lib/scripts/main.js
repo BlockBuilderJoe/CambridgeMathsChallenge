@@ -6,6 +6,7 @@ import { scale, resetArea } from "./scaler";
 import { cuisenaire } from "./rod";
 import { cycleNumberBlock } from "./output";
 import { grid } from "./grid";
+import { facing } from "./playerFacing";
 //listens for the button push event.
 world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
     switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
@@ -33,7 +34,7 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
             world.getDimension("overworld").runCommand("function lava");
             break;
         }
-        case "606,-60,995": {
+        case "608,-59,1007": {
             yield grid({ x: 608, y: -61, z: 995 });
             break;
         }
@@ -42,17 +43,20 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c, _d;
+    let viewDirection = event.player.getViewDirection();
+    let direction = yield facing(viewDirection);
+    world.sendMessage(direction);
     if ((_a = event.block.permutation) === null || _a === void 0 ? void 0 : _a.matches("red_concrete")) {
-        cuisenaire(event, "red_concrete", 2, "Placed two blocks");
+        cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction);
     }
     else if ((_b = event.block.permutation) === null || _b === void 0 ? void 0 : _b.matches("green_concrete")) {
-        cuisenaire(event, "green_concrete", 6, "Placed six blocks");
+        cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction);
     }
     else if ((_c = event.block.permutation) === null || _c === void 0 ? void 0 : _c.matches("purple_concrete")) {
-        cuisenaire(event, "purple_concrete", 4, "Placed four blocks");
+        cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction);
     }
     else if ((_d = event.block.permutation) === null || _d === void 0 ? void 0 : _d.matches("blue_concrete")) {
-        cuisenaire(event, "blue_concrete", 3, "Placed three blocks");
+        cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction);
     }
 }));
 world.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
