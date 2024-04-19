@@ -7,6 +7,17 @@ import { cuisenaire } from "./rod";
 import { cycleNumberBlock } from "./output";
 import { grid } from "./grid";
 import { facing } from "./playerFacing";
+import { potion } from "./potion";
+//cuisenaire rods 615 -60 1013
+world.beforeEvents.playerBreakBlock.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    if (((_a = event.itemStack) === null || _a === void 0 ? void 0 : _a.typeId) === "minecraft:stick") {
+        if ((_b = event.block.permutation) === null || _b === void 0 ? void 0 : _b.matches("hopper")) {
+            event.cancel = true;
+            yield potion(event);
+        }
+    }
+}));
 //listens for the button push event.
 world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
     switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
@@ -42,20 +53,19 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
 }));
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c, _d;
+    var _c, _d, _e, _f;
     let viewDirection = event.player.getViewDirection();
     let direction = yield facing(viewDirection);
-    world.sendMessage(direction);
-    if ((_a = event.block.permutation) === null || _a === void 0 ? void 0 : _a.matches("red_concrete")) {
+    if ((_c = event.block.permutation) === null || _c === void 0 ? void 0 : _c.matches("red_concrete")) {
         cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction);
     }
-    else if ((_b = event.block.permutation) === null || _b === void 0 ? void 0 : _b.matches("green_concrete")) {
+    else if ((_d = event.block.permutation) === null || _d === void 0 ? void 0 : _d.matches("green_concrete")) {
         cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction);
     }
-    else if ((_c = event.block.permutation) === null || _c === void 0 ? void 0 : _c.matches("purple_concrete")) {
+    else if ((_e = event.block.permutation) === null || _e === void 0 ? void 0 : _e.matches("purple_concrete")) {
         cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction);
     }
-    else if ((_d = event.block.permutation) === null || _d === void 0 ? void 0 : _d.matches("blue_concrete")) {
+    else if ((_f = event.block.permutation) === null || _f === void 0 ? void 0 : _f.matches("blue_concrete")) {
         cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction);
     }
 }));
@@ -66,11 +76,4 @@ world.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
         cycleNumberBlock(clickEvent);
     }
 });
-//right click
-world.afterEvents.itemUse.subscribe((eventData) => __awaiter(void 0, void 0, void 0, function* () {
-    let player = eventData.source; // Get the player that waved the wand
-    if (eventData.itemStack.typeId === "minecraft:stick") { //tests for the wand.
-        player.sendMessage("Right click"); //sends a message to the player
-    }
-}));
 //# sourceMappingURL=main.js.map
