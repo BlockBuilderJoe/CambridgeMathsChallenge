@@ -9,10 +9,19 @@ import { grid } from "./grid";
 import { facing } from "./playerFacing";
 import { potion } from "./potion";
 //cuisenaire rods 615 -60 1013
-world.beforeEvents.playerBreakBlock.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
+world.afterEvents.itemUseOn.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     if (((_a = event.itemStack) === null || _a === void 0 ? void 0 : _a.typeId) === "minecraft:stick") {
         if ((_b = event.block.permutation) === null || _b === void 0 ? void 0 : _b.matches("hopper")) {
+            yield potion(event);
+        }
+    }
+    null;
+}));
+world.beforeEvents.playerBreakBlock.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
+    var _c, _d;
+    if (((_c = event.itemStack) === null || _c === void 0 ? void 0 : _c.typeId) === "minecraft:stick") {
+        if ((_d = event.block.permutation) === null || _d === void 0 ? void 0 : _d.matches("hopper")) {
             event.cancel = true;
             yield potion(event);
         }
@@ -53,19 +62,19 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
 }));
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _c, _d, _e, _f;
+    var _e, _f, _g, _h;
     let viewDirection = event.player.getViewDirection();
     let direction = yield facing(viewDirection);
-    if ((_c = event.block.permutation) === null || _c === void 0 ? void 0 : _c.matches("red_concrete")) {
+    if ((_e = event.block.permutation) === null || _e === void 0 ? void 0 : _e.matches("red_concrete")) {
         cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction);
     }
-    else if ((_d = event.block.permutation) === null || _d === void 0 ? void 0 : _d.matches("green_concrete")) {
+    else if ((_f = event.block.permutation) === null || _f === void 0 ? void 0 : _f.matches("green_concrete")) {
         cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction);
     }
-    else if ((_e = event.block.permutation) === null || _e === void 0 ? void 0 : _e.matches("purple_concrete")) {
+    else if ((_g = event.block.permutation) === null || _g === void 0 ? void 0 : _g.matches("purple_concrete")) {
         cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction);
     }
-    else if ((_f = event.block.permutation) === null || _f === void 0 ? void 0 : _f.matches("blue_concrete")) {
+    else if ((_h = event.block.permutation) === null || _h === void 0 ? void 0 : _h.matches("blue_concrete")) {
         cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction);
     }
 }));

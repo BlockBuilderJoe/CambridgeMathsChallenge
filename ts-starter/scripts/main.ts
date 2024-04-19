@@ -12,6 +12,14 @@ import { potion } from "./potion";
 
 
 //cuisenaire rods 615 -60 1013
+world.afterEvents.itemUseOn.subscribe(async(event) => {
+  if (event.itemStack?.typeId === "minecraft:stick") {
+    if (event.block.permutation?.matches("hopper")) {
+      await potion(event); 
+    }
+  } null;
+});
+
 world.beforeEvents.playerBreakBlock.subscribe(async (event) => {
   if (event.itemStack?.typeId === "minecraft:stick") {
     if (event.block.permutation?.matches("hopper")) {

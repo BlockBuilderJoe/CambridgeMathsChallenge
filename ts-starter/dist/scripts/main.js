@@ -364,7 +364,6 @@ async function getSlots(event) {
   let slots = [];
   for (let i = 0; i <= 4; i++) {
     let item = hopper?.container?.getItem(i);
-    world9.sendMessage(`Slot ${i} has ${item?.amount} ${item?.typeId}`);
     slots.push({
       slotNumber: i,
       amount: item?.amount,
@@ -374,37 +373,77 @@ async function getSlots(event) {
   ;
   return slots;
 }
+async function calculateRatio2(ingredients) {
+  let wrongIngredients = ingredients.potato + ingredients.beetroot + ingredients.melon;
+  let appleRatio = ingredients.apple + ingredients.potato + ingredients.beetroot + ingredients.melon;
+  let carrotRatio = ingredients.carrot + ingredients.potato + ingredients.beetroot + ingredients.melon;
+  let potatoRatio = ingredients.potato + ingredients.apple + ingredients.beetroot + ingredients.melon;
+  let beetrootRatio = ingredients.beetroot + ingredients.apple + ingredients.carrot + ingredients.melon;
+  let total = ingredients.apple + ingredients.carrot + ingredients.potato + ingredients.beetroot + ingredients.melon;
+  let nightVision = carrotRatio / appleRatio;
+  let waterBreathing = carrotRatio / appleRatio;
+  if (nightVision === 2) {
+    let seconds = Math.ceil((ingredients.apple + ingredients.carrot) * 2);
+    world9.sendMessage(`Potion of Night Vision for ${seconds} seconds`);
+  } else if (wrongIngredients === 0 && potatoRatio + carrotRatio > 0) {
+    let seconds = Math.ceil((potatoRatio + carrotRatio) / 5);
+    world9.sendMessage(`Potion of Darkness for ${seconds} seconds`);
+  } else if (total === 0) {
+    world9.sendMessage(`No potion`);
+  } else {
+    let seconds = Math.ceil((appleRatio + carrotRatio) / 10);
+    world9.sendMessage(`Potion of Poison for ${seconds} seconds`);
+  }
+}
 async function barChart(slots) {
+  let ingredients = {
+    apple: 0,
+    carrot: 0,
+    potato: 0,
+    beetroot: 0,
+    melon: 0
+  };
   for (let slot of slots) {
     switch (slot.typeId) {
       case "minecraft:apple": {
         await setGlass(slot, "red_stained_glass");
         await setItemFrame(0, slot.slotNumber);
+        ingredients.apple = (ingredients.apple || 0) + slot.amount;
         break;
       }
       case "minecraft:carrot": {
         await setGlass(slot, "orange_stained_glass");
         await setItemFrame(1, slot.slotNumber);
+        ingredients.carrot = (ingredients.carrot || 0) + slot.amount;
         break;
       }
       case "minecraft:potato": {
         await setGlass(slot, "yellow_stained_glass");
         await setItemFrame(2, slot.slotNumber);
+        ingredients.potato = (ingredients.potato || 0) + slot.amount;
         break;
       }
       case "minecraft:beetroot": {
         await setGlass(slot, "purple_stained_glass");
         await setItemFrame(3, slot.slotNumber);
+        ingredients.beetroot = (ingredients.beetroot || 0) + slot.amount;
         break;
       }
       case "minecraft:melon": {
         await setGlass(slot, "green_stained_glass");
         await setItemFrame(4, slot.slotNumber);
+        ingredients.melon = (ingredients.melon || 0) + slot.amount;
+        break;
+      }
+      default: {
+        await setItemFrame(5, slot.slotNumber);
         break;
       }
     }
     ;
   }
+  ;
+  calculateRatio2(ingredients);
 }
 async function setGlass(slot, blockName) {
   let { block } = getBlockValue({ x: -52, y: -59, z: 126 });
@@ -428,6 +467,14 @@ async function resetArea2() {
 }
 
 // scripts/main.ts
+world10.afterEvents.itemUseOn.subscribe(async (event) => {
+  if (event.itemStack?.typeId === "minecraft:stick") {
+    if (event.block.permutation?.matches("hopper")) {
+      await potion(event);
+    }
+  }
+  null;
+});
 world10.beforeEvents.playerBreakBlock.subscribe(async (event) => {
   if (event.itemStack?.typeId === "minecraft:stick") {
     if (event.block.permutation?.matches("hopper")) {
