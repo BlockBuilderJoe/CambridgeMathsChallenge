@@ -18,6 +18,12 @@ function getSlots(event) {
     });
 }
 ;
+function givePotion() {
+    return __awaiter(this, void 0, void 0, function* () {
+        world.getDimension("overworld").runCommandAsync(`clear @p minecraft:potion`);
+        world.getDimension("overworld").runCommandAsync(`give @p minecraft:potion 1`);
+    });
+}
 function calculateRatio(ingredients) {
     return __awaiter(this, void 0, void 0, function* () {
         let wrongIngredients = ingredients.potato + ingredients.beetroot + ingredients.melon;
@@ -29,19 +35,19 @@ function calculateRatio(ingredients) {
         let nightVision = carrotRatio / appleRatio;
         let waterBreathing = carrotRatio / appleRatio;
         if (nightVision === 2) {
+            let potion = "night_vision";
             let seconds = Math.ceil((ingredients.apple + ingredients.carrot) * 2);
-            world.sendMessage(`Potion of Night Vision for ${seconds} seconds`);
+            return { potion, seconds };
         }
         else if (wrongIngredients === 0 && (potatoRatio + carrotRatio) > 0) {
             let seconds = Math.ceil((potatoRatio + carrotRatio) / 5);
-            world.sendMessage(`Potion of Darkness for ${seconds} seconds`);
-        }
-        else if (total === 0) {
-            world.sendMessage(`No potion`);
+            let potion = "blindness";
+            return { potion, seconds };
         }
         else {
             let seconds = Math.ceil((appleRatio + carrotRatio) / 10);
-            world.sendMessage(`Potion of Poison for ${seconds} seconds`);
+            let potion = "poison";
+            return { potion, seconds };
         }
     });
 }
@@ -94,7 +100,7 @@ function barChart(slots) {
             ;
         }
         ;
-        calculateRatio(ingredients);
+        return ingredients;
     });
 }
 ;
@@ -119,11 +125,14 @@ function setItemFrame(offset_z, slotNumber) {
     });
 }
 ;
-export function potion(event) {
+export function potionMaker(event) {
     return __awaiter(this, void 0, void 0, function* () {
         yield resetArea();
         let slots = yield getSlots(event);
-        yield barChart(slots);
+        let ingredients = yield barChart(slots);
+        let { potion, seconds } = yield calculateRatio(ingredients);
+        yield givePotion();
+        return { potion, seconds };
     });
 }
 ;

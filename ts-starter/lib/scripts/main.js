@@ -7,17 +7,10 @@ import { cuisenaire } from "./rod";
 import { cycleNumberBlock } from "./output";
 import { grid } from "./grid";
 import { facing } from "./playerFacing";
-import { potion } from "./potion";
+import { potionMaker } from "./potion";
+let potion = "";
+let seconds = 0;
 //cuisenaire rods 615 -60 1013
-world.beforeEvents.playerBreakBlock.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
-    if (((_a = event.itemStack) === null || _a === void 0 ? void 0 : _a.typeId) === "minecraft:stick") {
-        if ((_b = event.block.permutation) === null || _b === void 0 ? void 0 : _b.matches("hopper")) {
-            event.cancel = true;
-            yield potion(event);
-        }
-    }
-}));
 //listens for the button push event.
 world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
     switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
@@ -51,15 +44,39 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
         }
     }
 }));
-//listens for the potion to be drank item use event.
+//listens for the potion to be fully drunk.
 world.afterEvents.itemCompleteUse.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _c;
-    if (((_c = event.itemStack) === null || _c === void 0 ? void 0 : _c.typeId) === "minecraft:potion") {
-        event.source.addEffect("water_breathing", 10);
-        world.sendMessage("MMMMMMMM YuMmY PoTiOnS");
+    var _a;
+    if (((_a = event.itemStack) === null || _a === void 0 ? void 0 : _a.typeId) === "minecraft:potion") {
+        let player = event.source;
+        let tick = seconds * 20; //converts seconds to ticks
+        switch (potion) {
+            case "water_breathing": {
+                player.addEffect("water_breathing", tick);
+                break;
+            }
+            case "night_vision": {
+                player.addEffect("night_vision", tick);
+                break;
+            }
+            case "blindness": {
+                player.addEffect("blindness", tick);
+                break;
+            }
+            case "poison": {
+                event.source.addEffect("poison", tick);
+                break;
+            }
+            case "fire_resistance": {
+                event.source.removeEffect("fire_resistance");
+                break;
+            }
+        }
+        world.sendMessage("The potion is: " + potion + " and the seconds are: " + seconds);
         event.source.runCommand("clear @p minecraft:glass_bottle");
     }
 }));
+//listens for the entity health changed event so they don't drown.
 world.afterEvents.entityHealthChanged.subscribe((event) => {
     if (event.entity.typeId === "minecraft:player") {
         let player = event.entity;
@@ -71,19 +88,19 @@ world.afterEvents.entityHealthChanged.subscribe((event) => {
 });
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _d, _e, _f, _g;
+    var _b, _c, _d, _e;
     let viewDirection = event.player.getViewDirection();
     let direction = yield facing(viewDirection);
-    if ((_d = event.block.permutation) === null || _d === void 0 ? void 0 : _d.matches("red_concrete")) {
+    if ((_b = event.block.permutation) === null || _b === void 0 ? void 0 : _b.matches("red_concrete")) {
         cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction);
     }
-    else if ((_e = event.block.permutation) === null || _e === void 0 ? void 0 : _e.matches("green_concrete")) {
+    else if ((_c = event.block.permutation) === null || _c === void 0 ? void 0 : _c.matches("green_concrete")) {
         cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction);
     }
-    else if ((_f = event.block.permutation) === null || _f === void 0 ? void 0 : _f.matches("purple_concrete")) {
+    else if ((_d = event.block.permutation) === null || _d === void 0 ? void 0 : _d.matches("purple_concrete")) {
         cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction);
     }
-    else if ((_g = event.block.permutation) === null || _g === void 0 ? void 0 : _g.matches("blue_concrete")) {
+    else if ((_e = event.block.permutation) === null || _e === void 0 ? void 0 : _e.matches("blue_concrete")) {
         cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction);
     }
 }));
@@ -94,4 +111,13 @@ world.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
         cycleNumberBlock(clickEvent);
     }
 });
+world.beforeEvents.itemUseOn.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
+    var _f, _g;
+    if (((_f = event.itemStack) === null || _f === void 0 ? void 0 : _f.typeId) === "minecraft:stick") {
+        if ((_g = event.block.permutation) === null || _g === void 0 ? void 0 : _g.matches("hopper")) {
+            event.cancel = true;
+            ({ potion, seconds } = yield potionMaker(event));
+        }
+    }
+}));
 //# sourceMappingURL=main.js.map

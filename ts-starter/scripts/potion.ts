@@ -15,7 +15,10 @@ async function getSlots(event: any) {
     };
     return slots;
 };
-
+async function givePotion() {
+    world.getDimension("overworld").runCommandAsync(`clear @p minecraft:potion`);
+    world.getDimension("overworld").runCommandAsync(`give @p minecraft:potion 1`);
+}
 async function calculateRatio(ingredients: any) {
     let wrongIngredients = ingredients.potato + ingredients.beetroot + ingredients.melon;
     let appleRatio = ingredients.apple +  ingredients.potato + ingredients.beetroot + ingredients.melon;
@@ -23,23 +26,22 @@ async function calculateRatio(ingredients: any) {
     let potatoRatio = ingredients.potato + ingredients.apple + ingredients.beetroot + ingredients.melon;
     let beetrootRatio = ingredients.beetroot + ingredients.apple + ingredients.carrot + ingredients.melon;
     let total = ingredients.apple + ingredients.carrot + ingredients.potato + ingredients.beetroot + ingredients.melon;
-    
     let nightVision = carrotRatio / appleRatio;
     let waterBreathing = carrotRatio / appleRatio;
     if (nightVision === 2) {
+        let potion = "night_vision";
         let seconds = Math.ceil((ingredients.apple + ingredients.carrot) * 2);
-        world.sendMessage(`Potion of Night Vision for ${seconds} seconds`);
+        return { potion, seconds };
     }
     else if (wrongIngredients === 0 && (potatoRatio + carrotRatio) > 0) {
         let seconds = Math.ceil((potatoRatio + carrotRatio) / 5);
-        world.sendMessage(`Potion of Darkness for ${seconds} seconds`);
-    }
-    else if (total === 0) {
-        world.sendMessage(`No potion`);
+        let potion = "blindness";
+        return { potion, seconds };
     }
     else {
         let seconds = Math.ceil((appleRatio + carrotRatio) / 10);
-        world.sendMessage(`Potion of Poison for ${seconds} seconds`);      
+        let potion = "poison"
+        return { potion, seconds };     
     }
 }
 
@@ -90,7 +92,7 @@ async function barChart(slots: any) {
             }
         };
     };
-    calculateRatio(ingredients);
+    return ingredients;
 };
 async function setGlass(slot: any, blockName: string) {
     let {block} = getBlockValue({x: -52, y: 61, z: 126});
@@ -106,10 +108,13 @@ async function setItemFrame(offset_z: number, slotNumber: number) {
     world.getDimension("overworld").runCommandAsync(`clone -40 60 ${cloneFrom} -40 60 ${cloneFrom} -50 60 ${cloneTo} replace`);
 };
 
-export async function potion(event: any) {
+export async function potionMaker(event: any) {
     await resetArea();
     let slots = await getSlots(event);
-    await barChart(slots);
+    let ingredients = await barChart(slots);
+    let { potion, seconds}  = await calculateRatio(ingredients);
+    await givePotion();
+    return { potion, seconds};
 };
 
 async function resetArea(){

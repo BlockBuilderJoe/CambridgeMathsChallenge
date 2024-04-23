@@ -373,6 +373,10 @@ async function getSlots(event) {
   ;
   return slots;
 }
+async function givePotion() {
+  world9.getDimension("overworld").runCommandAsync(`clear @p minecraft:potion`);
+  world9.getDimension("overworld").runCommandAsync(`give @p minecraft:potion 1`);
+}
 async function calculateRatio2(ingredients) {
   let wrongIngredients = ingredients.potato + ingredients.beetroot + ingredients.melon;
   let appleRatio = ingredients.apple + ingredients.potato + ingredients.beetroot + ingredients.melon;
@@ -383,16 +387,17 @@ async function calculateRatio2(ingredients) {
   let nightVision = carrotRatio / appleRatio;
   let waterBreathing = carrotRatio / appleRatio;
   if (nightVision === 2) {
-    let seconds = Math.ceil((ingredients.apple + ingredients.carrot) * 2);
-    world9.sendMessage(`Potion of Night Vision for ${seconds} seconds`);
+    let potion2 = "night_vision";
+    let seconds2 = Math.ceil((ingredients.apple + ingredients.carrot) * 2);
+    return { potion: potion2, seconds: seconds2 };
   } else if (wrongIngredients === 0 && potatoRatio + carrotRatio > 0) {
-    let seconds = Math.ceil((potatoRatio + carrotRatio) / 5);
-    world9.sendMessage(`Potion of Darkness for ${seconds} seconds`);
-  } else if (total === 0) {
-    world9.sendMessage(`No potion`);
+    let seconds2 = Math.ceil((potatoRatio + carrotRatio) / 5);
+    let potion2 = "blindness";
+    return { potion: potion2, seconds: seconds2 };
   } else {
-    let seconds = Math.ceil((appleRatio + carrotRatio) / 10);
-    world9.sendMessage(`Potion of Poison for ${seconds} seconds`);
+    let seconds2 = Math.ceil((appleRatio + carrotRatio) / 10);
+    let potion2 = "poison";
+    return { potion: potion2, seconds: seconds2 };
   }
 }
 async function barChart(slots) {
@@ -443,7 +448,7 @@ async function barChart(slots) {
     ;
   }
   ;
-  calculateRatio2(ingredients);
+  return ingredients;
 }
 async function setGlass(slot, blockName) {
   let { block } = getBlockValue({ x: -52, y: 61, z: 126 });
@@ -460,24 +465,21 @@ async function setItemFrame(offset_z, slotNumber) {
   let cloneTo = 126 - slotNumber;
   world9.getDimension("overworld").runCommandAsync(`clone -40 60 ${cloneFrom} -40 60 ${cloneFrom} -50 60 ${cloneTo} replace`);
 }
-async function potion(event) {
+async function potionMaker(event) {
   await resetArea2();
   let slots = await getSlots(event);
-  await barChart(slots);
+  let ingredients = await barChart(slots);
+  let { potion: potion2, seconds: seconds2 } = await calculateRatio2(ingredients);
+  await givePotion();
+  return { potion: potion2, seconds: seconds2 };
 }
 async function resetArea2() {
   await world9.getDimension("overworld").runCommandAsync("fill -52 60 126 -52 69 122 black_stained_glass replace");
 }
 
 // scripts/main.ts
-world10.beforeEvents.playerBreakBlock.subscribe(async (event) => {
-  if (event.itemStack?.typeId === "minecraft:stick") {
-    if (event.block.permutation?.matches("hopper")) {
-      event.cancel = true;
-      await potion(event);
-    }
-  }
-});
+var potion = "";
+var seconds = 0;
 world10.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
     case "-11,-60,94": {
@@ -512,8 +514,31 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
 });
 world10.afterEvents.itemCompleteUse.subscribe(async (event) => {
   if (event.itemStack?.typeId === "minecraft:potion") {
-    event.source.addEffect("water_breathing", 10);
-    world10.sendMessage("MMMMMMMM YuMmY PoTiOnS");
+    let player = event.source;
+    let tick = seconds * 20;
+    switch (potion) {
+      case "water_breathing": {
+        player.addEffect("water_breathing", tick);
+        break;
+      }
+      case "night_vision": {
+        player.addEffect("night_vision", tick);
+        break;
+      }
+      case "blindness": {
+        player.addEffect("blindness", tick);
+        break;
+      }
+      case "poison": {
+        event.source.addEffect("poison", tick);
+        break;
+      }
+      case "fire_resistance": {
+        event.source.removeEffect("fire_resistance");
+        break;
+      }
+    }
+    world10.sendMessage("The potion is: " + potion + " and the seconds are: " + seconds);
     event.source.runCommand("clear @p minecraft:glass_bottle");
   }
 });
@@ -543,6 +568,14 @@ world10.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId;
   if (hand_item === "minecraft:stick") {
     cycleNumberBlock(clickEvent);
+  }
+});
+world10.beforeEvents.itemUseOn.subscribe(async (event) => {
+  if (event.itemStack?.typeId === "minecraft:stick") {
+    if (event.block.permutation?.matches("hopper")) {
+      event.cancel = true;
+      ({ potion, seconds } = await potionMaker(event));
+    }
   }
 });
 

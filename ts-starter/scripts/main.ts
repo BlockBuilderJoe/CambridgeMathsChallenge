@@ -7,21 +7,17 @@ import { cuisenaire } from "./rod";
 import { cycleNumberBlock } from "./output";
 import { grid } from "./grid";
 import { facing } from "./playerFacing";
-import { potion } from "./potion";
+import { potionMaker } from "./potion";
 
 
+
+let potion: string = "";
+let seconds: number = 0;
 
 //cuisenaire rods 615 -60 1013
 
 
-world.beforeEvents.playerBreakBlock.subscribe(async (event) => {
-  if (event.itemStack?.typeId === "minecraft:stick") {
-    if (event.block.permutation?.matches("hopper")) {
-      event.cancel = true;
-      await potion(event); 
-    }
-  }
-});
+
 
 
 //listens for the button push event.
@@ -58,16 +54,40 @@ world.afterEvents.buttonPush.subscribe(async(event) => {
 }
 });
 
-//listens for the potion to be drank item use event.
+//listens for the potion to be fully drunk.
 world.afterEvents.itemCompleteUse.subscribe(async(event) => {
   if (event.itemStack?.typeId === "minecraft:potion") {
-    event.source.addEffect("water_breathing", 10);
-    world.sendMessage("MMMMMMMM YuMmY PoTiOnS");
+    let player = event.source;
+    let tick = seconds * 20; //converts seconds to ticks
+    switch (potion) {
+      case "water_breathing": {
+        player.addEffect("water_breathing", tick);
+        break;
+      }
+      case "night_vision": {
+        player.addEffect("night_vision", tick);
+        break;
+      }
+      case "blindness": {
+        player.addEffect("blindness", tick);
+        break;
+      }
+      case "poison": {
+        event.source.addEffect("poison", tick);
+        break;
+      }
+      case "fire_resistance": {
+        event.source.removeEffect("fire_resistance");
+        break;
+      }
+    }
+    world.sendMessage("The potion is: " + potion + " and the seconds are: " + seconds);
     event.source.runCommand("clear @p minecraft:glass_bottle");
 
   }
 });
 
+//listens for the entity health changed event so they don't drown.
 world.afterEvents.entityHealthChanged.subscribe((event) => {
   if (event.entity.typeId === "minecraft:player") {
     let player = event.entity;    
@@ -96,9 +116,6 @@ world.afterEvents.playerPlaceBlock.subscribe(async(event) => {
   }
   });
 
-  
-
-
 world.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId; //gets the item in the players hand
   if (hand_item === "minecraft:stick") {
@@ -106,7 +123,14 @@ world.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
   }
 });
 
-
+world.beforeEvents.itemUseOn.subscribe(async (event) => {
+  if (event.itemStack?.typeId === "minecraft:stick") {
+    if (event.block.permutation?.matches("hopper")) {
+      event.cancel = true;
+      ({ potion, seconds } = await potionMaker(event)); 
+    }
+  }
+});
 
 
 
