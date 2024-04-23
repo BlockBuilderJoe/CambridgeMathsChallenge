@@ -103,6 +103,9 @@ function setGlass(slot, blockName) {
         var _a, _b, _c;
         let { block } = getBlockValue({ x: -52, y: -59, z: 126 });
         (_a = block === null || block === void 0 ? void 0 : block.north(slot.slotNumber)) === null || _a === void 0 ? void 0 : _a.setPermutation(BlockPermutation.resolve(blockName));
+        if (slot.amount > 9) {
+            slot.amount = 9;
+        }
         for (let i = 0; i < slot.amount; i++) {
             (_c = (_b = block === null || block === void 0 ? void 0 : block.above(i)) === null || _b === void 0 ? void 0 : _b.north(slot.slotNumber)) === null || _c === void 0 ? void 0 : _c.setPermutation(BlockPermutation.resolve(blockName));
         }

@@ -95,6 +95,7 @@ async function barChart(slots: any) {
 async function setGlass(slot: any, blockName: string) {
     let {block} = getBlockValue({x: -52, y: -59, z: 126});
     block?.north(slot.slotNumber)?.setPermutation(BlockPermutation.resolve(blockName));
+    if (slot.amount > 9) { slot.amount = 9; }
     for (let i = 0; i < slot.amount; i++) {
         block?.above(i)?.north(slot.slotNumber)?.setPermutation(BlockPermutation.resolve(blockName));
     }
