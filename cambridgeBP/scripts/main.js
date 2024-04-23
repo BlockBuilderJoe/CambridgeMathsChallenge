@@ -448,6 +448,9 @@ async function barChart(slots) {
 async function setGlass(slot, blockName) {
   let { block } = getBlockValue({ x: -52, y: -59, z: 126 });
   block?.north(slot.slotNumber)?.setPermutation(BlockPermutation5.resolve(blockName));
+  if (slot.amount > 9) {
+    slot.amount = 9;
+  }
   for (let i = 0; i < slot.amount; i++) {
     block?.above(i)?.north(slot.slotNumber)?.setPermutation(BlockPermutation5.resolve(blockName));
   }
@@ -467,14 +470,6 @@ async function resetArea2() {
 }
 
 // scripts/main.ts
-world10.afterEvents.itemUseOn.subscribe(async (event) => {
-  if (event.itemStack?.typeId === "minecraft:stick") {
-    if (event.block.permutation?.matches("hopper")) {
-      await potion(event);
-    }
-  }
-  null;
-});
 world10.beforeEvents.playerBreakBlock.subscribe(async (event) => {
   if (event.itemStack?.typeId === "minecraft:stick") {
     if (event.block.permutation?.matches("hopper")) {
@@ -512,6 +507,14 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
     case "608,-59,1007": {
       await grid({ x: 608, y: -61, z: 995 });
       break;
+    }
+  }
+});
+world10.afterEvents.entityHealthChanged.subscribe((event) => {
+  if (event.entity.typeId === "minecraft:player") {
+    if (event.entity.isInWater == true) {
+      event.entity.addEffect("instant_health", 1);
+      event.entity.teleport({ x: -50, y: 60, z: 132 });
     }
   }
 });

@@ -12,13 +12,7 @@ import { potion } from "./potion";
 
 
 //cuisenaire rods 615 -60 1013
-world.afterEvents.itemUseOn.subscribe(async(event) => {
-  if (event.itemStack?.typeId === "minecraft:stick") {
-    if (event.block.permutation?.matches("hopper")) {
-      await potion(event); 
-    }
-  } null;
-});
+
 
 world.beforeEvents.playerBreakBlock.subscribe(async (event) => {
   if (event.itemStack?.typeId === "minecraft:stick") {
@@ -64,6 +58,14 @@ world.afterEvents.buttonPush.subscribe(async(event) => {
 }
 });
 
+world.afterEvents.entityHealthChanged.subscribe((event) => {
+  if (event.entity.typeId === "minecraft:player") {
+    if (event.entity.isInWater == true) {
+      event.entity.addEffect("instant_health", 1)
+      event.entity.teleport({x: -50, y: 60, z: 132});
+    }
+  }
+});
 
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe(async(event) => {
@@ -82,6 +84,8 @@ world.afterEvents.playerPlaceBlock.subscribe(async(event) => {
     cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction);
   }
   });
+
+  
 
 
 world.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
