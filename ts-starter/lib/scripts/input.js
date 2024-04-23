@@ -2,7 +2,7 @@ import { BlockPermutation, world } from "@minecraft/server";
 let overworld = world.getDimension("overworld");
 //combines multiple digits into a single number
 export function getInput(digits) {
-    let combinedString = '';
+    let combinedString = "";
     for (let digit of digits) {
         let digitValue = getNumberValue(digit);
         combinedString += digitValue;
@@ -32,7 +32,8 @@ export function getCube(pos1, pos2) {
 //converts a block to a number value
 function getNumberValue(location) {
     let { block, permutation } = getBlockValue(location);
-    for (let i = 0; i < 10; i++) { //check for element_0 to element_9
+    for (let i = 0; i < 10; i++) {
+        //check for element_0 to element_9
         if (permutation === null || permutation === void 0 ? void 0 : permutation.matches("blockbuilders:number_" + i)) {
             return i;
         }

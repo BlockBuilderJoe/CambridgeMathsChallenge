@@ -1,4 +1,4 @@
-import { BlockPermutation, BlockInventoryComponent, ItemStack, world, system} from "@minecraft/server";
+import { BlockPermutation, BlockInventoryComponent, ItemStack, world, system, BlockComponent } from "@minecraft/server";
 import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
@@ -9,19 +9,13 @@ import { grid } from "./grid";
 import { facing } from "./playerFacing";
 import { potionMaker } from "./potion";
 
-
-
 let potion: string = "";
 let seconds: number = 0;
 
 //cuisenaire rods 615 -60 1013
 
-
-
-
-
 //listens for the button push event.
-world.afterEvents.buttonPush.subscribe(async(event) => {
+world.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
     case "-11,-60,94": {
       calculate();
@@ -48,14 +42,14 @@ world.afterEvents.buttonPush.subscribe(async(event) => {
       break;
     }
     case "608,-59,1007": {
-      await grid({x: 608, y: -61, z: 995});
+      await grid({ x: 608, y: -61, z: 995 });
       break;
+    }
   }
-}
 });
 
 //listens for the potion to be fully drunk.
-world.afterEvents.itemCompleteUse.subscribe(async(event) => {
+world.afterEvents.itemCompleteUse.subscribe(async (event) => {
   if (event.itemStack?.typeId === "minecraft:potion") {
     let player = event.source;
     let tick = seconds * 20; //converts seconds to ticks
@@ -76,45 +70,37 @@ world.afterEvents.itemCompleteUse.subscribe(async(event) => {
         event.source.addEffect("poison", tick);
         break;
       }
-      case "fire_resistance": {
-        event.source.removeEffect("fire_resistance");
-        break;
-      }
     }
     world.sendMessage("The potion is: " + potion + " and the seconds are: " + seconds);
     event.source.runCommand("clear @p minecraft:glass_bottle");
-
   }
 });
 
 //listens for the entity health changed event so they don't drown.
 world.afterEvents.entityHealthChanged.subscribe((event) => {
   if (event.entity.typeId === "minecraft:player") {
-    let player = event.entity;    
+    let player = event.entity;
     if (player.isInWater == true) {
-      player.addEffect("instant_health", 1)
-      player.teleport({x: -50, y: 60, z: 132});
+      player.addEffect("instant_health", 1);
+      player.teleport({ x: -50, y: 60, z: 132 });
     }
   }
 });
 
 //listens for the block place event.
-world.afterEvents.playerPlaceBlock.subscribe(async(event) => {
+world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let viewDirection = event.player.getViewDirection();
   let direction = await facing(viewDirection);
   if (event.block.permutation?.matches("red_concrete")) {
     cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction);
-  }
-  else if (event.block.permutation?.matches("green_concrete")) {
+  } else if (event.block.permutation?.matches("green_concrete")) {
     cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction);
-  }
-  else if (event.block.permutation?.matches("purple_concrete")) {
+  } else if (event.block.permutation?.matches("purple_concrete")) {
     cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction);
-  }
-  else if (event.block.permutation?.matches("blue_concrete")) {
+  } else if (event.block.permutation?.matches("blue_concrete")) {
     cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction);
   }
-  });
+});
 
 world.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId; //gets the item in the players hand
@@ -125,14 +111,10 @@ world.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
 
 world.beforeEvents.itemUseOn.subscribe(async (event) => {
   if (event.itemStack?.typeId === "minecraft:stick") {
-    if (event.block.permutation?.matches("hopper")) {
+    let block = event.block;
+    if (block.permutation?.matches("hopper")) {
       event.cancel = true;
-      ({ potion, seconds } = await potionMaker(event)); 
+      ({ potion, seconds } = await potionMaker(event));
     }
   }
 });
-
-
-
-
-

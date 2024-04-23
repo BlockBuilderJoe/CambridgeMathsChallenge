@@ -129,8 +129,16 @@ function calculateTotal(leftvalue, rightvalue) {
 }
 async function calculate() {
   await clearAnswer({ x: -14, y: -57, z: 93 }, { x: -8, y: -57, z: 93 });
-  let leftInput = getInput([{ x: -14, y: -59, z: 93 }, { x: -13, y: -59, z: 93 }, { x: -12, y: -59, z: 93 }]);
-  let rightInput = getInput([{ x: -10, y: -59, z: 93 }, { x: -9, y: -59, z: 93 }, { x: -8, y: -59, z: 93 }]);
+  let leftInput = getInput([
+    { x: -14, y: -59, z: 93 },
+    { x: -13, y: -59, z: 93 },
+    { x: -12, y: -59, z: 93 }
+  ]);
+  let rightInput = getInput([
+    { x: -10, y: -59, z: 93 },
+    { x: -9, y: -59, z: 93 },
+    { x: -8, y: -59, z: 93 }
+  ]);
   let total = calculateTotal(leftInput, rightInput);
   if (total !== null && total !== void 0) {
     let roundedTotal = roundToDigits(total, 6);
@@ -154,7 +162,11 @@ async function fraction1() {
   await clearAnswer(outputRight, outputLeft);
   let numerator = getInput([{ x: -28, y: -57, z: 93 }]);
   let denominator = getInput([{ x: -28, y: -59, z: 93 }]);
-  let input = getInput([{ x: -26, y: -57, z: 93 }, { x: -25, y: -57, z: 93 }, { x: -24, y: -57, z: 93 }]);
+  let input = getInput([
+    { x: -26, y: -57, z: 93 },
+    { x: -25, y: -57, z: 93 },
+    { x: -24, y: -57, z: 93 }
+  ]);
   world4.sendMessage("The fraction is:");
   world4.sendMessage(numerator + "/" + denominator + " of " + input);
   let fraction = calculateFraction(numerator, denominator);
@@ -181,7 +193,17 @@ async function ratio1() {
   let output1 = { x: -42, y: -59, z: 93 };
   let output2 = { x: -40, y: -59, z: 93 };
   world5.sendMessage("Calculating the ratio of pink to yellow blocks.");
-  let ratioInput = [{ x: -37, y: -58, z: 93 }, { x: -39, y: -60, z: 93 }, { x: -38, y: -60, z: 93 }, { x: -37, y: -60, z: 93 }, { x: -36, y: -60, z: 93 }, { x: -35, y: -60, z: 93 }, { x: -38, y: -59, z: 93 }, { x: -37, y: -59, z: 93 }, { x: -36, y: -59, z: 93 }];
+  let ratioInput = [
+    { x: -37, y: -58, z: 93 },
+    { x: -39, y: -60, z: 93 },
+    { x: -38, y: -60, z: 93 },
+    { x: -37, y: -60, z: 93 },
+    { x: -36, y: -60, z: 93 },
+    { x: -35, y: -60, z: 93 },
+    { x: -38, y: -59, z: 93 },
+    { x: -37, y: -59, z: 93 },
+    { x: -36, y: -59, z: 93 }
+  ];
   let { pink, yellow } = calculateRatio(ratioInput);
   world5.sendMessage("The ratio is:");
   world5.sendMessage(pink + ":" + yellow);
@@ -205,7 +227,24 @@ function calculateRatio(ratioInput) {
 // scripts/scaler.ts
 import { world as world6 } from "@minecraft/server";
 var overworld3 = world6.getDimension("overworld");
-var glass = ["magenta", "orange", "light_blue", "yellow", "lime", "pink", "gray", "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black", "white"];
+var glass = [
+  "magenta",
+  "orange",
+  "light_blue",
+  "yellow",
+  "lime",
+  "pink",
+  "gray",
+  "light_gray",
+  "cyan",
+  "purple",
+  "blue",
+  "brown",
+  "green",
+  "red",
+  "black",
+  "white"
+];
 async function scale() {
   const blocks = await getCube({ x: 13, y: -60, z: 142 }, { x: 13, y: -51, z: 148 });
   let shape = [];
@@ -235,11 +274,14 @@ async function resetArea() {
 }
 async function scaleShape(shape, scaleFactor, axes) {
   const scaledShape = [];
-  const basePoint = shape.reduce((min, block) => ({
-    x: Math.min(min.x, block.x),
-    y: Math.min(min.y, block.y),
-    z: Math.min(min.z, block.z)
-  }), shape[0]);
+  const basePoint = shape.reduce(
+    (min, block) => ({
+      x: Math.min(min.x, block.x),
+      y: Math.min(min.y, block.y),
+      z: Math.min(min.z, block.z)
+    }),
+    shape[0]
+  );
   for (const block of shape) {
     const relativePos = {
       x: block.x - basePoint.x,
@@ -330,10 +372,18 @@ function extendRods(event, blockName, rodLength, direction) {
 import { world as world8 } from "@minecraft/server";
 var overworld5 = world8.getDimension("overworld");
 async function square(location) {
-  overworld5.runCommandAsync("fill " + location.x + " " + location.y + " " + location.z + " " + (location.x + 11) + " " + location.y + " " + (location.z + 11) + " sandstone");
-  overworld5.runCommandAsync("fill " + (location.x + 1) + " " + location.y + " " + (location.z + 1) + " " + (location.x + 10) + " " + location.y + " " + (location.z + 10) + " grass replace");
-  overworld5.runCommandAsync("fill " + (location.x + 1) + " " + (location.y + 1) + " " + (location.z + 1) + " " + (location.x + 10) + " " + (location.y + 1) + " " + (location.z + 10) + " tallgrass replace");
-  overworld5.runCommandAsync("fill " + (location.x + 1) + " " + (location.y + 2) + " " + (location.z + 1) + " " + (location.x + 10) + " " + (location.y + 2) + " " + (location.z + 10) + " air replace");
+  overworld5.runCommandAsync(
+    "fill " + location.x + " " + location.y + " " + location.z + " " + (location.x + 11) + " " + location.y + " " + (location.z + 11) + " sandstone"
+  );
+  overworld5.runCommandAsync(
+    "fill " + (location.x + 1) + " " + location.y + " " + (location.z + 1) + " " + (location.x + 10) + " " + location.y + " " + (location.z + 10) + " grass replace"
+  );
+  overworld5.runCommandAsync(
+    "fill " + (location.x + 1) + " " + (location.y + 1) + " " + (location.z + 1) + " " + (location.x + 10) + " " + (location.y + 1) + " " + (location.z + 10) + " tallgrass replace"
+  );
+  overworld5.runCommandAsync(
+    "fill " + (location.x + 1) + " " + (location.y + 2) + " " + (location.z + 1) + " " + (location.x + 10) + " " + (location.y + 2) + " " + (location.z + 10) + " air replace"
+  );
 }
 async function grid(location) {
   for (let i = 0; i < 5; i++) {
@@ -370,7 +420,6 @@ async function getSlots(event) {
       typeId: item?.typeId
     });
   }
-  ;
   return slots;
 }
 async function givePotion() {
@@ -378,21 +427,30 @@ async function givePotion() {
   world9.getDimension("overworld").runCommandAsync(`give @p minecraft:potion 1`);
 }
 async function calculateRatio2(ingredients) {
-  let wrongIngredients = ingredients.potato + ingredients.beetroot + ingredients.melon;
+  let wrongIngredientsSight = ingredients.potato + ingredients.beetroot + ingredients.melon;
+  let wrongIngredientsDive = ingredients.apple + ingredients.carrot;
   let appleRatio = ingredients.apple + ingredients.potato + ingredients.beetroot + ingredients.melon;
   let carrotRatio = ingredients.carrot + ingredients.potato + ingredients.beetroot + ingredients.melon;
-  let potatoRatio = ingredients.potato + ingredients.apple + ingredients.beetroot + ingredients.melon;
+  let potatoRatio = ingredients.potato + ingredients.apple + ingredients.carrot;
   let beetrootRatio = ingredients.beetroot + ingredients.apple + ingredients.carrot + ingredients.melon;
+  let melonRatio = ingredients.melon + ingredients.apple + ingredients.carrot + ingredients.potato;
   let total = ingredients.apple + ingredients.carrot + ingredients.potato + ingredients.beetroot + ingredients.melon;
   let nightVision = carrotRatio / appleRatio;
-  let waterBreathing = carrotRatio / appleRatio;
   if (nightVision === 2) {
     let potion2 = "night_vision";
     let seconds2 = Math.ceil((ingredients.apple + ingredients.carrot) * 2);
     return { potion: potion2, seconds: seconds2 };
-  } else if (wrongIngredients === 0 && potatoRatio + carrotRatio > 0) {
+  } else if (wrongIngredientsSight === 0 && potatoRatio + carrotRatio > 0) {
     let seconds2 = Math.ceil((potatoRatio + carrotRatio) / 5);
     let potion2 = "blindness";
+    return { potion: potion2, seconds: seconds2 };
+  } else if (wrongIngredientsDive === 0 && beetrootRatio + melonRatio + potatoRatio > 0) {
+    let seconds2 = Math.ceil((beetrootRatio + melonRatio + potatoRatio) / 5);
+    let potion2 = "water_breathing";
+    return { potion: potion2, seconds: seconds2 };
+  } else if (total === 0) {
+    let seconds2 = 0;
+    let potion2 = "empty";
     return { potion: potion2, seconds: seconds2 };
   } else {
     let seconds2 = Math.ceil((appleRatio + carrotRatio) / 10);
@@ -434,7 +492,7 @@ async function barChart(slots) {
         ingredients.beetroot = (ingredients.beetroot || 0) + slot.amount;
         break;
       }
-      case "minecraft:melon": {
+      case "minecraft:melon_slice": {
         await setGlass(slot, "green_stained_glass");
         await setItemFrame(4, slot.slotNumber);
         ingredients.melon = (ingredients.melon || 0) + slot.amount;
@@ -445,9 +503,7 @@ async function barChart(slots) {
         break;
       }
     }
-    ;
   }
-  ;
   return ingredients;
 }
 async function setGlass(slot, blockName) {
@@ -470,7 +526,9 @@ async function potionMaker(event) {
   let slots = await getSlots(event);
   let ingredients = await barChart(slots);
   let { potion: potion2, seconds: seconds2 } = await calculateRatio2(ingredients);
-  await givePotion();
+  if (potion2 !== "empty") {
+    await givePotion();
+  }
   return { potion: potion2, seconds: seconds2 };
 }
 async function resetArea2() {
@@ -533,10 +591,6 @@ world10.afterEvents.itemCompleteUse.subscribe(async (event) => {
         event.source.addEffect("poison", tick);
         break;
       }
-      case "fire_resistance": {
-        event.source.removeEffect("fire_resistance");
-        break;
-      }
     }
     world10.sendMessage("The potion is: " + potion + " and the seconds are: " + seconds);
     event.source.runCommand("clear @p minecraft:glass_bottle");
@@ -572,7 +626,8 @@ world10.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
 });
 world10.beforeEvents.itemUseOn.subscribe(async (event) => {
   if (event.itemStack?.typeId === "minecraft:stick") {
-    if (event.block.permutation?.matches("hopper")) {
+    let block = event.block;
+    if (block.permutation?.matches("hopper")) {
       event.cancel = true;
       ({ potion, seconds } = await potionMaker(event));
     }

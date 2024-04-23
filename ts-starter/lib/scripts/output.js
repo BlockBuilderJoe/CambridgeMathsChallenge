@@ -4,10 +4,10 @@ const overworld = world.getDimension("overworld");
 //outputs the total to the screen
 export function outputTotal(total, location) {
     let blockName = "";
-    let totalString = ('' + total).split('').reverse().join(''); //reverses the string so it can be read from right to left
+    let totalString = ("" + total).split("").reverse().join(""); //reverses the string so it can be read from right to left
     for (let i = 0; i < totalString.length; i++) {
         let { block, permutation } = getBlockValue(location);
-        if (totalString[i] === '.') {
+        if (totalString[i] === ".") {
             blockName = "blockbuilders:symbol_decimalpoint";
         }
         else {
@@ -29,7 +29,8 @@ export function clearAnswer(start, end) {
 }
 export function cycleNumberBlock(clickEvent) {
     var _a, _b;
-    for (let i = 0; i < 9; i++) { //check for element_0 toplement_8
+    for (let i = 0; i < 9; i++) {
+        //check for element_0 toplement_8
         if ((_a = clickEvent.brokenBlockPermutation) === null || _a === void 0 ? void 0 : _a.matches("blockbuilders:number_" + i)) {
             let nextNumber = i + 1;
             let blockname = "blockbuilders:number_" + nextNumber;

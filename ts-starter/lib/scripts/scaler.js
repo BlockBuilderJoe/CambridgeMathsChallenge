@@ -3,7 +3,24 @@ import { getCube } from "./input";
 import { setBlock } from "./output";
 import { getInput } from "./input";
 let overworld = world.getDimension("overworld");
-let glass = ["magenta", "orange", "light_blue", "yellow", "lime", "pink", "gray", "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black", "white"];
+let glass = [
+    "magenta",
+    "orange",
+    "light_blue",
+    "yellow",
+    "lime",
+    "pink",
+    "gray",
+    "light_gray",
+    "cyan",
+    "purple",
+    "blue",
+    "brown",
+    "green",
+    "red",
+    "black",
+    "white",
+];
 export function scale() {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b, _c, _d;
@@ -53,14 +70,14 @@ export function scaleShape(shape, scaleFactor, axes) {
                 z: block.z - basePoint.z,
             };
             // Scale the relative position
-            for (let i = axes.includes('x') ? 0 : scaleFactor - 1; i < scaleFactor; i++) {
-                for (let j = axes.includes('y') ? 0 : scaleFactor - 1; j < scaleFactor; j++) {
-                    for (let k = axes.includes('z') ? 0 : scaleFactor - 1; k < scaleFactor; k++) {
+            for (let i = axes.includes("x") ? 0 : scaleFactor - 1; i < scaleFactor; i++) {
+                for (let j = axes.includes("y") ? 0 : scaleFactor - 1; j < scaleFactor; j++) {
+                    for (let k = axes.includes("z") ? 0 : scaleFactor - 1; k < scaleFactor; k++) {
                         // Add the scaled relative position to the base point
                         const scaledBlock = {
-                            x: basePoint.x + (axes.includes('x') ? relativePos.x * scaleFactor + i : relativePos.x),
-                            y: basePoint.y + (axes.includes('y') ? relativePos.y * scaleFactor + j : relativePos.y),
-                            z: basePoint.z + (axes.includes('z') ? relativePos.z * scaleFactor + k : relativePos.z),
+                            x: basePoint.x + (axes.includes("x") ? relativePos.x * scaleFactor + i : relativePos.x),
+                            y: basePoint.y + (axes.includes("y") ? relativePos.y * scaleFactor + j : relativePos.y),
+                            z: basePoint.z + (axes.includes("z") ? relativePos.z * scaleFactor + k : relativePos.z),
                             colour: block.colour,
                         };
                         scaledShape.push(scaledBlock);

@@ -34,8 +34,16 @@ function calculateTotal(leftvalue, rightvalue) {
 export function calculate() {
     return __awaiter(this, void 0, void 0, function* () {
         yield clearAnswer({ x: -14, y: -57, z: 93 }, { x: -8, y: -57, z: 93 });
-        let leftInput = getInput([{ x: -14, y: -59, z: 93 }, { x: -13, y: -59, z: 93 }, { x: -12, y: -59, z: 93 }]);
-        let rightInput = getInput([{ x: -10, y: -59, z: 93 }, { x: -9, y: -59, z: 93 }, { x: -8, y: -59, z: 93 }]);
+        let leftInput = getInput([
+            { x: -14, y: -59, z: 93 },
+            { x: -13, y: -59, z: 93 },
+            { x: -12, y: -59, z: 93 },
+        ]);
+        let rightInput = getInput([
+            { x: -10, y: -59, z: 93 },
+            { x: -9, y: -59, z: 93 },
+            { x: -8, y: -59, z: 93 },
+        ]);
         let total = calculateTotal(leftInput, rightInput);
         if (total !== null && total !== undefined) {
             let roundedTotal = roundToDigits(total, 6);

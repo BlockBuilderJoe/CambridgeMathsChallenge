@@ -67,10 +67,6 @@ world.afterEvents.itemCompleteUse.subscribe((event) => __awaiter(void 0, void 0,
                 event.source.addEffect("poison", tick);
                 break;
             }
-            case "fire_resistance": {
-                event.source.removeEffect("fire_resistance");
-                break;
-            }
         }
         world.sendMessage("The potion is: " + potion + " and the seconds are: " + seconds);
         event.source.runCommand("clear @p minecraft:glass_bottle");
@@ -114,7 +110,8 @@ world.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
 world.beforeEvents.itemUseOn.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
     var _f, _g;
     if (((_f = event.itemStack) === null || _f === void 0 ? void 0 : _f.typeId) === "minecraft:stick") {
-        if ((_g = event.block.permutation) === null || _g === void 0 ? void 0 : _g.matches("hopper")) {
+        let block = event.block;
+        if ((_g = block.permutation) === null || _g === void 0 ? void 0 : _g.matches("hopper")) {
             event.cancel = true;
             ({ potion, seconds } = yield potionMaker(event));
         }

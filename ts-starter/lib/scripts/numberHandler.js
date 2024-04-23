@@ -1,8 +1,8 @@
 export function roundToDigits(num, digits) {
     let numStr = num.toString();
     if (numStr.length > digits) {
-        if (numStr.includes('.')) {
-            let [whole, decimal] = numStr.split('.');
+        if (numStr.includes(".")) {
+            let [whole, decimal] = numStr.split(".");
             if (whole.length >= digits) {
                 return parseFloat(whole.slice(0, digits));
             }
