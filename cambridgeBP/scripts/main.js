@@ -1,5 +1,8 @@
 // scripts/main.ts
-import { world as world10 } from "@minecraft/server";
+import {
+  world as world10,
+  system
+} from "@minecraft/server";
 
 // scripts/input.ts
 import { BlockPermutation, world } from "@minecraft/server";
@@ -129,8 +132,16 @@ function calculateTotal(leftvalue, rightvalue) {
 }
 async function calculate() {
   await clearAnswer({ x: -14, y: -57, z: 93 }, { x: -8, y: -57, z: 93 });
-  let leftInput = getInput([{ x: -14, y: -59, z: 93 }, { x: -13, y: -59, z: 93 }, { x: -12, y: -59, z: 93 }]);
-  let rightInput = getInput([{ x: -10, y: -59, z: 93 }, { x: -9, y: -59, z: 93 }, { x: -8, y: -59, z: 93 }]);
+  let leftInput = getInput([
+    { x: -14, y: -59, z: 93 },
+    { x: -13, y: -59, z: 93 },
+    { x: -12, y: -59, z: 93 }
+  ]);
+  let rightInput = getInput([
+    { x: -10, y: -59, z: 93 },
+    { x: -9, y: -59, z: 93 },
+    { x: -8, y: -59, z: 93 }
+  ]);
   let total = calculateTotal(leftInput, rightInput);
   if (total !== null && total !== void 0) {
     let roundedTotal = roundToDigits(total, 6);
@@ -154,7 +165,11 @@ async function fraction1() {
   await clearAnswer(outputRight, outputLeft);
   let numerator = getInput([{ x: -28, y: -57, z: 93 }]);
   let denominator = getInput([{ x: -28, y: -59, z: 93 }]);
-  let input = getInput([{ x: -26, y: -57, z: 93 }, { x: -25, y: -57, z: 93 }, { x: -24, y: -57, z: 93 }]);
+  let input = getInput([
+    { x: -26, y: -57, z: 93 },
+    { x: -25, y: -57, z: 93 },
+    { x: -24, y: -57, z: 93 }
+  ]);
   world4.sendMessage("The fraction is:");
   world4.sendMessage(numerator + "/" + denominator + " of " + input);
   let fraction = calculateFraction(numerator, denominator);
@@ -181,7 +196,17 @@ async function ratio1() {
   let output1 = { x: -42, y: -59, z: 93 };
   let output2 = { x: -40, y: -59, z: 93 };
   world5.sendMessage("Calculating the ratio of pink to yellow blocks.");
-  let ratioInput = [{ x: -37, y: -58, z: 93 }, { x: -39, y: -60, z: 93 }, { x: -38, y: -60, z: 93 }, { x: -37, y: -60, z: 93 }, { x: -36, y: -60, z: 93 }, { x: -35, y: -60, z: 93 }, { x: -38, y: -59, z: 93 }, { x: -37, y: -59, z: 93 }, { x: -36, y: -59, z: 93 }];
+  let ratioInput = [
+    { x: -37, y: -58, z: 93 },
+    { x: -39, y: -60, z: 93 },
+    { x: -38, y: -60, z: 93 },
+    { x: -37, y: -60, z: 93 },
+    { x: -36, y: -60, z: 93 },
+    { x: -35, y: -60, z: 93 },
+    { x: -38, y: -59, z: 93 },
+    { x: -37, y: -59, z: 93 },
+    { x: -36, y: -59, z: 93 }
+  ];
   let { pink, yellow } = calculateRatio(ratioInput);
   world5.sendMessage("The ratio is:");
   world5.sendMessage(pink + ":" + yellow);
@@ -205,7 +230,24 @@ function calculateRatio(ratioInput) {
 // scripts/scaler.ts
 import { world as world6 } from "@minecraft/server";
 var overworld3 = world6.getDimension("overworld");
-var glass = ["magenta", "orange", "light_blue", "yellow", "lime", "pink", "gray", "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black", "white"];
+var glass = [
+  "magenta",
+  "orange",
+  "light_blue",
+  "yellow",
+  "lime",
+  "pink",
+  "gray",
+  "light_gray",
+  "cyan",
+  "purple",
+  "blue",
+  "brown",
+  "green",
+  "red",
+  "black",
+  "white"
+];
 async function scale() {
   const blocks = await getCube({ x: 13, y: -60, z: 142 }, { x: 13, y: -51, z: 148 });
   let shape = [];
@@ -235,11 +277,14 @@ async function resetArea() {
 }
 async function scaleShape(shape, scaleFactor, axes) {
   const scaledShape = [];
-  const basePoint = shape.reduce((min, block) => ({
-    x: Math.min(min.x, block.x),
-    y: Math.min(min.y, block.y),
-    z: Math.min(min.z, block.z)
-  }), shape[0]);
+  const basePoint = shape.reduce(
+    (min, block) => ({
+      x: Math.min(min.x, block.x),
+      y: Math.min(min.y, block.y),
+      z: Math.min(min.z, block.z)
+    }),
+    shape[0]
+  );
   for (const block of shape) {
     const relativePos = {
       x: block.x - basePoint.x,
@@ -330,10 +375,18 @@ function extendRods(event, blockName, rodLength, direction) {
 import { world as world8 } from "@minecraft/server";
 var overworld5 = world8.getDimension("overworld");
 async function square(location) {
-  overworld5.runCommandAsync("fill " + location.x + " " + location.y + " " + location.z + " " + (location.x + 11) + " " + location.y + " " + (location.z + 11) + " sandstone");
-  overworld5.runCommandAsync("fill " + (location.x + 1) + " " + location.y + " " + (location.z + 1) + " " + (location.x + 10) + " " + location.y + " " + (location.z + 10) + " grass replace");
-  overworld5.runCommandAsync("fill " + (location.x + 1) + " " + (location.y + 1) + " " + (location.z + 1) + " " + (location.x + 10) + " " + (location.y + 1) + " " + (location.z + 10) + " tallgrass replace");
-  overworld5.runCommandAsync("fill " + (location.x + 1) + " " + (location.y + 2) + " " + (location.z + 1) + " " + (location.x + 10) + " " + (location.y + 2) + " " + (location.z + 10) + " air replace");
+  overworld5.runCommandAsync(
+    "fill " + location.x + " " + location.y + " " + location.z + " " + (location.x + 11) + " " + location.y + " " + (location.z + 11) + " sandstone"
+  );
+  overworld5.runCommandAsync(
+    "fill " + (location.x + 1) + " " + location.y + " " + (location.z + 1) + " " + (location.x + 10) + " " + location.y + " " + (location.z + 10) + " grass replace"
+  );
+  overworld5.runCommandAsync(
+    "fill " + (location.x + 1) + " " + (location.y + 1) + " " + (location.z + 1) + " " + (location.x + 10) + " " + (location.y + 1) + " " + (location.z + 10) + " tallgrass replace"
+  );
+  overworld5.runCommandAsync(
+    "fill " + (location.x + 1) + " " + (location.y + 2) + " " + (location.z + 1) + " " + (location.x + 10) + " " + (location.y + 2) + " " + (location.z + 10) + " air replace"
+  );
 }
 async function grid(location) {
   for (let i = 0; i < 5; i++) {
@@ -370,29 +423,48 @@ async function getSlots(event) {
       typeId: item?.typeId
     });
   }
-  ;
   return slots;
 }
+async function givePotion() {
+  world9.getDimension("overworld").runCommandAsync(`clear @p minecraft:potion`);
+  world9.getDimension("overworld").runCommandAsync(`give @p minecraft:potion 1`);
+}
 async function calculateRatio2(ingredients) {
-  let wrongIngredients = ingredients.potato + ingredients.beetroot + ingredients.melon;
+  let wrongIngredientsSight = ingredients.potato + ingredients.beetroot + ingredients.melon;
+  let wrongIngredientsDive = ingredients.apple + ingredients.carrot;
   let appleRatio = ingredients.apple + ingredients.potato + ingredients.beetroot + ingredients.melon;
   let carrotRatio = ingredients.carrot + ingredients.potato + ingredients.beetroot + ingredients.melon;
-  let potatoRatio = ingredients.potato + ingredients.apple + ingredients.beetroot + ingredients.melon;
-  let beetrootRatio = ingredients.beetroot + ingredients.apple + ingredients.carrot + ingredients.melon;
+  let potatoRatio = ingredients.potato + ingredients.apple + ingredients.carrot;
+  let beetrootRatio = ingredients.beetroot + ingredients.apple + ingredients.carrot;
+  let melonRatio = ingredients.melon + ingredients.apple + ingredients.carrot;
   let total = ingredients.apple + ingredients.carrot + ingredients.potato + ingredients.beetroot + ingredients.melon;
   let nightVision = carrotRatio / appleRatio;
-  let waterBreathing = carrotRatio / appleRatio;
-  if (nightVision === 2) {
-    let seconds = Math.ceil((ingredients.apple + ingredients.carrot) * 2);
-    world9.sendMessage(`Potion of Night Vision for ${seconds} seconds`);
-  } else if (wrongIngredients === 0 && potatoRatio + carrotRatio > 0) {
-    let seconds = Math.ceil((potatoRatio + carrotRatio) / 5);
-    world9.sendMessage(`Potion of Darkness for ${seconds} seconds`);
+  let beetrootMelonRatio = beetrootRatio / melonRatio;
+  let melonPotatoRatio = melonRatio / potatoRatio;
+  if (beetrootMelonRatio === 1.5 && melonPotatoRatio === 2) {
+    let potion2 = "water_breathing";
+    let seconds2 = Math.ceil(beetrootRatio + melonRatio + potatoRatio);
+    return { potion: potion2, seconds: seconds2 };
+  } else if (nightVision === 2) {
+    let potion2 = "night_vision";
+    let seconds2 = Math.ceil(ingredients.apple + ingredients.carrot);
+    return { potion: potion2, seconds: seconds2 };
+  } else if (wrongIngredientsSight === 0 && potatoRatio + carrotRatio > 0) {
+    let seconds2 = Math.ceil((potatoRatio + carrotRatio) / 5);
+    let potion2 = "blindness";
+    return { potion: potion2, seconds: seconds2 };
+  } else if (wrongIngredientsDive === 0 && beetrootRatio + melonRatio + potatoRatio > 0) {
+    let seconds2 = Math.ceil((beetrootRatio + melonRatio + potatoRatio) / 5);
+    let potion2 = "levitation";
+    return { potion: potion2, seconds: seconds2 };
   } else if (total === 0) {
-    world9.sendMessage(`No potion`);
+    let seconds2 = 0;
+    let potion2 = "empty";
+    return { potion: potion2, seconds: seconds2 };
   } else {
-    let seconds = Math.ceil((appleRatio + carrotRatio) / 10);
-    world9.sendMessage(`Potion of Poison for ${seconds} seconds`);
+    let seconds2 = Math.ceil((appleRatio + carrotRatio) / 10);
+    let potion2 = "poison";
+    return { potion: potion2, seconds: seconds2 };
   }
 }
 async function barChart(slots) {
@@ -429,7 +501,7 @@ async function barChart(slots) {
         ingredients.beetroot = (ingredients.beetroot || 0) + slot.amount;
         break;
       }
-      case "minecraft:melon": {
+      case "minecraft:melon_slice": {
         await setGlass(slot, "green_stained_glass");
         await setItemFrame(4, slot.slotNumber);
         ingredients.melon = (ingredients.melon || 0) + slot.amount;
@@ -440,16 +512,14 @@ async function barChart(slots) {
         break;
       }
     }
-    ;
   }
-  ;
-  calculateRatio2(ingredients);
+  return ingredients;
 }
 async function setGlass(slot, blockName) {
   let { block } = getBlockValue({ x: -52, y: 61, z: 126 });
   block?.north(slot.slotNumber)?.setPermutation(BlockPermutation5.resolve(blockName));
-  if (slot.amount > 9) {
-    slot.amount = 9;
+  if (slot.amount > 10) {
+    slot.amount = 10;
   }
   for (let i = 0; i < slot.amount; i++) {
     block?.above(i)?.north(slot.slotNumber)?.setPermutation(BlockPermutation5.resolve(blockName));
@@ -460,22 +530,50 @@ async function setItemFrame(offset_z, slotNumber) {
   let cloneTo = 126 - slotNumber;
   world9.getDimension("overworld").runCommandAsync(`clone -40 60 ${cloneFrom} -40 60 ${cloneFrom} -50 60 ${cloneTo} replace`);
 }
-async function potion(event) {
+async function potionMaker(event) {
   await resetArea2();
   let slots = await getSlots(event);
-  await barChart(slots);
+  let ingredients = await barChart(slots);
+  let { potion: potion2, seconds: seconds2 } = await calculateRatio2(ingredients);
+  if (potion2 !== "empty") {
+    await givePotion();
+  }
+  return { potion: potion2, seconds: seconds2 };
 }
 async function resetArea2() {
   await world9.getDimension("overworld").runCommandAsync("fill -52 60 126 -52 69 122 black_stained_glass replace");
 }
 
 // scripts/main.ts
-world10.beforeEvents.playerBreakBlock.subscribe(async (event) => {
-  if (event.itemStack?.typeId === "minecraft:stick") {
-    if (event.block.permutation?.matches("hopper")) {
-      event.cancel = true;
-      await potion(event);
-    }
+var potion = "";
+var seconds = 0;
+var currentPlayer = null;
+function mainTick() {
+  if (system.currentTick % 10 === 0) {
+    world10.getAllPlayers().forEach((player) => {
+      if (player.isInWater == true) {
+        let score = 58 - Math.floor(player.location.y);
+        player.runCommand(`scoreboard players set Meters Depth ${score}`);
+      }
+    });
+  }
+  system.run(mainTick);
+}
+system.run(mainTick);
+world10.afterEvents.playerSpawn.subscribe((eventData) => {
+  currentPlayer = eventData.player;
+  let initialSpawn = eventData.initialSpawn;
+  if (initialSpawn) {
+    currentPlayer.sendMessage(`\xA73Welcome back ${currentPlayer.name}!`);
+    currentPlayer.runCommandAsync(
+      `give @p[hasitem={item=stick,quantity=0}] stick 1 0 {"item_lock": { "mode": "lock_in_slot" }}`
+    );
+  }
+  if (!initialSpawn) {
+    currentPlayer.sendMessage(`<BlockBuilderAI> \xA73Welcome ${currentPlayer.name}!`);
+    currentPlayer.runCommandAsync(
+      `give @a[hasitem={item=stick,quantity=0}] stick 1 0 {"item_lock": { "mode": "lock_in_slot" }}`
+    );
   }
 });
 world10.afterEvents.buttonPush.subscribe(async (event) => {
@@ -512,8 +610,31 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
 });
 world10.afterEvents.itemCompleteUse.subscribe(async (event) => {
   if (event.itemStack?.typeId === "minecraft:potion") {
-    event.source.addEffect("water_breathing", 10);
-    world10.sendMessage("MMMMMMMM YuMmY PoTiOnS");
+    let player = event.source;
+    let tick = seconds * 20;
+    switch (potion) {
+      case "water_breathing": {
+        player.addEffect("water_breathing", tick);
+        break;
+      }
+      case "night_vision": {
+        player.addEffect("night_vision", tick);
+        break;
+      }
+      case "blindness": {
+        player.addEffect("blindness", tick);
+        break;
+      }
+      case "poison": {
+        event.source.addEffect("poison", tick);
+        break;
+      }
+      case "levitation": {
+        event.source.addEffect("levitation", tick);
+        break;
+      }
+    }
+    world10.sendMessage("The potion is: " + potion + " and the seconds are: " + seconds);
     event.source.runCommand("clear @p minecraft:glass_bottle");
   }
 });
@@ -521,7 +642,7 @@ world10.afterEvents.entityHealthChanged.subscribe((event) => {
   if (event.entity.typeId === "minecraft:player") {
     let player = event.entity;
     if (player.isInWater == true) {
-      player.addEffect("instant_health", 1);
+      player.addEffect("instant_health", 5);
       player.teleport({ x: -50, y: 60, z: 132 });
     }
   }
@@ -543,6 +664,15 @@ world10.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId;
   if (hand_item === "minecraft:stick") {
     cycleNumberBlock(clickEvent);
+  }
+});
+world10.beforeEvents.itemUseOn.subscribe(async (event) => {
+  if (event.itemStack?.typeId === "minecraft:stick") {
+    let block = event.block;
+    if (block.permutation?.matches("hopper")) {
+      event.cancel = true;
+      ({ potion, seconds } = await potionMaker(event));
+    }
   }
 });
 

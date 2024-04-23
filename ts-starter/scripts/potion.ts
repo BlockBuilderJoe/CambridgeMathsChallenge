@@ -24,15 +24,21 @@ async function calculateRatio(ingredients: any) {
   let appleRatio = ingredients.apple + ingredients.potato + ingredients.beetroot + ingredients.melon;
   let carrotRatio = ingredients.carrot + ingredients.potato + ingredients.beetroot + ingredients.melon;
   let potatoRatio = ingredients.potato + ingredients.apple + ingredients.carrot;
-  let beetrootRatio = ingredients.beetroot + ingredients.apple + ingredients.carrot + ingredients.melon;
-  let melonRatio = ingredients.melon + ingredients.apple + ingredients.carrot + ingredients.potato;
-
+  let beetrootRatio = ingredients.beetroot + ingredients.apple + ingredients.carrot;
+  let melonRatio = ingredients.melon + ingredients.apple + ingredients.carrot;
   let total: number =
     ingredients.apple + ingredients.carrot + ingredients.potato + ingredients.beetroot + ingredients.melon;
   let nightVision: number = carrotRatio / appleRatio;
-  if (nightVision === 2) {
+  let beetrootMelonRatio: number = beetrootRatio / melonRatio;
+  let melonPotatoRatio: number = melonRatio / potatoRatio;
+
+  if (beetrootMelonRatio === 1.5 && melonPotatoRatio === 2) {
+    let potion = "water_breathing";
+    let seconds = Math.ceil(beetrootRatio + melonRatio + potatoRatio);
+    return { potion, seconds };
+  } else if (nightVision === 2) {
     let potion = "night_vision";
-    let seconds = Math.ceil((ingredients.apple + ingredients.carrot) * 2);
+    let seconds = Math.ceil(ingredients.apple + ingredients.carrot);
     return { potion, seconds };
   } else if (wrongIngredientsSight === 0 && potatoRatio + carrotRatio > 0) {
     let seconds = Math.ceil((potatoRatio + carrotRatio) / 5);
@@ -40,7 +46,7 @@ async function calculateRatio(ingredients: any) {
     return { potion, seconds };
   } else if (wrongIngredientsDive === 0 && beetrootRatio + melonRatio + potatoRatio > 0) {
     let seconds = Math.ceil((beetrootRatio + melonRatio + potatoRatio) / 5);
-    let potion = "water_breathing";
+    let potion = "levitation";
     return { potion, seconds };
   } else if (total === 0) {
     let seconds = 0;
@@ -105,8 +111,8 @@ async function barChart(slots: any) {
 async function setGlass(slot: any, blockName: string) {
   let { block } = getBlockValue({ x: -52, y: 61, z: 126 });
   block?.north(slot.slotNumber)?.setPermutation(BlockPermutation.resolve(blockName));
-  if (slot.amount > 9) {
-    slot.amount = 9;
+  if (slot.amount > 10) {
+    slot.amount = 10;
   }
   for (let i = 0; i < slot.amount; i++) {
     block?.above(i)?.north(slot.slotNumber)?.setPermutation(BlockPermutation.resolve(blockName));

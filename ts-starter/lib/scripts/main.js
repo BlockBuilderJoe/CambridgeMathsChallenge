@@ -1,4 +1,4 @@
-import { world } from "@minecraft/server";
+import { world, system, } from "@minecraft/server";
 import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
@@ -10,7 +10,32 @@ import { facing } from "./playerFacing";
 import { potionMaker } from "./potion";
 let potion = "";
 let seconds = 0;
-//cuisenaire rods 615 -60 1013
+let currentPlayer = null;
+function mainTick() {
+    if (system.currentTick % 10 === 0) {
+        //runs every second
+        world.getAllPlayers().forEach((player) => {
+            if (player.isInWater == true) {
+                let score = 58 - Math.floor(player.location.y);
+                player.runCommand(`scoreboard players set Meters Depth ${score}`);
+            }
+        });
+    }
+    system.run(mainTick);
+}
+system.run(mainTick);
+world.afterEvents.playerSpawn.subscribe((eventData) => {
+    currentPlayer = eventData.player;
+    let initialSpawn = eventData.initialSpawn;
+    if (initialSpawn) {
+        currentPlayer.sendMessage(`§3Welcome back ${currentPlayer.name}!`);
+        currentPlayer.runCommandAsync(`give @p[hasitem={item=stick,quantity=0}] stick 1 0 {"item_lock": { "mode": "lock_in_slot" }}`);
+    }
+    if (!initialSpawn) {
+        currentPlayer.sendMessage(`<BlockBuilderAI> §3Welcome ${currentPlayer.name}!`);
+        currentPlayer.runCommandAsync(`give @a[hasitem={item=stick,quantity=0}] stick 1 0 {"item_lock": { "mode": "lock_in_slot" }}`);
+    }
+});
 //listens for the button push event.
 world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
     switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
@@ -67,6 +92,10 @@ world.afterEvents.itemCompleteUse.subscribe((event) => __awaiter(void 0, void 0,
                 event.source.addEffect("poison", tick);
                 break;
             }
+            case "levitation": {
+                event.source.addEffect("levitation", tick);
+                break;
+            }
         }
         world.sendMessage("The potion is: " + potion + " and the seconds are: " + seconds);
         event.source.runCommand("clear @p minecraft:glass_bottle");
@@ -77,7 +106,7 @@ world.afterEvents.entityHealthChanged.subscribe((event) => {
     if (event.entity.typeId === "minecraft:player") {
         let player = event.entity;
         if (player.isInWater == true) {
-            player.addEffect("instant_health", 1);
+            player.addEffect("instant_health", 5);
             player.teleport({ x: -50, y: 60, z: 132 });
         }
     }

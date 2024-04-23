@@ -1,5 +1,8 @@
 // scripts/main.ts
-import { world as world10 } from "@minecraft/server";
+import {
+  world as world10,
+  system
+} from "@minecraft/server";
 
 // scripts/input.ts
 import { BlockPermutation, world } from "@minecraft/server";
@@ -432,13 +435,19 @@ async function calculateRatio2(ingredients) {
   let appleRatio = ingredients.apple + ingredients.potato + ingredients.beetroot + ingredients.melon;
   let carrotRatio = ingredients.carrot + ingredients.potato + ingredients.beetroot + ingredients.melon;
   let potatoRatio = ingredients.potato + ingredients.apple + ingredients.carrot;
-  let beetrootRatio = ingredients.beetroot + ingredients.apple + ingredients.carrot + ingredients.melon;
-  let melonRatio = ingredients.melon + ingredients.apple + ingredients.carrot + ingredients.potato;
+  let beetrootRatio = ingredients.beetroot + ingredients.apple + ingredients.carrot;
+  let melonRatio = ingredients.melon + ingredients.apple + ingredients.carrot;
   let total = ingredients.apple + ingredients.carrot + ingredients.potato + ingredients.beetroot + ingredients.melon;
   let nightVision = carrotRatio / appleRatio;
-  if (nightVision === 2) {
+  let beetrootMelonRatio = beetrootRatio / melonRatio;
+  let melonPotatoRatio = melonRatio / potatoRatio;
+  if (beetrootMelonRatio === 1.5 && melonPotatoRatio === 2) {
+    let potion2 = "water_breathing";
+    let seconds2 = Math.ceil(beetrootRatio + melonRatio + potatoRatio);
+    return { potion: potion2, seconds: seconds2 };
+  } else if (nightVision === 2) {
     let potion2 = "night_vision";
-    let seconds2 = Math.ceil((ingredients.apple + ingredients.carrot) * 2);
+    let seconds2 = Math.ceil(ingredients.apple + ingredients.carrot);
     return { potion: potion2, seconds: seconds2 };
   } else if (wrongIngredientsSight === 0 && potatoRatio + carrotRatio > 0) {
     let seconds2 = Math.ceil((potatoRatio + carrotRatio) / 5);
@@ -446,7 +455,7 @@ async function calculateRatio2(ingredients) {
     return { potion: potion2, seconds: seconds2 };
   } else if (wrongIngredientsDive === 0 && beetrootRatio + melonRatio + potatoRatio > 0) {
     let seconds2 = Math.ceil((beetrootRatio + melonRatio + potatoRatio) / 5);
-    let potion2 = "water_breathing";
+    let potion2 = "levitation";
     return { potion: potion2, seconds: seconds2 };
   } else if (total === 0) {
     let seconds2 = 0;
@@ -509,8 +518,8 @@ async function barChart(slots) {
 async function setGlass(slot, blockName) {
   let { block } = getBlockValue({ x: -52, y: 61, z: 126 });
   block?.north(slot.slotNumber)?.setPermutation(BlockPermutation5.resolve(blockName));
-  if (slot.amount > 9) {
-    slot.amount = 9;
+  if (slot.amount > 10) {
+    slot.amount = 10;
   }
   for (let i = 0; i < slot.amount; i++) {
     block?.above(i)?.north(slot.slotNumber)?.setPermutation(BlockPermutation5.resolve(blockName));
@@ -538,6 +547,35 @@ async function resetArea2() {
 // scripts/main.ts
 var potion = "";
 var seconds = 0;
+var currentPlayer = null;
+function mainTick() {
+  if (system.currentTick % 10 === 0) {
+    world10.getAllPlayers().forEach((player) => {
+      if (player.isInWater == true) {
+        let score = 58 - Math.floor(player.location.y);
+        player.runCommand(`scoreboard players set Meters Depth ${score}`);
+      }
+    });
+  }
+  system.run(mainTick);
+}
+system.run(mainTick);
+world10.afterEvents.playerSpawn.subscribe((eventData) => {
+  currentPlayer = eventData.player;
+  let initialSpawn = eventData.initialSpawn;
+  if (initialSpawn) {
+    currentPlayer.sendMessage(`\xA73Welcome back ${currentPlayer.name}!`);
+    currentPlayer.runCommandAsync(
+      `give @p[hasitem={item=stick,quantity=0}] stick 1 0 {"item_lock": { "mode": "lock_in_slot" }}`
+    );
+  }
+  if (!initialSpawn) {
+    currentPlayer.sendMessage(`<BlockBuilderAI> \xA73Welcome ${currentPlayer.name}!`);
+    currentPlayer.runCommandAsync(
+      `give @a[hasitem={item=stick,quantity=0}] stick 1 0 {"item_lock": { "mode": "lock_in_slot" }}`
+    );
+  }
+});
 world10.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
     case "-11,-60,94": {
@@ -591,6 +629,10 @@ world10.afterEvents.itemCompleteUse.subscribe(async (event) => {
         event.source.addEffect("poison", tick);
         break;
       }
+      case "levitation": {
+        event.source.addEffect("levitation", tick);
+        break;
+      }
     }
     world10.sendMessage("The potion is: " + potion + " and the seconds are: " + seconds);
     event.source.runCommand("clear @p minecraft:glass_bottle");
@@ -600,7 +642,7 @@ world10.afterEvents.entityHealthChanged.subscribe((event) => {
   if (event.entity.typeId === "minecraft:player") {
     let player = event.entity;
     if (player.isInWater == true) {
-      player.addEffect("instant_health", 1);
+      player.addEffect("instant_health", 5);
       player.teleport({ x: -50, y: 60, z: 132 });
     }
   }

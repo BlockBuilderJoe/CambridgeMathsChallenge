@@ -29,13 +29,20 @@ function calculateRatio(ingredients) {
         let appleRatio = ingredients.apple + ingredients.potato + ingredients.beetroot + ingredients.melon;
         let carrotRatio = ingredients.carrot + ingredients.potato + ingredients.beetroot + ingredients.melon;
         let potatoRatio = ingredients.potato + ingredients.apple + ingredients.carrot;
-        let beetrootRatio = ingredients.beetroot + ingredients.apple + ingredients.carrot + ingredients.melon;
-        let melonRatio = ingredients.melon + ingredients.apple + ingredients.carrot + ingredients.potato;
+        let beetrootRatio = ingredients.beetroot + ingredients.apple + ingredients.carrot;
+        let melonRatio = ingredients.melon + ingredients.apple + ingredients.carrot;
         let total = ingredients.apple + ingredients.carrot + ingredients.potato + ingredients.beetroot + ingredients.melon;
         let nightVision = carrotRatio / appleRatio;
-        if (nightVision === 2) {
+        let beetrootMelonRatio = beetrootRatio / melonRatio;
+        let melonPotatoRatio = melonRatio / potatoRatio;
+        if (beetrootMelonRatio === 1.5 && melonPotatoRatio === 2) {
+            let potion = "water_breathing";
+            let seconds = Math.ceil(beetrootRatio + melonRatio + potatoRatio);
+            return { potion, seconds };
+        }
+        else if (nightVision === 2) {
             let potion = "night_vision";
-            let seconds = Math.ceil((ingredients.apple + ingredients.carrot) * 2);
+            let seconds = Math.ceil(ingredients.apple + ingredients.carrot);
             return { potion, seconds };
         }
         else if (wrongIngredientsSight === 0 && potatoRatio + carrotRatio > 0) {
@@ -45,7 +52,7 @@ function calculateRatio(ingredients) {
         }
         else if (wrongIngredientsDive === 0 && beetrootRatio + melonRatio + potatoRatio > 0) {
             let seconds = Math.ceil((beetrootRatio + melonRatio + potatoRatio) / 5);
-            let potion = "water_breathing";
+            let potion = "levitation";
             return { potion, seconds };
         }
         else if (total === 0) {
@@ -116,8 +123,8 @@ function setGlass(slot, blockName) {
         var _a, _b, _c;
         let { block } = getBlockValue({ x: -52, y: 61, z: 126 });
         (_a = block === null || block === void 0 ? void 0 : block.north(slot.slotNumber)) === null || _a === void 0 ? void 0 : _a.setPermutation(BlockPermutation.resolve(blockName));
-        if (slot.amount > 9) {
-            slot.amount = 9;
+        if (slot.amount > 10) {
+            slot.amount = 10;
         }
         for (let i = 0; i < slot.amount; i++) {
             (_c = (_b = block === null || block === void 0 ? void 0 : block.above(i)) === null || _b === void 0 ? void 0 : _b.north(slot.slotNumber)) === null || _c === void 0 ? void 0 : _c.setPermutation(BlockPermutation.resolve(blockName));
