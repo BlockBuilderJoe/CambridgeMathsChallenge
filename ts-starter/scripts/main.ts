@@ -1,4 +1,4 @@
-import { BlockPermutation, BlockInventoryComponent, ItemStack, world} from "@minecraft/server";
+import { BlockPermutation, BlockInventoryComponent, ItemStack, world, system} from "@minecraft/server";
 import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
@@ -58,11 +58,22 @@ world.afterEvents.buttonPush.subscribe(async(event) => {
 }
 });
 
+//listens for the potion to be drank item use event.
+world.afterEvents.itemCompleteUse.subscribe(async(event) => {
+  if (event.itemStack?.typeId === "minecraft:potion") {
+    event.source.addEffect("water_breathing", 10);
+    world.sendMessage("MMMMMMMM YuMmY PoTiOnS");
+    event.source.runCommand("clear @p minecraft:glass_bottle");
+
+  }
+});
+
 world.afterEvents.entityHealthChanged.subscribe((event) => {
   if (event.entity.typeId === "minecraft:player") {
-    if (event.entity.isInWater == true) {
-      event.entity.addEffect("instant_health", 1)
-      event.entity.teleport({x: -50, y: 60, z: 132});
+    let player = event.entity;    
+    if (player.isInWater == true) {
+      player.addEffect("instant_health", 1)
+      player.teleport({x: -50, y: 60, z: 132});
     }
   }
 });

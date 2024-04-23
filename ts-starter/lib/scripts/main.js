@@ -51,29 +51,39 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
         }
     }
 }));
+//listens for the potion to be drank item use event.
+world.afterEvents.itemCompleteUse.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
+    var _c;
+    if (((_c = event.itemStack) === null || _c === void 0 ? void 0 : _c.typeId) === "minecraft:potion") {
+        event.source.addEffect("water_breathing", 10);
+        world.sendMessage("MMMMMMMM YuMmY PoTiOnS");
+        event.source.runCommand("clear @p minecraft:glass_bottle");
+    }
+}));
 world.afterEvents.entityHealthChanged.subscribe((event) => {
     if (event.entity.typeId === "minecraft:player") {
-        if (event.entity.isInWater == true) {
-            event.entity.addEffect("instant_health", 1);
-            event.entity.teleport({ x: -50, y: 60, z: 132 });
+        let player = event.entity;
+        if (player.isInWater == true) {
+            player.addEffect("instant_health", 1);
+            player.teleport({ x: -50, y: 60, z: 132 });
         }
     }
 });
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _c, _d, _e, _f;
+    var _d, _e, _f, _g;
     let viewDirection = event.player.getViewDirection();
     let direction = yield facing(viewDirection);
-    if ((_c = event.block.permutation) === null || _c === void 0 ? void 0 : _c.matches("red_concrete")) {
+    if ((_d = event.block.permutation) === null || _d === void 0 ? void 0 : _d.matches("red_concrete")) {
         cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction);
     }
-    else if ((_d = event.block.permutation) === null || _d === void 0 ? void 0 : _d.matches("green_concrete")) {
+    else if ((_e = event.block.permutation) === null || _e === void 0 ? void 0 : _e.matches("green_concrete")) {
         cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction);
     }
-    else if ((_e = event.block.permutation) === null || _e === void 0 ? void 0 : _e.matches("purple_concrete")) {
+    else if ((_f = event.block.permutation) === null || _f === void 0 ? void 0 : _f.matches("purple_concrete")) {
         cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction);
     }
-    else if ((_f = event.block.permutation) === null || _f === void 0 ? void 0 : _f.matches("blue_concrete")) {
+    else if ((_g = event.block.permutation) === null || _g === void 0 ? void 0 : _g.matches("blue_concrete")) {
         cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction);
     }
 }));

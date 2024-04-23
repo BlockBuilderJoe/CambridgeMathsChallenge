@@ -101,7 +101,7 @@ function barChart(slots) {
 function setGlass(slot, blockName) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b, _c;
-        let { block } = getBlockValue({ x: -52, y: -59, z: 126 });
+        let { block } = getBlockValue({ x: -52, y: 61, z: 126 });
         (_a = block === null || block === void 0 ? void 0 : block.north(slot.slotNumber)) === null || _a === void 0 ? void 0 : _a.setPermutation(BlockPermutation.resolve(blockName));
         if (slot.amount > 9) {
             slot.amount = 9;
@@ -115,7 +115,7 @@ function setItemFrame(offset_z, slotNumber) {
     return __awaiter(this, void 0, void 0, function* () {
         let cloneFrom = 126 - offset_z;
         let cloneTo = 126 - slotNumber;
-        world.getDimension("overworld").runCommandAsync(`clone -40 -60 ${cloneFrom} -40 -60 ${cloneFrom} -50 -60 ${cloneTo} replace`);
+        world.getDimension("overworld").runCommandAsync(`clone -40 60 ${cloneFrom} -40 60 ${cloneFrom} -50 60 ${cloneTo} replace`);
     });
 }
 ;
@@ -129,7 +129,7 @@ export function potion(event) {
 ;
 function resetArea() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield world.getDimension("overworld").runCommandAsync("fill -52 -60 126 -52 -51 122 black_stained_glass replace");
+        yield world.getDimension("overworld").runCommandAsync("fill -52 60 126 -52 69 122 black_stained_glass replace");
     });
 }
 //# sourceMappingURL=potion.js.map

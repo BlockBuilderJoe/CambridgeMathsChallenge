@@ -93,7 +93,7 @@ async function barChart(slots: any) {
     calculateRatio(ingredients);
 };
 async function setGlass(slot: any, blockName: string) {
-    let {block} = getBlockValue({x: -52, y: -59, z: 126});
+    let {block} = getBlockValue({x: -52, y: 61, z: 126});
     block?.north(slot.slotNumber)?.setPermutation(BlockPermutation.resolve(blockName));
     if (slot.amount > 9) { slot.amount = 9; }
     for (let i = 0; i < slot.amount; i++) {
@@ -103,7 +103,7 @@ async function setGlass(slot: any, blockName: string) {
 async function setItemFrame(offset_z: number, slotNumber: number) {
     let cloneFrom = 126 - offset_z;
     let cloneTo = 126 - slotNumber;
-    world.getDimension("overworld").runCommandAsync(`clone -40 -60 ${cloneFrom} -40 -60 ${cloneFrom} -50 -60 ${cloneTo} replace`);
+    world.getDimension("overworld").runCommandAsync(`clone -40 60 ${cloneFrom} -40 60 ${cloneFrom} -50 60 ${cloneTo} replace`);
 };
 
 export async function potion(event: any) {
@@ -113,5 +113,5 @@ export async function potion(event: any) {
 };
 
 async function resetArea(){
-    await world.getDimension("overworld").runCommandAsync("fill -52 -60 126 -52 -51 122 black_stained_glass replace");
+    await world.getDimension("overworld").runCommandAsync("fill -52 60 126 -52 69 122 black_stained_glass replace");
 }

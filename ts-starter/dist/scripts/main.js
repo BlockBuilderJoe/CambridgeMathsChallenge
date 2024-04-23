@@ -446,7 +446,7 @@ async function barChart(slots) {
   calculateRatio2(ingredients);
 }
 async function setGlass(slot, blockName) {
-  let { block } = getBlockValue({ x: -52, y: -59, z: 126 });
+  let { block } = getBlockValue({ x: -52, y: 61, z: 126 });
   block?.north(slot.slotNumber)?.setPermutation(BlockPermutation5.resolve(blockName));
   if (slot.amount > 9) {
     slot.amount = 9;
@@ -458,7 +458,7 @@ async function setGlass(slot, blockName) {
 async function setItemFrame(offset_z, slotNumber) {
   let cloneFrom = 126 - offset_z;
   let cloneTo = 126 - slotNumber;
-  world9.getDimension("overworld").runCommandAsync(`clone -40 -60 ${cloneFrom} -40 -60 ${cloneFrom} -50 -60 ${cloneTo} replace`);
+  world9.getDimension("overworld").runCommandAsync(`clone -40 60 ${cloneFrom} -40 60 ${cloneFrom} -50 60 ${cloneTo} replace`);
 }
 async function potion(event) {
   await resetArea2();
@@ -466,7 +466,7 @@ async function potion(event) {
   await barChart(slots);
 }
 async function resetArea2() {
-  await world9.getDimension("overworld").runCommandAsync("fill -52 -60 126 -52 -51 122 black_stained_glass replace");
+  await world9.getDimension("overworld").runCommandAsync("fill -52 60 126 -52 69 122 black_stained_glass replace");
 }
 
 // scripts/main.ts
@@ -510,11 +510,19 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
     }
   }
 });
+world10.afterEvents.itemCompleteUse.subscribe(async (event) => {
+  if (event.itemStack?.typeId === "minecraft:potion") {
+    event.source.addEffect("water_breathing", 10);
+    world10.sendMessage("MMMMMMMM YuMmY PoTiOnS");
+    event.source.runCommand("clear @p minecraft:glass_bottle");
+  }
+});
 world10.afterEvents.entityHealthChanged.subscribe((event) => {
   if (event.entity.typeId === "minecraft:player") {
-    if (event.entity.isInWater == true) {
-      event.entity.addEffect("instant_health", 1);
-      event.entity.teleport({ x: -50, y: 60, z: 132 });
+    let player = event.entity;
+    if (player.isInWater == true) {
+      player.addEffect("instant_health", 1);
+      player.teleport({ x: -50, y: 60, z: 132 });
     }
   }
 });
