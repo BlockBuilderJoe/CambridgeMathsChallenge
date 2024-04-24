@@ -55,7 +55,7 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
             break;
         }
         case "608,-59,1007": {
-            yield grid({ x: 608, y: -61, z: 995 });
+            yield grid({ x: 608, y: -60, z: 995 });
             break;
         }
     }

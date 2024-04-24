@@ -50,20 +50,28 @@ export async function square(location: Vector3) {
       " " +
       (location.z + 10) +
       " " +
-      "tallgrass replace"
+      "tallgrass replace concrete"
   );
 }
 
-async function sandstoneStops(location: Vector3) {
-  overworld.runCommandAsync(`setblock ${location.x} ${location.y} ${location.z} sandstone`);
+export async function squareReset(location: Vector3, concreteColours: string[]) {
+  for (let i = 0; i < concreteColours.length; i++) {
+    let command = `fill ${location.x} ${location.y} ${location.z} ${location.x + 11} ${location.y} ${location.z + 11} tallgrass replace ${concreteColours[i]}_concrete`;
+    overworld.runCommand(command);
+  }
+  overworld.runCommandAsync(`fill ${location.x} ${location.y - 1} ${location.z} ${location.x + 11} ${location.y - 1} ${location.z + 11} grass replace dirt`);
+  overworld.runCommandAsync(`fill ${location.x} ${location.y} ${location.z} ${location.x + 11} ${location.y} ${location.z + 11} tallgrass replace air`);
 }
+
+
 export async function grid(location: Vector3) {
+  let concreteColours = ["red", "green", "purple"];
   for (let i = 0; i < 5; i++) {
     for (let j = 0; j < 5; j++) {
       let offset_x = location.x + i * 11;
       let offset_z = location.z + j * 11;
       const squareLocation = { x: offset_x, y: location.y, z: offset_z };
-      await square(squareLocation);
+      await squareReset(squareLocation, concreteColours);
     }
   }
 }

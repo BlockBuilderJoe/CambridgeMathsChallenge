@@ -62,7 +62,7 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
       break;
     }
     case "608,-59,1007": {
-      await grid({ x: 608, y: -61, z: 995 });
+      await grid({ x: 608, y: -60, z: 995 });
       break;
     }
   }

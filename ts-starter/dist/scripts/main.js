@@ -371,24 +371,22 @@ function extendRods(event, blockName, rodLength, direction) {
 // scripts/grid.ts
 import { world as world8 } from "@minecraft/server";
 var overworld5 = world8.getDimension("overworld");
-async function square(location) {
-  overworld5.runCommandAsync(
-    "fill " + location.x + " " + location.y + " " + location.z + " " + (location.x + 11) + " " + location.y + " " + (location.z + 11) + " sandstone"
-  );
-  overworld5.runCommandAsync(
-    "fill " + (location.x + 1) + " " + location.y + " " + (location.z + 1) + " " + (location.x + 10) + " " + location.y + " " + (location.z + 10) + " grass replace"
-  );
-  overworld5.runCommandAsync(
-    "fill " + (location.x + 1) + " " + (location.y + 1) + " " + (location.z + 1) + " " + (location.x + 10) + " " + (location.y + 1) + " " + (location.z + 10) + " tallgrass replace"
-  );
+async function squareReset(location, concreteColours) {
+  for (let i = 0; i < concreteColours.length; i++) {
+    let command = `fill ${location.x} ${location.y} ${location.z} ${location.x + 11} ${location.y} ${location.z + 11} tallgrass replace ${concreteColours[i]}_concrete`;
+    overworld5.runCommand(command);
+  }
+  overworld5.runCommandAsync(`fill ${location.x} ${location.y - 1} ${location.z} ${location.x + 11} ${location.y - 1} ${location.z + 11} grass replace dirt`);
+  overworld5.runCommandAsync(`fill ${location.x} ${location.y} ${location.z} ${location.x + 11} ${location.y} ${location.z + 11} tallgrass replace air`);
 }
 async function grid(location) {
+  let concreteColours = ["red", "green", "purple"];
   for (let i = 0; i < 5; i++) {
     for (let j = 0; j < 5; j++) {
       let offset_x = location.x + i * 11;
       let offset_z = location.z + j * 11;
       const squareLocation = { x: offset_x, y: location.y, z: offset_z };
-      await square(squareLocation);
+      await squareReset(squareLocation, concreteColours);
     }
   }
 }
@@ -594,7 +592,7 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
       break;
     }
     case "608,-59,1007": {
-      await grid({ x: 608, y: -61, z: 995 });
+      await grid({ x: 608, y: -60, z: 995 });
       break;
     }
   }
