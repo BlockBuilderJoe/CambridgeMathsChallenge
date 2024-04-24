@@ -1,4 +1,5 @@
 import { BlockPermutation, world } from "@minecraft/server";
+import { ActionFormResponse } from "@minecraft/server-ui";
 
 let overworld = world.getDimension("overworld");
 
@@ -10,21 +11,29 @@ export function cuisenaire(
   direction: string
 ) {
   if (event.block.permutation?.matches(blockName)) {
+    let placeRods = true;
     overworld.runCommand("title @p actionbar " + successMessage);
     for (let i = 0; i < rodLength; i++) {
       //runs east to the rod length
-      if (event.block[direction](i)?.permutation?.matches("sandstone")) {
+      if (event.block[direction](i)?.permutation?.matches("sandstone") || event.block[direction](i)?.permutation?.matches("white_concrete") ) {
         world.sendMessage("It's gone over a whole rod length!");
-        event.block.setPermutation(BlockPermutation.resolve("grass"));
+        placeRods = false;
         break;
-      } else {
-        if (["east", "west", "north", "south"].includes(direction)) {
-          event.block[direction](i)?.setPermutation(BlockPermutation.resolve(blockName));
-        } else {
-          throw new Error(`Invalid direction: ${direction}`);
-        }
       }
     }
+    if (placeRods) {
+      for (let i = 0; i < rodLength; i++) {
+          if (["east", "west", "north", "south"].includes(direction)) {
+            event.block[direction](i)?.setPermutation(BlockPermutation.resolve(blockName));
+          } else {
+            throw new Error(`Invalid direction: ${direction}`);
+          }
+        }
+      }
+      else {
+        event.block?.setPermutation(BlockPermutation.resolve("air"));
+      
+      }
   }
 }
 
