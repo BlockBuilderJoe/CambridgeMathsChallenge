@@ -31,7 +31,7 @@ export function cuisenaire(
       if (event.block[direction](i)?.permutation?.matches("sandstone")) {
         world.sendMessage("It's gone over a whole rod length!");
         event.block.setPermutation(BlockPermutation.resolve("grass"));
-        extend = false;
+        extend = false; //removes the extend functionality can be removed at a later date.
         break;
       } else {
         if (["east", "west", "north", "south"].includes(direction)) {
@@ -45,6 +45,11 @@ export function cuisenaire(
       extendRods(event, blockName, rodLength, direction);
     }
   }
+}
+
+export async function getBlockBehind(event: any, oppositeDirection: string) {
+  let hasColour = event.block[oppositeDirection](1)?.permutation?.getState("color");
+  return hasColour;    
 }
 
 export function extendRods(event: any, blockName: string, rodLength: number, direction: string) {

@@ -1,9 +1,9 @@
-import { world,system, Player} from "@minecraft/server";
+import { world,system, Player, BlockPermutation, Block} from "@minecraft/server";
 import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
 import { scale, resetArea } from "./scaler";
-import { cuisenaire } from "./rod";
+import { cuisenaire, getBlockBehind } from "./rod";
 import { cycleNumberBlock } from "./output";
 import { grid } from "./grid";
 import { facing } from "./playerFacing";
@@ -70,17 +70,27 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
 
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
-  if (event.block.location.y === -60) {
+  let block = event.block;
+  if (block.location.y === -60) {
     let viewDirection = event.player.getViewDirection();
-    let direction = await facing(viewDirection);
-    if (event.block.permutation?.matches("red_concrete")) {
-      cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction);
-    } else if (event.block.permutation?.matches("green_concrete")) {
-      cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction);
-    } else if (event.block.permutation?.matches("purple_concrete")) {
-      cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction);
-    } else if (event.block.permutation?.matches("blue_concrete")) {
-      cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction);
+    let { direction, oppositeDirection } = await facing(viewDirection);
+    world.sendMessage(`You are facing ${direction} not ${oppositeDirection}`);
+    let hasColour = await getBlockBehind(event, oppositeDirection)
+    world.sendMessage(`The block behind is ${hasColour}`);
+    if (hasColour) { //checks if the block has a colour (meaning it's a cuisenaire rod block)
+      if (event.block.permutation?.matches("red_concrete")) {
+        cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction);
+      } else if (event.block.permutation?.matches("green_concrete")) {
+        cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction);
+      } else if (event.block.permutation?.matches("purple_concrete")) {
+        cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction);
+      } else if (event.block.permutation?.matches("blue_concrete")) {
+        cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction);
+      }
+    }
+    else {
+      world.sendMessage("You need to place a cuisenaire rod block first.");
+      event.block.setPermutation(BlockPermutation.resolve("air"));
     }
   }
 });

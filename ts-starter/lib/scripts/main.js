@@ -1,9 +1,9 @@
-import { world, system } from "@minecraft/server";
+import { world, system, BlockPermutation } from "@minecraft/server";
 import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
 import { scale, resetArea } from "./scaler";
-import { cuisenaire } from "./rod";
+import { cuisenaire, getBlockBehind } from "./rod";
 import { cycleNumberBlock } from "./output";
 import { grid } from "./grid";
 import { facing } from "./playerFacing";
@@ -63,20 +63,30 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c, _d;
-    if (event.block.location.y === -60) {
+    let block = event.block;
+    if (block.location.y === -60) {
         let viewDirection = event.player.getViewDirection();
-        let direction = yield facing(viewDirection);
-        if ((_a = event.block.permutation) === null || _a === void 0 ? void 0 : _a.matches("red_concrete")) {
-            cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction);
+        let { direction, oppositeDirection } = yield facing(viewDirection);
+        world.sendMessage(`You are facing ${direction} not ${oppositeDirection}`);
+        let hasColour = yield getBlockBehind(event, oppositeDirection);
+        world.sendMessage(`The block behind is ${hasColour}`);
+        if (hasColour) { //checks if the block has a colour (meaning it's a cuisenaire rod block)
+            if ((_a = event.block.permutation) === null || _a === void 0 ? void 0 : _a.matches("red_concrete")) {
+                cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction);
+            }
+            else if ((_b = event.block.permutation) === null || _b === void 0 ? void 0 : _b.matches("green_concrete")) {
+                cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction);
+            }
+            else if ((_c = event.block.permutation) === null || _c === void 0 ? void 0 : _c.matches("purple_concrete")) {
+                cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction);
+            }
+            else if ((_d = event.block.permutation) === null || _d === void 0 ? void 0 : _d.matches("blue_concrete")) {
+                cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction);
+            }
         }
-        else if ((_b = event.block.permutation) === null || _b === void 0 ? void 0 : _b.matches("green_concrete")) {
-            cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction);
-        }
-        else if ((_c = event.block.permutation) === null || _c === void 0 ? void 0 : _c.matches("purple_concrete")) {
-            cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction);
-        }
-        else if ((_d = event.block.permutation) === null || _d === void 0 ? void 0 : _d.matches("blue_concrete")) {
-            cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction);
+        else {
+            world.sendMessage("You need to place a cuisenaire rod block first.");
+            event.block.setPermutation(BlockPermutation.resolve("air"));
         }
     }
 }));

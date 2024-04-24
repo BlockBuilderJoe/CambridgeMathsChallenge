@@ -22,7 +22,7 @@ export function cuisenaire(event, blockName, rodLength, successMessage, directio
             if ((_c = (_b = event.block[direction](i)) === null || _b === void 0 ? void 0 : _b.permutation) === null || _c === void 0 ? void 0 : _c.matches("sandstone")) {
                 world.sendMessage("It's gone over a whole rod length!");
                 event.block.setPermutation(BlockPermutation.resolve("grass"));
-                extend = false;
+                extend = false; //removes the extend functionality can be removed at a later date.
                 break;
             }
             else {
@@ -38,6 +38,13 @@ export function cuisenaire(event, blockName, rodLength, successMessage, directio
             extendRods(event, blockName, rodLength, direction);
         }
     }
+}
+export function getBlockBehind(event, oppositeDirection) {
+    return __awaiter(this, void 0, void 0, function* () {
+        var _a, _b;
+        let hasColour = (_b = (_a = event.block[oppositeDirection](1)) === null || _a === void 0 ? void 0 : _a.permutation) === null || _b === void 0 ? void 0 : _b.getState("color");
+        return hasColour;
+    });
 }
 export function extendRods(event, blockName, rodLength, direction) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;

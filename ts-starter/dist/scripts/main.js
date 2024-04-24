@@ -1,5 +1,5 @@
 // scripts/main.ts
-import { world as world10, system as system2 } from "@minecraft/server";
+import { world as world10, system as system2, BlockPermutation as BlockPermutation6 } from "@minecraft/server";
 
 // scripts/input.ts
 import { BlockPermutation, world } from "@minecraft/server";
@@ -343,6 +343,10 @@ function cuisenaire(event, blockName, rodLength, successMessage, direction) {
     }
   }
 }
+async function getBlockBehind(event, oppositeDirection) {
+  let hasColour = event.block[oppositeDirection](1)?.permutation?.getState("color");
+  return hasColour;
+}
 function extendRods(event, blockName, rodLength, direction) {
   const leftDirection = left[direction];
   const rightDirection = right[direction];
@@ -395,11 +399,20 @@ async function grid(location) {
 async function facing(blockLocation) {
   const xDiff = Math.abs(blockLocation.x);
   const zDiff = Math.abs(blockLocation.z);
+  let direction;
   if (xDiff > zDiff) {
-    return blockLocation.x > 0 ? "east" : "west";
+    direction = blockLocation.x > 0 ? "east" : "west";
   } else {
-    return blockLocation.z > 0 ? "south" : "north";
+    direction = blockLocation.z > 0 ? "south" : "north";
   }
+  const oppositeDirections = {
+    "east": "west",
+    "west": "east",
+    "south": "north",
+    "north": "south"
+  };
+  let oppositeDirection = oppositeDirections[direction];
+  return { direction, oppositeDirection };
 }
 
 // scripts/potion.ts
@@ -598,17 +611,26 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
   }
 });
 world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
-  if (event.block.location.y === -60) {
+  let block = event.block;
+  if (block.location.y === -60) {
     let viewDirection = event.player.getViewDirection();
-    let direction = await facing(viewDirection);
-    if (event.block.permutation?.matches("red_concrete")) {
-      cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction);
-    } else if (event.block.permutation?.matches("green_concrete")) {
-      cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction);
-    } else if (event.block.permutation?.matches("purple_concrete")) {
-      cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction);
-    } else if (event.block.permutation?.matches("blue_concrete")) {
-      cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction);
+    let { direction, oppositeDirection } = await facing(viewDirection);
+    world10.sendMessage(`You are facing ${direction} not ${oppositeDirection}`);
+    let hasColour = await getBlockBehind(event, oppositeDirection);
+    world10.sendMessage(`The block behind is ${hasColour}`);
+    if (hasColour) {
+      if (event.block.permutation?.matches("red_concrete")) {
+        cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction);
+      } else if (event.block.permutation?.matches("green_concrete")) {
+        cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction);
+      } else if (event.block.permutation?.matches("purple_concrete")) {
+        cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction);
+      } else if (event.block.permutation?.matches("blue_concrete")) {
+        cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction);
+      }
+    } else {
+      world10.sendMessage("You need to place a cuisenaire rod block first.");
+      event.block.setPermutation(BlockPermutation6.resolve("air"));
     }
   }
 });
