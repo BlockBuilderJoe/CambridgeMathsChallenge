@@ -308,27 +308,13 @@ async function scaleShape(shape, scaleFactor, axes) {
 // scripts/rod.ts
 import { BlockPermutation as BlockPermutation4, world as world7 } from "@minecraft/server";
 var overworld4 = world7.getDimension("overworld");
-var left = {
-  east: "south",
-  south: "west",
-  west: "north",
-  north: "east"
-};
-var right = {
-  east: "north",
-  north: "west",
-  west: "south",
-  south: "east"
-};
 function cuisenaire(event, blockName, rodLength, successMessage, direction) {
-  let extend = false;
   if (event.block.permutation?.matches(blockName)) {
     overworld4.runCommand("title @p actionbar " + successMessage);
     for (let i = 0; i < rodLength; i++) {
       if (event.block[direction](i)?.permutation?.matches("sandstone")) {
         world7.sendMessage("It's gone over a whole rod length!");
         event.block.setPermutation(BlockPermutation4.resolve("grass"));
-        extend = false;
         break;
       } else {
         if (["east", "west", "north", "south"].includes(direction)) {
@@ -338,38 +324,11 @@ function cuisenaire(event, blockName, rodLength, successMessage, direction) {
         }
       }
     }
-    if (extend) {
-      extendRods(event, blockName, rodLength, direction);
-    }
   }
 }
 async function getBlockBehind(event, oppositeDirection) {
   let hasColour = event.block[oppositeDirection](1)?.permutation?.getState("color");
   return hasColour;
-}
-function extendRods(event, blockName, rodLength, direction) {
-  const leftDirection = left[direction];
-  const rightDirection = right[direction];
-  for (let i = 0; i < 10; i++) {
-    if (event.block[leftDirection](i)?.permutation?.matches("sandstone") || event.block[leftDirection](i)?.permutation?.matches("white_concrete")) {
-      break;
-    } else {
-      for (let j = 0; j < rodLength; j++) {
-        event.block[leftDirection](i)?.setPermutation(BlockPermutation4.resolve(blockName));
-        event.block[leftDirection](i)?.[direction](j)?.setPermutation(BlockPermutation4.resolve(blockName));
-      }
-    }
-  }
-  for (let i = 0; i < 9; i++) {
-    if (event.block[rightDirection](i)?.permutation?.matches("sandstone") || event.block[rightDirection](i)?.permutation?.matches("white_concrete")) {
-      break;
-    } else {
-      for (let j = 0; j < rodLength; j++) {
-        event.block[rightDirection](i)?.setPermutation(BlockPermutation4.resolve(blockName));
-        event.block[rightDirection](i)?.[direction](j)?.setPermutation(BlockPermutation4.resolve(blockName));
-      }
-    }
-  }
 }
 
 // scripts/grid.ts
