@@ -1,8 +1,5 @@
 // scripts/main.ts
-import {
-  world as world10,
-  system
-} from "@minecraft/server";
+import { world as world10, system as system2 } from "@minecraft/server";
 
 // scripts/input.ts
 import { BlockPermutation, world } from "@minecraft/server";
@@ -411,7 +408,7 @@ async function facing(blockLocation) {
 }
 
 // scripts/potion.ts
-import { BlockPermutation as BlockPermutation5, world as world9 } from "@minecraft/server";
+import { BlockPermutation as BlockPermutation5, system, world as world9 } from "@minecraft/server";
 async function getSlots(event) {
   let hopper = event.block.getComponent("inventory");
   let slots = [];
@@ -450,11 +447,11 @@ async function calculateRatio2(ingredients) {
     let seconds2 = Math.ceil(ingredients.apple + ingredients.carrot);
     return { potion: potion2, seconds: seconds2 };
   } else if (wrongIngredientsSight === 0 && potatoRatio + carrotRatio > 0) {
-    let seconds2 = Math.ceil((potatoRatio + carrotRatio) / 5);
+    let seconds2 = Math.ceil(potatoRatio + carrotRatio);
     let potion2 = "blindness";
     return { potion: potion2, seconds: seconds2 };
   } else if (wrongIngredientsDive === 0 && beetrootRatio + melonRatio + potatoRatio > 0) {
-    let seconds2 = Math.ceil((beetrootRatio + melonRatio + potatoRatio) / 5);
+    let seconds2 = Math.ceil(beetrootRatio + melonRatio + potatoRatio);
     let potion2 = "levitation";
     return { potion: potion2, seconds: seconds2 };
   } else if (total === 0) {
@@ -543,23 +540,21 @@ async function potionMaker(event) {
 async function resetArea2() {
   await world9.getDimension("overworld").runCommandAsync("fill -52 60 126 -52 69 122 black_stained_glass replace");
 }
+function displayTimer(potionStart2, seconds2, player, potionDescription) {
+  let timeLeft = (potionStart2 + seconds2 * 20 - system.currentTick) / 20;
+  if (timeLeft % 1 === 0) {
+    player.onScreenDisplay.setActionBar(`Time left:
+ ${potionDescription} ${timeLeft} seconds`);
+  }
+}
 
 // scripts/main.ts
 var potion = "";
 var seconds = 0;
 var currentPlayer = null;
-function mainTick() {
-  if (system.currentTick % 10 === 0) {
-    world10.getAllPlayers().forEach((player) => {
-      if (player.isInWater == true) {
-        let score = 58 - Math.floor(player.location.y);
-        player.runCommand(`scoreboard players set Meters Depth ${score}`);
-      }
-    });
-  }
-  system.run(mainTick);
-}
-system.run(mainTick);
+var potionStart = 0;
+var potionDrank = false;
+var meters = 0;
 world10.afterEvents.playerSpawn.subscribe((eventData) => {
   currentPlayer = eventData.player;
   let initialSpawn = eventData.initialSpawn;
@@ -568,8 +563,7 @@ world10.afterEvents.playerSpawn.subscribe((eventData) => {
     currentPlayer.runCommandAsync(
       `give @p[hasitem={item=stick,quantity=0}] stick 1 0 {"item_lock": { "mode": "lock_in_slot" }}`
     );
-  }
-  if (!initialSpawn) {
+  } else {
     currentPlayer.sendMessage(`<BlockBuilderAI> \xA73Welcome ${currentPlayer.name}!`);
     currentPlayer.runCommandAsync(
       `give @a[hasitem={item=stick,quantity=0}] stick 1 0 {"item_lock": { "mode": "lock_in_slot" }}`
@@ -608,45 +602,6 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
     }
   }
 });
-world10.afterEvents.itemCompleteUse.subscribe(async (event) => {
-  if (event.itemStack?.typeId === "minecraft:potion") {
-    let player = event.source;
-    let tick = seconds * 20;
-    switch (potion) {
-      case "water_breathing": {
-        player.addEffect("water_breathing", tick);
-        break;
-      }
-      case "night_vision": {
-        player.addEffect("night_vision", tick);
-        break;
-      }
-      case "blindness": {
-        player.addEffect("blindness", tick);
-        break;
-      }
-      case "poison": {
-        event.source.addEffect("poison", tick);
-        break;
-      }
-      case "levitation": {
-        event.source.addEffect("levitation", tick);
-        break;
-      }
-    }
-    world10.sendMessage("The potion is: " + potion + " and the seconds are: " + seconds);
-    event.source.runCommand("clear @p minecraft:glass_bottle");
-  }
-});
-world10.afterEvents.entityHealthChanged.subscribe((event) => {
-  if (event.entity.typeId === "minecraft:player") {
-    let player = event.entity;
-    if (player.isInWater == true) {
-      player.addEffect("instant_health", 5);
-      player.teleport({ x: -50, y: 60, z: 132 });
-    }
-  }
-});
 world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let viewDirection = event.player.getViewDirection();
   let direction = await facing(viewDirection);
@@ -675,5 +630,87 @@ world10.beforeEvents.itemUseOn.subscribe(async (event) => {
     }
   }
 });
+function applyPotionEffect(player, potion2, seconds2) {
+  player.runCommand("scoreboard objectives setdisplay sidebar Depth");
+  let tick = seconds2 * 20;
+  potionStart = system2.currentTick;
+  switch (potion2) {
+    case "water_breathing": {
+      player.addEffect("water_breathing", tick);
+      break;
+    }
+    case "night_vision": {
+      player.addEffect("night_vision", tick);
+      break;
+    }
+    case "blindness": {
+      player.addEffect("blindness", tick);
+      break;
+    }
+    case "poison": {
+      player.addEffect("poison", tick);
+      break;
+    }
+    case "levitation": {
+      player.addEffect("levitation", tick);
+      break;
+    }
+  }
+  player.runCommand("clear @p minecraft:glass_bottle");
+}
+function mainTick() {
+  world10.getAllPlayers().forEach((player) => {
+    if (player.isInWater == true) {
+      meters = 58 - Math.floor(player.location.y);
+      player.runCommand(`scoreboard players set Meters Depth ${meters}`);
+      if (potionDrank) {
+        applyPotionEffect(player, potion, seconds);
+        potionDrank = false;
+      }
+      if (player.getEffect("water_breathing")) {
+        displayTimer(potionStart, seconds, player, "Breathing underwater");
+      } else if (player.getEffect("night_vision")) {
+        displayTimer(potionStart, seconds, player, "Great work you can see in the dark for");
+      } else if (player.getEffect("blindness")) {
+        displayTimer(potionStart, seconds, player, "Oh no! The ratios were wrong, you can't see anything for");
+      } else if (player.getEffect("levitation")) {
+        displayTimer(potionStart, seconds, player, "Oh no! You're floating for");
+      }
+      if (player.isSneaking == true) {
+        surface(player);
+      }
+    }
+  });
+  system2.run(mainTick);
+}
+async function surface(player) {
+  player.teleport({ x: -50, y: 60, z: 132 });
+  player.addEffect("instant_health", 5);
+  player.removeEffect("blindness");
+  player.removeEffect("night_vision");
+  player.removeEffect("water_breathing");
+  player.runCommand("scoreboard objectives setdisplay sidebar");
+}
+world10.afterEvents.itemCompleteUse.subscribe(async (event) => {
+  let player = event.source;
+  if (event.itemStack?.typeId === "minecraft:potion") {
+    if (potion === "poison") {
+      player.sendMessage("\xA7fYou mixed the potion with the \xA72wrong ingredients. \n\xA7fIt has had no effect.\nMake sure you're using the correct ingredients.");
+    } else {
+      potionDrank = true;
+      player.sendMessage("\xA7fYou drank the potion. \n\xA72Jump in the well \xA7fto see the effect.");
+    }
+    event.source.runCommand("clear @p minecraft:glass_bottle");
+  }
+});
+world10.afterEvents.entityHealthChanged.subscribe(async (event) => {
+  if (event.entity.typeId === "minecraft:player") {
+    let player = event.entity;
+    if (player.isInWater == true) {
+      await surface(player);
+    }
+  }
+});
+system2.run(mainTick);
 
 //# sourceMappingURL=../debug/main.js.map

@@ -1,4 +1,4 @@
-import { BlockPermutation, BlockInventoryComponent, ItemStack, world } from "@minecraft/server";
+import { BlockPermutation, BlockInventoryComponent, system, world } from "@minecraft/server";
 import { getBlockValue } from "./input";
 
 async function getSlots(event: any) {
@@ -41,11 +41,11 @@ async function calculateRatio(ingredients: any) {
     let seconds = Math.ceil(ingredients.apple + ingredients.carrot);
     return { potion, seconds };
   } else if (wrongIngredientsSight === 0 && potatoRatio + carrotRatio > 0) {
-    let seconds = Math.ceil((potatoRatio + carrotRatio) / 5);
+    let seconds = Math.ceil(potatoRatio + carrotRatio);
     let potion = "blindness";
     return { potion, seconds };
   } else if (wrongIngredientsDive === 0 && beetrootRatio + melonRatio + potatoRatio > 0) {
-    let seconds = Math.ceil((beetrootRatio + melonRatio + potatoRatio) / 5);
+    let seconds = Math.ceil(beetrootRatio + melonRatio + potatoRatio);
     let potion = "levitation";
     return { potion, seconds };
   } else if (total === 0) {
@@ -140,3 +140,11 @@ export async function potionMaker(event: any) {
 async function resetArea() {
   await world.getDimension("overworld").runCommandAsync("fill -52 60 126 -52 69 122 black_stained_glass replace");
 }
+
+
+export function displayTimer(potionStart: number, seconds: number, player: any, potionDescription: string) {
+  let timeLeft = (potionStart + seconds * 20 - system.currentTick)/20;
+  if (timeLeft % 1 === 0 ){
+            player.onScreenDisplay.setActionBar(`Time left:\n ${potionDescription} ${timeLeft} seconds`);
+          }
+}; 

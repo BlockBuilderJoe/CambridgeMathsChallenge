@@ -1,4 +1,4 @@
-import { BlockPermutation, world } from "@minecraft/server";
+import { BlockPermutation, system, world } from "@minecraft/server";
 import { getBlockValue } from "./input";
 function getSlots(event) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -46,12 +46,12 @@ function calculateRatio(ingredients) {
             return { potion, seconds };
         }
         else if (wrongIngredientsSight === 0 && potatoRatio + carrotRatio > 0) {
-            let seconds = Math.ceil((potatoRatio + carrotRatio) / 5);
+            let seconds = Math.ceil(potatoRatio + carrotRatio);
             let potion = "blindness";
             return { potion, seconds };
         }
         else if (wrongIngredientsDive === 0 && beetrootRatio + melonRatio + potatoRatio > 0) {
-            let seconds = Math.ceil((beetrootRatio + melonRatio + potatoRatio) / 5);
+            let seconds = Math.ceil(beetrootRatio + melonRatio + potatoRatio);
             let potion = "levitation";
             return { potion, seconds };
         }
@@ -157,4 +157,11 @@ function resetArea() {
         yield world.getDimension("overworld").runCommandAsync("fill -52 60 126 -52 69 122 black_stained_glass replace");
     });
 }
+export function displayTimer(potionStart, seconds, player, potionDescription) {
+    let timeLeft = (potionStart + seconds * 20 - system.currentTick) / 20;
+    if (timeLeft % 1 === 0) {
+        player.onScreenDisplay.setActionBar(`Time left:\n ${potionDescription} ${timeLeft} seconds`);
+    }
+}
+;
 //# sourceMappingURL=potion.js.map
