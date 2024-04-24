@@ -14,7 +14,7 @@ const right = {
 };
 export function cuisenaire(event, blockName, rodLength, successMessage, direction) {
     var _a, _b, _c, _d;
-    let extend = true;
+    let extend = false;
     if ((_a = event.block.permutation) === null || _a === void 0 ? void 0 : _a.matches(blockName)) {
         overworld.runCommand("title @p actionbar " + successMessage);
         for (let i = 0; i < rodLength; i++) {
@@ -34,7 +34,7 @@ export function cuisenaire(event, blockName, rodLength, successMessage, directio
                 }
             }
         }
-        if (extend == true) {
+        if (extend) {
             extendRods(event, blockName, rodLength, direction);
         }
     }

@@ -321,7 +321,7 @@ var right = {
   south: "east"
 };
 function cuisenaire(event, blockName, rodLength, successMessage, direction) {
-  let extend = true;
+  let extend = false;
   if (event.block.permutation?.matches(blockName)) {
     overworld4.runCommand("title @p actionbar " + successMessage);
     for (let i = 0; i < rodLength; i++) {
@@ -338,7 +338,7 @@ function cuisenaire(event, blockName, rodLength, successMessage, direction) {
         }
       }
     }
-    if (extend == true) {
+    if (extend) {
       extendRods(event, blockName, rodLength, direction);
     }
   }
@@ -380,9 +380,6 @@ async function square(location) {
   );
   overworld5.runCommandAsync(
     "fill " + (location.x + 1) + " " + (location.y + 1) + " " + (location.z + 1) + " " + (location.x + 10) + " " + (location.y + 1) + " " + (location.z + 10) + " tallgrass replace"
-  );
-  overworld5.runCommandAsync(
-    "fill " + (location.x + 1) + " " + (location.y + 2) + " " + (location.z + 1) + " " + (location.x + 10) + " " + (location.y + 2) + " " + (location.z + 10) + " air replace"
   );
 }
 async function grid(location) {
@@ -603,16 +600,18 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
   }
 });
 world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
-  let viewDirection = event.player.getViewDirection();
-  let direction = await facing(viewDirection);
-  if (event.block.permutation?.matches("red_concrete")) {
-    cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction);
-  } else if (event.block.permutation?.matches("green_concrete")) {
-    cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction);
-  } else if (event.block.permutation?.matches("purple_concrete")) {
-    cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction);
-  } else if (event.block.permutation?.matches("blue_concrete")) {
-    cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction);
+  if (event.block.location.y === -60) {
+    let viewDirection = event.player.getViewDirection();
+    let direction = await facing(viewDirection);
+    if (event.block.permutation?.matches("red_concrete")) {
+      cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction);
+    } else if (event.block.permutation?.matches("green_concrete")) {
+      cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction);
+    } else if (event.block.permutation?.matches("purple_concrete")) {
+      cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction);
+    } else if (event.block.permutation?.matches("blue_concrete")) {
+      cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction);
+    }
   }
 });
 world10.afterEvents.playerBreakBlock.subscribe((clickEvent) => {

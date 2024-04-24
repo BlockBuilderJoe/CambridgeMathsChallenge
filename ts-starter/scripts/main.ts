@@ -70,16 +70,18 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
 
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
-  let viewDirection = event.player.getViewDirection();
-  let direction = await facing(viewDirection);
-  if (event.block.permutation?.matches("red_concrete")) {
-    cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction);
-  } else if (event.block.permutation?.matches("green_concrete")) {
-    cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction);
-  } else if (event.block.permutation?.matches("purple_concrete")) {
-    cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction);
-  } else if (event.block.permutation?.matches("blue_concrete")) {
-    cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction);
+  if (event.block.location.y === -60) {
+    let viewDirection = event.player.getViewDirection();
+    let direction = await facing(viewDirection);
+    if (event.block.permutation?.matches("red_concrete")) {
+      cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction);
+    } else if (event.block.permutation?.matches("green_concrete")) {
+      cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction);
+    } else if (event.block.permutation?.matches("purple_concrete")) {
+      cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction);
+    } else if (event.block.permutation?.matches("blue_concrete")) {
+      cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction);
+    }
   }
 });
 

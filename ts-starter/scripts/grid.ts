@@ -52,24 +52,11 @@ export async function square(location: Vector3) {
       " " +
       "tallgrass replace"
   );
-  overworld.runCommandAsync(
-    "fill " +
-      (location.x + 1) +
-      " " +
-      (location.y + 2) +
-      " " +
-      (location.z + 1) +
-      " " +
-      (location.x + 10) +
-      " " +
-      (location.y + 2) +
-      " " +
-      (location.z + 10) +
-      " " +
-      "air replace"
-  );
 }
 
+async function sandstoneStops(location: Vector3) {
+  overworld.runCommandAsync(`setblock ${location.x} ${location.y} ${location.z} sandstone`);
+}
 export async function grid(location: Vector3) {
   for (let i = 0; i < 5; i++) {
     for (let j = 0; j < 5; j++) {

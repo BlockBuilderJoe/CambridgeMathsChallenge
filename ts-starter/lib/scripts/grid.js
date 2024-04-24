@@ -44,20 +44,11 @@ export function square(location) {
             (location.z + 10) +
             " " +
             "tallgrass replace");
-        overworld.runCommandAsync("fill " +
-            (location.x + 1) +
-            " " +
-            (location.y + 2) +
-            " " +
-            (location.z + 1) +
-            " " +
-            (location.x + 10) +
-            " " +
-            (location.y + 2) +
-            " " +
-            (location.z + 10) +
-            " " +
-            "air replace");
+    });
+}
+function sandstoneStops(location) {
+    return __awaiter(this, void 0, void 0, function* () {
+        overworld.runCommandAsync(`setblock ${location.x} ${location.y} ${location.z} sandstone`);
     });
 }
 export function grid(location) {
