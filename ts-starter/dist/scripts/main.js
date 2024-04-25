@@ -344,15 +344,15 @@ async function replayRods(rodsPlaced2, entity) {
   entity.runCommandAsync(`title ${entity.name} actionbar Replaying rods`);
   entity.runCommandAsync(`clear ${entity.name}`);
   entity.runCommandAsync(`replaceitem entity ${entity.name} slot.weapon.mainhand 0 filled_map`);
-  let i = 0;
-  for (let i2 = 0; i2 < rodsPlaced2.length; i2++) {
+  for (let i = 0; i < rodsPlaced2.length; i++) {
     ((index) => {
-      system.runInterval(async () => {
+      system.runTimeout(async () => {
         let location = { x: rodsPlaced2[index].location.x, y: rodsPlaced2[index].location.y, z: rodsPlaced2[index].location.z + 33 };
         let block = overworld4.getBlock(location);
+        world7.sendMessage(`Replaying rod ${index}`);
         placeRods(block, rodsPlaced2[index].blockName, rodsPlaced2[index].rodLength, rodsPlaced2[index].direction);
       }, 40 * index);
-    })(i2);
+    })(i);
   }
 }
 
