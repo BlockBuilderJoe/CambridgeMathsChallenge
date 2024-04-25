@@ -1,4 +1,4 @@
-import { world,system, Player, BlockPermutation, Block} from "@minecraft/server";
+import { world,system, Player, BlockPermutation, Block, Entity} from "@minecraft/server";
 import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
@@ -35,6 +35,7 @@ world.afterEvents.playerSpawn.subscribe((eventData) => {
   } 
 });
 
+
 //listens for the button push event.
 world.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
@@ -69,7 +70,8 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
     }
     case "608,-59,1016": {
       world.sendMessage("Replaying rods");
-      await replayRods(rodsPlaced);
+      let player = event.source as Entity; // Cast event.source to Player type
+      await replayRods(rodsPlaced, player); // Pass the casted player as an argument
       break;
     }
   }
@@ -85,14 +87,14 @@ world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
     let hasColour = await getBlockBehind(event, oppositeDirection)
     world.sendMessage(`The block behind is ${hasColour}`);
     if (hasColour) { //checks if the block has a colour (meaning it's a cuisenaire rod block)
-      if (event.block.permutation?.matches("red_concrete")) {
-        cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction, rodsPlaced);
-      } else if (event.block.permutation?.matches("green_concrete")) {
-        cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction, rodsPlaced);
-      } else if (event.block.permutation?.matches("purple_concrete")) {
-        cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction, rodsPlaced);
-      } else if (event.block.permutation?.matches("blue_concrete")) {
-        cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction, rodsPlaced);
+      if (block.permutation?.matches("red_concrete")) {
+        cuisenaire(block, "red_concrete", 2, "Placed two blocks", direction, rodsPlaced);
+      } else if (block.permutation?.matches("green_concrete")) {
+        cuisenaire(block, "green_concrete", 6, "Placed six blocks", direction, rodsPlaced);
+      } else if (block.permutation?.matches("purple_concrete")) {
+        cuisenaire(block, "purple_concrete", 4, "Placed four blocks", direction, rodsPlaced);
+      } else if (block.permutation?.matches("blue_concrete")) {
+        cuisenaire(block, "blue_concrete", 3, "Placed three blocks", direction, rodsPlaced);
       }
     }
     else {

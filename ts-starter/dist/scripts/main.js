@@ -1,5 +1,5 @@
 // scripts/main.ts
-import { world as world10, system as system2, BlockPermutation as BlockPermutation6 } from "@minecraft/server";
+import { world as world10, system as system3, BlockPermutation as BlockPermutation6 } from "@minecraft/server";
 
 // scripts/input.ts
 import { BlockPermutation, world } from "@minecraft/server";
@@ -306,30 +306,33 @@ async function scaleShape(shape, scaleFactor, axes) {
 }
 
 // scripts/rod.ts
-import { BlockPermutation as BlockPermutation4, world as world7 } from "@minecraft/server";
+import { BlockPermutation as BlockPermutation4, world as world7, system } from "@minecraft/server";
 var overworld4 = world7.getDimension("overworld");
-function cuisenaire(event, blockName, rodLength, successMessage, direction, rodsPlaced2) {
-  if (event.block.permutation?.matches(blockName)) {
-    let placeRods = true;
+function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced2) {
+  if (block.permutation?.matches(blockName)) {
+    let runPlaceRods = true;
     overworld4.runCommand("title @p actionbar " + successMessage);
     for (let i = 0; i < rodLength; i++) {
-      if (event.block[direction](i)?.permutation?.matches("sandstone") || event.block[direction](i)?.permutation?.matches("white_concrete") || event.block[direction](1)?.permutation?.getState("color")) {
+      if (block[direction](i)?.permutation?.matches("sandstone") || block[direction](i)?.permutation?.matches("white_concrete") || block[direction](1)?.permutation?.getState("color")) {
         world7.sendMessage("It's gone over a whole rod length!");
-        placeRods = false;
+        runPlaceRods = false;
         break;
       }
     }
-    if (placeRods) {
-      rodsPlaced2.push({ location: event.block.location, direction, rodLength, blockName });
-      for (let i = 0; i < rodLength; i++) {
-        if (["east", "west", "north", "south"].includes(direction)) {
-          event.block[direction](i)?.setPermutation(BlockPermutation4.resolve(blockName));
-        } else {
-          throw new Error(`Invalid direction: ${direction}`);
-        }
-      }
+    if (runPlaceRods) {
+      rodsPlaced2.push({ location: block.location, direction, rodLength, blockName });
+      placeRods(block, blockName, rodLength, direction);
     } else {
-      event.block?.setPermutation(BlockPermutation4.resolve("air"));
+      block?.setPermutation(BlockPermutation4.resolve("air"));
+    }
+  }
+}
+function placeRods(block, blockName, rodLength, direction) {
+  for (let i = 0; i < rodLength; i++) {
+    if (["east", "west", "north", "south"].includes(direction)) {
+      block[direction](i)?.setPermutation(BlockPermutation4.resolve(blockName));
+    } else {
+      throw new Error(`Invalid direction: ${direction}`);
     }
   }
 }
@@ -337,10 +340,19 @@ async function getBlockBehind(event, oppositeDirection) {
   let hasColour = event.block[oppositeDirection](1)?.permutation?.getState("color");
   return hasColour;
 }
-async function replayRods(rodsPlaced2) {
-  for (let i = 0; i < rodsPlaced2.length; i++) {
-    let rod = rodsPlaced2[i];
-    world7.sendMessage(`Replaying rod ${rod.blockName} at ${rod.location.x} ${rod.location.y} ${rod.location.z} in direction ${rod.direction} for length ${rod.rodLength}`);
+async function replayRods(rodsPlaced2, entity) {
+  entity.runCommandAsync(`title ${entity.name} actionbar Replaying rods`);
+  entity.runCommandAsync(`clear ${entity.name}`);
+  entity.runCommandAsync(`replaceitem entity ${entity.name} slot.weapon.mainhand 0 filled_map`);
+  let i = 0;
+  for (let i2 = 0; i2 < rodsPlaced2.length; i2++) {
+    ((index) => {
+      system.runInterval(async () => {
+        let location = { x: rodsPlaced2[index].location.x, y: rodsPlaced2[index].location.y, z: rodsPlaced2[index].location.z + 33 };
+        let block = overworld4.getBlock(location);
+        placeRods(block, rodsPlaced2[index].blockName, rodsPlaced2[index].rodLength, rodsPlaced2[index].direction);
+      }, 40 * index);
+    })(i2);
   }
 }
 
@@ -388,7 +400,7 @@ async function facing(blockLocation) {
 }
 
 // scripts/potion.ts
-import { BlockPermutation as BlockPermutation5, system, world as world9 } from "@minecraft/server";
+import { BlockPermutation as BlockPermutation5, system as system2, world as world9 } from "@minecraft/server";
 async function getSlots(event) {
   let hopper = event.block.getComponent("inventory");
   let slots = [];
@@ -521,7 +533,7 @@ async function resetArea2() {
   await world9.getDimension("overworld").runCommandAsync("fill -52 60 126 -52 69 122 black_stained_glass replace");
 }
 function displayTimer(potionStart2, seconds2, player, potionDescription) {
-  let timeLeft = (potionStart2 + seconds2 * 20 - system.currentTick) / 20;
+  let timeLeft = (potionStart2 + seconds2 * 20 - system2.currentTick) / 20;
   if (timeLeft % 1 === 0) {
     player.onScreenDisplay.setActionBar(`Time left:
  ${potionDescription} ${timeLeft} seconds`);
@@ -584,7 +596,8 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
     }
     case "608,-59,1016": {
       world10.sendMessage("Replaying rods");
-      await replayRods(rodsPlaced);
+      let player = event.source;
+      await replayRods(rodsPlaced, player);
       break;
     }
   }
@@ -598,14 +611,14 @@ world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
     let hasColour = await getBlockBehind(event, oppositeDirection);
     world10.sendMessage(`The block behind is ${hasColour}`);
     if (hasColour) {
-      if (event.block.permutation?.matches("red_concrete")) {
-        cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction, rodsPlaced);
-      } else if (event.block.permutation?.matches("green_concrete")) {
-        cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction, rodsPlaced);
-      } else if (event.block.permutation?.matches("purple_concrete")) {
-        cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction, rodsPlaced);
-      } else if (event.block.permutation?.matches("blue_concrete")) {
-        cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction, rodsPlaced);
+      if (block.permutation?.matches("red_concrete")) {
+        cuisenaire(block, "red_concrete", 2, "Placed two blocks", direction, rodsPlaced);
+      } else if (block.permutation?.matches("green_concrete")) {
+        cuisenaire(block, "green_concrete", 6, "Placed six blocks", direction, rodsPlaced);
+      } else if (block.permutation?.matches("purple_concrete")) {
+        cuisenaire(block, "purple_concrete", 4, "Placed four blocks", direction, rodsPlaced);
+      } else if (block.permutation?.matches("blue_concrete")) {
+        cuisenaire(block, "blue_concrete", 3, "Placed three blocks", direction, rodsPlaced);
       }
     } else {
       world10.sendMessage("You need to place a cuisenaire rod block first.");
@@ -631,7 +644,7 @@ world10.beforeEvents.itemUseOn.subscribe(async (event) => {
 function applyPotionEffect(player, potion2, seconds2) {
   player.runCommand("scoreboard objectives setdisplay sidebar Depth");
   let tick = seconds2 * 20;
-  potionStart = system2.currentTick;
+  potionStart = system3.currentTick;
   switch (potion2) {
     case "water_breathing": {
       player.addEffect("water_breathing", tick);
@@ -679,7 +692,7 @@ function mainTick() {
       }
     }
   });
-  system2.run(mainTick);
+  system3.run(mainTick);
 }
 async function surface(player) {
   player.teleport({ x: -50, y: 60, z: 132 });
@@ -709,6 +722,6 @@ world10.afterEvents.entityHealthChanged.subscribe(async (event) => {
     }
   }
 });
-system2.run(mainTick);
+system3.run(mainTick);
 
 //# sourceMappingURL=../debug/main.js.map
