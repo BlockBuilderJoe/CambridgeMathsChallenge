@@ -15,7 +15,7 @@ export function cuisenaire(
     overworld.runCommand("title @p actionbar " + successMessage);
     for (let i = 0; i < rodLength; i++) {
       //runs east to the rod length
-      if (event.block[direction](i)?.permutation?.matches("sandstone") || event.block[direction](i)?.permutation?.matches("white_concrete") ) {
+      if (event.block[direction](i)?.permutation?.matches("sandstone") || event.block[direction](i)?.permutation?.matches("white_concrete") || event.block[direction](1)?.permutation?.getState("color") ) {
         world.sendMessage("It's gone over a whole rod length!");
         placeRods = false;
         break;

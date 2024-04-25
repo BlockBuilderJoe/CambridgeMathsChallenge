@@ -313,7 +313,7 @@ function cuisenaire(event, blockName, rodLength, successMessage, direction) {
     let placeRods = true;
     overworld4.runCommand("title @p actionbar " + successMessage);
     for (let i = 0; i < rodLength; i++) {
-      if (event.block[direction](i)?.permutation?.matches("sandstone") || event.block[direction](i)?.permutation?.matches("white_concrete")) {
+      if (event.block[direction](i)?.permutation?.matches("sandstone") || event.block[direction](i)?.permutation?.matches("white_concrete") || event.block[direction](1)?.permutation?.getState("color")) {
         world7.sendMessage("It's gone over a whole rod length!");
         placeRods = false;
         break;
