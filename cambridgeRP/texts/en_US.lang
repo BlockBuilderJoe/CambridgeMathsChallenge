@@ -19,4 +19,12 @@ tile.concrete.red.name=Two
 tile.concrete.purple.name=Four
 tile.concrete.green.name=Six
 tile.concrete.brown.name=Eight
+item.stick.name=§eMathmagicians Wand
+item.itemLock.popupNotice.cantMove=§eLeft click to change blocks and right click to cast spells.
+potion.emptyPotion.name=Ratio Potion
+potion.empty=Double check the ratio before drinking to avoid unwanted side effects.
+
+
+
+
 

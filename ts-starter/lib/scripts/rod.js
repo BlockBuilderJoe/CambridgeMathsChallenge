@@ -1,4 +1,5 @@
 import { BlockPermutation, world, system } from "@minecraft/server";
+import { grid } from "./grid";
 let overworld = world.getDimension("overworld");
 export function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced) {
     var _a, _b, _c, _d, _e, _f, _g;
@@ -42,17 +43,29 @@ export function getBlockBehind(event, oppositeDirection) {
 }
 export function replayRods(rodsPlaced, entity) {
     return __awaiter(this, void 0, void 0, function* () {
+        let perfectRun = [{ location: { x: 609, y: -60, z: 1009 }, direction: "east", rodLength: 2, blockName: "red_concrete" }, { location: { x: 610, y: -60, z: 1008 }, direction: "north", rodLength: 2, blockName: "red_concrete" }, { location: { x: 610, y: -60, z: 1005 }, direction: "north", rodLength: 4, blockName: "purple_concrete" }, { location: { x: 611, y: -60, z: 1002 }, direction: "east", rodLength: 8, blockName: "brown_concrete" }];
+        world.sendMessage('Replaying rods');
         entity.runCommandAsync(`title ${entity.name} actionbar Replaying rods`);
         entity.runCommandAsync(`clear ${entity.name}`);
         entity.runCommandAsync(`replaceitem entity ${entity.name} slot.weapon.mainhand 0 filled_map`);
+        yield grid({ x: 608, y: -60, z: 995 });
+        let shouldContinue = true;
         for (let i = 0; i < rodsPlaced.length; i++) {
             ((index) => {
-                system.runTimeout(() => __awaiter(this, void 0, void 0, function* () {
-                    let location = { x: rodsPlaced[index].location.x, y: rodsPlaced[index].location.y, z: rodsPlaced[index].location.z + 33 };
-                    let block = overworld.getBlock(location);
-                    world.sendMessage(`Replaying rod ${index}`);
+                system.runTimeout(() => {
+                    if (!shouldContinue) {
+                        return;
+                    }
+                    let offsetLocation = { x: perfectRun[index].location.x, y: perfectRun[index].location.y, z: perfectRun[index].location.z + 33 };
+                    let offsetBlock = overworld.getBlock(offsetLocation);
+                    let block = overworld.getBlock(rodsPlaced[index].location);
                     placeRods(block, rodsPlaced[index].blockName, rodsPlaced[index].rodLength, rodsPlaced[index].direction);
-                }), 40 * index);
+                    placeRods(offsetBlock, perfectRun[index].blockName, perfectRun[index].rodLength, perfectRun[index].direction);
+                    if (rodsPlaced[index].blockName !== perfectRun[index].blockName) {
+                        world.sendMessage(`${rodsPlaced[index].rodLength} is not the most efficient rod to place here. If you want to get further try again!`);
+                        shouldContinue = false;
+                    }
+                }, 40 * index);
             })(i);
         }
     });

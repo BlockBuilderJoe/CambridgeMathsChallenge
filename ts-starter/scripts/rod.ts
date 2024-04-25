@@ -1,5 +1,5 @@
 import { BlockPermutation, world, system, Vector3, Player, EntityInventoryComponent, EquipmentSlot, EntityItemComponent} from "@minecraft/server";
-
+import { grid } from "./grid";
 let overworld = world.getDimension("overworld");
 
 export function cuisenaire(
@@ -50,17 +50,30 @@ export async function getBlockBehind(event: any, oppositeDirection: string) {
 
 
 export async function replayRods(rodsPlaced: any[], entity: any){
+  let perfectRun = [{location: {x:609, y:-60, z:1009}, direction: "east", rodLength: 2, blockName: "red_concrete"}, {location: {x: 610, y: -60, z: 1008}, direction: "north", rodLength: 2, blockName: "red_concrete"}, {location: {x: 610, y: -60, z: 1005}, direction: "north", rodLength: 4, blockName: "purple_concrete"}, {location: {x: 611, y: -60, z: 1002}, direction: "east", rodLength: 8, blockName: "brown_concrete"}];
+  world.sendMessage('Replaying rods');
   entity.runCommandAsync(`title ${entity.name} actionbar Replaying rods`);
   entity.runCommandAsync(`clear ${entity.name}`);
   entity.runCommandAsync(`replaceitem entity ${entity.name} slot.weapon.mainhand 0 filled_map`);
-  
+  await grid({ x: 608, y: -60, z: 995 });
+  let shouldContinue = true;
+
   for (let i = 0; i < rodsPlaced.length; i++) {
     ((index) => {
-      system.runTimeout(async() => {
-        let location = {x: rodsPlaced[index].location.x, y: rodsPlaced[index].location.y, z: rodsPlaced[index].location.z + 33};
-        let block = overworld.getBlock(location);
-        world.sendMessage(`Replaying rod ${index}`);
+      system.runTimeout(() => {
+        if (!shouldContinue) {
+          return;
+        }
+
+        let offsetLocation = {x: perfectRun[index].location.x, y: perfectRun[index].location.y, z: perfectRun[index].location.z + 33};
+        let offsetBlock = overworld.getBlock(offsetLocation);
+        let block = overworld.getBlock(rodsPlaced[index].location); 
         placeRods(block, rodsPlaced[index].blockName, rodsPlaced[index].rodLength, rodsPlaced[index].direction);
+        placeRods(offsetBlock, perfectRun[index].blockName, perfectRun[index].rodLength, perfectRun[index].direction);
+        if (rodsPlaced[index].blockName !== perfectRun[index].blockName) {
+          world.sendMessage(`${rodsPlaced[index].rodLength} is not the most efficient rod to place here. If you want to get further try again!`);
+          shouldContinue = false;
+        }
       }, 40 * index);
     })(i);
   }

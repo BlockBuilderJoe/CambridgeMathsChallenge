@@ -306,15 +306,40 @@ async function scaleShape(shape, scaleFactor, axes) {
 }
 
 // scripts/rod.ts
-import { BlockPermutation as BlockPermutation4, world as world7, system } from "@minecraft/server";
+import { BlockPermutation as BlockPermutation4, world as world8, system } from "@minecraft/server";
+
+// scripts/grid.ts
+import { world as world7 } from "@minecraft/server";
 var overworld4 = world7.getDimension("overworld");
+async function squareReset(location, concreteColours) {
+  for (let i = 0; i < concreteColours.length; i++) {
+    let command = `fill ${location.x} ${location.y} ${location.z} ${location.x + 11} ${location.y} ${location.z + 11} tallgrass replace ${concreteColours[i]}_concrete`;
+    overworld4.runCommand(command);
+  }
+  overworld4.runCommandAsync(`fill ${location.x} ${location.y - 1} ${location.z} ${location.x + 11} ${location.y - 1} ${location.z + 11} grass replace dirt`);
+  overworld4.runCommandAsync(`fill ${location.x} ${location.y} ${location.z} ${location.x + 11} ${location.y} ${location.z + 11} tallgrass replace air`);
+}
+async function grid(location) {
+  let concreteColours = ["red", "green", "purple", "brown"];
+  for (let i = 0; i < 5; i++) {
+    for (let j = 0; j < 5; j++) {
+      let offset_x = location.x + i * 11;
+      let offset_z = location.z + j * 11;
+      const squareLocation = { x: offset_x, y: location.y, z: offset_z };
+      await squareReset(squareLocation, concreteColours);
+    }
+  }
+}
+
+// scripts/rod.ts
+var overworld5 = world8.getDimension("overworld");
 function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced2) {
   if (block.permutation?.matches(blockName)) {
     let runPlaceRods = true;
-    overworld4.runCommand("title @p actionbar " + successMessage);
+    overworld5.runCommand("title @p actionbar " + successMessage);
     for (let i = 0; i < rodLength; i++) {
       if (block[direction](i)?.permutation?.matches("sandstone") || block[direction](i)?.permutation?.matches("white_concrete") || block[direction](1)?.permutation?.getState("color")) {
-        world7.sendMessage("It's gone over a whole rod length!");
+        world8.sendMessage("It's gone over a whole rod length!");
         runPlaceRods = false;
         break;
       }
@@ -341,41 +366,30 @@ async function getBlockBehind(event, oppositeDirection) {
   return hasColour;
 }
 async function replayRods(rodsPlaced2, entity) {
+  let perfectRun = [{ location: { x: 609, y: -60, z: 1009 }, direction: "east", rodLength: 2, blockName: "red_concrete" }, { location: { x: 610, y: -60, z: 1008 }, direction: "north", rodLength: 2, blockName: "red_concrete" }, { location: { x: 610, y: -60, z: 1005 }, direction: "north", rodLength: 4, blockName: "purple_concrete" }, { location: { x: 611, y: -60, z: 1002 }, direction: "east", rodLength: 8, blockName: "brown_concrete" }];
+  world8.sendMessage("Replaying rods");
   entity.runCommandAsync(`title ${entity.name} actionbar Replaying rods`);
   entity.runCommandAsync(`clear ${entity.name}`);
   entity.runCommandAsync(`replaceitem entity ${entity.name} slot.weapon.mainhand 0 filled_map`);
+  await grid({ x: 608, y: -60, z: 995 });
+  let shouldContinue = true;
   for (let i = 0; i < rodsPlaced2.length; i++) {
     ((index) => {
-      system.runTimeout(async () => {
-        let location = { x: rodsPlaced2[index].location.x, y: rodsPlaced2[index].location.y, z: rodsPlaced2[index].location.z + 33 };
-        let block = overworld4.getBlock(location);
-        world7.sendMessage(`Replaying rod ${index}`);
+      system.runTimeout(() => {
+        if (!shouldContinue) {
+          return;
+        }
+        let offsetLocation = { x: perfectRun[index].location.x, y: perfectRun[index].location.y, z: perfectRun[index].location.z + 33 };
+        let offsetBlock = overworld5.getBlock(offsetLocation);
+        let block = overworld5.getBlock(rodsPlaced2[index].location);
         placeRods(block, rodsPlaced2[index].blockName, rodsPlaced2[index].rodLength, rodsPlaced2[index].direction);
+        placeRods(offsetBlock, perfectRun[index].blockName, perfectRun[index].rodLength, perfectRun[index].direction);
+        if (rodsPlaced2[index].blockName !== perfectRun[index].blockName) {
+          world8.sendMessage(`${rodsPlaced2[index].rodLength} is not the most efficient rod to place here. If you want to get further try again!`);
+          shouldContinue = false;
+        }
       }, 40 * index);
     })(i);
-  }
-}
-
-// scripts/grid.ts
-import { world as world8 } from "@minecraft/server";
-var overworld5 = world8.getDimension("overworld");
-async function squareReset(location, concreteColours) {
-  for (let i = 0; i < concreteColours.length; i++) {
-    let command = `fill ${location.x} ${location.y} ${location.z} ${location.x + 11} ${location.y} ${location.z + 11} tallgrass replace ${concreteColours[i]}_concrete`;
-    overworld5.runCommand(command);
-  }
-  overworld5.runCommandAsync(`fill ${location.x} ${location.y - 1} ${location.z} ${location.x + 11} ${location.y - 1} ${location.z + 11} grass replace dirt`);
-  overworld5.runCommandAsync(`fill ${location.x} ${location.y} ${location.z} ${location.x + 11} ${location.y} ${location.z + 11} tallgrass replace air`);
-}
-async function grid(location) {
-  let concreteColours = ["red", "green", "purple"];
-  for (let i = 0; i < 5; i++) {
-    for (let j = 0; j < 5; j++) {
-      let offset_x = location.x + i * 11;
-      let offset_z = location.z + j * 11;
-      const squareLocation = { x: offset_x, y: location.y, z: offset_z };
-      await squareReset(squareLocation, concreteColours);
-    }
   }
 }
 
@@ -591,6 +605,7 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
     }
     case "608,-59,1007": {
       rodsPlaced = [];
+      world10.getDimension("overworld").runCommand("function lava");
       await grid({ x: 608, y: -60, z: 995 });
       break;
     }
@@ -617,8 +632,8 @@ world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
         cuisenaire(block, "green_concrete", 6, "Placed six blocks", direction, rodsPlaced);
       } else if (block.permutation?.matches("purple_concrete")) {
         cuisenaire(block, "purple_concrete", 4, "Placed four blocks", direction, rodsPlaced);
-      } else if (block.permutation?.matches("blue_concrete")) {
-        cuisenaire(block, "blue_concrete", 3, "Placed three blocks", direction, rodsPlaced);
+      } else if (block.permutation?.matches("brown_concrete")) {
+        cuisenaire(block, "brown_concrete", 8, "Placed eight blocks", direction, rodsPlaced);
       }
     } else {
       world10.sendMessage("You need to place a cuisenaire rod block first.");

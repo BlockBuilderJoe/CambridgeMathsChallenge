@@ -10,7 +10,7 @@ setblock 3 -62 83 allow
 setblock 3 -62 79 allow
 
 
-gamemode a @a
+
 clear @p
 give @p green_concrete 10
 give @p purple_concrete 10

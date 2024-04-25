@@ -58,7 +58,7 @@ export function squareReset(location, concreteColours) {
 }
 export function grid(location) {
     return __awaiter(this, void 0, void 0, function* () {
-        let concreteColours = ["red", "green", "purple"];
+        let concreteColours = ["red", "green", "purple", "brown"];
         for (let i = 0; i < 5; i++) {
             for (let j = 0; j < 5; j++) {
                 let offset_x = location.x + i * 11;

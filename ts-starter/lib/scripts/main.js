@@ -57,6 +57,7 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
         }
         case "608,-59,1007": {
             rodsPlaced = []; //resets the rods placed array
+            world.getDimension("overworld").runCommand("function lava");
             yield grid({ x: 608, y: -60, z: 995 });
             break;
         }
@@ -88,8 +89,8 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0
             else if ((_c = block.permutation) === null || _c === void 0 ? void 0 : _c.matches("purple_concrete")) {
                 cuisenaire(block, "purple_concrete", 4, "Placed four blocks", direction, rodsPlaced);
             }
-            else if ((_d = block.permutation) === null || _d === void 0 ? void 0 : _d.matches("blue_concrete")) {
-                cuisenaire(block, "blue_concrete", 3, "Placed three blocks", direction, rodsPlaced);
+            else if ((_d = block.permutation) === null || _d === void 0 ? void 0 : _d.matches("brown_concrete")) {
+                cuisenaire(block, "brown_concrete", 8, "Placed eight blocks", direction, rodsPlaced);
             }
         }
         else {

@@ -65,7 +65,7 @@ export async function squareReset(location: Vector3, concreteColours: string[]) 
 
 
 export async function grid(location: Vector3) {
-  let concreteColours = ["red", "green", "purple"];
+  let concreteColours = ["red", "green", "purple", "brown"];
   for (let i = 0; i < 5; i++) {
     for (let j = 0; j < 5; j++) {
       let offset_x = location.x + i * 11;
