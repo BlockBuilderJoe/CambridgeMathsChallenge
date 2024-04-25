@@ -3,7 +3,7 @@ import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
 import { scale, resetArea } from "./scaler";
-import { cuisenaire, getBlockBehind } from "./rod";
+import { cuisenaire, getBlockBehind, replayRods } from "./rod";
 import { cycleNumberBlock } from "./output";
 import { grid } from "./grid";
 import { facing } from "./playerFacing";
@@ -15,6 +15,7 @@ let currentPlayer = null;
 let potionStart = 0;
 let potionDrank = false;
 let meters = 0;
+let rodsPlaced: any[] = [];
 
 //welcome player
 world.afterEvents.playerSpawn.subscribe((eventData) => {
@@ -62,7 +63,13 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
       break;
     }
     case "608,-59,1007": {
+      rodsPlaced = []; //resets the rods placed array
       await grid({ x: 608, y: -60, z: 995 });
+      break;
+    }
+    case "608,-59,1016": {
+      world.sendMessage("Replaying rods");
+      await replayRods(rodsPlaced);
       break;
     }
   }
@@ -79,13 +86,13 @@ world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
     world.sendMessage(`The block behind is ${hasColour}`);
     if (hasColour) { //checks if the block has a colour (meaning it's a cuisenaire rod block)
       if (event.block.permutation?.matches("red_concrete")) {
-        cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction);
+        cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction, rodsPlaced);
       } else if (event.block.permutation?.matches("green_concrete")) {
-        cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction);
+        cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction, rodsPlaced);
       } else if (event.block.permutation?.matches("purple_concrete")) {
-        cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction);
+        cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction, rodsPlaced);
       } else if (event.block.permutation?.matches("blue_concrete")) {
-        cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction);
+        cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction, rodsPlaced);
       }
     }
     else {
@@ -171,7 +178,7 @@ function mainTick() {
       }
     }
   });
-system.run(mainTick);
+  system.run(mainTick);
 }
 async function surface(player: any) {
   player.teleport({x:-50,y: 60,z: 132});

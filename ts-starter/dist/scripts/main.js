@@ -308,7 +308,7 @@ async function scaleShape(shape, scaleFactor, axes) {
 // scripts/rod.ts
 import { BlockPermutation as BlockPermutation4, world as world7 } from "@minecraft/server";
 var overworld4 = world7.getDimension("overworld");
-function cuisenaire(event, blockName, rodLength, successMessage, direction) {
+function cuisenaire(event, blockName, rodLength, successMessage, direction, rodsPlaced2) {
   if (event.block.permutation?.matches(blockName)) {
     let placeRods = true;
     overworld4.runCommand("title @p actionbar " + successMessage);
@@ -320,6 +320,7 @@ function cuisenaire(event, blockName, rodLength, successMessage, direction) {
       }
     }
     if (placeRods) {
+      rodsPlaced2.push({ location: event.block.location, direction, rodLength, blockName });
       for (let i = 0; i < rodLength; i++) {
         if (["east", "west", "north", "south"].includes(direction)) {
           event.block[direction](i)?.setPermutation(BlockPermutation4.resolve(blockName));
@@ -335,6 +336,12 @@ function cuisenaire(event, blockName, rodLength, successMessage, direction) {
 async function getBlockBehind(event, oppositeDirection) {
   let hasColour = event.block[oppositeDirection](1)?.permutation?.getState("color");
   return hasColour;
+}
+async function replayRods(rodsPlaced2) {
+  for (let i = 0; i < rodsPlaced2.length; i++) {
+    let rod = rodsPlaced2[i];
+    world7.sendMessage(`Replaying rod ${rod.blockName} at ${rod.location.x} ${rod.location.y} ${rod.location.z} in direction ${rod.direction} for length ${rod.rodLength}`);
+  }
 }
 
 // scripts/grid.ts
@@ -528,6 +535,7 @@ var currentPlayer = null;
 var potionStart = 0;
 var potionDrank = false;
 var meters = 0;
+var rodsPlaced = [];
 world10.afterEvents.playerSpawn.subscribe((eventData) => {
   currentPlayer = eventData.player;
   let initialSpawn = eventData.initialSpawn;
@@ -570,7 +578,13 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
       break;
     }
     case "608,-59,1007": {
+      rodsPlaced = [];
       await grid({ x: 608, y: -60, z: 995 });
+      break;
+    }
+    case "608,-59,1016": {
+      world10.sendMessage("Replaying rods");
+      await replayRods(rodsPlaced);
       break;
     }
   }
@@ -585,13 +599,13 @@ world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
     world10.sendMessage(`The block behind is ${hasColour}`);
     if (hasColour) {
       if (event.block.permutation?.matches("red_concrete")) {
-        cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction);
+        cuisenaire(event, "red_concrete", 2, "Placed two blocks", direction, rodsPlaced);
       } else if (event.block.permutation?.matches("green_concrete")) {
-        cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction);
+        cuisenaire(event, "green_concrete", 6, "Placed six blocks", direction, rodsPlaced);
       } else if (event.block.permutation?.matches("purple_concrete")) {
-        cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction);
+        cuisenaire(event, "purple_concrete", 4, "Placed four blocks", direction, rodsPlaced);
       } else if (event.block.permutation?.matches("blue_concrete")) {
-        cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction);
+        cuisenaire(event, "blue_concrete", 3, "Placed three blocks", direction, rodsPlaced);
       }
     } else {
       world10.sendMessage("You need to place a cuisenaire rod block first.");
