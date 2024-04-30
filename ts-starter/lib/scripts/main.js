@@ -76,9 +76,7 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0
     if (block.location.y === -60) {
         let viewDirection = event.player.getViewDirection();
         let { direction, oppositeDirection } = yield facing(viewDirection);
-        world.sendMessage(`You are facing ${direction} not ${oppositeDirection}`);
         let hasColour = yield getBlockBehind(event, oppositeDirection);
-        world.sendMessage(`The block behind is ${hasColour}`);
         if (hasColour) { //checks if the block has a colour (meaning it's a cuisenaire rod block)
             if ((_a = block.permutation) === null || _a === void 0 ? void 0 : _a.matches("red_concrete")) {
                 cuisenaire(block, "red_concrete", 2, "Placed two blocks", direction, rodsPlaced);

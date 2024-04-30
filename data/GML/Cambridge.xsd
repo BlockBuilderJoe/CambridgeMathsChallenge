@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns:fme="http://www.safe.com/gml/fme" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gml="http://www.opengis.net/gml" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.safe.com/gml/fme" elementFormDefault="qualified">
+<import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+<element name="Output" type="fme:OutputType" substitutionGroup="gml:_Feature"/>
+<complexType name="OutputType">
+<complexContent>
+<extension base="gml:AbstractFeatureType">
+<sequence>
+<element name="placeName" minOccurs="0">
+<simpleType>
+<restriction base="string">
+<maxLength value="6"/>
+</restriction>
+</simpleType></element>
+<element name="What3Words" minOccurs="0">
+<simpleType>
+<restriction base="string">
+<maxLength value="16"/>
+</restriction>
+</simpleType></element>
+<element name="Make" minOccurs="0">
+<simpleType>
+<restriction base="string">
+<maxLength value="200"/>
+</restriction>
+</simpleType></element>
+<element name="DescriptiveGroup" minOccurs="0">
+<simpleType>
+<restriction base="string">
+<maxLength value="200"/>
+</restriction>
+</simpleType></element>
+<element name="DescriptiveTerm" minOccurs="0">
+<simpleType>
+<restriction base="string">
+<maxLength value="200"/>
+</restriction>
+</simpleType></element>
+<element name="Theme" minOccurs="0">
+<simpleType>
+<restriction base="string">
+<maxLength value="200"/>
+</restriction>
+</simpleType></element>
+<element ref="gml:surfaceProperty" minOccurs="0"/>
+<element ref="gml:multiSurfaceProperty" minOccurs="0"/>
+</sequence>
+</extension>
+</complexContent>
+</complexType>
+</schema>

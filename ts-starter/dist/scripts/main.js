@@ -622,9 +622,7 @@ world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   if (block.location.y === -60) {
     let viewDirection = event.player.getViewDirection();
     let { direction, oppositeDirection } = await facing(viewDirection);
-    world10.sendMessage(`You are facing ${direction} not ${oppositeDirection}`);
     let hasColour = await getBlockBehind(event, oppositeDirection);
-    world10.sendMessage(`The block behind is ${hasColour}`);
     if (hasColour) {
       if (block.permutation?.matches("red_concrete")) {
         cuisenaire(block, "red_concrete", 2, "Placed two blocks", direction, rodsPlaced);
