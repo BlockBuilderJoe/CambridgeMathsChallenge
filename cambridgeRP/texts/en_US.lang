@@ -23,7 +23,16 @@ item.stick.name=§eMathmagicians Wand
 item.itemLock.popupNotice.cantMove=§eLeft click to change blocks and right click to cast spells.
 potion.emptyPotion.name=Ratio Potion
 potion.empty=Double check the ratio before drinking to avoid unwanted side effects.
-
+tile.blockbuilders:number_11.name=number_11
+tile.blockbuilders:number_12.name=number_12
+tile.blockbuilders:number_13.name=number_13
+tile.blockbuilders:number_14.name=number_14
+tile.blockbuilders:number_15.name=number_15
+tile.blockbuilders:number_16.name=number_16
+tile.blockbuilders:number_17.name=number_17
+tile.blockbuilders:number_18.name=number_18
+tile.blockbuilders:number_19.name=number_19
+tile.blockbuilders:number_20.name=number_20
 
 
 
