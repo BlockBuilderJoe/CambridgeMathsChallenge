@@ -1,3 +1,5 @@
 *.DS_Store
 *.ffs_db
 ts-starter/node_modules/**/*/
+*.qb
+*.qef
