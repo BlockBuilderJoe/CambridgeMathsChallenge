@@ -1,6 +1,6 @@
 import { BlockPermutation, world, system, Vector3, Player, EntityInventoryComponent, EquipmentSlot, EntityItemComponent} from "@minecraft/server";
-import { grid } from "./grid";
 let overworld = world.getDimension("overworld");
+
 
 export function cuisenaire(
   block: any,
@@ -55,7 +55,7 @@ export async function replayRods(rodsPlaced: any[], entity: any){
   entity.runCommandAsync(`title ${entity.name} actionbar Replaying rods`);
   entity.runCommandAsync(`clear ${entity.name}`);
   entity.runCommandAsync(`replaceitem entity ${entity.name} slot.weapon.mainhand 0 filled_map`);
-  await grid({ x: 608, y: -60, z: 995 });
+  await resetGrid({ x: 608, y: -60, z: 995 });
   let shouldContinue = true;
 
   for (let i = 0; i < rodsPlaced.length; i++) {
@@ -78,4 +78,25 @@ export async function replayRods(rodsPlaced: any[], entity: any){
     })(i);
   }
 }
+
+//Resets the area to the original state, one area at a time. 
+async function squareReset(pos1: Vector3, pos2: Vector3, concreteColours: string[]) {
+  for (let i = 0; i < concreteColours.length; i++) {
+    let command = `fill ${pos1.x} ${pos1.y} ${pos1.z} ${pos2.x} ${pos2.y} ${pos2.z} tallgrass replace ${concreteColours[i]}_concrete`;
+    overworld.runCommand(command);
+  }
+  overworld.runCommandAsync(`fill ${pos1.x} ${pos1.y - 1} ${pos1.z} ${pos2.x} ${pos2.y - 1} ${pos2.z} grass replace dirt`);
+  overworld.runCommandAsync(`fill ${pos1.x} ${pos1.y} ${pos1.z} ${pos2.x} ${pos2.y} ${pos2.z} tallgrass replace air`);
+}
+
+//preps the grid coordinates for the squareReset function.
+export async function resetGrid(location: Vector3) {
+  let concreteColours = ["red", "green", "purple", "brown"]; // What rods will be replaced. 
+  for (let i = 0; i < 4; i++) {
+      let offset_x = location.x + i * 25; // 25 is the distance between each starting point of the grid.
+      let pos1 = {x: offset_x, y: location.y, z: location.z};
+      let pos2 = {x: offset_x + 24, y: location.y, z: location.z + 24};
+      await squareReset(pos1, pos2, concreteColours);
+    }
+  }
 

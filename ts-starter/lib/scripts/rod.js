@@ -1,5 +1,4 @@
 import { BlockPermutation, world, system } from "@minecraft/server";
-import { grid } from "./grid";
 let overworld = world.getDimension("overworld");
 export function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced) {
     var _a, _b, _c, _d, _e, _f, _g;
@@ -48,7 +47,7 @@ export function replayRods(rodsPlaced, entity) {
         entity.runCommandAsync(`title ${entity.name} actionbar Replaying rods`);
         entity.runCommandAsync(`clear ${entity.name}`);
         entity.runCommandAsync(`replaceitem entity ${entity.name} slot.weapon.mainhand 0 filled_map`);
-        yield grid({ x: 608, y: -60, z: 995 });
+        yield resetGrid({ x: 608, y: -60, z: 995 });
         let shouldContinue = true;
         for (let i = 0; i < rodsPlaced.length; i++) {
             ((index) => {
@@ -67,6 +66,29 @@ export function replayRods(rodsPlaced, entity) {
                     }
                 }, 40 * index);
             })(i);
+        }
+    });
+}
+//Resets the area to the original state, one area at a time. 
+function squareReset(pos1, pos2, concreteColours) {
+    return __awaiter(this, void 0, void 0, function* () {
+        for (let i = 0; i < concreteColours.length; i++) {
+            let command = `fill ${pos1.x} ${pos1.y} ${pos1.z} ${pos2.x} ${pos2.y} ${pos2.z} tallgrass replace ${concreteColours[i]}_concrete`;
+            overworld.runCommand(command);
+        }
+        overworld.runCommandAsync(`fill ${pos1.x} ${pos1.y - 1} ${pos1.z} ${pos2.x} ${pos2.y - 1} ${pos2.z} grass replace dirt`);
+        overworld.runCommandAsync(`fill ${pos1.x} ${pos1.y} ${pos1.z} ${pos2.x} ${pos2.y} ${pos2.z} tallgrass replace air`);
+    });
+}
+//preps the grid coordinates for the squareReset function.
+export function resetGrid(location) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let concreteColours = ["red", "green", "purple", "brown"]; // What rods will be replaced. 
+        for (let i = 0; i < 4; i++) {
+            let offset_x = location.x + i * 25; // 25 is the distance between each starting point of the grid.
+            let pos1 = { x: offset_x, y: location.y, z: location.z };
+            let pos2 = { x: offset_x + 24, y: location.y, z: location.z + 24 };
+            yield squareReset(pos1, pos2, concreteColours);
         }
     });
 }

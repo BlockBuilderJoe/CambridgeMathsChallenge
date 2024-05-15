@@ -1,5 +1,5 @@
 // scripts/main.ts
-import { world as world10, system as system3, BlockPermutation as BlockPermutation6 } from "@minecraft/server";
+import { world as world9, system as system3, BlockPermutation as BlockPermutation6 } from "@minecraft/server";
 
 // scripts/input.ts
 import { BlockPermutation, world } from "@minecraft/server";
@@ -306,40 +306,15 @@ async function scaleShape(shape, scaleFactor, axes) {
 }
 
 // scripts/rod.ts
-import { BlockPermutation as BlockPermutation4, world as world8, system } from "@minecraft/server";
-
-// scripts/grid.ts
-import { world as world7 } from "@minecraft/server";
+import { BlockPermutation as BlockPermutation4, world as world7, system } from "@minecraft/server";
 var overworld4 = world7.getDimension("overworld");
-async function squareReset(location, concreteColours) {
-  for (let i = 0; i < concreteColours.length; i++) {
-    let command = `fill ${location.x} ${location.y} ${location.z} ${location.x + 11} ${location.y} ${location.z + 11} tallgrass replace ${concreteColours[i]}_concrete`;
-    overworld4.runCommand(command);
-  }
-  overworld4.runCommandAsync(`fill ${location.x} ${location.y - 1} ${location.z} ${location.x + 11} ${location.y - 1} ${location.z + 11} grass replace dirt`);
-  overworld4.runCommandAsync(`fill ${location.x} ${location.y} ${location.z} ${location.x + 11} ${location.y} ${location.z + 11} tallgrass replace air`);
-}
-async function grid(location) {
-  let concreteColours = ["red", "green", "purple", "brown"];
-  for (let i = 0; i < 5; i++) {
-    for (let j = 0; j < 5; j++) {
-      let offset_x = location.x + i * 11;
-      let offset_z = location.z + j * 11;
-      const squareLocation = { x: offset_x, y: location.y, z: offset_z };
-      await squareReset(squareLocation, concreteColours);
-    }
-  }
-}
-
-// scripts/rod.ts
-var overworld5 = world8.getDimension("overworld");
 function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced2) {
   if (block.permutation?.matches(blockName)) {
     let runPlaceRods = true;
-    overworld5.runCommand("title @p actionbar " + successMessage);
+    overworld4.runCommand("title @p actionbar " + successMessage);
     for (let i = 0; i < rodLength; i++) {
       if (block[direction](i)?.permutation?.matches("sandstone") || block[direction](i)?.permutation?.matches("white_concrete") || block[direction](1)?.permutation?.getState("color")) {
-        world8.sendMessage("It's gone over a whole rod length!");
+        world7.sendMessage("It's gone over a whole rod length!");
         runPlaceRods = false;
         break;
       }
@@ -367,11 +342,11 @@ async function getBlockBehind(event, oppositeDirection) {
 }
 async function replayRods(rodsPlaced2, entity) {
   let perfectRun = [{ location: { x: 609, y: -60, z: 1009 }, direction: "east", rodLength: 2, blockName: "red_concrete" }, { location: { x: 610, y: -60, z: 1008 }, direction: "north", rodLength: 2, blockName: "red_concrete" }, { location: { x: 610, y: -60, z: 1005 }, direction: "north", rodLength: 4, blockName: "purple_concrete" }, { location: { x: 611, y: -60, z: 1002 }, direction: "east", rodLength: 8, blockName: "brown_concrete" }];
-  world8.sendMessage("Replaying rods");
+  world7.sendMessage("Replaying rods");
   entity.runCommandAsync(`title ${entity.name} actionbar Replaying rods`);
   entity.runCommandAsync(`clear ${entity.name}`);
   entity.runCommandAsync(`replaceitem entity ${entity.name} slot.weapon.mainhand 0 filled_map`);
-  await grid({ x: 608, y: -60, z: 995 });
+  await resetGrid({ x: 608, y: -60, z: 995 });
   let shouldContinue = true;
   for (let i = 0; i < rodsPlaced2.length; i++) {
     ((index) => {
@@ -380,16 +355,33 @@ async function replayRods(rodsPlaced2, entity) {
           return;
         }
         let offsetLocation = { x: perfectRun[index].location.x, y: perfectRun[index].location.y, z: perfectRun[index].location.z + 33 };
-        let offsetBlock = overworld5.getBlock(offsetLocation);
-        let block = overworld5.getBlock(rodsPlaced2[index].location);
+        let offsetBlock = overworld4.getBlock(offsetLocation);
+        let block = overworld4.getBlock(rodsPlaced2[index].location);
         placeRods(block, rodsPlaced2[index].blockName, rodsPlaced2[index].rodLength, rodsPlaced2[index].direction);
         placeRods(offsetBlock, perfectRun[index].blockName, perfectRun[index].rodLength, perfectRun[index].direction);
         if (rodsPlaced2[index].blockName !== perfectRun[index].blockName) {
-          world8.sendMessage(`${rodsPlaced2[index].rodLength} is not the most efficient rod to place here. If you want to get further try again!`);
+          world7.sendMessage(`${rodsPlaced2[index].rodLength} is not the most efficient rod to place here. If you want to get further try again!`);
           shouldContinue = false;
         }
       }, 40 * index);
     })(i);
+  }
+}
+async function squareReset(pos1, pos2, concreteColours) {
+  for (let i = 0; i < concreteColours.length; i++) {
+    let command = `fill ${pos1.x} ${pos1.y} ${pos1.z} ${pos2.x} ${pos2.y} ${pos2.z} tallgrass replace ${concreteColours[i]}_concrete`;
+    overworld4.runCommand(command);
+  }
+  overworld4.runCommandAsync(`fill ${pos1.x} ${pos1.y - 1} ${pos1.z} ${pos2.x} ${pos2.y - 1} ${pos2.z} grass replace dirt`);
+  overworld4.runCommandAsync(`fill ${pos1.x} ${pos1.y} ${pos1.z} ${pos2.x} ${pos2.y} ${pos2.z} tallgrass replace air`);
+}
+async function resetGrid(location) {
+  let concreteColours = ["red", "green", "purple", "brown"];
+  for (let i = 0; i < 4; i++) {
+    let offset_x = location.x + i * 25;
+    let pos1 = { x: offset_x, y: location.y, z: location.z };
+    let pos2 = { x: offset_x + 24, y: location.y, z: location.z + 24 };
+    await squareReset(pos1, pos2, concreteColours);
   }
 }
 
@@ -414,7 +406,7 @@ async function facing(blockLocation) {
 }
 
 // scripts/potion.ts
-import { BlockPermutation as BlockPermutation5, system as system2, world as world9 } from "@minecraft/server";
+import { BlockPermutation as BlockPermutation5, system as system2, world as world8 } from "@minecraft/server";
 async function getSlots(event) {
   let hopper = event.block.getComponent("inventory");
   let slots = [];
@@ -429,8 +421,8 @@ async function getSlots(event) {
   return slots;
 }
 async function givePotion() {
-  world9.getDimension("overworld").runCommandAsync(`clear @p minecraft:potion`);
-  world9.getDimension("overworld").runCommandAsync(`give @p minecraft:potion 1`);
+  world8.getDimension("overworld").runCommandAsync(`clear @p minecraft:potion`);
+  world8.getDimension("overworld").runCommandAsync(`give @p minecraft:potion 1`);
 }
 async function calculateRatio2(ingredients) {
   let wrongIngredientsSight = ingredients.potato + ingredients.beetroot + ingredients.melon;
@@ -531,7 +523,7 @@ async function setGlass(slot, blockName) {
 async function setItemFrame(offset_z, slotNumber) {
   let cloneFrom = 126 - offset_z;
   let cloneTo = 126 - slotNumber;
-  world9.getDimension("overworld").runCommandAsync(`clone -40 60 ${cloneFrom} -40 60 ${cloneFrom} -50 60 ${cloneTo} replace`);
+  world8.getDimension("overworld").runCommandAsync(`clone -40 60 ${cloneFrom} -40 60 ${cloneFrom} -50 60 ${cloneTo} replace`);
 }
 async function potionMaker(event) {
   await resetArea2();
@@ -544,7 +536,7 @@ async function potionMaker(event) {
   return { potion: potion2, seconds: seconds2 };
 }
 async function resetArea2() {
-  await world9.getDimension("overworld").runCommandAsync("fill -52 60 126 -52 69 122 black_stained_glass replace");
+  await world8.getDimension("overworld").runCommandAsync("fill -52 60 126 -52 69 122 black_stained_glass replace");
 }
 function displayTimer(potionStart2, seconds2, player, potionDescription) {
   let timeLeft = (potionStart2 + seconds2 * 20 - system2.currentTick) / 20;
@@ -562,7 +554,7 @@ var potionStart = 0;
 var potionDrank = false;
 var meters = 0;
 var rodsPlaced = [];
-world10.afterEvents.playerSpawn.subscribe((eventData) => {
+world9.afterEvents.playerSpawn.subscribe((eventData) => {
   currentPlayer = eventData.player;
   let initialSpawn = eventData.initialSpawn;
   if (initialSpawn) {
@@ -577,7 +569,7 @@ world10.afterEvents.playerSpawn.subscribe((eventData) => {
     );
   }
 });
-world10.afterEvents.buttonPush.subscribe(async (event) => {
+world9.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
     case "-11,-60,94": {
       calculate();
@@ -600,26 +592,26 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
       break;
     }
     case "-3,-60,90": {
-      world10.getDimension("overworld").runCommand("function lava");
+      world9.getDimension("overworld").runCommand("function lava");
       break;
     }
-    case "608,-59,1007": {
+    case "-40,95,31": {
       rodsPlaced = [];
-      world10.getDimension("overworld").runCommand("function lava");
-      await grid({ x: 608, y: -60, z: 995 });
+      world9.getDimension("overworld").runCommand("function lava");
+      await resetGrid({ x: -50, y: 94, z: 33 });
       break;
     }
     case "608,-59,1016": {
-      world10.sendMessage("Replaying rods");
+      world9.sendMessage("Replaying rods");
       let player = event.source;
       await replayRods(rodsPlaced, player);
       break;
     }
   }
 });
-world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
+world9.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let block = event.block;
-  if (block.location.y === -60) {
+  if (block.location.y === 94) {
     let viewDirection = event.player.getViewDirection();
     let { direction, oppositeDirection } = await facing(viewDirection);
     let hasColour = await getBlockBehind(event, oppositeDirection);
@@ -634,18 +626,18 @@ world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
         cuisenaire(block, "brown_concrete", 8, "Placed eight blocks", direction, rodsPlaced);
       }
     } else {
-      world10.sendMessage("You need to place a cuisenaire rod block first.");
+      world9.sendMessage("You need to place a cuisenaire rod block first.");
       event.block.setPermutation(BlockPermutation6.resolve("air"));
     }
   }
 });
-world10.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
+world9.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId;
   if (hand_item === "minecraft:stick") {
     cycleNumberBlock(clickEvent);
   }
 });
-world10.beforeEvents.itemUseOn.subscribe(async (event) => {
+world9.beforeEvents.itemUseOn.subscribe(async (event) => {
   if (event.itemStack?.typeId === "minecraft:stick") {
     let block = event.block;
     if (block.permutation?.matches("hopper")) {
@@ -683,7 +675,7 @@ function applyPotionEffect(player, potion2, seconds2) {
   player.runCommand("clear @p minecraft:glass_bottle");
 }
 function mainTick() {
-  world10.getAllPlayers().forEach((player) => {
+  world9.getAllPlayers().forEach((player) => {
     if (player.isInWater == true) {
       meters = 58 - Math.floor(player.location.y);
       player.runCommand(`scoreboard players set Meters Depth ${meters}`);
@@ -715,7 +707,7 @@ async function surface(player) {
   player.removeEffect("water_breathing");
   player.runCommand("scoreboard objectives setdisplay sidebar");
 }
-world10.afterEvents.itemCompleteUse.subscribe(async (event) => {
+world9.afterEvents.itemCompleteUse.subscribe(async (event) => {
   let player = event.source;
   if (event.itemStack?.typeId === "minecraft:potion") {
     if (potion === "poison") {
@@ -727,7 +719,7 @@ world10.afterEvents.itemCompleteUse.subscribe(async (event) => {
     event.source.runCommand("clear @p minecraft:glass_bottle");
   }
 });
-world10.afterEvents.entityHealthChanged.subscribe(async (event) => {
+world9.afterEvents.entityHealthChanged.subscribe(async (event) => {
   if (event.entity.typeId === "minecraft:player") {
     let player = event.entity;
     if (player.isInWater == true) {

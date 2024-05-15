@@ -3,9 +3,8 @@ import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
 import { scale, resetArea } from "./scaler";
-import { cuisenaire, getBlockBehind, replayRods } from "./rod";
+import { cuisenaire, getBlockBehind, replayRods, resetGrid } from "./rod";
 import { cycleNumberBlock } from "./output";
-import { grid } from "./grid";
 import { facing } from "./playerFacing";
 import { potionMaker, displayTimer } from "./potion";
 
@@ -63,10 +62,10 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
       world.getDimension("overworld").runCommand("function lava");
       break;
     }
-    case "608,-59,1007": {
+    case "-40,95,31": {
       rodsPlaced = []; //resets the rods placed array
       world.getDimension("overworld").runCommand("function lava");
-      await grid({ x: 608, y: -60, z: 995 });
+      await resetGrid({ x: -50, y: 94, z: 33 });
       break;
     }
     case "608,-59,1016": {
@@ -81,7 +80,7 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let block = event.block;
-  if (block.location.y === -60) {
+  if (block.location.y === 94) {
     let viewDirection = event.player.getViewDirection();
     let { direction, oppositeDirection } = await facing(viewDirection);
     let hasColour = await getBlockBehind(event, oppositeDirection)

@@ -3,9 +3,8 @@ import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
 import { scale, resetArea } from "./scaler";
-import { cuisenaire, getBlockBehind, replayRods } from "./rod";
+import { cuisenaire, getBlockBehind, replayRods, resetGrid } from "./rod";
 import { cycleNumberBlock } from "./output";
-import { grid } from "./grid";
 import { facing } from "./playerFacing";
 import { potionMaker, displayTimer } from "./potion";
 let potion = "";
@@ -55,10 +54,10 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
             world.getDimension("overworld").runCommand("function lava");
             break;
         }
-        case "608,-59,1007": {
+        case "-40,95,31": {
             rodsPlaced = []; //resets the rods placed array
             world.getDimension("overworld").runCommand("function lava");
-            yield grid({ x: 608, y: -60, z: 995 });
+            yield resetGrid({ x: -50, y: 94, z: 33 });
             break;
         }
         case "608,-59,1016": {
@@ -73,7 +72,7 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
 world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c, _d;
     let block = event.block;
-    if (block.location.y === -60) {
+    if (block.location.y === 94) {
         let viewDirection = event.player.getViewDirection();
         let { direction, oppositeDirection } = yield facing(viewDirection);
         let hasColour = yield getBlockBehind(event, oppositeDirection);
