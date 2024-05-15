@@ -70,29 +70,31 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
 }));
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
     let block = event.block;
-    if (block.location.y === 94) {
-        let viewDirection = event.player.getViewDirection();
-        let { direction, oppositeDirection } = yield facing(viewDirection);
-        let hasColour = yield getBlockBehind(event, oppositeDirection);
-        if (hasColour) { //checks if the block has a colour (meaning it's a cuisenaire rod block)
-            if ((_a = block.permutation) === null || _a === void 0 ? void 0 : _a.matches("red_concrete")) {
-                cuisenaire(block, "red_concrete", 2, "Placed two blocks", direction, rodsPlaced);
+    if ((_a = block.permutation) === null || _a === void 0 ? void 0 : _a.getState("color")) {
+        if (block.location.y === 94) {
+            let viewDirection = event.player.getViewDirection();
+            let { direction, oppositeDirection } = yield facing(viewDirection);
+            let hasColour = yield getBlockBehind(event, oppositeDirection);
+            if (hasColour) { //checks if the block has a colour (meaning it's a cuisenaire rod block)
+                if ((_b = block.permutation) === null || _b === void 0 ? void 0 : _b.matches("red_concrete")) {
+                    cuisenaire(block, "red_concrete", 2, "Placed two blocks", direction, rodsPlaced);
+                }
+                else if ((_c = block.permutation) === null || _c === void 0 ? void 0 : _c.matches("green_concrete")) {
+                    cuisenaire(block, "green_concrete", 6, "Placed six blocks", direction, rodsPlaced);
+                }
+                else if ((_d = block.permutation) === null || _d === void 0 ? void 0 : _d.matches("purple_concrete")) {
+                    cuisenaire(block, "purple_concrete", 4, "Placed four blocks", direction, rodsPlaced);
+                }
+                else if ((_e = block.permutation) === null || _e === void 0 ? void 0 : _e.matches("brown_concrete")) {
+                    cuisenaire(block, "brown_concrete", 8, "Placed eight blocks", direction, rodsPlaced);
+                }
             }
-            else if ((_b = block.permutation) === null || _b === void 0 ? void 0 : _b.matches("green_concrete")) {
-                cuisenaire(block, "green_concrete", 6, "Placed six blocks", direction, rodsPlaced);
+            else {
+                world.sendMessage("You need to place a cuisenaire rod block first.");
+                event.block.setPermutation(BlockPermutation.resolve("air"));
             }
-            else if ((_c = block.permutation) === null || _c === void 0 ? void 0 : _c.matches("purple_concrete")) {
-                cuisenaire(block, "purple_concrete", 4, "Placed four blocks", direction, rodsPlaced);
-            }
-            else if ((_d = block.permutation) === null || _d === void 0 ? void 0 : _d.matches("brown_concrete")) {
-                cuisenaire(block, "brown_concrete", 8, "Placed eight blocks", direction, rodsPlaced);
-            }
-        }
-        else {
-            world.sendMessage("You need to place a cuisenaire rod block first.");
-            event.block.setPermutation(BlockPermutation.resolve("air"));
         }
     }
 }));
@@ -104,10 +106,10 @@ world.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
     }
 });
 world.beforeEvents.itemUseOn.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _e, _f;
-    if (((_e = event.itemStack) === null || _e === void 0 ? void 0 : _e.typeId) === "minecraft:stick") {
+    var _f, _g;
+    if (((_f = event.itemStack) === null || _f === void 0 ? void 0 : _f.typeId) === "minecraft:stick") {
         let block = event.block;
-        if ((_f = block.permutation) === null || _f === void 0 ? void 0 : _f.matches("hopper")) {
+        if ((_g = block.permutation) === null || _g === void 0 ? void 0 : _g.matches("hopper")) {
             event.cancel = true;
             ({ potion, seconds } = yield potionMaker(event));
         }
@@ -183,9 +185,9 @@ function surface(player) {
 }
 //listens for the potion to be fully drunk.
 world.afterEvents.itemCompleteUse.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _g;
+    var _h;
     let player = event.source;
-    if (((_g = event.itemStack) === null || _g === void 0 ? void 0 : _g.typeId) === "minecraft:potion") {
+    if (((_h = event.itemStack) === null || _h === void 0 ? void 0 : _h.typeId) === "minecraft:potion") {
         if (potion === "poison") {
             player.sendMessage("§fYou mixed the potion with the §2wrong ingredients. \n§fIt has had no effect.\nMake sure you're using the correct ingredients.");
         }
