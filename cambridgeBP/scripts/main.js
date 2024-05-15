@@ -595,7 +595,7 @@ world9.afterEvents.buttonPush.subscribe(async (event) => {
       world9.getDimension("overworld").runCommand("function lava");
       break;
     }
-    case "-40,95,31": {
+    case "38,95,31": {
       rodsPlaced = [];
       world9.getDimension("overworld").runCommand("function lava");
       await resetGrid({ x: -50, y: 94, z: 33 });
@@ -611,23 +611,25 @@ world9.afterEvents.buttonPush.subscribe(async (event) => {
 });
 world9.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let block = event.block;
-  if (block.location.y === 94) {
-    let viewDirection = event.player.getViewDirection();
-    let { direction, oppositeDirection } = await facing(viewDirection);
-    let hasColour = await getBlockBehind(event, oppositeDirection);
-    if (hasColour) {
-      if (block.permutation?.matches("red_concrete")) {
-        cuisenaire(block, "red_concrete", 2, "Placed two blocks", direction, rodsPlaced);
-      } else if (block.permutation?.matches("green_concrete")) {
-        cuisenaire(block, "green_concrete", 6, "Placed six blocks", direction, rodsPlaced);
-      } else if (block.permutation?.matches("purple_concrete")) {
-        cuisenaire(block, "purple_concrete", 4, "Placed four blocks", direction, rodsPlaced);
-      } else if (block.permutation?.matches("brown_concrete")) {
-        cuisenaire(block, "brown_concrete", 8, "Placed eight blocks", direction, rodsPlaced);
+  if (block.permutation?.getState("color")) {
+    if (block.location.y === 94) {
+      let viewDirection = event.player.getViewDirection();
+      let { direction, oppositeDirection } = await facing(viewDirection);
+      let hasColour = await getBlockBehind(event, oppositeDirection);
+      if (hasColour) {
+        if (block.permutation?.matches("red_concrete")) {
+          cuisenaire(block, "red_concrete", 2, "Placed two blocks", direction, rodsPlaced);
+        } else if (block.permutation?.matches("green_concrete")) {
+          cuisenaire(block, "green_concrete", 6, "Placed six blocks", direction, rodsPlaced);
+        } else if (block.permutation?.matches("purple_concrete")) {
+          cuisenaire(block, "purple_concrete", 4, "Placed four blocks", direction, rodsPlaced);
+        } else if (block.permutation?.matches("brown_concrete")) {
+          cuisenaire(block, "brown_concrete", 8, "Placed eight blocks", direction, rodsPlaced);
+        }
+      } else {
+        world9.sendMessage("You need to place a cuisenaire rod block first.");
+        event.block.setPermutation(BlockPermutation6.resolve("air"));
       }
-    } else {
-      world9.sendMessage("You need to place a cuisenaire rod block first.");
-      event.block.setPermutation(BlockPermutation6.resolve("air"));
     }
   }
 });

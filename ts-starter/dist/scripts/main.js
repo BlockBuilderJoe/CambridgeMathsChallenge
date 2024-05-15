@@ -595,7 +595,7 @@ world9.afterEvents.buttonPush.subscribe(async (event) => {
       world9.getDimension("overworld").runCommand("function lava");
       break;
     }
-    case "-40,95,31": {
+    case "38,95,31": {
       rodsPlaced = [];
       world9.getDimension("overworld").runCommand("function lava");
       await resetGrid({ x: -50, y: 94, z: 33 });

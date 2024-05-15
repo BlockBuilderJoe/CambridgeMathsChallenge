@@ -54,7 +54,7 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
             world.getDimension("overworld").runCommand("function lava");
             break;
         }
-        case "-40,95,31": {
+        case "38,95,31": {
             rodsPlaced = []; //resets the rods placed array
             world.getDimension("overworld").runCommand("function lava");
             yield resetGrid({ x: -50, y: 94, z: 33 });
