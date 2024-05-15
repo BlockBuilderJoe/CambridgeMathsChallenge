@@ -84,6 +84,21 @@
 		},
 		"number_11": {
 			"textures": "textures/blocks/number_11.png"
+		},
+		"number_10": {
+			"textures": "textures/blocks/number_10.png"
+		},
+		"number_24": {
+			"textures": "textures/blocks/number_24.png"
+		},
+		"number_23": {
+			"textures": "textures/blocks/number_23.png"
+		},
+		"number_22": {
+			"textures": "textures/blocks/number_22.png"
+		},
+		"number_21": {
+			"textures": "textures/blocks/number_21.png"
 		}		
 		}
 		
