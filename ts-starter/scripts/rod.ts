@@ -91,7 +91,7 @@ async function squareReset(pos1: Vector3, pos2: Vector3, concreteColours: string
 
 //preps the grid coordinates for the squareReset function.
 export async function resetGrid(location: Vector3) {
-  let concreteColours = ["red", "green", "purple", "brown"]; // What rods will be replaced. 
+  let concreteColours = ["red", "green", "purple", "brown", "blue", "lime", "yellow"]; // What rods will be replaced. 
   for (let i = 0; i < 4; i++) {
       let offset_x = location.x + i * 25; // 25 is the distance between each starting point of the grid.
       let pos1 = {x: offset_x, y: location.y, z: location.z};

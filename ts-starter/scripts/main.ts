@@ -86,15 +86,22 @@ world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
       let hasColour = await getBlockBehind(event, oppositeDirection)
       if (hasColour) { //checks if the block has a colour (meaning it's a cuisenaire rod block)
         if (block.permutation?.matches("red_concrete")) {
-          cuisenaire(block, "red_concrete", 2, "Placed two blocks", direction, rodsPlaced);
-        } else if (block.permutation?.matches("green_concrete")) {
-          cuisenaire(block, "green_concrete", 6, "Placed six blocks", direction, rodsPlaced);
+          cuisenaire(block, "red_concrete", 2, "Placed a twelth rod", direction, rodsPlaced);
+        } else if (block.permutation?.matches("lime_concrete")) {
+          cuisenaire(block, "lime_concrete", 3, "Placed an eigth rod", direction, rodsPlaced);
         } else if (block.permutation?.matches("purple_concrete")) {
-          cuisenaire(block, "purple_concrete", 4, "Placed four blocks", direction, rodsPlaced);
+          cuisenaire(block, "purple_concrete", 4, "Placed a sixth rod", direction, rodsPlaced);
+        } else if (block.permutation?.matches("green_concrete")) {
+          cuisenaire(block, "green_concrete", 6, "Placed a quarter rod", direction, rodsPlaced);
         } else if (block.permutation?.matches("brown_concrete")) {
-          cuisenaire(block, "brown_concrete", 8, "Placed eight blocks", direction, rodsPlaced);
+          cuisenaire(block, "brown_concrete", 8, "Placed a third rod", direction, rodsPlaced);
+        } else if (block.permutation?.matches("yellow_concrete")) {
+          cuisenaire(block, "yellow_concrete", 12, "Placed a half rod", direction, rodsPlaced);
+        } else if (block.permutation?.matches("blue_concrete")) {
+          cuisenaire(block, "blue_concrete", 24, "Placed a whole rod", direction, rodsPlaced);
         }
       }
+      
       else {
         world.sendMessage("You need to place a cuisenaire rod block first.");
         event.block.setPermutation(BlockPermutation.resolve("air"));

@@ -376,7 +376,7 @@ async function squareReset(pos1, pos2, concreteColours) {
   overworld4.runCommandAsync(`fill ${pos1.x} ${pos1.y} ${pos1.z} ${pos2.x} ${pos2.y} ${pos2.z} tallgrass replace air`);
 }
 async function resetGrid(location) {
-  let concreteColours = ["red", "green", "purple", "brown"];
+  let concreteColours = ["red", "green", "purple", "brown", "blue", "lime", "yellow"];
   for (let i = 0; i < 4; i++) {
     let offset_x = location.x + i * 25;
     let pos1 = { x: offset_x, y: location.y, z: location.z };
@@ -618,13 +618,19 @@ world9.afterEvents.playerPlaceBlock.subscribe(async (event) => {
       let hasColour = await getBlockBehind(event, oppositeDirection);
       if (hasColour) {
         if (block.permutation?.matches("red_concrete")) {
-          cuisenaire(block, "red_concrete", 2, "Placed two blocks", direction, rodsPlaced);
-        } else if (block.permutation?.matches("green_concrete")) {
-          cuisenaire(block, "green_concrete", 6, "Placed six blocks", direction, rodsPlaced);
+          cuisenaire(block, "red_concrete", 2, "Placed a twelth rod", direction, rodsPlaced);
+        } else if (block.permutation?.matches("lime_concrete")) {
+          cuisenaire(block, "lime_concrete", 3, "Placed an eigth rod", direction, rodsPlaced);
         } else if (block.permutation?.matches("purple_concrete")) {
-          cuisenaire(block, "purple_concrete", 4, "Placed four blocks", direction, rodsPlaced);
+          cuisenaire(block, "purple_concrete", 4, "Placed a sixth rod", direction, rodsPlaced);
+        } else if (block.permutation?.matches("green_concrete")) {
+          cuisenaire(block, "green_concrete", 6, "Placed a quarter rod", direction, rodsPlaced);
         } else if (block.permutation?.matches("brown_concrete")) {
-          cuisenaire(block, "brown_concrete", 8, "Placed eight blocks", direction, rodsPlaced);
+          cuisenaire(block, "brown_concrete", 8, "Placed a third rod", direction, rodsPlaced);
+        } else if (block.permutation?.matches("yellow_concrete")) {
+          cuisenaire(block, "yellow_concrete", 12, "Placed a half rod", direction, rodsPlaced);
+        } else if (block.permutation?.matches("blue_concrete")) {
+          cuisenaire(block, "blue_concrete", 24, "Placed a whole rod", direction, rodsPlaced);
         }
       } else {
         world9.sendMessage("You need to place a cuisenaire rod block first.");
