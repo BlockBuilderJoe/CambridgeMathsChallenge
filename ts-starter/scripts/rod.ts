@@ -48,22 +48,23 @@ export async function getBlockBehind(event: any, oppositeDirection: string) {
   return hasColour;    
 }
 
-
 export async function replayRods(rodsPlaced: any[], entity: any){
-  let perfectRun = [{location: {x:609, y:-60, z:1009}, direction: "east", rodLength: 2, blockName: "red_concrete"}, {location: {x: 610, y: -60, z: 1008}, direction: "north", rodLength: 2, blockName: "red_concrete"}, {location: {x: 610, y: -60, z: 1005}, direction: "north", rodLength: 4, blockName: "purple_concrete"}, {location: {x: 611, y: -60, z: 1002}, direction: "east", rodLength: 8, blockName: "brown_concrete"}];
-  world.sendMessage('Replaying rods');
-  entity.runCommandAsync(`title ${entity.name} actionbar Replaying rods`);
-  entity.runCommandAsync(`clear ${entity.name}`);
-  entity.runCommandAsync(`replaceitem entity ${entity.name} slot.weapon.mainhand 0 filled_map`);
-  await resetGrid({ x: 608, y: -60, z: 995 });
-  let shouldContinue = true;
-
-  for (let i = 0; i < rodsPlaced.length; i++) {
-    ((index) => {
-      system.runTimeout(() => {
-        if (!shouldContinue) {
-          return;
-        }
+  let perfectRun = [{location: {z:33,y:94,x:37}, direction: "south", rodLength: 12, blockName: "yellow_concrete"}, {location: {z:45,y:94,x:36}, direction: "west", rodLength: 12, blockName: "yellow_concrete"}];
+  world.sendMessage(JSON.stringify(rodsPlaced));
+  world.sendMessage(JSON.stringify(perfectRun));
+  
+  if (JSON.stringify(rodsPlaced) === JSON.stringify(perfectRun)){
+    world.sendMessage('You placed the rods in the most efficient way! Well done!');
+  } else {
+    world.sendMessage('Replaying rods');
+    await resetGrid({ x: -50, y: 94, z: 33 });
+    let shouldContinue = true;
+    for (let i = 0; i < rodsPlaced.length; i++) {
+      ((index) => {
+        system.runTimeout(() => {
+          if (!shouldContinue) {
+            return;
+          }
 
         let offsetLocation = {x: perfectRun[index].location.x, y: perfectRun[index].location.y, z: perfectRun[index].location.z + 33};
         let offsetBlock = overworld.getBlock(offsetLocation);
@@ -73,9 +74,10 @@ export async function replayRods(rodsPlaced: any[], entity: any){
         if (rodsPlaced[index].blockName !== perfectRun[index].blockName) {
           world.sendMessage(`${rodsPlaced[index].rodLength} is not the most efficient rod to place here. If you want to get further try again!`);
           shouldContinue = false;
-        }
-      }, 40 * index);
-    })(i);
+          }
+        }, 40 * index);
+      })(i);
+    }
   }
 }
 

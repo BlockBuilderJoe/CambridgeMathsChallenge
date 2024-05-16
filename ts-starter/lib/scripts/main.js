@@ -60,8 +60,7 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
             yield resetGrid({ x: -50, y: 94, z: 33 });
             break;
         }
-        case "608,-59,1016": {
-            world.sendMessage("Replaying rods");
+        case "24,95,45": {
             let player = event.source; // Cast event.source to Player type
             yield replayRods(rodsPlaced, player); // Pass the casted player as an argument
             break;

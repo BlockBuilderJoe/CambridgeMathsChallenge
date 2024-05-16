@@ -67,8 +67,7 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
       await resetGrid({ x: -50, y: 94, z: 33 });
       break;
     }
-    case "608,-59,1016": {
-      world.sendMessage("Replaying rods");
+    case "24,95,45": {
       let player = event.source as Entity; // Cast event.source to Player type
       await replayRods(rodsPlaced, player); // Pass the casted player as an argument
       break;
