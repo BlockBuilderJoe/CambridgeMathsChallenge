@@ -1,16 +1,26 @@
 import { BlockPermutation, world, system } from "@minecraft/server";
 let overworld = world.getDimension("overworld");
 export function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced) {
-    var _a, _b, _c, _d, _e, _f, _g;
+    var _a, _b, _c;
     if ((_a = block.permutation) === null || _a === void 0 ? void 0 : _a.matches(blockName)) {
         let runPlaceRods = true;
+        let hasColour = null;
         overworld.runCommand("title @p actionbar " + successMessage);
+        block.setPermutation(BlockPermutation.resolve("tallgrass"));
         for (let i = 0; i < rodLength; i++) {
             //cancels the rod placement if it goes over a whole rod length.
-            if (((_c = (_b = block[direction](i)) === null || _b === void 0 ? void 0 : _b.permutation) === null || _c === void 0 ? void 0 : _c.matches("sandstone")) || ((_e = (_d = block[direction](i)) === null || _d === void 0 ? void 0 : _d.permutation) === null || _e === void 0 ? void 0 : _e.matches("white_concrete")) || ((_g = (_f = block[direction](1)) === null || _f === void 0 ? void 0 : _f.permutation) === null || _g === void 0 ? void 0 : _g.getState("color"))) {
-                world.sendMessage("It's gone over a whole rod length!");
-                runPlaceRods = false;
-                break;
+            const adjacentBlock = block[direction](i);
+            let colour;
+            if (adjacentBlock && adjacentBlock.permutation) {
+                colour = adjacentBlock.permutation.getState("color");
+                if (colour) {
+                    runPlaceRods = false;
+                }
+                if ((_c = (_b = block[direction](i)) === null || _b === void 0 ? void 0 : _b.permutation) === null || _c === void 0 ? void 0 : _c.matches("sandstone")) {
+                    world.sendMessage("It's gone over a whole rod length!");
+                    runPlaceRods = false;
+                    break;
+                }
             }
         }
         if (runPlaceRods) {

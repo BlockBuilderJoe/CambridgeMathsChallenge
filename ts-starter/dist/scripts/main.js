@@ -311,12 +311,22 @@ var overworld4 = world7.getDimension("overworld");
 function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced2) {
   if (block.permutation?.matches(blockName)) {
     let runPlaceRods = true;
+    let hasColour = null;
     overworld4.runCommand("title @p actionbar " + successMessage);
+    block.setPermutation(BlockPermutation4.resolve("tallgrass"));
     for (let i = 0; i < rodLength; i++) {
-      if (block[direction](i)?.permutation?.matches("sandstone") || block[direction](i)?.permutation?.matches("white_concrete") || block[direction](1)?.permutation?.getState("color")) {
-        world7.sendMessage("It's gone over a whole rod length!");
-        runPlaceRods = false;
-        break;
+      const adjacentBlock = block[direction](i);
+      let colour;
+      if (adjacentBlock && adjacentBlock.permutation) {
+        colour = adjacentBlock.permutation.getState("color");
+        if (colour) {
+          runPlaceRods = false;
+        }
+        if (block[direction](i)?.permutation?.matches("sandstone")) {
+          world7.sendMessage("It's gone over a whole rod length!");
+          runPlaceRods = false;
+          break;
+        }
       }
     }
     if (runPlaceRods) {
