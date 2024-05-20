@@ -14,7 +14,7 @@ export function cuisenaire(
     let runPlaceRods = true;
     overworld.runCommand("title @p actionbar " + successMessage);
     for (let i = 0; i < rodLength; i++) {
-      //runs east to the rod length
+      //cancels the rod placement if it goes over a whole rod length.
       if (block[direction](i)?.permutation?.matches("sandstone") || block[direction](i)?.permutation?.matches("white_concrete") || block[direction](1)?.permutation?.getState("color") ) {
         world.sendMessage("It's gone over a whole rod length!");
         runPlaceRods = false;
@@ -48,33 +48,27 @@ export async function getBlockBehind(event: any, oppositeDirection: string) {
   return hasColour;    
 }
 
-export async function replayRods(rodsPlaced: any[], entity: any){
+export async function replayRods(rodsPlaced: any[], player: any){
   let perfectRun = [{location: {z:33,y:94,x:37}, direction: "south", rodLength: 12, blockName: "yellow_concrete"}, {location: {z:45,y:94,x:36}, direction: "west", rodLength: 12, blockName: "yellow_concrete"}];
-  world.sendMessage(JSON.stringify(rodsPlaced));
-  world.sendMessage(JSON.stringify(perfectRun));
-  
   if (JSON.stringify(rodsPlaced) === JSON.stringify(perfectRun)){
     world.sendMessage('You placed the rods in the most efficient way! Well done!');
   } else {
-    world.sendMessage('Replaying rods');
+    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 36 120 44 facing 36 94 44`)
+    player.runCommandAsync(`title ${player.name} actionbar This was how you placed the rods.`);
     await resetGrid({ x: -50, y: 94, z: 33 });
-    let shouldContinue = true;
     for (let i = 0; i < rodsPlaced.length; i++) {
       ((index) => {
-        system.runTimeout(() => {
-          if (!shouldContinue) {
-            return;
-          }
-
-        let offsetLocation = {x: perfectRun[index].location.x, y: perfectRun[index].location.y, z: perfectRun[index].location.z + 33};
-        let offsetBlock = overworld.getBlock(offsetLocation);
+        
+        system.runTimeout(() => {          
         let block = overworld.getBlock(rodsPlaced[index].location); 
         placeRods(block, rodsPlaced[index].blockName, rodsPlaced[index].rodLength, rodsPlaced[index].direction);
-        placeRods(offsetBlock, perfectRun[index].blockName, perfectRun[index].rodLength, perfectRun[index].direction);
-        if (rodsPlaced[index].blockName !== perfectRun[index].blockName) {
-          world.sendMessage(`${rodsPlaced[index].rodLength} is not the most efficient rod to place here. If you want to get further try again!`);
-          shouldContinue = false;
-          }
+        
+        if (perfectRun[index] && rodsPlaced[index].blockName !== perfectRun[index].blockName) {
+          player.runCommandAsync(`title ${player.name} actionbar ${rodsPlaced[index].rodLength} is not the most efficient factor.`);
+        } else if (!perfectRun[index]) {
+          // Handle the case where there is no corresponding value in perfectRun to stop errors.
+          player.runCommandAsync(`title ${player.name} actionbar ${rodsPlaced[index].rodLength} is not the most efficient factor.`);
+        }
         }, 40 * index);
       })(i);
     }
