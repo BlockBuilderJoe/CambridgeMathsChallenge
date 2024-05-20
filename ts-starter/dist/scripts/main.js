@@ -315,18 +315,11 @@ function cuisenaire(block, blockName, rodLength, successMessage, direction, rods
     overworld4.runCommand("title @p actionbar " + successMessage);
     block.setPermutation(BlockPermutation4.resolve("tallgrass"));
     for (let i = 0; i < rodLength; i++) {
-      const adjacentBlock = block[direction](i);
-      let colour;
-      if (adjacentBlock && adjacentBlock.permutation) {
-        colour = adjacentBlock.permutation.getState("color");
-        if (colour) {
-          runPlaceRods = false;
-        }
-        if (block[direction](i)?.permutation?.matches("sandstone")) {
-          world7.sendMessage("It's gone over a whole rod length!");
-          runPlaceRods = false;
-          break;
-        }
+      let colour = block[direction](i)?.permutation?.getState("color");
+      if (colour || block[direction](i)?.permutation?.matches("sandstone")) {
+        world7.sendMessage("It's gone over a whole rod length!");
+        runPlaceRods = false;
+        break;
       }
     }
     if (runPlaceRods) {

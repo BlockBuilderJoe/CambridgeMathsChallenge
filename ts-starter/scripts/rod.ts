@@ -16,21 +16,13 @@ export function cuisenaire(
     overworld.runCommand("title @p actionbar " + successMessage);
     block.setPermutation(BlockPermutation.resolve("tallgrass"));
     for (let i = 0; i < rodLength; i++) {
-      //cancels the rod placement if it goes over a whole rod length.
-      const adjacentBlock = block[direction](i);
-      let colour;
-      if (adjacentBlock && adjacentBlock.permutation) {
-        colour = adjacentBlock.permutation.getState("color");
-        if (colour) {
+      let colour = block[direction](i)?.permutation?.getState("color");
+      if (colour || block[direction](i)?.permutation?.matches("sandstone") ) {
+          world.sendMessage("It's gone over a whole rod length!");
           runPlaceRods = false;
+          break;
         }
-      if (block[direction](i)?.permutation?.matches("sandstone")) {
-        world.sendMessage("It's gone over a whole rod length!");
-        runPlaceRods = false;
-        break;
-      }
     }
-  }
     if (runPlaceRods) {
         rodsPlaced.push({location: block.location, direction: direction, rodLength: rodLength, blockName: blockName});
         placeRods(block, blockName, rodLength, direction);
