@@ -61,6 +61,7 @@ export async function getBlockBehind(event: any, oppositeDirection: string) {
   return hasColour;    
 }
 export async function replayRods(rodsPlaced: any[], player: any, perfectRun: any[]){
+  let handleTimeout = system.runTimeout(() => {}, 0);
   if (JSON.stringify(rodsPlaced) === JSON.stringify(perfectRun)){
     world.sendMessage('You placed the rods in the most efficient way! Well done!');
   } else {
@@ -68,27 +69,27 @@ export async function replayRods(rodsPlaced: any[], player: any, perfectRun: any
     for (let i = 0; i < rodsPlaced.length; i++) {      
       player.runCommandAsync(`title ${player.name} actionbar This was how you placed the rods.`);
       ((index) => {
-        system.runTimeout(async() => {
+        handleTimeout = system.runTimeout(async() => {
             let x = rodsPlaced[index].location.x;
             await setCameraView(x, player);
             let block = overworld.getBlock(rodsPlaced[index].location); 
             placeRods(block, rodsPlaced[index].blockName, rodsPlaced[index].rodLength, rodsPlaced[index].direction);
-            if (perfectRun[index] && rodsPlaced[index].blockName !== perfectRun[index].blockName) {
-              player.runCommandAsync(`title ${player.name} actionbar ${rodsPlaced[index].rodLength} is not the most efficient factor.`);
-            } else if (!perfectRun[index]) {
-              // Handle the case where there is no corresponding value in perfectRun to stop errors.
-              player.runCommandAsync(`title ${player.name} actionbar ${rodsPlaced[index].rodLength} is not the most efficient factor.`);
-            }
             if (i === rodsPlaced.length -1) { //resets the camera 2 seconds after last rod placed.
-              system.runTimeout(() => { 
-                player.runCommandAsync(`camera ${player.name} clear`)
-              }
-              , 40);
+              let tpCommand = `tp ${player.name} 36 95 30`;
+              endReplay(player, tpCommand);
           }
           }, 40 * index);
       })(i);
   }
 }
+}
+
+function endReplay(player: any, tpCommand: string){
+  system.runTimeout(() => { 
+    player.runCommandAsync(tpCommand);
+    player.runCommandAsync(`camera ${player.name} clear`)
+  }
+  , 40);
 }
 
 //Resets the area to the original state, one area at a time. 

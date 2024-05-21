@@ -355,6 +355,8 @@ async function getBlockBehind(event, oppositeDirection) {
   return hasColour;
 }
 async function replayRods(rodsPlaced2, player, perfectRun) {
+  let handleTimeout = system.runTimeout(() => {
+  }, 0);
   if (JSON.stringify(rodsPlaced2) === JSON.stringify(perfectRun)) {
     world7.sendMessage("You placed the rods in the most efficient way! Well done!");
   } else {
@@ -362,28 +364,28 @@ async function replayRods(rodsPlaced2, player, perfectRun) {
     for (let i = 0; i < rodsPlaced2.length; i++) {
       player.runCommandAsync(`title ${player.name} actionbar This was how you placed the rods.`);
       ((index) => {
-        system.runTimeout(async () => {
+        handleTimeout = system.runTimeout(async () => {
           let x = rodsPlaced2[index].location.x;
           await setCameraView(x, player);
           let block = overworld4.getBlock(rodsPlaced2[index].location);
           placeRods(block, rodsPlaced2[index].blockName, rodsPlaced2[index].rodLength, rodsPlaced2[index].direction);
-          if (perfectRun[index] && rodsPlaced2[index].blockName !== perfectRun[index].blockName) {
-            player.runCommandAsync(`title ${player.name} actionbar ${rodsPlaced2[index].rodLength} is not the most efficient factor.`);
-          } else if (!perfectRun[index]) {
-            player.runCommandAsync(`title ${player.name} actionbar ${rodsPlaced2[index].rodLength} is not the most efficient factor.`);
-          }
           if (i === rodsPlaced2.length - 1) {
-            system.runTimeout(
-              () => {
-                player.runCommandAsync(`camera ${player.name} clear`);
-              },
-              40
-            );
+            let tpCommand = `tp ${player.name} 36 95 30`;
+            endReplay(player, tpCommand);
           }
         }, 40 * index);
       })(i);
     }
   }
+}
+function endReplay(player, tpCommand) {
+  system.runTimeout(
+    () => {
+      player.runCommandAsync(tpCommand);
+      player.runCommandAsync(`camera ${player.name} clear`);
+    },
+    40
+  );
 }
 async function squareReset(pos1, pos2, concreteColours) {
   for (let i = 0; i < concreteColours.length; i++) {
