@@ -12,7 +12,6 @@ export function cuisenaire(
 ) {
   if (block.permutation?.matches(blockName)) {
     let runPlaceRods = true;
-    let hasColour = null;
     overworld.runCommand("title @p actionbar " + successMessage);
     block.setPermutation(BlockPermutation.resolve("tallgrass"));
     for (let i = 0; i < rodLength; i++) {
@@ -61,29 +60,28 @@ export async function getBlockBehind(event: any, oppositeDirection: string) {
   return hasColour;    
 }
 export async function replayRods(rodsPlaced: any[], player: any, perfectRun: any[]){
-  let handleTimeout = system.runTimeout(() => {}, 0);
-  if (JSON.stringify(rodsPlaced) === JSON.stringify(perfectRun)){
-    world.sendMessage('You placed the rods in the most efficient way! Well done!');
-  } else {
-    await resetGrid({ x: -50, y: 94, z: 33 });
-    for (let i = 0; i < rodsPlaced.length; i++) {      
-      player.runCommandAsync(`title ${player.name} actionbar This was how you placed the rods.`);
+  await resetGrid({ x: -50, y: 94, z: 33 });
+  let matchingRods = rodsPlaced.filter((rod, index) => JSON.stringify(rod) === JSON.stringify(perfectRun[index]));
+  for (let i = 0; i < matchingRods.length; i++) {
       ((index) => {
-        handleTimeout = system.runTimeout(async() => {
-            let x = rodsPlaced[index].location.x;
+        system.runTimeout(async() => {
+            
+            let x = matchingRods[index].location.x;
             await setCameraView(x, player);
-            let block = overworld.getBlock(rodsPlaced[index].location); 
-            placeRods(block, rodsPlaced[index].blockName, rodsPlaced[index].rodLength, rodsPlaced[index].direction);
-            if (i === rodsPlaced.length -1) { //resets the camera 2 seconds after last rod placed.
+            let block = overworld.getBlock(matchingRods[index].location);
+            placeRods(block, matchingRods[index].blockName, matchingRods[index].rodLength, matchingRods[index].direction);
+            if (i === matchingRods.length -1) { //resets the camera 2 seconds after last rod placed.
               let tpCommand = `tp ${player.name} 36 95 30`;
               endReplay(player, tpCommand);
           }
-          }, 40 * index);
-      })(i);
-  }
-}
+          }, 40 * index); 
+          return;
+          }
+      )(i);
+    }
 }
 
+ 
 function endReplay(player: any, tpCommand: string){
   system.runTimeout(() => { 
     player.runCommandAsync(tpCommand);

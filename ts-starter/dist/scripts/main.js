@@ -311,7 +311,6 @@ var overworld4 = world7.getDimension("overworld");
 function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced2) {
   if (block.permutation?.matches(blockName)) {
     let runPlaceRods = true;
-    let hasColour = null;
     overworld4.runCommand("title @p actionbar " + successMessage);
     block.setPermutation(BlockPermutation4.resolve("tallgrass"));
     for (let i = 0; i < rodLength; i++) {
@@ -355,27 +354,22 @@ async function getBlockBehind(event, oppositeDirection) {
   return hasColour;
 }
 async function replayRods(rodsPlaced2, player, perfectRun) {
-  let handleTimeout = system.runTimeout(() => {
-  }, 0);
-  if (JSON.stringify(rodsPlaced2) === JSON.stringify(perfectRun)) {
-    world7.sendMessage("You placed the rods in the most efficient way! Well done!");
-  } else {
-    await resetGrid({ x: -50, y: 94, z: 33 });
-    for (let i = 0; i < rodsPlaced2.length; i++) {
-      player.runCommandAsync(`title ${player.name} actionbar This was how you placed the rods.`);
-      ((index) => {
-        handleTimeout = system.runTimeout(async () => {
-          let x = rodsPlaced2[index].location.x;
-          await setCameraView(x, player);
-          let block = overworld4.getBlock(rodsPlaced2[index].location);
-          placeRods(block, rodsPlaced2[index].blockName, rodsPlaced2[index].rodLength, rodsPlaced2[index].direction);
-          if (i === rodsPlaced2.length - 1) {
-            let tpCommand = `tp ${player.name} 36 95 30`;
-            endReplay(player, tpCommand);
-          }
-        }, 40 * index);
-      })(i);
-    }
+  await resetGrid({ x: -50, y: 94, z: 33 });
+  let matchingRods = rodsPlaced2.filter((rod, index) => JSON.stringify(rod) === JSON.stringify(perfectRun[index]));
+  for (let i = 0; i < matchingRods.length; i++) {
+    ((index) => {
+      system.runTimeout(async () => {
+        let x = matchingRods[index].location.x;
+        await setCameraView(x, player);
+        let block = overworld4.getBlock(matchingRods[index].location);
+        placeRods(block, matchingRods[index].blockName, matchingRods[index].rodLength, matchingRods[index].direction);
+        if (i === matchingRods.length - 1) {
+          let tpCommand = `tp ${player.name} 36 95 30`;
+          endReplay(player, tpCommand);
+        }
+      }, 40 * index);
+      return;
+    })(i);
   }
 }
 function endReplay(player, tpCommand) {

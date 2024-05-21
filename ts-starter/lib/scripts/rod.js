@@ -4,7 +4,6 @@ export function cuisenaire(block, blockName, rodLength, successMessage, directio
     var _a, _b, _c, _d, _e;
     if ((_a = block.permutation) === null || _a === void 0 ? void 0 : _a.matches(blockName)) {
         let runPlaceRods = true;
-        let hasColour = null;
         overworld.runCommand("title @p actionbar " + successMessage);
         block.setPermutation(BlockPermutation.resolve("tallgrass"));
         for (let i = 0; i < rodLength; i++) {
@@ -60,27 +59,22 @@ export function getBlockBehind(event, oppositeDirection) {
 }
 export function replayRods(rodsPlaced, player, perfectRun) {
     return __awaiter(this, void 0, void 0, function* () {
-        let handleTimeout = system.runTimeout(() => { }, 0);
-        if (JSON.stringify(rodsPlaced) === JSON.stringify(perfectRun)) {
-            world.sendMessage('You placed the rods in the most efficient way! Well done!');
-        }
-        else {
-            yield resetGrid({ x: -50, y: 94, z: 33 });
-            for (let i = 0; i < rodsPlaced.length; i++) {
-                player.runCommandAsync(`title ${player.name} actionbar This was how you placed the rods.`);
-                ((index) => {
-                    handleTimeout = system.runTimeout(() => __awaiter(this, void 0, void 0, function* () {
-                        let x = rodsPlaced[index].location.x;
-                        yield setCameraView(x, player);
-                        let block = overworld.getBlock(rodsPlaced[index].location);
-                        placeRods(block, rodsPlaced[index].blockName, rodsPlaced[index].rodLength, rodsPlaced[index].direction);
-                        if (i === rodsPlaced.length - 1) { //resets the camera 2 seconds after last rod placed.
-                            let tpCommand = `tp ${player.name} 36 95 30`;
-                            endReplay(player, tpCommand);
-                        }
-                    }), 40 * index);
-                })(i);
-            }
+        yield resetGrid({ x: -50, y: 94, z: 33 });
+        let matchingRods = rodsPlaced.filter((rod, index) => JSON.stringify(rod) === JSON.stringify(perfectRun[index]));
+        for (let i = 0; i < matchingRods.length; i++) {
+            ((index) => {
+                system.runTimeout(() => __awaiter(this, void 0, void 0, function* () {
+                    let x = matchingRods[index].location.x;
+                    yield setCameraView(x, player);
+                    let block = overworld.getBlock(matchingRods[index].location);
+                    placeRods(block, matchingRods[index].blockName, matchingRods[index].rodLength, matchingRods[index].direction);
+                    if (i === matchingRods.length - 1) { //resets the camera 2 seconds after last rod placed.
+                        let tpCommand = `tp ${player.name} 36 95 30`;
+                        endReplay(player, tpCommand);
+                    }
+                }), 40 * index);
+                return;
+            })(i);
         }
     });
 }
