@@ -343,8 +343,7 @@ async function getBlockBehind(event, oppositeDirection) {
   let hasColour = event.block[oppositeDirection](1)?.permutation?.getState("color");
   return hasColour;
 }
-async function replayRods(rodsPlaced2, player) {
-  let perfectRun = [{ location: { z: 33, y: 94, x: 37 }, direction: "south", rodLength: 12, blockName: "yellow_concrete" }, { location: { z: 45, y: 94, x: 36 }, direction: "west", rodLength: 12, blockName: "yellow_concrete" }];
+async function replayRods(rodsPlaced2, player, perfectRun) {
   if (JSON.stringify(rodsPlaced2) === JSON.stringify(perfectRun)) {
     world7.sendMessage("You placed the rods in the most efficient way! Well done!");
   } else {
@@ -360,6 +359,14 @@ async function replayRods(rodsPlaced2, player) {
             player.runCommandAsync(`title ${player.name} actionbar ${rodsPlaced2[index].rodLength} is not the most efficient factor.`);
           } else if (!perfectRun[index]) {
             player.runCommandAsync(`title ${player.name} actionbar ${rodsPlaced2[index].rodLength} is not the most efficient factor.`);
+          }
+          if (i === rodsPlaced2.length - 1) {
+            system.runTimeout(
+              () => {
+                player.runCommandAsync(`camera ${player.name} clear`);
+              },
+              40
+            );
           }
         }, 40 * index);
       })(i);
@@ -602,7 +609,8 @@ world9.afterEvents.buttonPush.subscribe(async (event) => {
     }
     case "24,95,45": {
       let player = event.source;
-      await replayRods(rodsPlaced, player);
+      let perfectRun = [{ location: { z: 33, y: 94, x: 37 }, direction: "south", rodLength: 12, blockName: "yellow_concrete" }, { location: { z: 45, y: 94, x: 36 }, direction: "west", rodLength: 12, blockName: "yellow_concrete" }];
+      await replayRods(rodsPlaced, player, perfectRun);
       break;
     }
   }

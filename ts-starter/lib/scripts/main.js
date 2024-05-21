@@ -62,7 +62,8 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
         }
         case "24,95,45": {
             let player = event.source; // Cast event.source to Player type
-            yield replayRods(rodsPlaced, player); // Pass the casted player as an argument
+            let perfectRun = [{ location: { z: 33, y: 94, x: 37 }, direction: "south", rodLength: 12, blockName: "yellow_concrete" }, { location: { z: 45, y: 94, x: 36 }, direction: "west", rodLength: 12, blockName: "yellow_concrete" }];
+            yield replayRods(rodsPlaced, player, perfectRun); // Pass the casted player as an argument
             break;
         }
     }

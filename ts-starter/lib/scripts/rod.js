@@ -42,9 +42,8 @@ export function getBlockBehind(event, oppositeDirection) {
         return hasColour;
     });
 }
-export function replayRods(rodsPlaced, player) {
+export function replayRods(rodsPlaced, player, perfectRun) {
     return __awaiter(this, void 0, void 0, function* () {
-        let perfectRun = [{ location: { z: 33, y: 94, x: 37 }, direction: "south", rodLength: 12, blockName: "yellow_concrete" }, { location: { z: 45, y: 94, x: 36 }, direction: "west", rodLength: 12, blockName: "yellow_concrete" }];
         if (JSON.stringify(rodsPlaced) === JSON.stringify(perfectRun)) {
             world.sendMessage('You placed the rods in the most efficient way! Well done!');
         }
@@ -63,6 +62,11 @@ export function replayRods(rodsPlaced, player) {
                         else if (!perfectRun[index]) {
                             // Handle the case where there is no corresponding value in perfectRun to stop errors.
                             player.runCommandAsync(`title ${player.name} actionbar ${rodsPlaced[index].rodLength} is not the most efficient factor.`);
+                        }
+                        if (i === rodsPlaced.length - 1) { //resets the camera 2 seconds after last rod placed.
+                            system.runTimeout(() => {
+                                player.runCommandAsync(`camera ${player.name} clear`);
+                            }, 40);
                         }
                     }, 40 * index);
                 })(i);

@@ -69,7 +69,8 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
     }
     case "24,95,45": {
       let player = event.source as Entity; // Cast event.source to Player type
-      await replayRods(rodsPlaced, player); // Pass the casted player as an argument
+      let perfectRun = [{location: {z:33,y:94,x:37}, direction: "south", rodLength: 12, blockName: "yellow_concrete"}, {location: {z:45,y:94,x:36}, direction: "west", rodLength: 12, blockName: "yellow_concrete"}];
+      await replayRods(rodsPlaced, player, perfectRun); // Pass the casted player as an argument
       break;
     }
   }
@@ -100,7 +101,6 @@ world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
           cuisenaire(block, "blue_concrete", 24, "Placed a whole rod", direction, rodsPlaced);
         }
       }
-      
       else {
         world.sendMessage("You need to place a cuisenaire rod block first.");
         event.block.setPermutation(BlockPermutation.resolve("air"));

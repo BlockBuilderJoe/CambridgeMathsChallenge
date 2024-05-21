@@ -50,8 +50,7 @@ export async function getBlockBehind(event: any, oppositeDirection: string) {
   return hasColour;    
 }
 
-export async function replayRods(rodsPlaced: any[], player: any){
-  let perfectRun = [{location: {z:33,y:94,x:37}, direction: "south", rodLength: 12, blockName: "yellow_concrete"}, {location: {z:45,y:94,x:36}, direction: "west", rodLength: 12, blockName: "yellow_concrete"}];
+export async function replayRods(rodsPlaced: any[], player: any, perfectRun: any[]){
   if (JSON.stringify(rodsPlaced) === JSON.stringify(perfectRun)){
     world.sendMessage('You placed the rods in the most efficient way! Well done!');
   } else {
@@ -60,22 +59,29 @@ export async function replayRods(rodsPlaced: any[], player: any){
     await resetGrid({ x: -50, y: 94, z: 33 });
     for (let i = 0; i < rodsPlaced.length; i++) {
       ((index) => {
-        
-        system.runTimeout(() => {          
-        let block = overworld.getBlock(rodsPlaced[index].location); 
-        placeRods(block, rodsPlaced[index].blockName, rodsPlaced[index].rodLength, rodsPlaced[index].direction);
-        
-        if (perfectRun[index] && rodsPlaced[index].blockName !== perfectRun[index].blockName) {
-          player.runCommandAsync(`title ${player.name} actionbar ${rodsPlaced[index].rodLength} is not the most efficient factor.`);
-        } else if (!perfectRun[index]) {
-          // Handle the case where there is no corresponding value in perfectRun to stop errors.
-          player.runCommandAsync(`title ${player.name} actionbar ${rodsPlaced[index].rodLength} is not the most efficient factor.`);
-        }
-        }, 40 * index);
+        system.runTimeout(() => {           
+            let block = overworld.getBlock(rodsPlaced[index].location); 
+            placeRods(block, rodsPlaced[index].blockName, rodsPlaced[index].rodLength, rodsPlaced[index].direction);
+            if (perfectRun[index] && rodsPlaced[index].blockName !== perfectRun[index].blockName) {
+              player.runCommandAsync(`title ${player.name} actionbar ${rodsPlaced[index].rodLength} is not the most efficient factor.`);
+            } else if (!perfectRun[index]) {
+              // Handle the case where there is no corresponding value in perfectRun to stop errors.
+              player.runCommandAsync(`title ${player.name} actionbar ${rodsPlaced[index].rodLength} is not the most efficient factor.`);
+            }
+            if (i === rodsPlaced.length -1) { //resets the camera 2 seconds after last rod placed.
+              system.runTimeout(() => { 
+                player.runCommandAsync(`camera ${player.name} clear`)
+              }
+              , 40);
+          }
+          }, 40 * index);
       })(i);
-    }
+      
   }
 }
+}
+
+  
 
 //Resets the area to the original state, one area at a time. 
 async function squareReset(pos1: Vector3, pos2: Vector3, concreteColours: string[]) {
