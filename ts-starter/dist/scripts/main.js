@@ -347,10 +347,10 @@ async function replayRods(rodsPlaced2, player, perfectRun) {
   if (JSON.stringify(rodsPlaced2) === JSON.stringify(perfectRun)) {
     world7.sendMessage("You placed the rods in the most efficient way! Well done!");
   } else {
-    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 36 120 44 facing 36 94 44`);
-    player.runCommandAsync(`title ${player.name} actionbar This was how you placed the rods.`);
     await resetGrid({ x: -50, y: 94, z: 33 });
     for (let i = 0; i < rodsPlaced2.length; i++) {
+      player.runCommandAsync(`title ${player.name} actionbar This was how you placed the rods.`);
+      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 36 120 44 facing 36 94 44`);
       ((index) => {
         system.runTimeout(() => {
           let block = overworld4.getBlock(rodsPlaced2[index].location);

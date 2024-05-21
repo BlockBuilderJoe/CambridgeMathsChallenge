@@ -54,10 +54,10 @@ export async function replayRods(rodsPlaced: any[], player: any, perfectRun: any
   if (JSON.stringify(rodsPlaced) === JSON.stringify(perfectRun)){
     world.sendMessage('You placed the rods in the most efficient way! Well done!');
   } else {
-    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 36 120 44 facing 36 94 44`)
-    player.runCommandAsync(`title ${player.name} actionbar This was how you placed the rods.`);
     await resetGrid({ x: -50, y: 94, z: 33 });
     for (let i = 0; i < rodsPlaced.length; i++) {
+      player.runCommandAsync(`title ${player.name} actionbar This was how you placed the rods.`);
+      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 36 120 44 facing 36 94 44`);
       ((index) => {
         system.runTimeout(() => {           
             let block = overworld.getBlock(rodsPlaced[index].location); 
@@ -76,12 +76,9 @@ export async function replayRods(rodsPlaced: any[], player: any, perfectRun: any
           }
           }, 40 * index);
       })(i);
-      
   }
 }
 }
-
-  
 
 //Resets the area to the original state, one area at a time. 
 async function squareReset(pos1: Vector3, pos2: Vector3, concreteColours: string[]) {
