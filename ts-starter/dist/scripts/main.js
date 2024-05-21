@@ -339,6 +339,17 @@ function placeRods(block, blockName, rodLength, direction) {
     }
   }
 }
+async function setCameraView(x, player) {
+  if (x >= 25 && x <= 48) {
+    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 36 120 44 facing 36 94 44`);
+  } else if (x >= 0 && x <= 23) {
+    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 11 120 44 facing 11 94 44`);
+  } else if (x >= -25 && x <= -2) {
+    player.runCommandAsync(`camera ${player.name} set minecraft:free pos -14 120 44 facing -14 94 44`);
+  } else if (x >= -50 && x <= -27) {
+    player.runCommandAsync(`camera ${player.name} set minecraft:free pos -39 120 44 facing -39 94 44`);
+  }
+}
 async function getBlockBehind(event, oppositeDirection) {
   let hasColour = event.block[oppositeDirection](1)?.permutation?.getState("color");
   return hasColour;
@@ -350,9 +361,10 @@ async function replayRods(rodsPlaced2, player, perfectRun) {
     await resetGrid({ x: -50, y: 94, z: 33 });
     for (let i = 0; i < rodsPlaced2.length; i++) {
       player.runCommandAsync(`title ${player.name} actionbar This was how you placed the rods.`);
-      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 36 120 44 facing 36 94 44`);
       ((index) => {
-        system.runTimeout(() => {
+        system.runTimeout(async () => {
+          let x = rodsPlaced2[index].location.x;
+          await setCameraView(x, player);
           let block = overworld4.getBlock(rodsPlaced2[index].location);
           placeRods(block, rodsPlaced2[index].blockName, rodsPlaced2[index].rodLength, rodsPlaced2[index].direction);
           if (perfectRun[index] && rodsPlaced2[index].blockName !== perfectRun[index].blockName) {

@@ -44,22 +44,33 @@ function placeRods(block: any, blockName: string, rodLength: number, direction: 
         }
 }
 
+async function setCameraView(x: number, player: any){
+            if (x >= 25 && x <= 48) {
+              player.runCommandAsync(`camera ${player.name} set minecraft:free pos 36 120 44 facing 36 94 44`);
+            } else if (x >= 0 && x <= 23) {
+              player.runCommandAsync(`camera ${player.name} set minecraft:free pos 11 120 44 facing 11 94 44`);
+            } else if (x >= -25 && x <= -2) {
+              player.runCommandAsync(`camera ${player.name} set minecraft:free pos -14 120 44 facing -14 94 44`);
+            } else if (x >= -50 && x <= -27) {
+              player.runCommandAsync(`camera ${player.name} set minecraft:free pos -39 120 44 facing -39 94 44`);
+            }  
+}
 
 export async function getBlockBehind(event: any, oppositeDirection: string) {
   let hasColour = event.block[oppositeDirection](1)?.permutation?.getState("color");
   return hasColour;    
 }
-
 export async function replayRods(rodsPlaced: any[], player: any, perfectRun: any[]){
   if (JSON.stringify(rodsPlaced) === JSON.stringify(perfectRun)){
     world.sendMessage('You placed the rods in the most efficient way! Well done!');
   } else {
     await resetGrid({ x: -50, y: 94, z: 33 });
-    for (let i = 0; i < rodsPlaced.length; i++) {
+    for (let i = 0; i < rodsPlaced.length; i++) {      
       player.runCommandAsync(`title ${player.name} actionbar This was how you placed the rods.`);
-      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 36 120 44 facing 36 94 44`);
       ((index) => {
-        system.runTimeout(() => {           
+        system.runTimeout(async() => {
+            let x = rodsPlaced[index].location.x;
+            await setCameraView(x, player);
             let block = overworld.getBlock(rodsPlaced[index].location); 
             placeRods(block, rodsPlaced[index].blockName, rodsPlaced[index].rodLength, rodsPlaced[index].direction);
             if (perfectRun[index] && rodsPlaced[index].blockName !== perfectRun[index].blockName) {

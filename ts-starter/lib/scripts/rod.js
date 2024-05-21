@@ -35,6 +35,22 @@ function placeRods(block, blockName, rodLength, direction) {
         }
     }
 }
+function setCameraView(x, player) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (x >= 25 && x <= 48) {
+            player.runCommandAsync(`camera ${player.name} set minecraft:free pos 36 120 44 facing 36 94 44`);
+        }
+        else if (x >= 0 && x <= 23) {
+            player.runCommandAsync(`camera ${player.name} set minecraft:free pos 11 120 44 facing 11 94 44`);
+        }
+        else if (x >= -25 && x <= -2) {
+            player.runCommandAsync(`camera ${player.name} set minecraft:free pos -14 120 44 facing -14 94 44`);
+        }
+        else if (x >= -50 && x <= -27) {
+            player.runCommandAsync(`camera ${player.name} set minecraft:free pos -39 120 44 facing -39 94 44`);
+        }
+    });
+}
 export function getBlockBehind(event, oppositeDirection) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b;
@@ -51,9 +67,10 @@ export function replayRods(rodsPlaced, player, perfectRun) {
             yield resetGrid({ x: -50, y: 94, z: 33 });
             for (let i = 0; i < rodsPlaced.length; i++) {
                 player.runCommandAsync(`title ${player.name} actionbar This was how you placed the rods.`);
-                player.runCommandAsync(`camera ${player.name} set minecraft:free pos 36 120 44 facing 36 94 44`);
                 ((index) => {
-                    system.runTimeout(() => {
+                    system.runTimeout(() => __awaiter(this, void 0, void 0, function* () {
+                        let x = rodsPlaced[index].location.x;
+                        yield setCameraView(x, player);
                         let block = overworld.getBlock(rodsPlaced[index].location);
                         placeRods(block, rodsPlaced[index].blockName, rodsPlaced[index].rodLength, rodsPlaced[index].direction);
                         if (perfectRun[index] && rodsPlaced[index].blockName !== perfectRun[index].blockName) {
@@ -68,7 +85,7 @@ export function replayRods(rodsPlaced, player, perfectRun) {
                                 player.runCommandAsync(`camera ${player.name} clear`);
                             }, 40);
                         }
-                    }, 40 * index);
+                    }), 40 * index);
                 })(i);
             }
         }
