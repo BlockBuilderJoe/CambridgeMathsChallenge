@@ -20,7 +20,7 @@ export function cuisenaire(block, blockName, rodLength, successMessage, directio
             placeRods(block, blockName, rodLength, direction);
         }
         else {
-            block === null || block === void 0 ? void 0 : block.setPermutation(BlockPermutation.resolve("air"));
+            block === null || block === void 0 ? void 0 : block.setPermutation(BlockPermutation.resolve("tallgrass"));
         }
     }
 }

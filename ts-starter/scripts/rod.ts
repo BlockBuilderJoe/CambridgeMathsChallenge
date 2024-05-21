@@ -28,7 +28,7 @@ export function cuisenaire(
         placeRods(block, blockName, rodLength, direction);
       }
       else {
-        block?.setPermutation(BlockPermutation.resolve("air"));
+        block?.setPermutation(BlockPermutation.resolve("tallgrass"));
       
       }
   }

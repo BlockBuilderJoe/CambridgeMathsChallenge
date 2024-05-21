@@ -311,9 +311,12 @@ var overworld4 = world7.getDimension("overworld");
 function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced2) {
   if (block.permutation?.matches(blockName)) {
     let runPlaceRods = true;
+    let hasColour = null;
     overworld4.runCommand("title @p actionbar " + successMessage);
+    block.setPermutation(BlockPermutation4.resolve("tallgrass"));
     for (let i = 0; i < rodLength; i++) {
-      if (block[direction](i)?.permutation?.matches("sandstone") || block[direction](i)?.permutation?.matches("white_concrete") || block[direction](1)?.permutation?.getState("color")) {
+      let colour = block[direction](i)?.permutation?.getState("color");
+      if (colour || block[direction](i)?.permutation?.matches("sandstone")) {
         world7.sendMessage("It's gone over a whole rod length!");
         runPlaceRods = false;
         break;
@@ -323,7 +326,7 @@ function cuisenaire(block, blockName, rodLength, successMessage, direction, rods
       rodsPlaced2.push({ location: block.location, direction, rodLength, blockName });
       placeRods(block, blockName, rodLength, direction);
     } else {
-      block?.setPermutation(BlockPermutation4.resolve("air"));
+      block?.setPermutation(BlockPermutation4.resolve("tallgrass"));
     }
   }
 }
@@ -340,30 +343,30 @@ async function getBlockBehind(event, oppositeDirection) {
   let hasColour = event.block[oppositeDirection](1)?.permutation?.getState("color");
   return hasColour;
 }
-async function replayRods(rodsPlaced2, entity) {
-  let perfectRun = [{ location: { z: 33, y: 94, x: 37 }, direction: "south", rodLength: 12, blockName: "yellow_concrete" }, { location: { z: 45, y: 94, x: 36 }, direction: "west", rodLength: 12, blockName: "yellow_concrete" }];
-  world7.sendMessage(JSON.stringify(rodsPlaced2));
-  world7.sendMessage(JSON.stringify(perfectRun));
+async function replayRods(rodsPlaced2, player, perfectRun) {
   if (JSON.stringify(rodsPlaced2) === JSON.stringify(perfectRun)) {
     world7.sendMessage("You placed the rods in the most efficient way! Well done!");
   } else {
-    world7.sendMessage("Replaying rods");
     await resetGrid({ x: -50, y: 94, z: 33 });
-    let shouldContinue = true;
     for (let i = 0; i < rodsPlaced2.length; i++) {
+      player.runCommandAsync(`title ${player.name} actionbar This was how you placed the rods.`);
+      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 36 120 44 facing 36 94 44`);
       ((index) => {
         system.runTimeout(() => {
-          if (!shouldContinue) {
-            return;
-          }
-          let offsetLocation = { x: perfectRun[index].location.x, y: perfectRun[index].location.y, z: perfectRun[index].location.z + 33 };
-          let offsetBlock = overworld4.getBlock(offsetLocation);
           let block = overworld4.getBlock(rodsPlaced2[index].location);
           placeRods(block, rodsPlaced2[index].blockName, rodsPlaced2[index].rodLength, rodsPlaced2[index].direction);
-          placeRods(offsetBlock, perfectRun[index].blockName, perfectRun[index].rodLength, perfectRun[index].direction);
-          if (rodsPlaced2[index].blockName !== perfectRun[index].blockName) {
-            world7.sendMessage(`${rodsPlaced2[index].rodLength} is not the most efficient rod to place here. If you want to get further try again!`);
-            shouldContinue = false;
+          if (perfectRun[index] && rodsPlaced2[index].blockName !== perfectRun[index].blockName) {
+            player.runCommandAsync(`title ${player.name} actionbar ${rodsPlaced2[index].rodLength} is not the most efficient factor.`);
+          } else if (!perfectRun[index]) {
+            player.runCommandAsync(`title ${player.name} actionbar ${rodsPlaced2[index].rodLength} is not the most efficient factor.`);
+          }
+          if (i === rodsPlaced2.length - 1) {
+            system.runTimeout(
+              () => {
+                player.runCommandAsync(`camera ${player.name} clear`);
+              },
+              40
+            );
           }
         }, 40 * index);
       })(i);
@@ -606,7 +609,8 @@ world9.afterEvents.buttonPush.subscribe(async (event) => {
     }
     case "24,95,45": {
       let player = event.source;
-      await replayRods(rodsPlaced, player);
+      let perfectRun = [{ location: { z: 33, y: 94, x: 37 }, direction: "south", rodLength: 12, blockName: "yellow_concrete" }, { location: { z: 45, y: 94, x: 36 }, direction: "west", rodLength: 12, blockName: "yellow_concrete" }];
+      await replayRods(rodsPlaced, player, perfectRun);
       break;
     }
   }
@@ -636,7 +640,7 @@ world9.afterEvents.playerPlaceBlock.subscribe(async (event) => {
         }
       } else {
         world9.sendMessage("You need to place a cuisenaire rod block first.");
-        event.block.setPermutation(BlockPermutation6.resolve("air"));
+        event.block.setPermutation(BlockPermutation6.resolve("tallgrass"));
       }
     }
   }

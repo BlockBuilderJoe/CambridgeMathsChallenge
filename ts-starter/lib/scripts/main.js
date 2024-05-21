@@ -102,7 +102,7 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0
             }
             else {
                 world.sendMessage("You need to place a cuisenaire rod block first.");
-                event.block.setPermutation(BlockPermutation.resolve("air"));
+                event.block.setPermutation(BlockPermutation.resolve("tallgrass"));
             }
         }
     }

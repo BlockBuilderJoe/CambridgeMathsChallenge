@@ -326,7 +326,7 @@ function cuisenaire(block, blockName, rodLength, successMessage, direction, rods
       rodsPlaced2.push({ location: block.location, direction, rodLength, blockName });
       placeRods(block, blockName, rodLength, direction);
     } else {
-      block?.setPermutation(BlockPermutation4.resolve("air"));
+      block?.setPermutation(BlockPermutation4.resolve("tallgrass"));
     }
   }
 }
@@ -640,7 +640,7 @@ world9.afterEvents.playerPlaceBlock.subscribe(async (event) => {
         }
       } else {
         world9.sendMessage("You need to place a cuisenaire rod block first.");
-        event.block.setPermutation(BlockPermutation6.resolve("air"));
+        event.block.setPermutation(BlockPermutation6.resolve("tallgrass"));
       }
     }
   }
