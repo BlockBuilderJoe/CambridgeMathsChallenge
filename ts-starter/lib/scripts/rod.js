@@ -59,7 +59,8 @@ export function getBlockBehind(event, oppositeDirection) {
 }
 export function replayRods(rodsPlaced, player, perfectRun) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield resetGrid({ x: -50, y: 94, z: 33 });
+        player.runCommandAsync("tp 38 96 -76"); //moves the player out of sight.
+        yield resetGrid({ x: -50, y: 94, z: 33 }); //clears the grid.
         let matchingRods = rodsPlaced.filter((rod, index) => JSON.stringify(rod) === JSON.stringify(perfectRun[index]));
         for (let i = 0; i < matchingRods.length; i++) {
             ((index) => {
@@ -69,7 +70,7 @@ export function replayRods(rodsPlaced, player, perfectRun) {
                     let block = overworld.getBlock(matchingRods[index].location);
                     placeRods(block, matchingRods[index].blockName, matchingRods[index].rodLength, matchingRods[index].direction);
                     if (i === matchingRods.length - 1) { //resets the camera 2 seconds after last rod placed.
-                        let tpCommand = `tp ${player.name} 36 95 30`;
+                        let tpCommand = `tp ${player.name} ${matchingRods[index].location.x} ${matchingRods[index].location.y + 1} ${matchingRods[index].location.z}`;
                         endReplay(player, tpCommand);
                     }
                 }), 40 * index);

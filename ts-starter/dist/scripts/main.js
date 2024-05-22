@@ -354,6 +354,7 @@ async function getBlockBehind(event, oppositeDirection) {
   return hasColour;
 }
 async function replayRods(rodsPlaced2, player, perfectRun) {
+  player.runCommandAsync("tp 38 96 -76");
   await resetGrid({ x: -50, y: 94, z: 33 });
   let matchingRods = rodsPlaced2.filter((rod, index) => JSON.stringify(rod) === JSON.stringify(perfectRun[index]));
   for (let i = 0; i < matchingRods.length; i++) {
@@ -364,7 +365,7 @@ async function replayRods(rodsPlaced2, player, perfectRun) {
         let block = overworld4.getBlock(matchingRods[index].location);
         placeRods(block, matchingRods[index].blockName, matchingRods[index].rodLength, matchingRods[index].direction);
         if (i === matchingRods.length - 1) {
-          let tpCommand = `tp ${player.name} 36 95 30`;
+          let tpCommand = `tp ${player.name} ${matchingRods[index].location.x} ${matchingRods[index].location.y + 1} ${matchingRods[index].location.z}`;
           endReplay(player, tpCommand);
         }
       }, 40 * index);
