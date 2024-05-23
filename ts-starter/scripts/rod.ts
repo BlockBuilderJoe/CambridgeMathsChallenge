@@ -1,4 +1,5 @@
 import { BlockPermutation, world, system, Vector3, Player, EntityInventoryComponent, EquipmentSlot, EntityItemComponent} from "@minecraft/server";
+import { roundToDigits } from "./numberHandler";
 let overworld = world.getDimension("overworld");
 
 
@@ -8,7 +9,9 @@ export function cuisenaire(
   rodLength: number,
   successMessage: string,
   direction: string,
-  rodsPlaced: any[]
+  rodsPlaced: any[],
+  perfectRun: any[]
+
 ) {
   if (block.permutation?.matches(blockName)) {
     let runPlaceRods = true;
@@ -23,7 +26,13 @@ export function cuisenaire(
         }
     }
     if (runPlaceRods) {
-        rodsPlaced.push({location: block.location, direction: direction, rodLength: rodLength, blockName: blockName});
+        let rodToPlace = {location: block.location, direction: direction, rodLength: rodLength, blockName: blockName}
+        rodsPlaced.push(rodToPlace);
+        const matchingRodIndex = perfectRun.findIndex(rod => JSON.stringify(rod) === JSON.stringify(rodToPlace));
+        if (matchingRodIndex >= 0) {
+          world.sendMessage("You placed a rod in the correct position!");
+          changeNPC(matchingRodIndex);
+        }
         placeRods(block, blockName, rodLength, direction);
       }
       else {
@@ -31,6 +40,10 @@ export function cuisenaire(
       
       }
   }
+}
+
+async function changeNPC(matchingRodIndex: number){ //changes the NPC to the success state based on the matchingRodIndex.
+  overworld.runCommandAsync(`dialogue change @e[tag=game1student${matchingRodIndex}] game1student${matchingRodIndex}_success`)
 }
 
 function placeRods(block: any, blockName: string, rodLength: number, direction: string){

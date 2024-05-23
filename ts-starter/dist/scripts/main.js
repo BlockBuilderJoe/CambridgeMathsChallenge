@@ -308,7 +308,7 @@ async function scaleShape(shape, scaleFactor, axes) {
 // scripts/rod.ts
 import { BlockPermutation as BlockPermutation4, world as world7, system } from "@minecraft/server";
 var overworld4 = world7.getDimension("overworld");
-function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced2) {
+function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced2, perfectRun2) {
   if (block.permutation?.matches(blockName)) {
     let runPlaceRods = true;
     overworld4.runCommand("title @p actionbar " + successMessage);
@@ -322,12 +322,21 @@ function cuisenaire(block, blockName, rodLength, successMessage, direction, rods
       }
     }
     if (runPlaceRods) {
-      rodsPlaced2.push({ location: block.location, direction, rodLength, blockName });
+      let rodToPlace = { location: block.location, direction, rodLength, blockName };
+      rodsPlaced2.push(rodToPlace);
+      const matchingRodIndex = perfectRun2.findIndex((rod) => JSON.stringify(rod) === JSON.stringify(rodToPlace));
+      if (matchingRodIndex >= 0) {
+        world7.sendMessage("You placed a rod in the correct position!");
+        changeNPC(matchingRodIndex);
+      }
       placeRods(block, blockName, rodLength, direction);
     } else {
       block?.setPermutation(BlockPermutation4.resolve("tallgrass"));
     }
   }
+}
+async function changeNPC(matchingRodIndex) {
+  overworld4.runCommandAsync(`dialogue change @e[tag=game1student${matchingRodIndex}] game1student${matchingRodIndex}_success`);
 }
 function placeRods(block, blockName, rodLength, direction) {
   for (let i = 0; i < rodLength; i++) {
@@ -353,9 +362,9 @@ async function getBlockBehind(event, oppositeDirection) {
   let hasColour = event.block[oppositeDirection](1)?.permutation?.getState("color");
   return hasColour;
 }
-async function replayRods(rodsPlaced2, player, perfectRun) {
+async function replayRods(rodsPlaced2, player, perfectRun2) {
   await resetGrid({ x: -50, y: 94, z: 33 });
-  let matchingRods = rodsPlaced2.filter((rod, index) => JSON.stringify(rod) === JSON.stringify(perfectRun[index]));
+  let matchingRods = rodsPlaced2.filter((rod, index) => JSON.stringify(rod) === JSON.stringify(perfectRun2[index]));
   if (matchingRods) {
     player.runCommandAsync("tp 38 96 -76");
     for (let i = 0; i < matchingRods.length; i++) {
@@ -409,6 +418,22 @@ async function giveRods(player, rodsRemoved) {
     player.runCommandAsync(`give @p ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
   }
 }
+
+// scripts/perfectRun.ts
+var perfectRun = [
+  {
+    location: { z: 33, y: 94, x: 37 },
+    direction: "south",
+    rodLength: 12,
+    blockName: "yellow_concrete"
+  },
+  {
+    location: { z: 45, y: 94, x: 36 },
+    direction: "west",
+    rodLength: 6,
+    blockName: "green_concrete"
+  }
+];
 
 // scripts/playerFacing.ts
 async function facing(blockLocation) {
@@ -641,7 +666,6 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
     }
     case "24,95,45": {
       let player = event.source;
-      let perfectRun = [{ location: { z: 33, y: 94, x: 37 }, direction: "south", rodLength: 12, blockName: "yellow_concrete" }, { location: { z: 45, y: 94, x: 36 }, direction: "west", rodLength: 12, blockName: "yellow_concrete" }];
       await replayRods(rodsPlaced, player, perfectRun);
       break;
     }
@@ -656,19 +680,19 @@ world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
       let hasColour = await getBlockBehind(event, oppositeDirection);
       if (hasColour) {
         if (block.permutation?.matches("red_concrete")) {
-          cuisenaire(block, "red_concrete", 2, "Placed a twelth rod", direction, rodsPlaced);
+          cuisenaire(block, "red_concrete", 2, "Placed a twelth rod", direction, rodsPlaced, perfectRun);
         } else if (block.permutation?.matches("lime_concrete")) {
-          cuisenaire(block, "lime_concrete", 3, "Placed an eigth rod", direction, rodsPlaced);
+          cuisenaire(block, "lime_concrete", 3, "Placed an eigth rod", direction, rodsPlaced, perfectRun);
         } else if (block.permutation?.matches("purple_concrete")) {
-          cuisenaire(block, "purple_concrete", 4, "Placed a sixth rod", direction, rodsPlaced);
+          cuisenaire(block, "purple_concrete", 4, "Placed a sixth rod", direction, rodsPlaced, perfectRun);
         } else if (block.permutation?.matches("green_concrete")) {
-          cuisenaire(block, "green_concrete", 6, "Placed a quarter rod", direction, rodsPlaced);
+          cuisenaire(block, "green_concrete", 6, "Placed a quarter rod", direction, rodsPlaced, perfectRun);
         } else if (block.permutation?.matches("brown_concrete")) {
-          cuisenaire(block, "brown_concrete", 8, "Placed a third rod", direction, rodsPlaced);
+          cuisenaire(block, "brown_concrete", 8, "Placed a third rod", direction, rodsPlaced, perfectRun);
         } else if (block.permutation?.matches("yellow_concrete")) {
-          cuisenaire(block, "yellow_concrete", 12, "Placed a half rod", direction, rodsPlaced);
+          cuisenaire(block, "yellow_concrete", 12, "Placed a half rod", direction, rodsPlaced, perfectRun);
         } else if (block.permutation?.matches("blue_concrete")) {
-          cuisenaire(block, "blue_concrete", 24, "Placed a whole rod", direction, rodsPlaced);
+          cuisenaire(block, "blue_concrete", 24, "Placed a whole rod", direction, rodsPlaced, perfectRun);
         }
       } else {
         world10.sendMessage("You need to place a cuisenaire rod block first.");

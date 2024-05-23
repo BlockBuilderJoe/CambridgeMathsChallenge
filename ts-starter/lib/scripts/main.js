@@ -4,6 +4,7 @@ import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
 import { scale, resetArea } from "./scaler";
 import { cuisenaire, getBlockBehind, replayRods, resetGrid, giveRods } from "./rod";
+import { perfectRun } from "./perfectRun";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
 import { potionMaker, displayTimer } from "./potion";
@@ -62,7 +63,6 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
         }
         case "24,95,45": {
             let player = event.source; // Cast event.source to Player type
-            let perfectRun = [{ location: { z: 33, y: 94, x: 37 }, direction: "south", rodLength: 12, blockName: "yellow_concrete" }, { location: { z: 45, y: 94, x: 36 }, direction: "west", rodLength: 12, blockName: "yellow_concrete" }];
             yield replayRods(rodsPlaced, player, perfectRun); // Pass the casted player as an argument
             break;
         }
@@ -79,25 +79,25 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0
             let hasColour = yield getBlockBehind(event, oppositeDirection);
             if (hasColour) { //checks if the block has a colour (meaning it's a cuisenaire rod block)
                 if ((_b = block.permutation) === null || _b === void 0 ? void 0 : _b.matches("red_concrete")) {
-                    cuisenaire(block, "red_concrete", 2, "Placed a twelth rod", direction, rodsPlaced);
+                    cuisenaire(block, "red_concrete", 2, "Placed a twelth rod", direction, rodsPlaced, perfectRun);
                 }
                 else if ((_c = block.permutation) === null || _c === void 0 ? void 0 : _c.matches("lime_concrete")) {
-                    cuisenaire(block, "lime_concrete", 3, "Placed an eigth rod", direction, rodsPlaced);
+                    cuisenaire(block, "lime_concrete", 3, "Placed an eigth rod", direction, rodsPlaced, perfectRun);
                 }
                 else if ((_d = block.permutation) === null || _d === void 0 ? void 0 : _d.matches("purple_concrete")) {
-                    cuisenaire(block, "purple_concrete", 4, "Placed a sixth rod", direction, rodsPlaced);
+                    cuisenaire(block, "purple_concrete", 4, "Placed a sixth rod", direction, rodsPlaced, perfectRun);
                 }
                 else if ((_e = block.permutation) === null || _e === void 0 ? void 0 : _e.matches("green_concrete")) {
-                    cuisenaire(block, "green_concrete", 6, "Placed a quarter rod", direction, rodsPlaced);
+                    cuisenaire(block, "green_concrete", 6, "Placed a quarter rod", direction, rodsPlaced, perfectRun);
                 }
                 else if ((_f = block.permutation) === null || _f === void 0 ? void 0 : _f.matches("brown_concrete")) {
-                    cuisenaire(block, "brown_concrete", 8, "Placed a third rod", direction, rodsPlaced);
+                    cuisenaire(block, "brown_concrete", 8, "Placed a third rod", direction, rodsPlaced, perfectRun);
                 }
                 else if ((_g = block.permutation) === null || _g === void 0 ? void 0 : _g.matches("yellow_concrete")) {
-                    cuisenaire(block, "yellow_concrete", 12, "Placed a half rod", direction, rodsPlaced);
+                    cuisenaire(block, "yellow_concrete", 12, "Placed a half rod", direction, rodsPlaced, perfectRun);
                 }
                 else if ((_h = block.permutation) === null || _h === void 0 ? void 0 : _h.matches("blue_concrete")) {
-                    cuisenaire(block, "blue_concrete", 24, "Placed a whole rod", direction, rodsPlaced);
+                    cuisenaire(block, "blue_concrete", 24, "Placed a whole rod", direction, rodsPlaced, perfectRun);
                 }
             }
             else {

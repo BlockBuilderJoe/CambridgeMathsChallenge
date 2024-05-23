@@ -1,6 +1,6 @@
 import { BlockPermutation, world, system } from "@minecraft/server";
 let overworld = world.getDimension("overworld");
-export function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced) {
+export function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced, perfectRun) {
     var _a, _b, _c, _d, _e;
     if ((_a = block.permutation) === null || _a === void 0 ? void 0 : _a.matches(blockName)) {
         let runPlaceRods = true;
@@ -15,13 +15,24 @@ export function cuisenaire(block, blockName, rodLength, successMessage, directio
             }
         }
         if (runPlaceRods) {
-            rodsPlaced.push({ location: block.location, direction: direction, rodLength: rodLength, blockName: blockName });
+            let rodToPlace = { location: block.location, direction: direction, rodLength: rodLength, blockName: blockName };
+            rodsPlaced.push(rodToPlace);
+            const matchingRodIndex = perfectRun.findIndex(rod => JSON.stringify(rod) === JSON.stringify(rodToPlace));
+            if (matchingRodIndex >= 0) {
+                world.sendMessage("You placed a rod in the correct position!");
+                changeNPC(matchingRodIndex);
+            }
             placeRods(block, blockName, rodLength, direction);
         }
         else {
             block === null || block === void 0 ? void 0 : block.setPermutation(BlockPermutation.resolve("tallgrass"));
         }
     }
+}
+function changeNPC(matchingRodIndex) {
+    return __awaiter(this, void 0, void 0, function* () {
+        overworld.runCommandAsync(`dialogue change @e[tag=game1student${matchingRodIndex}] game1student${matchingRodIndex}_success`);
+    });
 }
 function placeRods(block, blockName, rodLength, direction) {
     var _a;
