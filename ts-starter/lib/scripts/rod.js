@@ -1,28 +1,62 @@
 import { BlockPermutation, world, system } from "@minecraft/server";
 let overworld = world.getDimension("overworld");
-export function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced) {
-    var _a, _b, _c, _d, _e;
-    if ((_a = block.permutation) === null || _a === void 0 ? void 0 : _a.matches(blockName)) {
-        let runPlaceRods = true;
-        let hasColour = null;
-        overworld.runCommand("title @p actionbar " + successMessage);
-        block.setPermutation(BlockPermutation.resolve("tallgrass"));
-        for (let i = 0; i < rodLength; i++) {
-            let colour = (_c = (_b = block[direction](i)) === null || _b === void 0 ? void 0 : _b.permutation) === null || _c === void 0 ? void 0 : _c.getState("color");
-            if (colour || ((_e = (_d = block[direction](i)) === null || _d === void 0 ? void 0 : _d.permutation) === null || _e === void 0 ? void 0 : _e.matches("sandstone"))) {
-                world.sendMessage("It's gone over a whole rod length!");
-                runPlaceRods = false;
-                break;
+export function directionCheck(x, z, direction) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let correctDirection = false;
+        if (x == 37 && isInRange(z, 33, 44)) { //rod0{ //rod0
+            correctDirection = true;
+        }
+        else if (isInRange(x, 31, 36) && isInRange(z, 45, 46)) { //rod2
+            correctDirection = true;
+        }
+        return correctDirection;
+    });
+}
+function isInRange(value, min, max) {
+    return value >= min && value <= max;
+}
+export function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced, perfectRun) {
+    return __awaiter(this, void 0, void 0, function* () {
+        var _a, _b, _c, _d, _e;
+        if ((_a = block.permutation) === null || _a === void 0 ? void 0 : _a.matches(blockName)) {
+            let runPlaceRods = true;
+            overworld.runCommand("title @p actionbar " + successMessage);
+            block.setPermutation(BlockPermutation.resolve("tallgrass"));
+            for (let i = 0; i < rodLength; i++) {
+                let colour = (_c = (_b = block[direction](i)) === null || _b === void 0 ? void 0 : _b.permutation) === null || _c === void 0 ? void 0 : _c.getState("color");
+                if (colour || ((_e = (_d = block[direction](i)) === null || _d === void 0 ? void 0 : _d.permutation) === null || _e === void 0 ? void 0 : _e.matches("sandstone"))) {
+                    overworld.runCommand("title @p actionbar That rod is too long!");
+                    runPlaceRods = false;
+                    break;
+                }
+            }
+            if (runPlaceRods) {
+                let rodToPlace = { location: block.location, direction: direction, rodLength: rodLength, blockName: blockName };
+                rodsPlaced.push(rodToPlace);
+                const matchingRodIndex = perfectRun.findIndex(rod => JSON.stringify(rod) === JSON.stringify(rodToPlace));
+                if (matchingRodIndex >= 0) {
+                    world.sendMessage("You placed a rod in the correct position!");
+                    yield changeNPC(matchingRodIndex);
+                }
+                placeRods(block, blockName, rodLength, direction);
+            }
+            else {
+                block === null || block === void 0 ? void 0 : block.setPermutation(BlockPermutation.resolve("tallgrass"));
             }
         }
-        if (runPlaceRods) {
-            rodsPlaced.push({ location: block.location, direction: direction, rodLength: rodLength, blockName: blockName });
-            placeRods(block, blockName, rodLength, direction);
+    });
+}
+function changeNPC(matchingRodIndex) {
+    return __awaiter(this, void 0, void 0, function* () {
+        overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
+    });
+}
+export function resetNPC(npcAmount) {
+    return __awaiter(this, void 0, void 0, function* () {
+        for (let i = 0; i < npcAmount; i++) {
+            overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Fail`);
         }
-        else {
-            block === null || block === void 0 ? void 0 : block.setPermutation(BlockPermutation.resolve("air"));
-        }
-    }
+    });
 }
 function placeRods(block, blockName, rodLength, direction) {
     var _a;
@@ -35,6 +69,22 @@ function placeRods(block, blockName, rodLength, direction) {
         }
     }
 }
+function setCameraView(x, player) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (x >= 25 && x <= 48) {
+            player.runCommandAsync(`camera ${player.name} set minecraft:free pos 36 120 44 facing 36 94 44`);
+        }
+        else if (x >= 0 && x <= 23) {
+            player.runCommandAsync(`camera ${player.name} set minecraft:free pos 11 120 44 facing 11 94 44`);
+        }
+        else if (x >= -25 && x <= -2) {
+            player.runCommandAsync(`camera ${player.name} set minecraft:free pos -14 120 44 facing -14 94 44`);
+        }
+        else if (x >= -50 && x <= -27) {
+            player.runCommandAsync(`camera ${player.name} set minecraft:free pos -39 120 44 facing -39 94 44`);
+        }
+    });
+}
 export function getBlockBehind(event, oppositeDirection) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b;
@@ -42,33 +92,36 @@ export function getBlockBehind(event, oppositeDirection) {
         return hasColour;
     });
 }
-export function replayRods(rodsPlaced, player) {
+export function replayRods(rodsPlaced, player, perfectRun) {
     return __awaiter(this, void 0, void 0, function* () {
-        let perfectRun = [{ location: { z: 33, y: 94, x: 37 }, direction: "south", rodLength: 12, blockName: "yellow_concrete" }, { location: { z: 45, y: 94, x: 36 }, direction: "west", rodLength: 12, blockName: "yellow_concrete" }];
-        if (JSON.stringify(rodsPlaced) === JSON.stringify(perfectRun)) {
-            world.sendMessage('You placed the rods in the most efficient way! Well done!');
-        }
-        else {
-            player.runCommandAsync(`camera ${player.name} set minecraft:free pos 36 120 44 facing 36 94 44`);
-            player.runCommandAsync(`title ${player.name} actionbar This was how you placed the rods.`);
-            yield resetGrid({ x: -50, y: 94, z: 33 });
-            for (let i = 0; i < rodsPlaced.length; i++) {
+        yield resetGrid({ x: -50, y: 94, z: 33 }); //clears the grid.
+        let matchingRods = rodsPlaced.filter((rod, index) => JSON.stringify(rod) === JSON.stringify(perfectRun[index]));
+        if (matchingRods) {
+            player.runCommandAsync("tp 38 96 -76"); //moves the player out of sight.
+            for (let i = 0; i < matchingRods.length; i++) {
                 ((index) => {
-                    system.runTimeout(() => {
-                        let block = overworld.getBlock(rodsPlaced[index].location);
-                        placeRods(block, rodsPlaced[index].blockName, rodsPlaced[index].rodLength, rodsPlaced[index].direction);
-                        if (perfectRun[index] && rodsPlaced[index].blockName !== perfectRun[index].blockName) {
-                            player.runCommandAsync(`title ${player.name} actionbar ${rodsPlaced[index].rodLength} is not the most efficient factor.`);
+                    system.runTimeout(() => __awaiter(this, void 0, void 0, function* () {
+                        let x = matchingRods[index].location.x;
+                        yield setCameraView(x, player);
+                        let block = overworld.getBlock(matchingRods[index].location);
+                        placeRods(block, matchingRods[index].blockName, matchingRods[index].rodLength, matchingRods[index].direction);
+                        if (i === matchingRods.length - 1) { //resets the camera 2 seconds after last rod placed.
+                            world.sendMessage(`tp ${player.name} ${matchingRods[index].location.x} ${matchingRods[index].location.y + 1} ${matchingRods[index].location.z}`);
+                            let tpCommand = `tp ${player.name} ${matchingRods[index].location.x} ${matchingRods[index].location.y + 1} ${matchingRods[index].location.z}`;
+                            endReplay(player, tpCommand);
                         }
-                        else if (!perfectRun[index]) {
-                            // Handle the case where there is no corresponding value in perfectRun to stop errors.
-                            player.runCommandAsync(`title ${player.name} actionbar ${rodsPlaced[index].rodLength} is not the most efficient factor.`);
-                        }
-                    }, 40 * index);
+                    }), 40 * index);
+                    return;
                 })(i);
             }
         }
     });
+}
+function endReplay(player, tpCommand) {
+    system.runTimeout(() => {
+        player.runCommandAsync(tpCommand);
+        player.runCommandAsync(`camera ${player.name} clear`);
+    }, 40);
 }
 //Resets the area to the original state, one area at a time. 
 function squareReset(pos1, pos2, concreteColours) {
@@ -90,6 +143,15 @@ export function resetGrid(location) {
             let pos1 = { x: offset_x, y: location.y, z: location.z };
             let pos2 = { x: offset_x + 24, y: location.y, z: location.z + 24 };
             yield squareReset(pos1, pos2, concreteColours);
+        }
+    });
+}
+export function giveRods(player, rodsRemoved) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let rods = [{ block: "red_concrete", amount: 10 }, { block: "lime_concrete", amount: 10 }, { block: "purple_concrete", amount: 10 }, { block: "green_concrete", amount: 10 }, { block: "brown_concrete", amount: 10 }, { block: "yellow_concrete", amount: 10 }, { block: "blue_concrete", amount: 10 }];
+        player.runCommandAsync(`clear ${player.name}`);
+        for (let i = 0; i < rods.length; i++) {
+            player.runCommandAsync(`give @p ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
         }
     });
 }

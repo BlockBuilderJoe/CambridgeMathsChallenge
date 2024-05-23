@@ -3,10 +3,12 @@ import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
 import { scale, resetArea } from "./scaler";
-import { cuisenaire, getBlockBehind, replayRods, resetGrid } from "./rod";
+import { cuisenaire, getBlockBehind, replayRods, resetGrid, giveRods, resetNPC, directionCheck } from "./rod";
+import { perfectRun } from "./perfectRun";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
 import { potionMaker, displayTimer } from "./potion";
+import './npcscriptEventHandler'; //handles the NPC script events
 
 let potion: string = "";
 let seconds: number = 0;
@@ -15,6 +17,7 @@ let potionStart = 0;
 let potionDrank = false;
 let meters = 0;
 let rodsPlaced: any[] = [];
+let rodsToRemove: any[] = [];
 
 //welcome player
 world.afterEvents.playerSpawn.subscribe((eventData) => {
@@ -57,19 +60,18 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
       await resetArea();
       break;
     }
-    case "-3,-60,90": {
-      world.getDimension("overworld").runCommand("function lava");
-      break;
-    }
-    case "38,95,31": {
+    case "39,95,31": {
+      let player = event.source as Entity; // Cast event.source to Player type
       rodsPlaced = []; //resets the rods placed array
-      world.getDimension("overworld").runCommand("function lava");
+      rodsToRemove = []; //resets the rods to remove array
+      await resetNPC(2);
+      await giveRods(player, rodsToRemove);
       await resetGrid({ x: -50, y: 94, z: 33 });
       break;
     }
     case "24,95,45": {
       let player = event.source as Entity; // Cast event.source to Player type
-      await replayRods(rodsPlaced, player); // Pass the casted player as an argument
+      await replayRods(rodsPlaced, player, perfectRun); // Pass the casted player as an argument
       break;
     }
   }
@@ -78,36 +80,41 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let block = event.block;
-  if (block.permutation?.getState("color")) { 
-    if (block.location.y === 94) {
+  let player = event.player;
+  let colour = block.permutation?.getState("color");
+  if (colour) { //is it a rod block?
+    if (block.location.y === 94) { //is it placed on the grid?
       let viewDirection = event.player.getViewDirection();
       let { direction, oppositeDirection } = await facing(viewDirection);
-      let hasColour = await getBlockBehind(event, oppositeDirection)
-      if (hasColour) { //checks if the block has a colour (meaning it's a cuisenaire rod block)
-        if (block.permutation?.matches("red_concrete")) {
-          cuisenaire(block, "red_concrete", 2, "Placed a twelth rod", direction, rodsPlaced);
-        } else if (block.permutation?.matches("lime_concrete")) {
-          cuisenaire(block, "lime_concrete", 3, "Placed an eigth rod", direction, rodsPlaced);
-        } else if (block.permutation?.matches("purple_concrete")) {
-          cuisenaire(block, "purple_concrete", 4, "Placed a sixth rod", direction, rodsPlaced);
-        } else if (block.permutation?.matches("green_concrete")) {
-          cuisenaire(block, "green_concrete", 6, "Placed a quarter rod", direction, rodsPlaced);
-        } else if (block.permutation?.matches("brown_concrete")) {
-          cuisenaire(block, "brown_concrete", 8, "Placed a third rod", direction, rodsPlaced);
-        } else if (block.permutation?.matches("yellow_concrete")) {
-          cuisenaire(block, "yellow_concrete", 12, "Placed a half rod", direction, rodsPlaced);
-        } else if (block.permutation?.matches("blue_concrete")) {
-          cuisenaire(block, "blue_concrete", 24, "Placed a whole rod", direction, rodsPlaced);
-        }
-      }
+      let correctDirection = await directionCheck(block.location.x, block.location.z, direction);
+      let hasColour = await getBlockBehind(event, oppositeDirection);
+      const rodPermutations = {
+        "red": { block: "red_concrete", value: 2, message: "Placed a twelth rod" },
+        "lime": { block: "lime_concrete", value: 3, message: "Placed an eigth rod" },
+        "purple": { block: "purple_concrete", value: 4, message: "Placed a sixth rod" },
+        "green": { block: "green_concrete", value: 6, message: "Placed a quarter rod" },
+        "brown": { block: "brown_concrete", value: 8, message: "Placed a third rod" },
+        "yellow": { block: "yellow_concrete", value: 12, message: "Placed a half rod" },
+        "blue": { block: "blue_concrete", value: 24, message: "Placed a whole rod" }
+      };
       
-      else {
-        world.sendMessage("You need to place a cuisenaire rod block first.");
-        event.block.setPermutation(BlockPermutation.resolve("air"));
+      if (!hasColour) {
+        player.runCommandAsync(`title ${player.name} actionbar Place the rod in front of the magical connector.`);
+        event.block.setPermutation(BlockPermutation.resolve("tallgrass"));
+        return;
       }
+      if (!correctDirection) {
+        player.runCommandAsync(`title ${player.name} actionbar You're facing the wrong way.`);
+        event.block.setPermutation(BlockPermutation.resolve("tallgrass"));
+        return;
+      }
+      const rod = rodPermutations[colour as keyof typeof rodPermutations];
+      if (rod) {
+        cuisenaire(block, rod.block, rod.value, rod.message, direction, rodsPlaced, perfectRun);
+      }   
     }
   }
-});
+  });
 
 world.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId; //gets the item in the players hand

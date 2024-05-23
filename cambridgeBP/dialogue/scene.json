@@ -1,0 +1,155 @@
+{
+    "format_version": "1.17",
+    "minecraft:npc_dialogue": {
+        "scenes": [
+            {
+                "scene_tag": "rodNpc0Win",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc0"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "Great work, 12 is half of 24, I’m saved. "
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "No problem!"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent rod:npcComplete 0"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "rodNpc0Fail",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc0"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "You saved me! You made up a half out of multiple fractions. I can show you a more optimum way. "
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Show me "
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent rod:npcReplay 0"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Not Interested!"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "rodNpc1Win",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc1"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "Woohoo, 6 is a quarter of 24."
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "You’re Welcome"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent rod:npcComplete 1"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "rodNpc1Fail",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc1"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "Well done you made it! Shall I show you a more optimum route? "
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Show me "
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent rod:npcReplay 1"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Not Interested!"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
