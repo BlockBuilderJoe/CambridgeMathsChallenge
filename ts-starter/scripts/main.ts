@@ -3,10 +3,11 @@ import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
 import { scale, resetArea } from "./scaler";
-import { cuisenaire, getBlockBehind, replayRods, resetGrid } from "./rod";
+import { cuisenaire, getBlockBehind, replayRods, resetGrid, giveRods } from "./rod";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
 import { potionMaker, displayTimer } from "./potion";
+import './npcscriptEventHandler';
 
 let potion: string = "";
 let seconds: number = 0;
@@ -15,6 +16,7 @@ let potionStart = 0;
 let potionDrank = false;
 let meters = 0;
 let rodsPlaced: any[] = [];
+let rodsToRemove: any[] = [];
 
 //welcome player
 world.afterEvents.playerSpawn.subscribe((eventData) => {
@@ -57,13 +59,11 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
       await resetArea();
       break;
     }
-    case "-3,-60,90": {
-      world.getDimension("overworld").runCommand("function lava");
-      break;
-    }
     case "38,95,31": {
+      let player = event.source as Entity; // Cast event.source to Player type
       rodsPlaced = []; //resets the rods placed array
-      world.getDimension("overworld").runCommand("function lava");
+      rodsToRemove = []; //resets the rods to remove array
+      await giveRods(player, rodsToRemove);
       await resetGrid({ x: -50, y: 94, z: 33 });
       break;
     }

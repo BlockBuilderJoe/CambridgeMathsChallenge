@@ -60,28 +60,31 @@ export async function getBlockBehind(event: any, oppositeDirection: string) {
   return hasColour;    
 }
 export async function replayRods(rodsPlaced: any[], player: any, perfectRun: any[]){
-  player.runCommandAsync("tp 38 96 -76") //moves the player out of sight.
   await resetGrid({ x: -50, y: 94, z: 33 }); //clears the grid.
   let matchingRods = rodsPlaced.filter((rod, index) => JSON.stringify(rod) === JSON.stringify(perfectRun[index]));
-  for (let i = 0; i < matchingRods.length; i++) {
-      ((index) => {
-        system.runTimeout(async() => {
-            let x = matchingRods[index].location.x;
-            await setCameraView(x, player);
-            let block = overworld.getBlock(matchingRods[index].location);
-            placeRods(block, matchingRods[index].blockName, matchingRods[index].rodLength, matchingRods[index].direction);
-            if (i === matchingRods.length -1) { //resets the camera 2 seconds after last rod placed.
-              let tpCommand = `tp ${player.name} ${matchingRods[index].location.x} ${matchingRods[index].location.y + 1} ${matchingRods[index].location.z}`;
-              endReplay(player, tpCommand);
-          }
-          }, 40 * index); 
-          return;
-          }
-      )(i);
+  if (matchingRods) {
+    player.runCommandAsync("tp 38 96 -76") //moves the player out of sight.
+    for (let i = 0; i < matchingRods.length; i++) {
+        ((index) => {
+          system.runTimeout(async() => {
+              let x = matchingRods[index].location.x;
+              await setCameraView(x, player);
+              let block = overworld.getBlock(matchingRods[index].location);
+              placeRods(block, matchingRods[index].blockName, matchingRods[index].rodLength, matchingRods[index].direction);
+              if (i === matchingRods.length -1) { //resets the camera 2 seconds after last rod placed.
+                world.sendMessage(`tp ${player.name} ${matchingRods[index].location.x} ${matchingRods[index].location.y + 1} ${matchingRods[index].location.z}`)
+                let tpCommand = `tp ${player.name} ${matchingRods[index].location.x} ${matchingRods[index].location.y + 1} ${matchingRods[index].location.z}`;
+                endReplay(player, tpCommand);
+            }
+            }, 40 * index); 
+            return;
+            }
+        )(i);
+      }
     }
 }
 
- 
+
 function endReplay(player: any, tpCommand: string){
   system.runTimeout(() => { 
     player.runCommandAsync(tpCommand);
@@ -108,6 +111,14 @@ export async function resetGrid(location: Vector3) {
       let pos1 = {x: offset_x, y: location.y, z: location.z};
       let pos2 = {x: offset_x + 24, y: location.y, z: location.z + 24};
       await squareReset(pos1, pos2, concreteColours);
+    }
+  }
+
+  export async function giveRods(player: any, rodsRemoved: any[]){
+    let rods = [{block: "red_concrete", amount: 10}, {block: "lime_concrete", amount: 10}, {block: "purple_concrete", amount: 10}, {block: "green_concrete", amount: 10}, {block: "brown_concrete", amount: 10}, {block: "yellow_concrete", amount: 10}, {block: "blue_concrete", amount: 10}];
+    player.runCommandAsync(`clear ${player.name}`);
+    for (let i = 0; i < rods.length; i++) {
+      player.runCommandAsync(`give @p ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
     }
   }
 
