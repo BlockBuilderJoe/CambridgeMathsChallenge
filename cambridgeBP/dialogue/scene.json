@@ -28,7 +28,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent game1:npcComplete 0"
+                            "scriptevent rod:npcComplete 0"
                         ]
                     }
                 ]
@@ -59,7 +59,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent game1:npcReplay 0"
+                            "scriptevent rod:npcReplay 0"
                         ]
                     },
                     {
@@ -102,7 +102,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent game1:npcComplete 1"
+                            "scriptevent rod:npcComplete 1"
                         ]
                     }
                 ]
@@ -133,7 +133,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent game1:npcReplay 1"
+                            "scriptevent rod:npcReplay 1"
                         ]
                     },
                     {

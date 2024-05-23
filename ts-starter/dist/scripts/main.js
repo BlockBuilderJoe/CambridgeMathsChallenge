@@ -617,12 +617,13 @@ function displayTimer(potionStart2, seconds2, player, potionDescription) {
 import { system as system3, world as world9 } from "@minecraft/server";
 system3.afterEvents.scriptEventReceive.subscribe((event) => {
   switch (event.id) {
-    case "game1:npc1_correct": {
-      world9.sendMessage("You are correct! You may proceed to the next NPC.");
+    case "rod:npcReplay": {
+      world9.sendMessage(`Replay Version ${event.message}`);
       break;
     }
-    case "game1:npc1_incorrect": {
-      world9.sendMessage("You are incorrect! Please try again.");
+    case "rod:npcComplete": {
+      world9.sendMessage(`Complete Version ${event.message}`);
+      break;
     }
   }
 });
