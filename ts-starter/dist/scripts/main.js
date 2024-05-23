@@ -308,7 +308,7 @@ async function scaleShape(shape, scaleFactor, axes) {
 // scripts/rod.ts
 import { BlockPermutation as BlockPermutation4, world as world7, system } from "@minecraft/server";
 var overworld4 = world7.getDimension("overworld");
-function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced2, perfectRun2) {
+async function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced2, perfectRun2) {
   if (block.permutation?.matches(blockName)) {
     let runPlaceRods = true;
     overworld4.runCommand("title @p actionbar " + successMessage);
@@ -327,7 +327,7 @@ function cuisenaire(block, blockName, rodLength, successMessage, direction, rods
       const matchingRodIndex = perfectRun2.findIndex((rod) => JSON.stringify(rod) === JSON.stringify(rodToPlace));
       if (matchingRodIndex >= 0) {
         world7.sendMessage("You placed a rod in the correct position!");
-        changeNPC(matchingRodIndex);
+        await changeNPC(matchingRodIndex);
       }
       placeRods(block, blockName, rodLength, direction);
     } else {
@@ -336,7 +336,12 @@ function cuisenaire(block, blockName, rodLength, successMessage, direction, rods
   }
 }
 async function changeNPC(matchingRodIndex) {
-  overworld4.runCommandAsync(`dialogue change @e[tag=game1student${matchingRodIndex}] game1student${matchingRodIndex}_success`);
+  overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
+}
+async function resetNPC(npcAmount) {
+  for (let i = 0; i < npcAmount; i++) {
+    overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Fail`);
+  }
 }
 function placeRods(block, blockName, rodLength, direction) {
   for (let i = 0; i < rodLength; i++) {
@@ -660,6 +665,7 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
       let player = event.source;
       rodsPlaced = [];
       rodsToRemove = [];
+      await resetNPC(2);
       await giveRods(player, rodsToRemove);
       await resetGrid({ x: -50, y: 94, z: 33 });
       break;

@@ -3,12 +3,12 @@ import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
 import { scale, resetArea } from "./scaler";
-import { cuisenaire, getBlockBehind, replayRods, resetGrid, giveRods } from "./rod";
+import { cuisenaire, getBlockBehind, replayRods, resetGrid, giveRods, resetNPC } from "./rod";
 import { perfectRun } from "./perfectRun";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
 import { potionMaker, displayTimer } from "./potion";
-import './npcscriptEventHandler';
+import './npcscriptEventHandler'; //handles the NPC script events
 let potion = "";
 let seconds = 0;
 let currentPlayer = null;
@@ -57,6 +57,7 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
             let player = event.source; // Cast event.source to Player type
             rodsPlaced = []; //resets the rods placed array
             rodsToRemove = []; //resets the rods to remove array
+            yield resetNPC(2);
             yield giveRods(player, rodsToRemove);
             yield resetGrid({ x: -50, y: 94, z: 33 });
             break;

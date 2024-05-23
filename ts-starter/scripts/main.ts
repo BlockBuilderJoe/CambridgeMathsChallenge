@@ -3,12 +3,12 @@ import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
 import { scale, resetArea } from "./scaler";
-import { cuisenaire, getBlockBehind, replayRods, resetGrid, giveRods } from "./rod";
+import { cuisenaire, getBlockBehind, replayRods, resetGrid, giveRods, resetNPC } from "./rod";
 import { perfectRun } from "./perfectRun";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
 import { potionMaker, displayTimer } from "./potion";
-import './npcscriptEventHandler';
+import './npcscriptEventHandler'; //handles the NPC script events
 
 let potion: string = "";
 let seconds: number = 0;
@@ -18,8 +18,6 @@ let potionDrank = false;
 let meters = 0;
 let rodsPlaced: any[] = [];
 let rodsToRemove: any[] = [];
-
-
 
 //welcome player
 world.afterEvents.playerSpawn.subscribe((eventData) => {
@@ -66,6 +64,7 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
       let player = event.source as Entity; // Cast event.source to Player type
       rodsPlaced = []; //resets the rods placed array
       rodsToRemove = []; //resets the rods to remove array
+      await resetNPC(2);
       await giveRods(player, rodsToRemove);
       await resetGrid({ x: -50, y: 94, z: 33 });
       break;

@@ -1,37 +1,46 @@
 import { BlockPermutation, world, system } from "@minecraft/server";
 let overworld = world.getDimension("overworld");
 export function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced, perfectRun) {
-    var _a, _b, _c, _d, _e;
-    if ((_a = block.permutation) === null || _a === void 0 ? void 0 : _a.matches(blockName)) {
-        let runPlaceRods = true;
-        overworld.runCommand("title @p actionbar " + successMessage);
-        block.setPermutation(BlockPermutation.resolve("tallgrass"));
-        for (let i = 0; i < rodLength; i++) {
-            let colour = (_c = (_b = block[direction](i)) === null || _b === void 0 ? void 0 : _b.permutation) === null || _c === void 0 ? void 0 : _c.getState("color");
-            if (colour || ((_e = (_d = block[direction](i)) === null || _d === void 0 ? void 0 : _d.permutation) === null || _e === void 0 ? void 0 : _e.matches("sandstone"))) {
-                overworld.runCommand("title @p actionbar That rod is too long!");
-                runPlaceRods = false;
-                break;
+    return __awaiter(this, void 0, void 0, function* () {
+        var _a, _b, _c, _d, _e;
+        if ((_a = block.permutation) === null || _a === void 0 ? void 0 : _a.matches(blockName)) {
+            let runPlaceRods = true;
+            overworld.runCommand("title @p actionbar " + successMessage);
+            block.setPermutation(BlockPermutation.resolve("tallgrass"));
+            for (let i = 0; i < rodLength; i++) {
+                let colour = (_c = (_b = block[direction](i)) === null || _b === void 0 ? void 0 : _b.permutation) === null || _c === void 0 ? void 0 : _c.getState("color");
+                if (colour || ((_e = (_d = block[direction](i)) === null || _d === void 0 ? void 0 : _d.permutation) === null || _e === void 0 ? void 0 : _e.matches("sandstone"))) {
+                    overworld.runCommand("title @p actionbar That rod is too long!");
+                    runPlaceRods = false;
+                    break;
+                }
+            }
+            if (runPlaceRods) {
+                let rodToPlace = { location: block.location, direction: direction, rodLength: rodLength, blockName: blockName };
+                rodsPlaced.push(rodToPlace);
+                const matchingRodIndex = perfectRun.findIndex(rod => JSON.stringify(rod) === JSON.stringify(rodToPlace));
+                if (matchingRodIndex >= 0) {
+                    world.sendMessage("You placed a rod in the correct position!");
+                    yield changeNPC(matchingRodIndex);
+                }
+                placeRods(block, blockName, rodLength, direction);
+            }
+            else {
+                block === null || block === void 0 ? void 0 : block.setPermutation(BlockPermutation.resolve("tallgrass"));
             }
         }
-        if (runPlaceRods) {
-            let rodToPlace = { location: block.location, direction: direction, rodLength: rodLength, blockName: blockName };
-            rodsPlaced.push(rodToPlace);
-            const matchingRodIndex = perfectRun.findIndex(rod => JSON.stringify(rod) === JSON.stringify(rodToPlace));
-            if (matchingRodIndex >= 0) {
-                world.sendMessage("You placed a rod in the correct position!");
-                changeNPC(matchingRodIndex);
-            }
-            placeRods(block, blockName, rodLength, direction);
-        }
-        else {
-            block === null || block === void 0 ? void 0 : block.setPermutation(BlockPermutation.resolve("tallgrass"));
-        }
-    }
+    });
 }
 function changeNPC(matchingRodIndex) {
     return __awaiter(this, void 0, void 0, function* () {
-        overworld.runCommandAsync(`dialogue change @e[tag=game1student${matchingRodIndex}] game1student${matchingRodIndex}_success`);
+        overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
+    });
+}
+export function resetNPC(npcAmount) {
+    return __awaiter(this, void 0, void 0, function* () {
+        for (let i = 0; i < npcAmount; i++) {
+            overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Fail`);
+        }
     });
 }
 function placeRods(block, blockName, rodLength, direction) {

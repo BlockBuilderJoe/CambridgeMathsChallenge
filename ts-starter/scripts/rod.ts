@@ -3,7 +3,7 @@ import { roundToDigits } from "./numberHandler";
 let overworld = world.getDimension("overworld");
 
 
-export function cuisenaire(
+export async function cuisenaire(
   block: any,
   blockName: string,
   rodLength: number,
@@ -31,7 +31,7 @@ export function cuisenaire(
         const matchingRodIndex = perfectRun.findIndex(rod => JSON.stringify(rod) === JSON.stringify(rodToPlace));
         if (matchingRodIndex >= 0) {
           world.sendMessage("You placed a rod in the correct position!");
-          changeNPC(matchingRodIndex);
+          await changeNPC(matchingRodIndex);
         }
         placeRods(block, blockName, rodLength, direction);
       }
@@ -43,7 +43,13 @@ export function cuisenaire(
 }
 
 async function changeNPC(matchingRodIndex: number){ //changes the NPC to the success state based on the matchingRodIndex.
-  overworld.runCommandAsync(`dialogue change @e[tag=game1student${matchingRodIndex}] game1student${matchingRodIndex}_success`)
+  overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`)
+}
+
+export async function resetNPC(npcAmount: number) {
+  for (let i = 0; i < npcAmount; i++) {
+    overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Fail`)
+  }
 }
 
 function placeRods(block: any, blockName: string, rodLength: number, direction: string){
