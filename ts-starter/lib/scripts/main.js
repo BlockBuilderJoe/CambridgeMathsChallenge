@@ -3,7 +3,7 @@ import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
 import { scale, resetArea } from "./scaler";
-import { cuisenaire, getBlockBehind, replayRods, resetGrid, giveRods, resetNPC } from "./rod";
+import { cuisenaire, getBlockBehind, replayRods, resetGrid, giveRods, resetNPC, directionCheck } from "./rod";
 import { perfectRun } from "./perfectRun";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
@@ -53,7 +53,7 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
             yield resetArea();
             break;
         }
-        case "38,95,31": {
+        case "39,95,31": {
             let player = event.source; // Cast event.source to Player type
             rodsPlaced = []; //resets the rods placed array
             rodsToRemove = []; //resets the rods to remove array
@@ -73,36 +73,44 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
 world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c, _d, _e, _f, _g, _h;
     let block = event.block;
+    let player = event.player;
     if ((_a = block.permutation) === null || _a === void 0 ? void 0 : _a.getState("color")) {
         if (block.location.y === 94) { //placed in the cuisenaire rod game.
             let viewDirection = event.player.getViewDirection();
             let { direction, oppositeDirection } = yield facing(viewDirection);
+            let correctDirection = yield directionCheck(block.location.x, block.location.z, direction);
             let hasColour = yield getBlockBehind(event, oppositeDirection);
-            if (hasColour) { //checks if the block has a colour (meaning it's a cuisenaire rod block)
-                if ((_b = block.permutation) === null || _b === void 0 ? void 0 : _b.matches("red_concrete")) {
-                    cuisenaire(block, "red_concrete", 2, "Placed a twelth rod", direction, rodsPlaced, perfectRun);
+            if (hasColour) {
+                if (correctDirection) { //checks if the block has a colour (meaning it's a cuisenaire rod block)
+                    if ((_b = block.permutation) === null || _b === void 0 ? void 0 : _b.matches("red_concrete")) {
+                        cuisenaire(block, "red_concrete", 2, "Placed a twelth rod", direction, rodsPlaced, perfectRun);
+                    }
+                    else if ((_c = block.permutation) === null || _c === void 0 ? void 0 : _c.matches("lime_concrete")) {
+                        cuisenaire(block, "lime_concrete", 3, "Placed an eigth rod", direction, rodsPlaced, perfectRun);
+                    }
+                    else if ((_d = block.permutation) === null || _d === void 0 ? void 0 : _d.matches("purple_concrete")) {
+                        cuisenaire(block, "purple_concrete", 4, "Placed a sixth rod", direction, rodsPlaced, perfectRun);
+                    }
+                    else if ((_e = block.permutation) === null || _e === void 0 ? void 0 : _e.matches("green_concrete")) {
+                        cuisenaire(block, "green_concrete", 6, "Placed a quarter rod", direction, rodsPlaced, perfectRun);
+                    }
+                    else if ((_f = block.permutation) === null || _f === void 0 ? void 0 : _f.matches("brown_concrete")) {
+                        cuisenaire(block, "brown_concrete", 8, "Placed a third rod", direction, rodsPlaced, perfectRun);
+                    }
+                    else if ((_g = block.permutation) === null || _g === void 0 ? void 0 : _g.matches("yellow_concrete")) {
+                        cuisenaire(block, "yellow_concrete", 12, "Placed a half rod", direction, rodsPlaced, perfectRun);
+                    }
+                    else if ((_h = block.permutation) === null || _h === void 0 ? void 0 : _h.matches("blue_concrete")) {
+                        cuisenaire(block, "blue_concrete", 24, "Placed a whole rod", direction, rodsPlaced, perfectRun);
+                    }
                 }
-                else if ((_c = block.permutation) === null || _c === void 0 ? void 0 : _c.matches("lime_concrete")) {
-                    cuisenaire(block, "lime_concrete", 3, "Placed an eigth rod", direction, rodsPlaced, perfectRun);
-                }
-                else if ((_d = block.permutation) === null || _d === void 0 ? void 0 : _d.matches("purple_concrete")) {
-                    cuisenaire(block, "purple_concrete", 4, "Placed a sixth rod", direction, rodsPlaced, perfectRun);
-                }
-                else if ((_e = block.permutation) === null || _e === void 0 ? void 0 : _e.matches("green_concrete")) {
-                    cuisenaire(block, "green_concrete", 6, "Placed a quarter rod", direction, rodsPlaced, perfectRun);
-                }
-                else if ((_f = block.permutation) === null || _f === void 0 ? void 0 : _f.matches("brown_concrete")) {
-                    cuisenaire(block, "brown_concrete", 8, "Placed a third rod", direction, rodsPlaced, perfectRun);
-                }
-                else if ((_g = block.permutation) === null || _g === void 0 ? void 0 : _g.matches("yellow_concrete")) {
-                    cuisenaire(block, "yellow_concrete", 12, "Placed a half rod", direction, rodsPlaced, perfectRun);
-                }
-                else if ((_h = block.permutation) === null || _h === void 0 ? void 0 : _h.matches("blue_concrete")) {
-                    cuisenaire(block, "blue_concrete", 24, "Placed a whole rod", direction, rodsPlaced, perfectRun);
+                else {
+                    player.runCommandAsync(`title ${player.name} actionbar You're facing the wrong way.`);
+                    event.block.setPermutation(BlockPermutation.resolve("tallgrass"));
                 }
             }
             else {
-                world.sendMessage("You need to place a cuisenaire rod block first.");
+                player.runCommandAsync(`title ${player.name} actionbar Place the rod in front of the magical connector.`);
                 event.block.setPermutation(BlockPermutation.resolve("tallgrass"));
             }
         }

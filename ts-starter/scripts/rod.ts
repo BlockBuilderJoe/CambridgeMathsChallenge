@@ -2,6 +2,21 @@ import { BlockPermutation, world, system, Vector3, Player, EntityInventoryCompon
 import { roundToDigits } from "./numberHandler";
 let overworld = world.getDimension("overworld");
 
+export async function directionCheck(x: number, z: number, direction: string){
+  let correctDirection = false;
+  if (x == 37 && isInRange(z, 33, 44)) { //rod0{ //rod0
+    correctDirection = true;
+  } else if (isInRange(x, 31, 36) && isInRange(z, 45, 46)) { //rod2
+    correctDirection = true;
+  }
+  return correctDirection;
+}
+
+function isInRange(value: number, min: number, max: number): boolean {
+  return value >= min && value <= max;
+}
+
+
 
 export async function cuisenaire(
   block: any,

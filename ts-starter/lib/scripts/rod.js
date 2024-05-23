@@ -1,5 +1,20 @@
 import { BlockPermutation, world, system } from "@minecraft/server";
 let overworld = world.getDimension("overworld");
+export function directionCheck(x, z, direction) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let correctDirection = false;
+        if (x == 37 && isInRange(z, 33, 44)) { //rod0{ //rod0
+            correctDirection = true;
+        }
+        else if (isInRange(x, 31, 36) && isInRange(z, 45, 46)) { //rod2
+            correctDirection = true;
+        }
+        return correctDirection;
+    });
+}
+function isInRange(value, min, max) {
+    return value >= min && value <= max;
+}
 export function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced, perfectRun) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b, _c, _d, _e;

@@ -308,6 +308,18 @@ async function scaleShape(shape, scaleFactor, axes) {
 // scripts/rod.ts
 import { BlockPermutation as BlockPermutation4, world as world7, system } from "@minecraft/server";
 var overworld4 = world7.getDimension("overworld");
+async function directionCheck(x, z, direction) {
+  let correctDirection = false;
+  if (x == 37 && isInRange(z, 33, 44)) {
+    correctDirection = true;
+  } else if (isInRange(x, 31, 36) && isInRange(z, 45, 46)) {
+    correctDirection = true;
+  }
+  return correctDirection;
+}
+function isInRange(value, min, max) {
+  return value >= min && value <= max;
+}
 async function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced2, perfectRun2) {
   if (block.permutation?.matches(blockName)) {
     let runPlaceRods = true;
@@ -661,7 +673,7 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
       await resetArea();
       break;
     }
-    case "38,95,31": {
+    case "39,95,31": {
       let player = event.source;
       rodsPlaced = [];
       rodsToRemove = [];
@@ -679,29 +691,36 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
 });
 world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let block = event.block;
+  let player = event.player;
   if (block.permutation?.getState("color")) {
     if (block.location.y === 94) {
       let viewDirection = event.player.getViewDirection();
       let { direction, oppositeDirection } = await facing(viewDirection);
+      let correctDirection = await directionCheck(block.location.x, block.location.z, direction);
       let hasColour = await getBlockBehind(event, oppositeDirection);
       if (hasColour) {
-        if (block.permutation?.matches("red_concrete")) {
-          cuisenaire(block, "red_concrete", 2, "Placed a twelth rod", direction, rodsPlaced, perfectRun);
-        } else if (block.permutation?.matches("lime_concrete")) {
-          cuisenaire(block, "lime_concrete", 3, "Placed an eigth rod", direction, rodsPlaced, perfectRun);
-        } else if (block.permutation?.matches("purple_concrete")) {
-          cuisenaire(block, "purple_concrete", 4, "Placed a sixth rod", direction, rodsPlaced, perfectRun);
-        } else if (block.permutation?.matches("green_concrete")) {
-          cuisenaire(block, "green_concrete", 6, "Placed a quarter rod", direction, rodsPlaced, perfectRun);
-        } else if (block.permutation?.matches("brown_concrete")) {
-          cuisenaire(block, "brown_concrete", 8, "Placed a third rod", direction, rodsPlaced, perfectRun);
-        } else if (block.permutation?.matches("yellow_concrete")) {
-          cuisenaire(block, "yellow_concrete", 12, "Placed a half rod", direction, rodsPlaced, perfectRun);
-        } else if (block.permutation?.matches("blue_concrete")) {
-          cuisenaire(block, "blue_concrete", 24, "Placed a whole rod", direction, rodsPlaced, perfectRun);
+        if (correctDirection) {
+          if (block.permutation?.matches("red_concrete")) {
+            cuisenaire(block, "red_concrete", 2, "Placed a twelth rod", direction, rodsPlaced, perfectRun);
+          } else if (block.permutation?.matches("lime_concrete")) {
+            cuisenaire(block, "lime_concrete", 3, "Placed an eigth rod", direction, rodsPlaced, perfectRun);
+          } else if (block.permutation?.matches("purple_concrete")) {
+            cuisenaire(block, "purple_concrete", 4, "Placed a sixth rod", direction, rodsPlaced, perfectRun);
+          } else if (block.permutation?.matches("green_concrete")) {
+            cuisenaire(block, "green_concrete", 6, "Placed a quarter rod", direction, rodsPlaced, perfectRun);
+          } else if (block.permutation?.matches("brown_concrete")) {
+            cuisenaire(block, "brown_concrete", 8, "Placed a third rod", direction, rodsPlaced, perfectRun);
+          } else if (block.permutation?.matches("yellow_concrete")) {
+            cuisenaire(block, "yellow_concrete", 12, "Placed a half rod", direction, rodsPlaced, perfectRun);
+          } else if (block.permutation?.matches("blue_concrete")) {
+            cuisenaire(block, "blue_concrete", 24, "Placed a whole rod", direction, rodsPlaced, perfectRun);
+          }
+        } else {
+          player.runCommandAsync(`title ${player.name} actionbar You're facing the wrong way.`);
+          event.block.setPermutation(BlockPermutation6.resolve("tallgrass"));
         }
       } else {
-        world10.sendMessage("You need to place a cuisenaire rod block first.");
+        player.runCommandAsync(`title ${player.name} actionbar Place the rod in front of the magical connector.`);
         event.block.setPermutation(BlockPermutation6.resolve("tallgrass"));
       }
     }
