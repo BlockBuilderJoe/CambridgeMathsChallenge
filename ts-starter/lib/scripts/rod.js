@@ -9,7 +9,7 @@ export function cuisenaire(block, blockName, rodLength, successMessage, directio
         for (let i = 0; i < rodLength; i++) {
             let colour = (_c = (_b = block[direction](i)) === null || _b === void 0 ? void 0 : _b.permutation) === null || _c === void 0 ? void 0 : _c.getState("color");
             if (colour || ((_e = (_d = block[direction](i)) === null || _d === void 0 ? void 0 : _d.permutation) === null || _e === void 0 ? void 0 : _e.matches("sandstone"))) {
-                world.sendMessage("It's gone over a whole rod length!");
+                overworld.runCommand("title @p actionbar That rod is too long!");
                 runPlaceRods = false;
                 break;
             }

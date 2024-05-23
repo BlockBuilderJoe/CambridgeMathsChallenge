@@ -316,7 +316,7 @@ function cuisenaire(block, blockName, rodLength, successMessage, direction, rods
     for (let i = 0; i < rodLength; i++) {
       let colour = block[direction](i)?.permutation?.getState("color");
       if (colour || block[direction](i)?.permutation?.matches("sandstone")) {
-        world7.sendMessage("It's gone over a whole rod length!");
+        overworld4.runCommand("title @p actionbar That rod is too long!");
         runPlaceRods = false;
         break;
       }
@@ -571,7 +571,7 @@ function displayTimer(potionStart2, seconds2, player, potionDescription) {
   }
 }
 
-// scripts/npcHandler.ts
+// scripts/npcscriptEventHandler.ts
 import { system as system3, world as world9 } from "@minecraft/server";
 system3.afterEvents.scriptEventReceive.subscribe((event) => {
   switch (event.id) {

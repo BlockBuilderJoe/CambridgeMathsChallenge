@@ -11,4 +11,4 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
         }
     }
 });
-//# sourceMappingURL=npcHandler.js.map
+//# sourceMappingURL=npcscriptEventHandler.js.map

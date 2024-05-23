@@ -80,7 +80,7 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
 world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let block = event.block;
   if (block.permutation?.getState("color")) { 
-    if (block.location.y === 94) {
+    if (block.location.y === 94) { //placed in the cuisenaire rod game.
       let viewDirection = event.player.getViewDirection();
       let { direction, oppositeDirection } = await facing(viewDirection);
       let hasColour = await getBlockBehind(event, oppositeDirection)

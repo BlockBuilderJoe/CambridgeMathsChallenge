@@ -17,7 +17,7 @@ export function cuisenaire(
     for (let i = 0; i < rodLength; i++) {
       let colour = block[direction](i)?.permutation?.getState("color");
       if (colour || block[direction](i)?.permutation?.matches("sandstone") ) {
-          world.sendMessage("It's gone over a whole rod length!");
+          overworld.runCommand("title @p actionbar That rod is too long!");
           runPlaceRods = false;
           break;
         }

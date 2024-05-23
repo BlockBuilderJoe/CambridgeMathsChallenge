@@ -7,7 +7,7 @@ import { cuisenaire, getBlockBehind, replayRods, resetGrid, giveRods } from "./r
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
 import { potionMaker, displayTimer } from "./potion";
-import './npcHandler';
+import './npcscriptEventHandler';
 let potion = "";
 let seconds = 0;
 let currentPlayer = null;
@@ -73,7 +73,7 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0
     var _a, _b, _c, _d, _e, _f, _g, _h;
     let block = event.block;
     if ((_a = block.permutation) === null || _a === void 0 ? void 0 : _a.getState("color")) {
-        if (block.location.y === 94) {
+        if (block.location.y === 94) { //placed in the cuisenaire rod game.
             let viewDirection = event.player.getViewDirection();
             let { direction, oppositeDirection } = yield facing(viewDirection);
             let hasColour = yield getBlockBehind(event, oppositeDirection);
