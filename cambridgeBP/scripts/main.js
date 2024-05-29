@@ -307,7 +307,26 @@ async function scaleShape(shape, scaleFactor, axes) {
 
 // scripts/rod.ts
 import { BlockPermutation as BlockPermutation4, world as world7, system } from "@minecraft/server";
+
+// scripts/perfectRun.ts
+var perfectRun = [
+  {
+    location: { z: 33, y: 94, x: 37 },
+    direction: "south",
+    rodLength: 12,
+    blockName: "yellow_concrete"
+  },
+  {
+    location: { z: 45, y: 94, x: 36 },
+    direction: "west",
+    rodLength: 6,
+    blockName: "green_concrete"
+  }
+];
+
+// scripts/rod.ts
 var overworld4 = world7.getDimension("overworld");
+var rodsPlaced = [];
 async function directionCheck(x, z, direction) {
   let correctDirection = false;
   if (x == 37 && isInRange(z, 33, 44)) {
@@ -320,7 +339,7 @@ async function directionCheck(x, z, direction) {
 function isInRange(value, min, max) {
   return value >= min && value <= max;
 }
-async function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced2, perfectRun2) {
+async function cuisenaire(block, blockName, rodLength, successMessage, direction) {
   if (block.permutation?.matches(blockName)) {
     let runPlaceRods = true;
     overworld4.runCommand("title @p actionbar " + successMessage);
@@ -335,8 +354,8 @@ async function cuisenaire(block, blockName, rodLength, successMessage, direction
     }
     if (runPlaceRods) {
       let rodToPlace = { location: block.location, direction, rodLength, blockName };
-      rodsPlaced2.push(rodToPlace);
-      const matchingRodIndex = perfectRun2.findIndex((rod) => JSON.stringify(rod) === JSON.stringify(rodToPlace));
+      rodsPlaced.push(rodToPlace);
+      const matchingRodIndex = perfectRun.findIndex((rod) => JSON.stringify(rod) === JSON.stringify(rodToPlace));
       if (matchingRodIndex >= 0) {
         world7.sendMessage("You placed a rod in the correct position!");
         await changeNPC(matchingRodIndex);
@@ -351,6 +370,7 @@ async function changeNPC(matchingRodIndex) {
   overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
 }
 async function resetNPC(npcAmount) {
+  rodsPlaced = [];
   for (let i = 0; i < npcAmount; i++) {
     overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Fail`);
   }
@@ -379,33 +399,37 @@ async function getBlockBehind(event, oppositeDirection) {
   let hasColour = event.block[oppositeDirection](1)?.permutation?.getState("color");
   return hasColour;
 }
-async function replayRods(rodsPlaced2, player, perfectRun2) {
-  await resetGrid({ x: -50, y: 94, z: 33 });
-  let matchingRods = rodsPlaced2.filter((rod, index) => JSON.stringify(rod) === JSON.stringify(perfectRun2[index]));
-  if (matchingRods) {
-    player.runCommandAsync("tp 38 96 -76");
-    for (let i = 0; i < matchingRods.length; i++) {
-      ((index) => {
-        system.runTimeout(async () => {
-          let x = matchingRods[index].location.x;
+async function replay(index) {
+  let tpStart = `tp @p 37 95 31 facing 37 95 45`;
+  let clearCommand = `fill 37 94 33 37 94 44 tallgrass replace`;
+  overworld4.runCommandAsync(clearCommand);
+  let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === 37);
+  let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === 37);
+  let combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
+  world7.sendMessage(`Replaying rods ${combinedRods}`);
+  for (let i = 0; i < combinedRods.length; i++) {
+    ((index2) => {
+      system.runTimeout(async () => {
+        let x = combinedRods[index2].location.x;
+        world7.getAllPlayers().forEach(async (player) => {
           await setCameraView(x, player);
-          let block = overworld4.getBlock(matchingRods[index].location);
-          placeRods(block, matchingRods[index].blockName, matchingRods[index].rodLength, matchingRods[index].direction);
-          if (i === matchingRods.length - 1) {
-            world7.sendMessage(`tp ${player.name} ${matchingRods[index].location.x} ${matchingRods[index].location.y + 1} ${matchingRods[index].location.z}`);
-            let tpCommand = `tp ${player.name} ${matchingRods[index].location.x} ${matchingRods[index].location.y + 1} ${matchingRods[index].location.z}`;
-            endReplay(player, tpCommand);
+          let block = overworld4.getBlock(combinedRods[index2].location);
+          placeRods(block, combinedRods[index2].blockName, combinedRods[index2].rodLength, combinedRods[index2].direction);
+          if (i === combinedRods.length - 1) {
+            endReplay(player, tpStart, clearCommand);
           }
-        }, 40 * index);
-        return;
-      })(i);
-    }
+        });
+      }, 40 * index2);
+      return;
+    })(i);
+    world7.sendMessage(`Replaying Rods ${JSON.stringify(combinedRods)}`);
   }
 }
-function endReplay(player, tpCommand) {
+function endReplay(player, tpCommand, clearCommand = `fill 37 94 33 37 94 44 tallgrass replace`) {
   system.runTimeout(
     () => {
       player.runCommandAsync(tpCommand);
+      player.runCommandAsync(clearCommand);
       player.runCommandAsync(`camera ${player.name} clear`);
     },
     40
@@ -435,22 +459,6 @@ async function giveRods(player, rodsRemoved) {
     player.runCommandAsync(`give @p ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
   }
 }
-
-// scripts/perfectRun.ts
-var perfectRun = [
-  {
-    location: { z: 33, y: 94, x: 37 },
-    direction: "south",
-    rodLength: 12,
-    blockName: "yellow_concrete"
-  },
-  {
-    location: { z: 45, y: 94, x: 36 },
-    direction: "west",
-    rodLength: 6,
-    blockName: "green_concrete"
-  }
-];
 
 // scripts/playerFacing.ts
 async function facing(blockLocation) {
@@ -618,7 +626,7 @@ import { system as system3, world as world9 } from "@minecraft/server";
 system3.afterEvents.scriptEventReceive.subscribe((event) => {
   switch (event.id) {
     case "rod:npcReplay": {
-      world9.sendMessage(`Replay Version ${event.message}`);
+      replay(parseInt(event.message));
       break;
     }
     case "rod:npcComplete": {
@@ -635,7 +643,6 @@ var currentPlayer = null;
 var potionStart = 0;
 var potionDrank = false;
 var meters = 0;
-var rodsPlaced = [];
 var rodsToRemove = [];
 world10.afterEvents.playerSpawn.subscribe((eventData) => {
   currentPlayer = eventData.player;
@@ -676,7 +683,6 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
     }
     case "39,95,31": {
       let player = event.source;
-      rodsPlaced = [];
       rodsToRemove = [];
       await resetNPC(2);
       await giveRods(player, rodsToRemove);
@@ -685,7 +691,6 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
     }
     case "24,95,45": {
       let player = event.source;
-      await replayRods(rodsPlaced, player, perfectRun);
       break;
     }
   }
@@ -721,7 +726,7 @@ world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
       }
       const rod = rodPermutations[colour];
       if (rod) {
-        cuisenaire(block, rod.block, rod.value, rod.message, direction, rodsPlaced, perfectRun);
+        cuisenaire(block, rod.block, rod.value, rod.message, direction);
       }
     }
   }

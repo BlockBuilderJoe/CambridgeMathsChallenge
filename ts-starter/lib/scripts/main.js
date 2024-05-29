@@ -3,8 +3,7 @@ import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
 import { scale, resetArea } from "./scaler";
-import { cuisenaire, getBlockBehind, replayRods, resetGrid, giveRods, resetNPC, directionCheck } from "./rod";
-import { perfectRun } from "./perfectRun";
+import { cuisenaire, getBlockBehind, resetGrid, giveRods, resetNPC, directionCheck } from "./rod";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
 import { potionMaker, displayTimer } from "./potion";
@@ -15,7 +14,6 @@ let currentPlayer = null;
 let potionStart = 0;
 let potionDrank = false;
 let meters = 0;
-let rodsPlaced = [];
 let rodsToRemove = [];
 //welcome player
 world.afterEvents.playerSpawn.subscribe((eventData) => {
@@ -55,7 +53,6 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
         }
         case "39,95,31": {
             let player = event.source; // Cast event.source to Player type
-            rodsPlaced = []; //resets the rods placed array
             rodsToRemove = []; //resets the rods to remove array
             yield resetNPC(2);
             yield giveRods(player, rodsToRemove);
@@ -64,7 +61,7 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
         }
         case "24,95,45": {
             let player = event.source; // Cast event.source to Player type
-            yield replayRods(rodsPlaced, player, perfectRun); // Pass the casted player as an argument
+            //await replayRods(player, perfectRun); // Pass the casted player as an argument
             break;
         }
     }
@@ -102,7 +99,7 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0
             }
             const rod = rodPermutations[colour];
             if (rod) {
-                cuisenaire(block, rod.block, rod.value, rod.message, direction, rodsPlaced, perfectRun);
+                cuisenaire(block, rod.block, rod.value, rod.message, direction);
             }
         }
     }

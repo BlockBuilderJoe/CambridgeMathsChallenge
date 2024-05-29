@@ -1,5 +1,7 @@
 import { BlockPermutation, world, system } from "@minecraft/server";
+import { perfectRun } from "./perfectRun";
 let overworld = world.getDimension("overworld");
+let rodsPlaced = [];
 export function directionCheck(x, z, direction) {
     return __awaiter(this, void 0, void 0, function* () {
         let correctDirection = false;
@@ -15,7 +17,7 @@ export function directionCheck(x, z, direction) {
 function isInRange(value, min, max) {
     return value >= min && value <= max;
 }
-export function cuisenaire(block, blockName, rodLength, successMessage, direction, rodsPlaced, perfectRun) {
+export function cuisenaire(block, blockName, rodLength, successMessage, direction) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b, _c, _d, _e;
         if ((_a = block.permutation) === null || _a === void 0 ? void 0 : _a.matches(blockName)) {
@@ -53,6 +55,7 @@ function changeNPC(matchingRodIndex) {
 }
 export function resetNPC(npcAmount) {
     return __awaiter(this, void 0, void 0, function* () {
+        rodsPlaced = []; //resets the rods placed array.
         for (let i = 0; i < npcAmount; i++) {
             overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Fail`);
         }
@@ -92,7 +95,7 @@ export function getBlockBehind(event, oppositeDirection) {
         return hasColour;
     });
 }
-export function replayRods(rodsPlaced, player, perfectRun) {
+export function replayRods(player) {
     return __awaiter(this, void 0, void 0, function* () {
         yield resetGrid({ x: -50, y: 94, z: 33 }); //clears the grid.
         let matchingRods = rodsPlaced.filter((rod, index) => JSON.stringify(rod) === JSON.stringify(perfectRun[index]));
@@ -117,9 +120,38 @@ export function replayRods(rodsPlaced, player, perfectRun) {
         }
     });
 }
-function endReplay(player, tpCommand) {
+export function replay(index) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let tpStart = `tp @p 37 95 31 facing 37 95 45`;
+        let clearCommand = `fill 37 94 33 37 94 44 tallgrass replace`;
+        overworld.runCommandAsync(clearCommand);
+        let rodsPlacedToReplay = rodsPlaced.filter(rod => rod.location && rod.location.x === 37);
+        let perfectRunToReplay = perfectRun.filter(rod => rod.location && rod.location.x === 37);
+        let combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
+        world.sendMessage(`Replaying rods ${combinedRods}`);
+        for (let i = 0; i < combinedRods.length; i++) {
+            ((index) => {
+                system.runTimeout(() => __awaiter(this, void 0, void 0, function* () {
+                    let x = combinedRods[index].location.x;
+                    world.getAllPlayers().forEach((player) => __awaiter(this, void 0, void 0, function* () {
+                        yield setCameraView(x, player);
+                        let block = overworld.getBlock(combinedRods[index].location);
+                        placeRods(block, combinedRods[index].blockName, combinedRods[index].rodLength, combinedRods[index].direction);
+                        if (i === combinedRods.length - 1) { //resets the camera 2 seconds after last rod placed.
+                            endReplay(player, tpStart, clearCommand);
+                        }
+                    }));
+                }), 40 * index);
+                return;
+            })(i);
+            world.sendMessage(`Replaying Rods ${JSON.stringify(combinedRods)}`);
+        }
+    });
+}
+function endReplay(player, tpStart, clearCommand) {
     system.runTimeout(() => {
-        player.runCommandAsync(tpCommand);
+        player.runCommandAsync(tpStart);
+        player.runCommandAsync(clearCommand);
         player.runCommandAsync(`camera ${player.name} clear`);
     }, 40);
 }
