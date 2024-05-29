@@ -16,7 +16,6 @@ let currentPlayer = null;
 let potionStart = 0;
 let potionDrank = false;
 let meters = 0;
-let rodsPlaced: any[] = [];
 let rodsToRemove: any[] = [];
 
 //welcome player
@@ -62,7 +61,6 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
     }
     case "39,95,31": {
       let player = event.source as Entity; // Cast event.source to Player type
-      rodsPlaced = []; //resets the rods placed array
       rodsToRemove = []; //resets the rods to remove array
       await resetNPC(2);
       await giveRods(player, rodsToRemove);
@@ -71,7 +69,7 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
     }
     case "24,95,45": {
       let player = event.source as Entity; // Cast event.source to Player type
-      await replayRods(rodsPlaced, player, perfectRun); // Pass the casted player as an argument
+      //await replayRods(player, perfectRun); // Pass the casted player as an argument
       break;
     }
   }
@@ -110,7 +108,7 @@ world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
       }
       const rod = rodPermutations[colour as keyof typeof rodPermutations];
       if (rod) {
-        cuisenaire(block, rod.block, rod.value, rod.message, direction, rodsPlaced, perfectRun);
+        cuisenaire(block, rod.block, rod.value, rod.message, direction);
       }   
     }
   }
