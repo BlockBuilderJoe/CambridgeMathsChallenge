@@ -3,3 +3,4 @@
 ts-starter/node_modules/**/*/
 *.qb
 *.qef
+*.vox
