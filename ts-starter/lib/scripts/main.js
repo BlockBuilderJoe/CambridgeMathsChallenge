@@ -3,17 +3,18 @@ import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
 import { scale, resetArea } from "./scaler";
-import { cuisenaire, getBlockBehind, replayRods, resetGrid } from "./rod";
+import { cuisenaire, getBlockBehind, resetGrid, giveRods, resetNPC, directionCheck } from "./rod";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
 import { potionMaker, displayTimer } from "./potion";
+import './npcscriptEventHandler'; //handles the NPC script events
 let potion = "";
 let seconds = 0;
 let currentPlayer = null;
 let potionStart = 0;
 let potionDrank = false;
 let meters = 0;
-let rodsPlaced = [];
+let rodsToRemove = [];
 //welcome player
 world.afterEvents.playerSpawn.subscribe((eventData) => {
     currentPlayer = eventData.player;
@@ -50,58 +51,55 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
             yield resetArea();
             break;
         }
-        case "-3,-60,90": {
-            world.getDimension("overworld").runCommand("function lava");
-            break;
-        }
-        case "38,95,31": {
-            rodsPlaced = []; //resets the rods placed array
-            world.getDimension("overworld").runCommand("function lava");
+        case "39,95,31": {
+            let player = event.source; // Cast event.source to Player type
+            rodsToRemove = []; //resets the rods to remove array
+            yield resetNPC(2);
+            yield giveRods(player, rodsToRemove);
             yield resetGrid({ x: -50, y: 94, z: 33 });
             break;
         }
         case "24,95,45": {
             let player = event.source; // Cast event.source to Player type
-            yield replayRods(rodsPlaced, player); // Pass the casted player as an argument
+            //await replayRods(player, perfectRun); // Pass the casted player as an argument
             break;
         }
     }
 }));
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c, _d, _e, _f, _g, _h;
+    var _a;
     let block = event.block;
-    if ((_a = block.permutation) === null || _a === void 0 ? void 0 : _a.getState("color")) {
-        if (block.location.y === 94) {
+    let player = event.player;
+    let colour = (_a = block.permutation) === null || _a === void 0 ? void 0 : _a.getState("color");
+    if (colour) { //is it a rod block?
+        if (block.location.y === 94) { //is it placed on the grid?
             let viewDirection = event.player.getViewDirection();
             let { direction, oppositeDirection } = yield facing(viewDirection);
+            let correctDirection = yield directionCheck(block.location.x, block.location.z, direction);
             let hasColour = yield getBlockBehind(event, oppositeDirection);
-            if (hasColour) { //checks if the block has a colour (meaning it's a cuisenaire rod block)
-                if ((_b = block.permutation) === null || _b === void 0 ? void 0 : _b.matches("red_concrete")) {
-                    cuisenaire(block, "red_concrete", 2, "Placed a twelth rod", direction, rodsPlaced);
-                }
-                else if ((_c = block.permutation) === null || _c === void 0 ? void 0 : _c.matches("lime_concrete")) {
-                    cuisenaire(block, "lime_concrete", 3, "Placed an eigth rod", direction, rodsPlaced);
-                }
-                else if ((_d = block.permutation) === null || _d === void 0 ? void 0 : _d.matches("purple_concrete")) {
-                    cuisenaire(block, "purple_concrete", 4, "Placed a sixth rod", direction, rodsPlaced);
-                }
-                else if ((_e = block.permutation) === null || _e === void 0 ? void 0 : _e.matches("green_concrete")) {
-                    cuisenaire(block, "green_concrete", 6, "Placed a quarter rod", direction, rodsPlaced);
-                }
-                else if ((_f = block.permutation) === null || _f === void 0 ? void 0 : _f.matches("brown_concrete")) {
-                    cuisenaire(block, "brown_concrete", 8, "Placed a third rod", direction, rodsPlaced);
-                }
-                else if ((_g = block.permutation) === null || _g === void 0 ? void 0 : _g.matches("yellow_concrete")) {
-                    cuisenaire(block, "yellow_concrete", 12, "Placed a half rod", direction, rodsPlaced);
-                }
-                else if ((_h = block.permutation) === null || _h === void 0 ? void 0 : _h.matches("blue_concrete")) {
-                    cuisenaire(block, "blue_concrete", 24, "Placed a whole rod", direction, rodsPlaced);
-                }
+            const rodPermutations = {
+                "red": { block: "red_concrete", value: 2, message: "Placed a twelth rod" },
+                "lime": { block: "lime_concrete", value: 3, message: "Placed an eigth rod" },
+                "purple": { block: "purple_concrete", value: 4, message: "Placed a sixth rod" },
+                "green": { block: "green_concrete", value: 6, message: "Placed a quarter rod" },
+                "brown": { block: "brown_concrete", value: 8, message: "Placed a third rod" },
+                "yellow": { block: "yellow_concrete", value: 12, message: "Placed a half rod" },
+                "blue": { block: "blue_concrete", value: 24, message: "Placed a whole rod" }
+            };
+            if (!hasColour) {
+                player.runCommandAsync(`title ${player.name} actionbar Place the rod in front of the magical connector.`);
+                event.block.setPermutation(BlockPermutation.resolve("tallgrass"));
+                return;
             }
-            else {
-                world.sendMessage("You need to place a cuisenaire rod block first.");
-                event.block.setPermutation(BlockPermutation.resolve("air"));
+            if (!correctDirection) {
+                player.runCommandAsync(`title ${player.name} actionbar You're facing the wrong way.`);
+                event.block.setPermutation(BlockPermutation.resolve("tallgrass"));
+                return;
+            }
+            const rod = rodPermutations[colour];
+            if (rod) {
+                cuisenaire(block, rod.block, rod.value, rod.message, direction);
             }
         }
     }
@@ -114,10 +112,10 @@ world.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
     }
 });
 world.beforeEvents.itemUseOn.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _j, _k;
-    if (((_j = event.itemStack) === null || _j === void 0 ? void 0 : _j.typeId) === "minecraft:stick") {
+    var _b, _c;
+    if (((_b = event.itemStack) === null || _b === void 0 ? void 0 : _b.typeId) === "minecraft:stick") {
         let block = event.block;
-        if ((_k = block.permutation) === null || _k === void 0 ? void 0 : _k.matches("hopper")) {
+        if ((_c = block.permutation) === null || _c === void 0 ? void 0 : _c.matches("hopper")) {
             event.cancel = true;
             ({ potion, seconds } = yield potionMaker(event));
         }
@@ -193,9 +191,9 @@ function surface(player) {
 }
 //listens for the potion to be fully drunk.
 world.afterEvents.itemCompleteUse.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _l;
+    var _d;
     let player = event.source;
-    if (((_l = event.itemStack) === null || _l === void 0 ? void 0 : _l.typeId) === "minecraft:potion") {
+    if (((_d = event.itemStack) === null || _d === void 0 ? void 0 : _d.typeId) === "minecraft:potion") {
         if (potion === "poison") {
             player.sendMessage("§fYou mixed the potion with the §2wrong ingredients. \n§fIt has had no effect.\nMake sure you're using the correct ingredients.");
         }
