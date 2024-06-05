@@ -333,9 +333,9 @@ var overworld4 = world7.getDimension("overworld");
 var rodsPlaced = [];
 async function directionCheck(x, z, direction) {
   let correctDirection = false;
-  if (x == 37 && isInRange(z, 33, 44)) {
+  if (x == 30 && isInRange(z, 93, 104)) {
     correctDirection = true;
-  } else if (isInRange(x, 31, 36) && isInRange(z, 45, 46)) {
+  } else if (isInRange(x, 31, 36) && z == 92) {
     correctDirection = true;
   }
   return correctDirection;

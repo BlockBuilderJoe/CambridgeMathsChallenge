@@ -16,10 +16,9 @@ let rodsPlaced: any[] = [];
 
 export async function directionCheck(x: number, z: number, direction: string) {
   let correctDirection = false;
-  if (x == 37 && isInRange(z, 33, 44)) {
-    //rod0{ //rod0
+  if (x == 30 && isInRange(z, 93, 104)) {
     correctDirection = true;
-  } else if (isInRange(x, 31, 36) && isInRange(z, 45, 46)) {
+  } else if (isInRange(x, 31, 36) && z == 92) {
     //rod2
     correctDirection = true;
   }
