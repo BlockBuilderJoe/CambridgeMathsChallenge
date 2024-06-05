@@ -475,12 +475,10 @@ async function resetGrid(location) {
   let concreteColours = ["red", "green", "purple", "brown", "blue", "lime", "yellow"];
   for (let i = 0; i < 4; i++) {
     let offset_x = location.x + i * 25;
-    await overworld4.runCommandAsync(`tp @p ${offset_x} 80 ${location.z}`);
     let pos1 = { x: offset_x, y: location.y, z: location.z };
     let pos2 = { x: offset_x + 24, y: location.y, z: location.z + 24 };
     await squareReset(pos1, pos2, concreteColours);
   }
-  await overworld4.runCommandAsync(`tp @p 30 96 108 facing 30 96 100`);
 }
 async function giveRods(player, rodsRemoved) {
   let rods = [
