@@ -70,11 +70,13 @@ export async function cuisenaire(
     }
     if (runPlaceRods) {
       let rodToPlace = { location: block.location, direction: direction, rodLength: rodLength, blockName: blockName };
+      world.sendMessage(JSON.stringify(rodToPlace));
       rodsPlaced.push(rodToPlace);
       const matchingRodIndex = perfectRun.findIndex((rod) => JSON.stringify(rod) === JSON.stringify(rodToPlace));
+      world.sendMessage(`${matchingRodIndex}`);
       if (matchingRodIndex >= 0) {
         world.sendMessage("You placed a rod in the correct position!");
-        await changeNPC(matchingRodIndex);
+        await changeNPC(matchingRodIndex, true);
       }
       placeRods(block, blockName, rodLength, direction);
     } else {
@@ -83,9 +85,13 @@ export async function cuisenaire(
   }
 }
 
-async function changeNPC(matchingRodIndex: number) {
+async function changeNPC(matchingRodIndex: number, win: boolean) {
   //changes the NPC to the success state based on the matchingRodIndex.
-  overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
+  if (win) {
+    overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
+  } else {
+  overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Fail`);
+}
 }
 
 export async function resetNPC(npcAmount: number) {

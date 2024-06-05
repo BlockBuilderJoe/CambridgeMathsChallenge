@@ -1,6 +1,6 @@
 //defines the perfect run for the Cuisneaire Rods game.
 export const perfectRun = [
-    { location: { z: 104, y: 95, x: 30 }, direction: "south", rodLength: 12, blockName: "yellow_concrete" }, //1/2
+    { location: { z: 104, y: 95, x: 30 }, direction: "north", rodLength: 12, blockName: "yellow_concrete" }, //1/2
     { location: { z: 92, y: 95, x: 31 }, direction: "west", rodLength: 6, blockName: "green_concrete" }, //1/4
     { location: { z: 91, y: 95, x: 44 }, direction: "west", rodLength: 8, blockName: "brown_concrete" }, //1/3
     { location: { z: 94, y: 95, x: 53 }, direction: "north", rodLength: 4, blockName: "purple_concrete" }, //1/6
