@@ -66,13 +66,14 @@ export function resetNPC(npcAmount) {
 }
 function placeRods(block, blockName, rodLength, direction) {
     var _a;
-    for (let i = 0; i < rodLength; i++) {
-        if (["east", "west", "north", "south"].includes(direction)) {
+    const validDirections = ["east", "west", "north", "south"];
+    if (validDirections.includes(direction)) {
+        for (let i = 0; i < rodLength; i++) {
             (_a = block[direction](i)) === null || _a === void 0 ? void 0 : _a.setPermutation(BlockPermutation.resolve(blockName));
         }
-        else {
-            throw new Error(`Invalid direction: ${direction}`);
-        }
+    }
+    else {
+        throw new Error(`Invalid direction: ${direction}`);
     }
 }
 function setCameraView(x, player) {

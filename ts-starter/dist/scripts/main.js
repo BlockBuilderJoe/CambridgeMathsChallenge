@@ -380,12 +380,13 @@ async function resetNPC(npcAmount) {
   }
 }
 function placeRods(block, blockName, rodLength, direction) {
-  for (let i = 0; i < rodLength; i++) {
-    if (["east", "west", "north", "south"].includes(direction)) {
+  const validDirections = ["east", "west", "north", "south"];
+  if (validDirections.includes(direction)) {
+    for (let i = 0; i < rodLength; i++) {
       block[direction](i)?.setPermutation(BlockPermutation4.resolve(blockName));
-    } else {
-      throw new Error(`Invalid direction: ${direction}`);
     }
+  } else {
+    throw new Error(`Invalid direction: ${direction}`);
   }
 }
 async function setCameraView(x, player) {
@@ -713,7 +714,7 @@ world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let player = event.player;
   let colour = block.permutation?.getState("color");
   if (colour) {
-    if (block.location.y === 94) {
+    if (block.location.y === 95) {
       let viewDirection = event.player.getViewDirection();
       let { direction, oppositeDirection } = await facing(viewDirection);
       let correctDirection = await directionCheck(block.location.x, block.location.z, direction);

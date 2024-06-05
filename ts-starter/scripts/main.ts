@@ -80,8 +80,8 @@ world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let player = event.player;
   let colour = block.permutation?.getState("color");
   if (colour) {
-    //is it a rod block?
-    if (block.location.y === 94) {
+    //is it a rod block?w wsa   w
+    if (block.location.y === 95) {
       //is it placed on the grid?
       let viewDirection = event.player.getViewDirection();
       let { direction, oppositeDirection } = await facing(viewDirection);
