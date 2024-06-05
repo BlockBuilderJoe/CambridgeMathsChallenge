@@ -91,7 +91,7 @@ async function changeNPC(matchingRodIndex: number) {
 export async function resetNPC(npcAmount: number) {
   rodsPlaced = []; //resets the rods placed array.
   for (let i = 0; i < npcAmount; i++) {
-    overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Fail`);
+    overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Default`);
   }
 }
 

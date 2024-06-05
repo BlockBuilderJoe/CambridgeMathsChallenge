@@ -400,7 +400,7 @@ async function changeNPC(matchingRodIndex) {
 async function resetNPC(npcAmount) {
   rodsPlaced = [];
   for (let i = 0; i < npcAmount; i++) {
-    overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Fail`);
+    overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Default`);
   }
 }
 function placeRods(block, blockName, rodLength, direction) {
@@ -722,7 +722,7 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
     case "29,97,106": {
       let player = event.source;
       rodsToRemove = [];
-      await resetNPC(2);
+      await resetNPC(13);
       await giveRods(player, rodsToRemove);
       await resetGrid({ x: 19, y: 95, z: 81 });
       break;

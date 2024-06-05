@@ -54,7 +54,7 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
         case "29,97,106": {
             let player = event.source; // Cast event.source to Player type
             rodsToRemove = []; //resets the rods to remove array
-            yield resetNPC(2);
+            yield resetNPC(13);
             yield giveRods(player, rodsToRemove);
             yield resetGrid({ x: 19, y: 95, z: 81 }); //top left corner of the area.
             break;

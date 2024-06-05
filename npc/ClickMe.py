@@ -2,6 +2,8 @@
 import pandas as pd
 import json
 
+
+sceneJson = '/home/joe/.var/app/io.mrarm.mcpelauncher/data/mcpelauncher/games/com.mojang/development_behavior_packs/cambridge/dialogue/scene.json'
 #import openpyxl
 
 #get the location of the scriptss
@@ -74,7 +76,7 @@ for index, row in npc_template.iterrows(): #Runs through the rows in the excel f
     
     scene.append(scene_dict) # Append the scene dictionary to the scene list
     #Writes the readme file for each row in the excel file.
-    string = f"######################################################## \n INSTRUCTIONS FOR: \n NAME = {npc_template.iloc[:,2][row_count]} \n TAG = {npc_template.iloc[:,1][row_count]} \n \n 1. Stand in front of the NPC and copy this command: \n \n /tag @e[type=npc, r=2] add {npc_template.iloc[:,1][row_count]} \n \n 2. Then paste this command: \n \n /dialogue change @e[tag={npc_template.iloc[:,1][row_count]}] {npc_template.iloc[:,0][row_count]} \n \n ######################################################## \n "    
+    string = f"######################################################## \n INSTRUCTIONS FOR: \n NAME = {npc_template.iloc[:,2][row_count]} \n TAG = {npc_template.iloc[:,1][row_count]} \n \n 1. Stand in front of the NPC and copy this command: \n \n/tag @e[type=npc, r=2] add {npc_template.iloc[:,1][row_count]} \n\n 2. Then paste this command: \n\n/dialogue change @e[tag={npc_template.iloc[:,1][row_count]}] {npc_template.iloc[:,0][row_count]} \n \n ######################################################## \n "    
     text.append(string)
     #Writes the reloadNPC.mcfunction file for each row in the excel file.
     NPC_reload = f"dialogue change @e[tag={npc_template.iloc[:,1][row_count]}] {npc_template.iloc[:,0][row_count]}"
@@ -82,11 +84,12 @@ for index, row in npc_template.iterrows(): #Runs through the rows in the excel f
     row_count = row_count + 1 # Increases the row count by 1
     if row_count == scene_amount: # Tests to see if its the final row
         break
+    
 ######################################### Final formatting #############################################################################################################################################
 
 scene = {"format_version": Minecraft_version, "minecraft:npc_dialogue":{"scenes": scene}}
 
-with open('/home/joe/.local/share/mcpelauncher/games/com.mojang/development_behavior_packs/cambridge/dialogue/scene.json', 'w', encoding='utf-8') as f:
+with open(sceneJson, 'w', encoding='utf-8') as f:
     json.dump(scene, f, ensure_ascii=False, indent=4)
 
 with open(f"{os.path.dirname(__file__)}/README.txt", "w") as f:

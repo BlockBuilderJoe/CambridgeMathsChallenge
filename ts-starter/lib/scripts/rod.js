@@ -74,7 +74,7 @@ export function resetNPC(npcAmount) {
     return __awaiter(this, void 0, void 0, function* () {
         rodsPlaced = []; //resets the rods placed array.
         for (let i = 0; i < npcAmount; i++) {
-            overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Fail`);
+            overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Default`);
         }
     });
 }
