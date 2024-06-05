@@ -5,12 +5,23 @@ let rodsPlaced = [];
 export function directionCheck(x, z, direction) {
     return __awaiter(this, void 0, void 0, function* () {
         let correctDirection = false;
-        if (x == 30 && isInRange(z, 93, 104)) {
-            correctDirection = true;
-        }
-        else if (isInRange(x, 31, 36) && z == 92) {
-            //rod2
-            correctDirection = true;
+        const validRanges = [
+            { x: 30, zMin: 93, zMax: 104 },
+            { xMin: 31, xMax: 36, z: 92 },
+            { xMin: 44, xMax: 51, z: 91 },
+            { x: 53, zMin: 94, zMax: 97 },
+            { xMin: 55, xMax: 62, z: 99 },
+            { xMin: 69, xMax: 116, z: 99 },
+            { xMin: 113, xMax: 115, z: 95 },
+            { xMin: 101, xMax: 109, z: 94 },
+        ];
+        for (const range of validRanges) {
+            //world.sendMessage(`x: ${x} z: ${z}`);
+            if ((range.x !== undefined && x === range.x && isInRange(z, range.zMin, range.zMax)) ||
+                (range.z !== undefined && z === range.z && isInRange(x, range.xMin, range.xMax))) {
+                correctDirection = true;
+                break;
+            }
         }
         return correctDirection;
     });
