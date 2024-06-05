@@ -306,7 +306,11 @@ async function scaleShape(shape, scaleFactor, axes) {
 }
 
 // scripts/rod.ts
-import { BlockPermutation as BlockPermutation4, world as world7, system } from "@minecraft/server";
+import {
+  BlockPermutation as BlockPermutation4,
+  world as world7,
+  system
+} from "@minecraft/server";
 
 // scripts/perfectRun.ts
 var perfectRun = [
@@ -376,12 +380,13 @@ async function resetNPC(npcAmount) {
   }
 }
 function placeRods(block, blockName, rodLength, direction) {
-  for (let i = 0; i < rodLength; i++) {
-    if (["east", "west", "north", "south"].includes(direction)) {
+  const validDirections = ["east", "west", "north", "south"];
+  if (validDirections.includes(direction)) {
+    for (let i = 0; i < rodLength; i++) {
       block[direction](i)?.setPermutation(BlockPermutation4.resolve(blockName));
-    } else {
-      throw new Error(`Invalid direction: ${direction}`);
     }
+  } else {
+    throw new Error(`Invalid direction: ${direction}`);
   }
 }
 async function setCameraView(x, player) {
@@ -425,22 +430,21 @@ async function replay(index) {
     world7.sendMessage(`Replaying Rods ${JSON.stringify(combinedRods)}`);
   }
 }
-function endReplay(player, tpCommand, clearCommand = `fill 37 94 33 37 94 44 tallgrass replace`) {
-  system.runTimeout(
-    () => {
-      player.runCommandAsync(tpCommand);
-      player.runCommandAsync(clearCommand);
-      player.runCommandAsync(`camera ${player.name} clear`);
-    },
-    40
-  );
+function endReplay(player, tpStart, clearCommand) {
+  system.runTimeout(() => {
+    player.runCommandAsync(tpStart);
+    player.runCommandAsync(clearCommand);
+    player.runCommandAsync(`camera ${player.name} clear`);
+  }, 40);
 }
 async function squareReset(pos1, pos2, concreteColours) {
   for (let i = 0; i < concreteColours.length; i++) {
     let command = `fill ${pos1.x} ${pos1.y} ${pos1.z} ${pos2.x} ${pos2.y} ${pos2.z} tallgrass replace ${concreteColours[i]}_concrete`;
     overworld4.runCommand(command);
   }
-  overworld4.runCommandAsync(`fill ${pos1.x} ${pos1.y - 1} ${pos1.z} ${pos2.x} ${pos2.y - 1} ${pos2.z} grass replace dirt`);
+  overworld4.runCommandAsync(
+    `fill ${pos1.x} ${pos1.y - 1} ${pos1.z} ${pos2.x} ${pos2.y - 1} ${pos2.z} grass replace dirt`
+  );
   overworld4.runCommandAsync(`fill ${pos1.x} ${pos1.y} ${pos1.z} ${pos2.x} ${pos2.y} ${pos2.z} tallgrass replace air`);
 }
 async function resetGrid(location) {
@@ -453,10 +457,20 @@ async function resetGrid(location) {
   }
 }
 async function giveRods(player, rodsRemoved) {
-  let rods = [{ block: "red_concrete", amount: 10 }, { block: "lime_concrete", amount: 10 }, { block: "purple_concrete", amount: 10 }, { block: "green_concrete", amount: 10 }, { block: "brown_concrete", amount: 10 }, { block: "yellow_concrete", amount: 10 }, { block: "blue_concrete", amount: 10 }];
+  let rods = [
+    { block: "red_concrete", amount: 10 },
+    { block: "lime_concrete", amount: 10 },
+    { block: "purple_concrete", amount: 10 },
+    { block: "green_concrete", amount: 10 },
+    { block: "brown_concrete", amount: 10 },
+    { block: "yellow_concrete", amount: 10 },
+    { block: "blue_concrete", amount: 10 }
+  ];
   player.runCommandAsync(`clear ${player.name}`);
   for (let i = 0; i < rods.length; i++) {
-    player.runCommandAsync(`give @p ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
+    player.runCommandAsync(
+      `give @p ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
+    );
   }
 }
 
@@ -700,19 +714,19 @@ world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let player = event.player;
   let colour = block.permutation?.getState("color");
   if (colour) {
-    if (block.location.y === 94) {
+    if (block.location.y === 95) {
       let viewDirection = event.player.getViewDirection();
       let { direction, oppositeDirection } = await facing(viewDirection);
       let correctDirection = await directionCheck(block.location.x, block.location.z, direction);
       let hasColour = await getBlockBehind(event, oppositeDirection);
       const rodPermutations = {
-        "red": { block: "red_concrete", value: 2, message: "Placed a twelth rod" },
-        "lime": { block: "lime_concrete", value: 3, message: "Placed an eigth rod" },
-        "purple": { block: "purple_concrete", value: 4, message: "Placed a sixth rod" },
-        "green": { block: "green_concrete", value: 6, message: "Placed a quarter rod" },
-        "brown": { block: "brown_concrete", value: 8, message: "Placed a third rod" },
-        "yellow": { block: "yellow_concrete", value: 12, message: "Placed a half rod" },
-        "blue": { block: "blue_concrete", value: 24, message: "Placed a whole rod" }
+        red: { block: "red_concrete", value: 2, message: "Placed a twelth rod" },
+        lime: { block: "lime_concrete", value: 3, message: "Placed an eigth rod" },
+        purple: { block: "purple_concrete", value: 4, message: "Placed a sixth rod" },
+        green: { block: "green_concrete", value: 6, message: "Placed a quarter rod" },
+        brown: { block: "brown_concrete", value: 8, message: "Placed a third rod" },
+        yellow: { block: "yellow_concrete", value: 12, message: "Placed a half rod" },
+        blue: { block: "blue_concrete", value: 24, message: "Placed a whole rod" }
       };
       if (!hasColour) {
         player.runCommandAsync(`title ${player.name} actionbar Place the rod in front of the magical connector.`);
@@ -811,7 +825,9 @@ world10.afterEvents.itemCompleteUse.subscribe(async (event) => {
   let player = event.source;
   if (event.itemStack?.typeId === "minecraft:potion") {
     if (potion === "poison") {
-      player.sendMessage("\xA7fYou mixed the potion with the \xA72wrong ingredients. \n\xA7fIt has had no effect.\nMake sure you're using the correct ingredients.");
+      player.sendMessage(
+        "\xA7fYou mixed the potion with the \xA72wrong ingredients. \n\xA7fIt has had no effect.\nMake sure you're using the correct ingredients."
+      );
     } else {
       potionDrank = true;
       player.sendMessage("\xA7fYou drank the potion. \n\xA72Jump in the well \xA7fto see the effect.");
