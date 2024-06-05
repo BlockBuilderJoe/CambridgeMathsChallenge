@@ -314,7 +314,7 @@ import {
 
 // scripts/perfectRun.ts
 var perfectRun = [
-  { location: { z: 104, y: 95, x: 30 }, direction: "south", rodLength: 12, blockName: "yellow_concrete" },
+  { location: { z: 104, y: 95, x: 30 }, direction: "north", rodLength: 12, blockName: "yellow_concrete" },
   //1/2
   { location: { z: 92, y: 95, x: 31 }, direction: "west", rodLength: 6, blockName: "green_concrete" },
   //1/4
@@ -382,11 +382,13 @@ async function cuisenaire(block, blockName, rodLength, successMessage, direction
     }
     if (runPlaceRods) {
       let rodToPlace = { location: block.location, direction, rodLength, blockName };
+      world7.sendMessage(JSON.stringify(rodToPlace));
       rodsPlaced.push(rodToPlace);
       const matchingRodIndex = perfectRun.findIndex((rod) => JSON.stringify(rod) === JSON.stringify(rodToPlace));
+      world7.sendMessage(`${matchingRodIndex}`);
       if (matchingRodIndex >= 0) {
         world7.sendMessage("You placed a rod in the correct position!");
-        await changeNPC(matchingRodIndex);
+        await changeNPC(matchingRodIndex, true);
       }
       placeRods(block, blockName, rodLength, direction);
     } else {
@@ -394,8 +396,12 @@ async function cuisenaire(block, blockName, rodLength, successMessage, direction
     }
   }
 }
-async function changeNPC(matchingRodIndex) {
-  overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
+async function changeNPC(matchingRodIndex, win) {
+  if (win) {
+    overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
+  } else {
+    overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Fail`);
+  }
 }
 async function resetNPC(npcAmount) {
   rodsPlaced = [];
