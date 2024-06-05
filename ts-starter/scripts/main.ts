@@ -1,4 +1,4 @@
-import { world,system, Player, BlockPermutation, Block, Entity, Scoreboard} from "@minecraft/server";
+import { world, system, Player, BlockPermutation, Block, Entity, Scoreboard } from "@minecraft/server";
 import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
@@ -8,7 +8,7 @@ import { perfectRun } from "./perfectRun";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
 import { potionMaker, displayTimer } from "./potion";
-import './npcscriptEventHandler'; //handles the NPC script events
+import "./npcscriptEventHandler"; //handles the NPC script events
 
 let potion: string = "";
 let seconds: number = 0;
@@ -27,13 +27,12 @@ world.afterEvents.playerSpawn.subscribe((eventData) => {
     currentPlayer.runCommandAsync(
       `give @p[hasitem={item=stick,quantity=0}] stick 1 0 {"item_lock": { "mode": "lock_in_slot" }}`
     );
-  }
-  else {
+  } else {
     currentPlayer.sendMessage(`<BlockBuilderAI> §3Welcome ${currentPlayer.name}!`);
     currentPlayer.runCommandAsync(
       `give @a[hasitem={item=stick,quantity=0}] stick 1 0 {"item_lock": { "mode": "lock_in_slot" }}`
     );
-  } 
+  }
 });
 
 //listens for the button push event.
@@ -80,22 +79,24 @@ world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let block = event.block;
   let player = event.player;
   let colour = block.permutation?.getState("color");
-  if (colour) { //is it a rod block?
-    if (block.location.y === 94) { //is it placed on the grid?
+  if (colour) {
+    //is it a rod block?
+    if (block.location.y === 94) {
+      //is it placed on the grid?
       let viewDirection = event.player.getViewDirection();
       let { direction, oppositeDirection } = await facing(viewDirection);
       let correctDirection = await directionCheck(block.location.x, block.location.z, direction);
       let hasColour = await getBlockBehind(event, oppositeDirection);
       const rodPermutations = {
-        "red": { block: "red_concrete", value: 2, message: "Placed a twelth rod" },
-        "lime": { block: "lime_concrete", value: 3, message: "Placed an eigth rod" },
-        "purple": { block: "purple_concrete", value: 4, message: "Placed a sixth rod" },
-        "green": { block: "green_concrete", value: 6, message: "Placed a quarter rod" },
-        "brown": { block: "brown_concrete", value: 8, message: "Placed a third rod" },
-        "yellow": { block: "yellow_concrete", value: 12, message: "Placed a half rod" },
-        "blue": { block: "blue_concrete", value: 24, message: "Placed a whole rod" }
+        red: { block: "red_concrete", value: 2, message: "Placed a twelth rod" },
+        lime: { block: "lime_concrete", value: 3, message: "Placed an eigth rod" },
+        purple: { block: "purple_concrete", value: 4, message: "Placed a sixth rod" },
+        green: { block: "green_concrete", value: 6, message: "Placed a quarter rod" },
+        brown: { block: "brown_concrete", value: 8, message: "Placed a third rod" },
+        yellow: { block: "yellow_concrete", value: 12, message: "Placed a half rod" },
+        blue: { block: "blue_concrete", value: 24, message: "Placed a whole rod" },
       };
-      
+
       if (!hasColour) {
         player.runCommandAsync(`title ${player.name} actionbar Place the rod in front of the magical connector.`);
         event.block.setPermutation(BlockPermutation.resolve("tallgrass"));
@@ -109,10 +110,10 @@ world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
       const rod = rodPermutations[colour as keyof typeof rodPermutations];
       if (rod) {
         cuisenaire(block, rod.block, rod.value, rod.message, direction);
-      }   
+      }
     }
   }
-  });
+});
 
 world.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId; //gets the item in the players hand
@@ -130,7 +131,6 @@ world.beforeEvents.itemUseOn.subscribe(async (event) => {
     }
   }
 });
-
 
 //wellwellwell
 function applyPotionEffect(player: any, potion: string, seconds: number) {
@@ -167,21 +167,19 @@ function mainTick() {
     if (player.isInWater == true) {
       meters = 58 - Math.floor(player.location.y);
       player.runCommand(`scoreboard players set Meters Depth ${meters}`);
-      
-      if (potionDrank) { //applies the potion effect once
+
+      if (potionDrank) {
+        //applies the potion effect once
         applyPotionEffect(player, potion, seconds);
         potionDrank = false;
       }
-      if (player.getEffect("water_breathing")){
+      if (player.getEffect("water_breathing")) {
         displayTimer(potionStart, seconds, player, "Breathing underwater");
-      }
-      else if (player.getEffect("night_vision")){
+      } else if (player.getEffect("night_vision")) {
         displayTimer(potionStart, seconds, player, "Great work you can see in the dark for");
-      }
-      else if (player.getEffect("blindness")){
+      } else if (player.getEffect("blindness")) {
         displayTimer(potionStart, seconds, player, "Oh no! The ratios were wrong, you can't see anything for");
-      }
-      else if (player.getEffect("levitation")){
+      } else if (player.getEffect("levitation")) {
         displayTimer(potionStart, seconds, player, "Oh no! You're floating for");
       }
       if (player.isSneaking == true) {
@@ -193,7 +191,7 @@ function mainTick() {
   system.run(mainTick);
 }
 async function surface(player: any) {
-  player.teleport({x:-50,y: 60,z: 132});
+  player.teleport({ x: -50, y: 60, z: 132 });
   player.addEffect("instant_health", 5);
   player.removeEffect("blindness");
   player.removeEffect("night_vision");
@@ -202,21 +200,22 @@ async function surface(player: any) {
 }
 //listens for the potion to be fully drunk.
 world.afterEvents.itemCompleteUse.subscribe(async (event) => {
-let player = event.source;
-if (event.itemStack?.typeId === "minecraft:potion") {
-  if (potion === "poison"){
-    player.sendMessage("§fYou mixed the potion with the §2wrong ingredients. \n§fIt has had no effect.\nMake sure you're using the correct ingredients.");
+  let player = event.source;
+  if (event.itemStack?.typeId === "minecraft:potion") {
+    if (potion === "poison") {
+      player.sendMessage(
+        "§fYou mixed the potion with the §2wrong ingredients. \n§fIt has had no effect.\nMake sure you're using the correct ingredients."
+      );
+    } else {
+      potionDrank = true;
+      player.sendMessage("§fYou drank the potion. \n§2Jump in the well §fto see the effect.");
+    }
+    event.source.runCommand("clear @p minecraft:glass_bottle");
   }
-  else{
-    potionDrank = true;
-    player.sendMessage("§fYou drank the potion. \n§2Jump in the well §fto see the effect.");
-  } 
-  event.source.runCommand("clear @p minecraft:glass_bottle");
-}
 });
-  
+
 //listens for the entity health changed event so they don't drown.
-world.afterEvents.entityHealthChanged.subscribe(async(event) => {
+world.afterEvents.entityHealthChanged.subscribe(async (event) => {
   if (event.entity.typeId === "minecraft:player") {
     let player: Player = event.entity as Player;
     if (player.isInWater == true) {

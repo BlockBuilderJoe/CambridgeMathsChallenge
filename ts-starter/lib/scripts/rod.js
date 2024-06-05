@@ -1,14 +1,16 @@
-import { BlockPermutation, world, system } from "@minecraft/server";
+import { BlockPermutation, world, system, } from "@minecraft/server";
 import { perfectRun } from "./perfectRun";
 let overworld = world.getDimension("overworld");
 let rodsPlaced = [];
 export function directionCheck(x, z, direction) {
     return __awaiter(this, void 0, void 0, function* () {
         let correctDirection = false;
-        if (x == 37 && isInRange(z, 33, 44)) { //rod0{ //rod0
+        if (x == 37 && isInRange(z, 33, 44)) {
+            //rod0{ //rod0
             correctDirection = true;
         }
-        else if (isInRange(x, 31, 36) && isInRange(z, 45, 46)) { //rod2
+        else if (isInRange(x, 31, 36) && isInRange(z, 45, 46)) {
+            //rod2
             correctDirection = true;
         }
         return correctDirection;
@@ -35,7 +37,7 @@ export function cuisenaire(block, blockName, rodLength, successMessage, directio
             if (runPlaceRods) {
                 let rodToPlace = { location: block.location, direction: direction, rodLength: rodLength, blockName: blockName };
                 rodsPlaced.push(rodToPlace);
-                const matchingRodIndex = perfectRun.findIndex(rod => JSON.stringify(rod) === JSON.stringify(rodToPlace));
+                const matchingRodIndex = perfectRun.findIndex((rod) => JSON.stringify(rod) === JSON.stringify(rodToPlace));
                 if (matchingRodIndex >= 0) {
                     world.sendMessage("You placed a rod in the correct position!");
                     yield changeNPC(matchingRodIndex);
@@ -50,6 +52,7 @@ export function cuisenaire(block, blockName, rodLength, successMessage, directio
 }
 function changeNPC(matchingRodIndex) {
     return __awaiter(this, void 0, void 0, function* () {
+        //changes the NPC to the success state based on the matchingRodIndex.
         overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
     });
 }
@@ -108,10 +111,11 @@ export function replayRods(player) {
                         yield setCameraView(x, player);
                         let block = overworld.getBlock(matchingRods[index].location);
                         placeRods(block, matchingRods[index].blockName, matchingRods[index].rodLength, matchingRods[index].direction);
-                        if (i === matchingRods.length - 1) { //resets the camera 2 seconds after last rod placed.
+                        if (i === matchingRods.length - 1) {
+                            //resets the camera 2 seconds after last rod placed.
                             world.sendMessage(`tp ${player.name} ${matchingRods[index].location.x} ${matchingRods[index].location.y + 1} ${matchingRods[index].location.z}`);
                             let tpCommand = `tp ${player.name} ${matchingRods[index].location.x} ${matchingRods[index].location.y + 1} ${matchingRods[index].location.z}`;
-                            endReplay(player, tpCommand);
+                            //endReplay(player, tpCommand);
                         }
                     }), 40 * index);
                     return;
@@ -125,8 +129,8 @@ export function replay(index) {
         let tpStart = `tp @p 37 95 31 facing 37 95 45`;
         let clearCommand = `fill 37 94 33 37 94 44 tallgrass replace`;
         overworld.runCommandAsync(clearCommand);
-        let rodsPlacedToReplay = rodsPlaced.filter(rod => rod.location && rod.location.x === 37);
-        let perfectRunToReplay = perfectRun.filter(rod => rod.location && rod.location.x === 37);
+        let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === 37);
+        let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === 37);
         let combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
         world.sendMessage(`Replaying rods ${combinedRods}`);
         for (let i = 0; i < combinedRods.length; i++) {
@@ -137,7 +141,8 @@ export function replay(index) {
                         yield setCameraView(x, player);
                         let block = overworld.getBlock(combinedRods[index].location);
                         placeRods(block, combinedRods[index].blockName, combinedRods[index].rodLength, combinedRods[index].direction);
-                        if (i === combinedRods.length - 1) { //resets the camera 2 seconds after last rod placed.
+                        if (i === combinedRods.length - 1) {
+                            //resets the camera 2 seconds after last rod placed.
                             endReplay(player, tpStart, clearCommand);
                         }
                     }));
@@ -155,7 +160,7 @@ function endReplay(player, tpStart, clearCommand) {
         player.runCommandAsync(`camera ${player.name} clear`);
     }, 40);
 }
-//Resets the area to the original state, one area at a time. 
+//Resets the area to the original state, one area at a time.
 function squareReset(pos1, pos2, concreteColours) {
     return __awaiter(this, void 0, void 0, function* () {
         for (let i = 0; i < concreteColours.length; i++) {
@@ -169,7 +174,7 @@ function squareReset(pos1, pos2, concreteColours) {
 //preps the grid coordinates for the squareReset function.
 export function resetGrid(location) {
     return __awaiter(this, void 0, void 0, function* () {
-        let concreteColours = ["red", "green", "purple", "brown", "blue", "lime", "yellow"]; // What rods will be replaced. 
+        let concreteColours = ["red", "green", "purple", "brown", "blue", "lime", "yellow"]; // What rods will be replaced.
         for (let i = 0; i < 4; i++) {
             let offset_x = location.x + i * 25; // 25 is the distance between each starting point of the grid.
             let pos1 = { x: offset_x, y: location.y, z: location.z };
@@ -180,7 +185,15 @@ export function resetGrid(location) {
 }
 export function giveRods(player, rodsRemoved) {
     return __awaiter(this, void 0, void 0, function* () {
-        let rods = [{ block: "red_concrete", amount: 10 }, { block: "lime_concrete", amount: 10 }, { block: "purple_concrete", amount: 10 }, { block: "green_concrete", amount: 10 }, { block: "brown_concrete", amount: 10 }, { block: "yellow_concrete", amount: 10 }, { block: "blue_concrete", amount: 10 }];
+        let rods = [
+            { block: "red_concrete", amount: 10 },
+            { block: "lime_concrete", amount: 10 },
+            { block: "purple_concrete", amount: 10 },
+            { block: "green_concrete", amount: 10 },
+            { block: "brown_concrete", amount: 10 },
+            { block: "yellow_concrete", amount: 10 },
+            { block: "blue_concrete", amount: 10 },
+        ];
         player.runCommandAsync(`clear ${player.name}`);
         for (let i = 0; i < rods.length; i++) {
             player.runCommandAsync(`give @p ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);

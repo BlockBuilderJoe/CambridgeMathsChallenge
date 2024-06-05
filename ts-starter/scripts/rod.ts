@@ -77,12 +77,13 @@ export async function resetNPC(npcAmount: number) {
 }
 
 function placeRods(block: any, blockName: string, rodLength: number, direction: string) {
-  for (let i = 0; i < rodLength; i++) {
-    if (["east", "west", "north", "south"].includes(direction)) {
+  const validDirections = ["east", "west", "north", "south"];
+  if (validDirections.includes(direction)) {
+    for (let i = 0; i < rodLength; i++) {
       block[direction](i)?.setPermutation(BlockPermutation.resolve(blockName));
-    } else {
-      throw new Error(`Invalid direction: ${direction}`);
     }
+  } else {
+    throw new Error(`Invalid direction: ${direction}`);
   }
 }
 
@@ -124,7 +125,7 @@ export async function replayRods(player: any) {
             let tpCommand = `tp ${player.name} ${matchingRods[index].location.x} ${
               matchingRods[index].location.y + 1
             } ${matchingRods[index].location.z}`;
-            endReplay(player, tpCommand);
+            //endReplay(player, tpCommand);
           }
         }, 40 * index);
         return;

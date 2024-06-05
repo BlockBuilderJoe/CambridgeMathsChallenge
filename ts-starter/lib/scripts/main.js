@@ -7,7 +7,7 @@ import { cuisenaire, getBlockBehind, resetGrid, giveRods, resetNPC, directionChe
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
 import { potionMaker, displayTimer } from "./potion";
-import './npcscriptEventHandler'; //handles the NPC script events
+import "./npcscriptEventHandler"; //handles the NPC script events
 let potion = "";
 let seconds = 0;
 let currentPlayer = null;
@@ -72,20 +72,22 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0
     let block = event.block;
     let player = event.player;
     let colour = (_a = block.permutation) === null || _a === void 0 ? void 0 : _a.getState("color");
-    if (colour) { //is it a rod block?
-        if (block.location.y === 94) { //is it placed on the grid?
+    if (colour) {
+        //is it a rod block?
+        if (block.location.y === 94) {
+            //is it placed on the grid?
             let viewDirection = event.player.getViewDirection();
             let { direction, oppositeDirection } = yield facing(viewDirection);
             let correctDirection = yield directionCheck(block.location.x, block.location.z, direction);
             let hasColour = yield getBlockBehind(event, oppositeDirection);
             const rodPermutations = {
-                "red": { block: "red_concrete", value: 2, message: "Placed a twelth rod" },
-                "lime": { block: "lime_concrete", value: 3, message: "Placed an eigth rod" },
-                "purple": { block: "purple_concrete", value: 4, message: "Placed a sixth rod" },
-                "green": { block: "green_concrete", value: 6, message: "Placed a quarter rod" },
-                "brown": { block: "brown_concrete", value: 8, message: "Placed a third rod" },
-                "yellow": { block: "yellow_concrete", value: 12, message: "Placed a half rod" },
-                "blue": { block: "blue_concrete", value: 24, message: "Placed a whole rod" }
+                red: { block: "red_concrete", value: 2, message: "Placed a twelth rod" },
+                lime: { block: "lime_concrete", value: 3, message: "Placed an eigth rod" },
+                purple: { block: "purple_concrete", value: 4, message: "Placed a sixth rod" },
+                green: { block: "green_concrete", value: 6, message: "Placed a quarter rod" },
+                brown: { block: "brown_concrete", value: 8, message: "Placed a third rod" },
+                yellow: { block: "yellow_concrete", value: 12, message: "Placed a half rod" },
+                blue: { block: "blue_concrete", value: 24, message: "Placed a whole rod" },
             };
             if (!hasColour) {
                 player.runCommandAsync(`title ${player.name} actionbar Place the rod in front of the magical connector.`);
@@ -155,7 +157,8 @@ function mainTick() {
         if (player.isInWater == true) {
             meters = 58 - Math.floor(player.location.y);
             player.runCommand(`scoreboard players set Meters Depth ${meters}`);
-            if (potionDrank) { //applies the potion effect once
+            if (potionDrank) {
+                //applies the potion effect once
                 applyPotionEffect(player, potion, seconds);
                 potionDrank = false;
             }
