@@ -26,6 +26,10 @@ export async function directionCheck(x: number, z: number, direction: string) {
     { xMin: 69, xMax: 116, z: 99 },
     { xMin: 113, xMax: 115, z: 95 },
     { xMin: 101, xMax: 109, z: 94 },
+    { x: 99, zMin: 91, zMax: 92 },
+    { xMin: 94, xMax: 97, z: 89 },
+    { xMin: 91, xMax: 92, z: 89 },
+    { xMin: 80, xMax: 87, z: 89 },
   ];
 
   for (const range of validRanges) {
@@ -203,10 +207,12 @@ export async function resetGrid(location: Vector3) {
   let concreteColours = ["red", "green", "purple", "brown", "blue", "lime", "yellow"]; // What rods will be replaced.
   for (let i = 0; i < 4; i++) {
     let offset_x = location.x + i * 25; // 25 is the distance between each starting point of the grid.
+    await overworld.runCommandAsync(`tp @p ${offset_x} 80 ${location.z}`);
     let pos1 = { x: offset_x, y: location.y, z: location.z };
     let pos2 = { x: offset_x + 24, y: location.y, z: location.z + 24 };
     await squareReset(pos1, pos2, concreteColours);
   }
+  await overworld.runCommandAsync(`tp @p 30 96 108 facing 30 96 100`);
 }
 
 export async function giveRods(player: any, rodsRemoved: any[]) {
