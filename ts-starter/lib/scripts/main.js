@@ -51,12 +51,12 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
             yield resetArea();
             break;
         }
-        case "39,95,31": {
+        case "29,97,106": {
             let player = event.source; // Cast event.source to Player type
             rodsToRemove = []; //resets the rods to remove array
             yield resetNPC(2);
             yield giveRods(player, rodsToRemove);
-            yield resetGrid({ x: -50, y: 94, z: 33 });
+            yield resetGrid({ x: 19, y: 95, z: 81 }); //top left corner of the area.
             break;
         }
         case "24,95,45": {

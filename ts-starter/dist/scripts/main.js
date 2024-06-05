@@ -695,12 +695,12 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
       await resetArea();
       break;
     }
-    case "39,95,31": {
+    case "29,97,106": {
       let player = event.source;
       rodsToRemove = [];
       await resetNPC(2);
       await giveRods(player, rodsToRemove);
-      await resetGrid({ x: -50, y: 94, z: 33 });
+      await resetGrid({ x: 19, y: 95, z: 81 });
       break;
     }
     case "24,95,45": {
