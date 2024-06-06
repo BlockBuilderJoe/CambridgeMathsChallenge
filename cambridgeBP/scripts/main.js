@@ -314,27 +314,59 @@ import {
 
 // scripts/perfectRun.ts
 var perfectRun = [
-  { location: { z: 104, y: 95, x: 30 }, direction: "north", rodLength: 12, blockName: "yellow_concrete" },
+  { location: { z: 104, y: 95, x: 30 }, direction: "north", rodLength: 12, blockName: "yellow_concrete", successMessage: `To optimise use a 1/2 rod` },
   //1/2
-  { location: { z: 92, y: 95, x: 31 }, direction: "west", rodLength: 6, blockName: "green_concrete" },
+  { location: { z: 92, y: 95, x: 31 }, direction: "east", rodLength: 6, blockName: "green_concrete" },
   //1/4
-  { location: { z: 91, y: 95, x: 44 }, direction: "west", rodLength: 8, blockName: "brown_concrete" },
+  { location: { z: 91, y: 95, x: 44 }, direction: "east", rodLength: 8, blockName: "brown_concrete" },
   //1/3
-  { location: { z: 94, y: 95, x: 53 }, direction: "north", rodLength: 4, blockName: "purple_concrete" },
+  { location: { z: 94, y: 95, x: 53 }, direction: "south", rodLength: 4, blockName: "purple_concrete" },
   //1/6
-  { location: { z: 99, y: 95, x: 55 }, direction: "west", rodLength: 8, blockName: "brown_concrete" },
+  { location: { z: 99, y: 95, x: 55 }, direction: "east", rodLength: 8, blockName: "brown_concrete" },
   //2/6
-  { location: { z: 99, y: 95, x: 69 }, direction: "west", rodLength: 24, blockName: "blue_concrete" },
+  { location: { z: 99, y: 95, x: 69 }, direction: "east", rodLength: 24, blockName: "blue_concrete" },
   //1/1
-  { location: { z: 99, y: 95, x: 93 }, direction: "west", rodLength: 24, blockName: "blue_concrete" },
+  { location: { z: 99, y: 95, x: 93 }, direction: "east", rodLength: 24, blockName: "blue_concrete" },
   //1/1
-  { location: { z: 95, y: 95, x: 115 }, direction: "east", rodLength: 3, blockName: "lime_concrete" },
-  { location: { z: 94, y: 95, x: 109 }, direction: "east", rodLength: 6, blockName: "green_concrete" },
-  { location: { z: 94, y: 95, x: 103 }, direction: "east", rodLength: 3, blockName: "lime_concrete" },
-  { location: { z: 92, y: 95, x: 99 }, direction: "south", rodLength: 2, blockName: "red_concrete" },
-  { location: { z: 89, y: 95, x: 97 }, direction: "east", rodLength: 4, blockName: "purple_concrete" },
-  { location: { z: 89, y: 95, x: 92 }, direction: "east", rodLength: 2, blockName: "red_concrete" },
-  { location: { z: 89, y: 95, x: 87 }, direction: "east", rodLength: 8, blockName: "brown_concrete" }
+  { location: { z: 95, y: 95, x: 115 }, direction: "west", rodLength: 3, blockName: "lime_concrete" },
+  { location: { z: 94, y: 95, x: 109 }, direction: "west", rodLength: 6, blockName: "green_concrete" },
+  // If this code remains you need to fix this issue.
+  // The problem is having two values on the same rod puts out the index.
+  // You'll need a handler for all the values that do that.
+  //{ location: { z: 94, y: 95, x: 103 }, direction: "west", rodLength: 3, blockName: "lime_concrete" },
+  { location: { z: 92, y: 95, x: 99 }, direction: "north", rodLength: 2, blockName: "red_concrete" },
+  { location: { z: 89, y: 95, x: 97 }, direction: "west", rodLength: 4, blockName: "purple_concrete" },
+  { location: { z: 89, y: 95, x: 92 }, direction: "west", rodLength: 2, blockName: "red_concrete" },
+  { location: { z: 89, y: 95, x: 87 }, direction: "west", rodLength: 8, blockName: "brown_concrete" }
+];
+var validRanges = [
+  { x: 30, zMin: 93, zMax: 104 },
+  { xMin: 31, xMax: 36, z: 92 },
+  { xMin: 44, xMax: 51, z: 91 },
+  { x: 53, zMin: 94, zMax: 97 },
+  { xMin: 55, xMax: 62, z: 99 },
+  { xMin: 69, xMax: 116, z: 99 },
+  { xMin: 113, xMax: 115, z: 95 },
+  { xMin: 101, xMax: 109, z: 94 },
+  { x: 99, zMin: 91, zMax: 92 },
+  { xMin: 94, xMax: 97, z: 89 },
+  { xMin: 91, xMax: 92, z: 89 },
+  { xMin: 80, xMax: 87, z: 89 }
+];
+var finalBlock = [
+  { location: { z: 93, y: 95, x: 30 } },
+  { location: { z: 92, y: 95, x: 36 } },
+  { location: { z: 91, y: 95, x: 51 } },
+  { location: { z: 97, y: 95, x: 53 } },
+  { location: { z: 99, y: 95, x: 62 } },
+  { location: { z: 99, y: 95, x: 92 } },
+  { location: { z: 99, y: 95, x: 116 } },
+  { location: { z: 95, y: 95, x: 113 } },
+  { location: { z: 94, y: 95, x: 101 } },
+  { location: { z: 91, y: 95, x: 99 } },
+  { location: { z: 89, y: 95, x: 94 } },
+  { location: { z: 89, y: 95, x: 91 } },
+  { location: { z: 89, y: 95, x: 80 } }
 ];
 
 // scripts/rod.ts
@@ -342,20 +374,6 @@ var overworld4 = world7.getDimension("overworld");
 var rodsPlaced = [];
 async function directionCheck(x, z, direction) {
   let correctDirection = false;
-  const validRanges = [
-    { x: 30, zMin: 93, zMax: 104 },
-    { xMin: 31, xMax: 36, z: 92 },
-    { xMin: 44, xMax: 51, z: 91 },
-    { x: 53, zMin: 94, zMax: 97 },
-    { xMin: 55, xMax: 62, z: 99 },
-    { xMin: 69, xMax: 116, z: 99 },
-    { xMin: 113, xMax: 115, z: 95 },
-    { xMin: 101, xMax: 109, z: 94 },
-    { x: 99, zMin: 91, zMax: 92 },
-    { xMin: 94, xMax: 97, z: 89 },
-    { xMin: 91, xMax: 92, z: 89 },
-    { xMin: 80, xMax: 87, z: 89 }
-  ];
   for (const range of validRanges) {
     if (range.x !== void 0 && x === range.x && isInRange(z, range.zMin, range.zMax) || range.z !== void 0 && z === range.z && isInRange(x, range.xMin, range.xMax)) {
       correctDirection = true;
@@ -370,7 +388,7 @@ function isInRange(value, min, max) {
 async function cuisenaire(block, blockName, rodLength, successMessage, direction) {
   if (block.permutation?.matches(blockName)) {
     let runPlaceRods = true;
-    overworld4.runCommand("title @p actionbar " + successMessage);
+    overworld4.runCommand(`title @p actionbar ${successMessage} placed`);
     block.setPermutation(BlockPermutation4.resolve("tallgrass"));
     for (let i = 0; i < rodLength; i++) {
       let colour = block[direction](i)?.permutation?.getState("color");
@@ -381,16 +399,15 @@ async function cuisenaire(block, blockName, rodLength, successMessage, direction
       }
     }
     if (runPlaceRods) {
-      let rodToPlace = { location: block.location, direction, rodLength, blockName };
-      world7.sendMessage(JSON.stringify(rodToPlace));
+      let rodToPlace = { location: block.location, direction, rodLength, blockName, successMessage };
       rodsPlaced.push(rodToPlace);
-      const matchingRodIndex = perfectRun.findIndex((rod) => JSON.stringify(rod) === JSON.stringify(rodToPlace));
-      world7.sendMessage(`${matchingRodIndex}`);
+      placeRods(block, blockName, rodLength, direction);
+      const matchingRodIndex = perfectRun.findIndex(
+        (rod) => rod.location.x === rodToPlace.location.x && rod.location.y === rodToPlace.location.y && rod.location.z === rodToPlace.location.z && rod.direction === rodToPlace.direction && rod.rodLength === rodToPlace.rodLength && rod.blockName === rodToPlace.blockName
+      );
       if (matchingRodIndex >= 0) {
-        world7.sendMessage("You placed a rod in the correct position!");
         await changeNPC(matchingRodIndex, true);
       }
-      placeRods(block, blockName, rodLength, direction);
     } else {
       block?.setPermutation(BlockPermutation4.resolve("tallgrass"));
     }
@@ -413,20 +430,26 @@ function placeRods(block, blockName, rodLength, direction) {
   const validDirections = ["east", "west", "north", "south"];
   if (validDirections.includes(direction)) {
     for (let i = 0; i < rodLength; i++) {
-      block[direction](i)?.setPermutation(BlockPermutation4.resolve(blockName));
+      block[direction](i).setPermutation(BlockPermutation4.resolve(blockName));
+      const newRodIndex = finalBlock.findIndex(
+        (finalBlockElement) => JSON.stringify(finalBlockElement.location) === JSON.stringify(block[direction](i).location)
+      );
+      if (newRodIndex >= 0) {
+        changeNPC(newRodIndex, false);
+      }
     }
   } else {
     throw new Error(`Invalid direction: ${direction}`);
   }
 }
 async function setCameraView(x, player) {
-  if (x >= 25 && x <= 48) {
-    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 36 120 44 facing 36 94 44`);
-  } else if (x >= 0 && x <= 23) {
+  if (x >= 19 && x <= 42) {
+    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 30 120 92 facing 30 90 92`);
+  } else if (x >= 44 && x <= 67) {
     player.runCommandAsync(`camera ${player.name} set minecraft:free pos 11 120 44 facing 11 94 44`);
-  } else if (x >= -25 && x <= -2) {
+  } else if (x >= 69 && x <= 92) {
     player.runCommandAsync(`camera ${player.name} set minecraft:free pos -14 120 44 facing -14 94 44`);
-  } else if (x >= -50 && x <= -27) {
+  } else if (x >= 94 && x <= 117) {
     player.runCommandAsync(`camera ${player.name} set minecraft:free pos -39 120 44 facing -39 94 44`);
   }
 }
@@ -434,38 +457,58 @@ async function getBlockBehind(event, oppositeDirection) {
   let hasColour = event.block[oppositeDirection](1)?.permutation?.getState("color");
   return hasColour;
 }
+async function replayMessage(beginningMessage, fractions) {
+  if (fractions.length > 0) {
+    const playerPlacedFractions = fractions.filter((fraction) => fraction.startsWith("1"));
+    const perfectRunFractions = fractions.filter((fraction) => !fraction.startsWith("1"));
+    if (perfectRunFractions.length > 0) {
+      const perfectRunFractionsSum = perfectRunFractions.join(" + ");
+      overworld4.runCommandAsync(`title @p actionbar ${perfectRunFractionsSum}`);
+    } else if (playerPlacedFractions.length > 0) {
+      const fractionsSum = playerPlacedFractions.join(" + ");
+      overworld4.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
+    }
+  }
+}
 async function replay(index) {
-  let tpStart = `tp @p 37 95 31 facing 37 95 45`;
-  let clearCommand = `fill 37 94 33 37 94 44 tallgrass replace`;
-  overworld4.runCommandAsync(clearCommand);
-  let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === 37);
-  let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === 37);
+  let beginningMessage = `To make 1/2 you placed: `;
+  let fractions = [];
+  let tpStart = `tp @p 31 96 107 facing 31 96 100`;
+  let clearBlock = `fill 30 95 104 30 95 93 tallgrass replace`;
+  let replenishGrass = `fill 30 94 104 30 94 93 grass_block replace`;
+  overworld4.runCommandAsync(clearBlock);
+  overworld4.runCommandAsync(replenishGrass);
+  let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === 30);
+  rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === 30));
+  let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === 30);
   let combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
-  world7.sendMessage(`Replaying rods ${combinedRods}`);
   for (let i = 0; i < combinedRods.length; i++) {
     ((index2) => {
       system.runTimeout(async () => {
         let x = combinedRods[index2].location.x;
         world7.getAllPlayers().forEach(async (player) => {
           await setCameraView(x, player);
+          fractions.push(combinedRods[index2].successMessage);
+          await replayMessage(beginningMessage, fractions);
           let block = overworld4.getBlock(combinedRods[index2].location);
           placeRods(block, combinedRods[index2].blockName, combinedRods[index2].rodLength, combinedRods[index2].direction);
           if (i === combinedRods.length - 1) {
-            endReplay(player, tpStart, clearCommand);
+            endReplay(player, tpStart, clearBlock, replenishGrass, combinedRods);
           }
         });
-      }, 40 * index2);
+      }, 50 * index2);
       return;
     })(i);
-    world7.sendMessage(`Replaying Rods ${JSON.stringify(combinedRods)}`);
   }
 }
-function endReplay(player, tpStart, clearCommand) {
+function endReplay(player, tpStart, clearCommand, replenishGrass, combinedRods) {
   system.runTimeout(() => {
     player.runCommandAsync(tpStart);
     player.runCommandAsync(clearCommand);
+    player.runCommandAsync(replenishGrass);
     player.runCommandAsync(`camera ${player.name} clear`);
-  }, 40);
+    combinedRods = [];
+  }, 50);
 }
 async function squareReset(pos1, pos2, concreteColours) {
   for (let i = 0; i < concreteColours.length; i++) {
@@ -750,13 +793,13 @@ world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
       let correctDirection = await directionCheck(block.location.x, block.location.z, direction);
       let hasColour = await getBlockBehind(event, oppositeDirection);
       const rodPermutations = {
-        red: { block: "red_concrete", value: 2, message: "Placed a twelth rod" },
-        lime: { block: "lime_concrete", value: 3, message: "Placed an eigth rod" },
-        purple: { block: "purple_concrete", value: 4, message: "Placed a sixth rod" },
-        green: { block: "green_concrete", value: 6, message: "Placed a quarter rod" },
-        brown: { block: "brown_concrete", value: 8, message: "Placed a third rod" },
-        yellow: { block: "yellow_concrete", value: 12, message: "Placed a half rod" },
-        blue: { block: "blue_concrete", value: 24, message: "Placed a whole rod" }
+        red: { block: "red_concrete", value: 2, message: "1/12" },
+        lime: { block: "lime_concrete", value: 3, message: "1/8" },
+        purple: { block: "purple_concrete", value: 4, message: "1/6" },
+        green: { block: "green_concrete", value: 6, message: "1/4" },
+        brown: { block: "brown_concrete", value: 8, message: "1/3" },
+        yellow: { block: "yellow_concrete", value: 12, message: "1/2" },
+        blue: { block: "blue_concrete", value: 24, message: "1/1" }
       };
       if (!hasColour) {
         player.runCommandAsync(`title ${player.name} actionbar Place the rod in front of the magical connector.`);
