@@ -487,7 +487,6 @@ async function replay(index) {
         let x = combinedRods[index2].location.x;
         world7.getAllPlayers().forEach(async (player) => {
           await setCameraView(x, player);
-          world7.sendMessage(`${combinedRods[index2].successMessage}`);
           fractions.push(combinedRods[index2].successMessage);
           await replayMessage(beginningMessage, fractions);
           let block = overworld4.getBlock(combinedRods[index2].location);

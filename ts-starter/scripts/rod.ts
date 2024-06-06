@@ -162,7 +162,6 @@ export async function replay(index: number) {
         let x = combinedRods[index].location.x;
         world.getAllPlayers().forEach(async (player) => {
           await setCameraView(x, player);
-          world.sendMessage(`${combinedRods[index].successMessage}`);
           fractions.push(combinedRods[index].successMessage);
           await replayMessage(beginningMessage, fractions);
           

@@ -146,7 +146,6 @@ export function replay(index) {
                     let x = combinedRods[index].location.x;
                     world.getAllPlayers().forEach((player) => __awaiter(this, void 0, void 0, function* () {
                         yield setCameraView(x, player);
-                        world.sendMessage(`${combinedRods[index].successMessage}`);
                         fractions.push(combinedRods[index].successMessage);
                         yield replayMessage(beginningMessage, fractions);
                         let block = overworld.getBlock(combinedRods[index].location);
