@@ -55,6 +55,6 @@ export const finalBlock = [
 
 export const replaySettings = [
   { beginningMessage: `To make 1/2 you placed: `, tpStart: `tp @p 31 96 107 facing 31 96 100`, clearBlock: `fill 30 95 104 30 95 93 tallgrass replace`, replenishGrass: `fill 30 94 104 30 94 93 grass_block replace`, cartesianDirection: 'x', cartesionValue: 30},
-  { beginningMessage: `To make 1/2 you placed: `, tpStart: `tp @p 31 96 107 facing 31 96 100`, clearBlock: `fill 30 95 104 30 95 93 tallgrass replace`, replenishGrass: `fill 30 94 104 30 94 93 grass_block replace`, cartesianDirection: 'x', cartesionValue: 30},
+
 ]
 

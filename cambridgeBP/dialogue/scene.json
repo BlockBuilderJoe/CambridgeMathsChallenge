@@ -28,7 +28,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcComplete 1"
+                            "scriptevent rod:npcComplete 0"
                         ]
                     }
                 ]
@@ -59,7 +59,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcReplay 1"
+                            "scriptevent rod:npcReplay 0"
                         ]
                     },
                     {
@@ -133,7 +133,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcComplete 2"
+                            "scriptevent rod:npcComplete 1"
                         ]
                     }
                 ]
@@ -164,7 +164,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcReplay 2"
+                            "scriptevent rod:npcReplay 1"
                         ]
                     },
                     {
@@ -238,7 +238,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcComplete 3"
+                            "scriptevent rod:npcComplete 2"
                         ]
                     }
                 ]
@@ -269,7 +269,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcReplay 3"
+                            "scriptevent rod:npcReplay 2"
                         ]
                     },
                     {
@@ -343,7 +343,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcComplete 4"
+                            "scriptevent rod:npcComplete 3"
                         ]
                     }
                 ]
@@ -374,7 +374,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcReplay 4"
+                            "scriptevent rod:npcReplay 3"
                         ]
                     },
                     {
@@ -448,7 +448,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcComplete 5"
+                            "scriptevent rod:npcComplete 4"
                         ]
                     }
                 ]
@@ -479,7 +479,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcReplay 5"
+                            "scriptevent rod:npcReplay 4"
                         ]
                     },
                     {
@@ -553,7 +553,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcComplete 6"
+                            "scriptevent rod:npcComplete 5"
                         ]
                     }
                 ]
@@ -584,7 +584,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcReplay 6"
+                            "scriptevent rod:npcReplay 5"
                         ]
                     },
                     {
@@ -658,7 +658,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcComplete 7"
+                            "scriptevent rod:npcComplete 6"
                         ]
                     }
                 ]
@@ -689,7 +689,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcReplay 7"
+                            "scriptevent rod:npcReplay 6"
                         ]
                     },
                     {
@@ -763,7 +763,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcComplete 8"
+                            "scriptevent rod:npcComplete 7"
                         ]
                     }
                 ]
@@ -794,7 +794,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcReplay 8"
+                            "scriptevent rod:npcReplay 7"
                         ]
                     },
                     {
@@ -868,7 +868,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcComplete 9"
+                            "scriptevent rod:npcComplete 8"
                         ]
                     }
                 ]
@@ -899,7 +899,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcReplay 9"
+                            "scriptevent rod:npcReplay 8"
                         ]
                     },
                     {
@@ -973,7 +973,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcComplete 10"
+                            "scriptevent rod:npcComplete 9"
                         ]
                     }
                 ]
@@ -1004,7 +1004,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcReplay 10"
+                            "scriptevent rod:npcReplay 9"
                         ]
                     },
                     {
@@ -1078,7 +1078,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcComplete 11"
+                            "scriptevent rod:npcComplete 10"
                         ]
                     }
                 ]
@@ -1109,7 +1109,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcReplay 11"
+                            "scriptevent rod:npcReplay 10"
                         ]
                     },
                     {

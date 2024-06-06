@@ -368,6 +368,10 @@ var finalBlock = [
   { location: { z: 89, y: 95, x: 91 } },
   { location: { z: 89, y: 95, x: 80 } }
 ];
+var replaySettings = [
+  { beginningMessage: `To make 1/2 you placed: `, tpStart: `tp @p 31 96 107 facing 31 96 100`, clearBlock: `fill 30 95 104 30 95 93 tallgrass replace`, replenishGrass: `fill 30 94 104 30 94 93 grass_block replace`, cartesianDirection: "x", cartesionValue: 30 },
+  { beginningMessage: `To make 1/2 you placed: `, tpStart: `tp @p 31 96 107 facing 31 96 100`, clearBlock: `fill 30 95 104 30 95 93 tallgrass replace`, replenishGrass: `fill 30 94 104 30 94 93 grass_block replace`, cartesianDirection: "x", cartesionValue: 30 }
+];
 
 // scripts/rod.ts
 var overworld4 = world7.getDimension("overworld");
@@ -471,34 +475,41 @@ async function replayMessage(beginningMessage, fractions) {
   }
 }
 async function replay(index) {
-  let beginningMessage = `To make 1/2 you placed: `;
   let fractions = [];
-  let tpStart = `tp @p 31 96 107 facing 31 96 100`;
-  let clearBlock = `fill 30 95 104 30 95 93 tallgrass replace`;
-  let replenishGrass = `fill 30 94 104 30 94 93 grass_block replace`;
-  overworld4.runCommandAsync(clearBlock);
-  overworld4.runCommandAsync(replenishGrass);
-  let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === 30);
-  rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === 30));
-  let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === 30);
-  let combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
-  for (let i = 0; i < combinedRods.length; i++) {
-    ((index2) => {
-      system.runTimeout(async () => {
-        let x = combinedRods[index2].location.x;
-        world7.getAllPlayers().forEach(async (player) => {
-          await setCameraView(x, player);
-          fractions.push(combinedRods[index2].successMessage);
-          await replayMessage(beginningMessage, fractions);
-          let block = overworld4.getBlock(combinedRods[index2].location);
-          placeRods(block, combinedRods[index2].blockName, combinedRods[index2].rodLength, combinedRods[index2].direction);
-          if (i === combinedRods.length - 1) {
-            endReplay(player, tpStart, clearBlock, replenishGrass, combinedRods);
-          }
-        });
-      }, 50 * index2);
-      return;
-    })(i);
+  let combinedRods = [];
+  let replayConfig = replaySettings[index];
+  overworld4.runCommandAsync(replayConfig.clearBlock);
+  overworld4.runCommandAsync(replayConfig.replenishGrass);
+  if (replayConfig.cartesianDirection === "x") {
+    let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
+    rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === replayConfig.cartesionValue));
+    let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
+    combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
+  } else if (replayConfig.cartesianDirection === "z") {
+    let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
+    rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.z === replayConfig.cartesionValue));
+    let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
+    combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
+  }
+  if (combinedRods.length > 0) {
+    for (let i = 0; i < combinedRods.length; i++) {
+      ((index2) => {
+        system.runTimeout(async () => {
+          let x = combinedRods[index2].location.x;
+          world7.getAllPlayers().forEach(async (player) => {
+            await setCameraView(x, player);
+            fractions.push(combinedRods[index2].successMessage);
+            await replayMessage(replayConfig.beginningMessage, fractions);
+            let block = overworld4.getBlock(combinedRods[index2].location);
+            placeRods(block, combinedRods[index2].blockName, combinedRods[index2].rodLength, combinedRods[index2].direction);
+            if (i === combinedRods.length - 1) {
+              endReplay(player, replayConfig.tpStart, replayConfig.clearBlock, replayConfig.replenishGrass, combinedRods);
+            }
+          });
+        }, 50 * index2);
+        return;
+      })(i);
+    }
   }
 }
 function endReplay(player, tpStart, clearCommand, replenishGrass, combinedRods) {
