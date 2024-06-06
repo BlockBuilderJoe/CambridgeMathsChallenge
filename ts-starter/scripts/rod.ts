@@ -135,6 +135,7 @@ export async function replay(index: number) {
         let x = combinedRods[index].location.x;
         world.getAllPlayers().forEach(async (player) => {
           await setCameraView(x, player);
+
           let block = overworld.getBlock(combinedRods[index].location);
           placeRods(block, combinedRods[index].blockName, combinedRods[index].rodLength, combinedRods[index].direction);
           if (i === combinedRods.length - 1) {
@@ -145,8 +146,6 @@ export async function replay(index: number) {
       }, 40 * index);
       return;
     })(i);
-
-    world.sendMessage(`Replaying Rods ${JSON.stringify(combinedRods)}`);
   }
 }
 

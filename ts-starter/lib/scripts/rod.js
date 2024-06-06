@@ -134,7 +134,6 @@ export function replay(index) {
                 }), 40 * index);
                 return;
             })(i);
-            world.sendMessage(`Replaying Rods ${JSON.stringify(combinedRods)}`);
         }
     });
 }

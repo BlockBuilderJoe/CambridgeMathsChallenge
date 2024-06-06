@@ -480,7 +480,6 @@ async function replay(index) {
       }, 40 * index2);
       return;
     })(i);
-    world7.sendMessage(`Replaying Rods ${JSON.stringify(combinedRods)}`);
   }
 }
 function endReplay(player, tpStart, clearCommand, replenishGrass) {
