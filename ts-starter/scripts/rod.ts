@@ -42,6 +42,7 @@ export async function cuisenaire(
   successMessage: string,
   direction: string
 ) {
+
   if (block.permutation?.matches(blockName)) {
     let runPlaceRods = true;
     overworld.runCommand(`title @p actionbar ${successMessage} placed`);
@@ -59,7 +60,15 @@ export async function cuisenaire(
       rodsPlaced.push(rodToPlace);
       placeRods(block, blockName, rodLength, direction);
       
-      const matchingRodIndex = perfectRun.findIndex((rod) => JSON.stringify(rod) === JSON.stringify(rodToPlace));
+      const matchingRodIndex = perfectRun.findIndex((rod) =>
+        rod.location.x === rodToPlace.location.x &&
+        rod.location.y === rodToPlace.location.y &&
+        rod.location.z === rodToPlace.location.z &&
+        rod.direction === rodToPlace.direction &&
+        rod.rodLength === rodToPlace.rodLength &&
+        rod.blockName === rodToPlace.blockName
+      );
+      
       if (matchingRodIndex >= 0) {
         //means you match the perfect run.
         await changeNPC(matchingRodIndex, true);
@@ -168,6 +177,7 @@ export async function replay(index: number) {
       return;
     })(i);
   }
+  
 }
 
 function endReplay(player: any, tpStart: string, clearCommand: string, replenishGrass: string) {
@@ -176,6 +186,7 @@ function endReplay(player: any, tpStart: string, clearCommand: string, replenish
     player.runCommandAsync(clearCommand);
     player.runCommandAsync(replenishGrass);
     player.runCommandAsync(`camera ${player.name} clear`);
+
   }, 50);
 }
 

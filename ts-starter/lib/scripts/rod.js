@@ -38,7 +38,12 @@ export function cuisenaire(block, blockName, rodLength, successMessage, directio
                 let rodToPlace = { location: block.location, direction: direction, rodLength: rodLength, blockName: blockName, successMessage: successMessage };
                 rodsPlaced.push(rodToPlace);
                 placeRods(block, blockName, rodLength, direction);
-                const matchingRodIndex = perfectRun.findIndex((rod) => JSON.stringify(rod) === JSON.stringify(rodToPlace));
+                const matchingRodIndex = perfectRun.findIndex((rod) => rod.location.x === rodToPlace.location.x &&
+                    rod.location.y === rodToPlace.location.y &&
+                    rod.location.z === rodToPlace.location.z &&
+                    rod.direction === rodToPlace.direction &&
+                    rod.rodLength === rodToPlace.rodLength &&
+                    rod.blockName === rodToPlace.blockName);
                 if (matchingRodIndex >= 0) {
                     //means you match the perfect run.
                     yield changeNPC(matchingRodIndex, true);
