@@ -112,7 +112,6 @@ export function replay(index) {
         let tpStart = `tp @p 31 96 107 facing 31 96 100`;
         let clearBlock = `fill 30 95 104 30 95 93 tallgrass replace`;
         let replenishGrass = `fill 30 94 104 30 94 93 grass_block replace`;
-        world.sendMessage(`${index}`);
         overworld.runCommandAsync(clearBlock);
         overworld.runCommandAsync(replenishGrass);
         let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === 30);
