@@ -18,3 +18,34 @@ export const perfectRun = [
   { location: { z: 89, y: 95, x: 92 }, direction: "west", rodLength: 2, blockName: "red_concrete" },
   { location: { z: 89, y: 95, x: 87 }, direction: "west", rodLength: 8, blockName: "brown_concrete" },
 ];
+
+export const validRanges = [
+  { x: 30, zMin: 93, zMax: 104 },
+  { xMin: 31, xMax: 36, z: 92 },
+  { xMin: 44, xMax: 51, z: 91 },
+  { x: 53, zMin: 94, zMax: 97 },
+  { xMin: 55, xMax: 62, z: 99 },
+  { xMin: 69, xMax: 116, z: 99 },
+  { xMin: 113, xMax: 115, z: 95 },
+  { xMin: 101, xMax: 109, z: 94 },
+  { x: 99, zMin: 91, zMax: 92 },
+  { xMin: 94, xMax: 97, z: 89 },
+  { xMin: 91, xMax: 92, z: 89 },
+  { xMin: 80, xMax: 87, z: 89 },
+];
+
+export const finalBlock = [
+  { location: { z: 93, y: 95, x: 30 }},
+  { location: { z: 92, y: 95, x: 36 },},
+  { location: { z: 91, y: 95, x: 51 },},
+  { location: { z: 97, y: 95, x: 53 },},
+  { location: { z: 99, y: 95, x: 62},},
+  { location: { z: 99, y: 95, x: 92 },},
+  { location: { z: 99, y: 95, x: 116 },},
+  { location: { z: 95, y: 95, x: 113 },},
+  { location: { z: 94, y: 95, x: 101 },},
+  { location: { z: 91, y: 95, x: 99 },},
+  { location: { z: 89, y: 95, x: 94 },},
+  { location: { z: 89, y: 95, x: 91 },},
+  { location: { z: 89, y: 95, x: 80 },},
+]

@@ -1,24 +1,10 @@
 import { BlockPermutation, world, system, } from "@minecraft/server";
-import { perfectRun } from "./perfectRun";
+import { perfectRun, validRanges, finalBlock } from "./perfectRun";
 let overworld = world.getDimension("overworld");
 let rodsPlaced = [];
 export function directionCheck(x, z, direction) {
     return __awaiter(this, void 0, void 0, function* () {
         let correctDirection = false;
-        const validRanges = [
-            { x: 30, zMin: 93, zMax: 104 },
-            { xMin: 31, xMax: 36, z: 92 },
-            { xMin: 44, xMax: 51, z: 91 },
-            { x: 53, zMin: 94, zMax: 97 },
-            { xMin: 55, xMax: 62, z: 99 },
-            { xMin: 69, xMax: 116, z: 99 },
-            { xMin: 113, xMax: 115, z: 95 },
-            { xMin: 101, xMax: 109, z: 94 },
-            { x: 99, zMin: 91, zMax: 92 },
-            { xMin: 94, xMax: 97, z: 89 },
-            { xMin: 91, xMax: 92, z: 89 },
-            { xMin: 80, xMax: 87, z: 89 },
-        ];
         for (const range of validRanges) {
             //world.sendMessage(`x: ${x} z: ${z}`);
             if ((range.x !== undefined && x === range.x && isInRange(z, range.zMin, range.zMax)) ||
@@ -50,15 +36,13 @@ export function cuisenaire(block, blockName, rodLength, successMessage, directio
             }
             if (runPlaceRods) {
                 let rodToPlace = { location: block.location, direction: direction, rodLength: rodLength, blockName: blockName };
-                world.sendMessage(JSON.stringify(rodToPlace));
                 rodsPlaced.push(rodToPlace);
+                placeRods(block, blockName, rodLength, direction);
                 const matchingRodIndex = perfectRun.findIndex((rod) => JSON.stringify(rod) === JSON.stringify(rodToPlace));
-                world.sendMessage(`${matchingRodIndex}`);
                 if (matchingRodIndex >= 0) {
-                    world.sendMessage("You placed a rod in the correct position!");
+                    //means you match the perfect run.
                     yield changeNPC(matchingRodIndex, true);
                 }
-                placeRods(block, blockName, rodLength, direction);
             }
             else {
                 block === null || block === void 0 ? void 0 : block.setPermutation(BlockPermutation.resolve("tallgrass"));
@@ -68,11 +52,13 @@ export function cuisenaire(block, blockName, rodLength, successMessage, directio
 }
 function changeNPC(matchingRodIndex, win) {
     return __awaiter(this, void 0, void 0, function* () {
-        //changes the NPC to the success state based on the matchingRodIndex.
+        //changes the NPC to the success state based on the matchingRodIndex in cuisenaire function.
         if (win) {
+            world.sendMessage(`Success! npc` + matchingRodIndex);
             overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
         }
-        else {
+        else { //changes the NPC
+            world.sendMessage(`Fail! npc` + matchingRodIndex);
             overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Fail`);
         }
     });
@@ -86,11 +72,14 @@ export function resetNPC(npcAmount) {
     });
 }
 function placeRods(block, blockName, rodLength, direction) {
-    var _a;
     const validDirections = ["east", "west", "north", "south"];
     if (validDirections.includes(direction)) {
         for (let i = 0; i < rodLength; i++) {
-            (_a = block[direction](i)) === null || _a === void 0 ? void 0 : _a.setPermutation(BlockPermutation.resolve(blockName));
+            block[direction](i).setPermutation(BlockPermutation.resolve(blockName));
+            const newRodIndex = finalBlock.findIndex((finalBlockElement) => JSON.stringify(finalBlockElement.location) === JSON.stringify(block[direction](i).location));
+            if (newRodIndex >= 0) {
+                changeNPC(newRodIndex, false);
+            }
         }
     }
     else {
