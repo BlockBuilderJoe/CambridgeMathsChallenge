@@ -81,13 +81,13 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0
             let correctDirection = yield directionCheck(block.location.x, block.location.z, direction);
             let hasColour = yield getBlockBehind(event, oppositeDirection);
             const rodPermutations = {
-                red: { block: "red_concrete", value: 2, message: "Placed a twelth rod" },
-                lime: { block: "lime_concrete", value: 3, message: "Placed an eigth rod" },
-                purple: { block: "purple_concrete", value: 4, message: "Placed a sixth rod" },
-                green: { block: "green_concrete", value: 6, message: "Placed a quarter rod" },
-                brown: { block: "brown_concrete", value: 8, message: "Placed a third rod" },
-                yellow: { block: "yellow_concrete", value: 12, message: "Placed a half rod" },
-                blue: { block: "blue_concrete", value: 24, message: "Placed a whole rod" },
+                red: { block: "red_concrete", value: 2, message: "1/12" },
+                lime: { block: "lime_concrete", value: 3, message: "1/8" },
+                purple: { block: "purple_concrete", value: 4, message: "1/6" },
+                green: { block: "green_concrete", value: 6, message: "1/4" },
+                brown: { block: "brown_concrete", value: 8, message: "1/3" },
+                yellow: { block: "yellow_concrete", value: 12, message: "1/2" },
+                blue: { block: "blue_concrete", value: 24, message: "1/1" },
             };
             if (!hasColour) {
                 player.runCommandAsync(`title ${player.name} actionbar Place the rod in front of the magical connector.`);

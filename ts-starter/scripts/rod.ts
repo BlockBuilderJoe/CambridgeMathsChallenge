@@ -43,7 +43,7 @@ export async function cuisenaire(
 ) {
   if (block.permutation?.matches(blockName)) {
     let runPlaceRods = true;
-    overworld.runCommand("title @p actionbar " + successMessage);
+    overworld.runCommand(`title @p actionbar ${successMessage} placed`);
     block.setPermutation(BlockPermutation.resolve("tallgrass"));
     for (let i = 0; i < rodLength; i++) {
       let colour = block[direction](i)?.permutation?.getState("color");

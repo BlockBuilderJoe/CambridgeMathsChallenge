@@ -388,7 +388,7 @@ function isInRange(value, min, max) {
 async function cuisenaire(block, blockName, rodLength, successMessage, direction) {
   if (block.permutation?.matches(blockName)) {
     let runPlaceRods = true;
-    overworld4.runCommand("title @p actionbar " + successMessage);
+    overworld4.runCommand(`title @p actionbar ${successMessage} placed`);
     block.setPermutation(BlockPermutation4.resolve("tallgrass"));
     for (let i = 0; i < rodLength; i++) {
       let colour = block[direction](i)?.permutation?.getState("color");
@@ -772,13 +772,13 @@ world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
       let correctDirection = await directionCheck(block.location.x, block.location.z, direction);
       let hasColour = await getBlockBehind(event, oppositeDirection);
       const rodPermutations = {
-        red: { block: "red_concrete", value: 2, message: "Placed a twelth rod" },
-        lime: { block: "lime_concrete", value: 3, message: "Placed an eigth rod" },
-        purple: { block: "purple_concrete", value: 4, message: "Placed a sixth rod" },
-        green: { block: "green_concrete", value: 6, message: "Placed a quarter rod" },
-        brown: { block: "brown_concrete", value: 8, message: "Placed a third rod" },
-        yellow: { block: "yellow_concrete", value: 12, message: "Placed a half rod" },
-        blue: { block: "blue_concrete", value: 24, message: "Placed a whole rod" }
+        red: { block: "red_concrete", value: 2, message: "1/12" },
+        lime: { block: "lime_concrete", value: 3, message: "1/8" },
+        purple: { block: "purple_concrete", value: 4, message: "1/6" },
+        green: { block: "green_concrete", value: 6, message: "1/4" },
+        brown: { block: "brown_concrete", value: 8, message: "1/3" },
+        yellow: { block: "yellow_concrete", value: 12, message: "1/2" },
+        blue: { block: "blue_concrete", value: 24, message: "1/1" }
       };
       if (!hasColour) {
         player.runCommandAsync(`title ${player.name} actionbar Place the rod in front of the magical connector.`);

@@ -24,7 +24,7 @@ export function cuisenaire(block, blockName, rodLength, successMessage, directio
         var _a, _b, _c, _d, _e;
         if ((_a = block.permutation) === null || _a === void 0 ? void 0 : _a.matches(blockName)) {
             let runPlaceRods = true;
-            overworld.runCommand("title @p actionbar " + successMessage);
+            overworld.runCommand(`title @p actionbar ${successMessage} placed`);
             block.setPermutation(BlockPermutation.resolve("tallgrass"));
             for (let i = 0; i < rodLength; i++) {
                 let colour = (_c = (_b = block[direction](i)) === null || _b === void 0 ? void 0 : _b.permutation) === null || _c === void 0 ? void 0 : _c.getState("color");
