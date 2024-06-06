@@ -10,7 +10,7 @@ import {
   PressurePlatePopAfterEvent,
 } from "@minecraft/server";
 import { roundToDigits } from "./numberHandler";
-import { perfectRun, validRanges, finalBlock } from "./perfectRun";
+import { perfectRun, validRanges, finalBlock, replaySettings } from "./perfectRun";
 
 let overworld = world.getDimension("overworld");
 let rodsPlaced: any[] = [];
@@ -146,37 +146,43 @@ async function replayMessage(beginningMessage: string, fractions: any []) {
   
 
 export async function replay(index: number) {
-  let beginningMessage = `To make 1/2 you placed: `;
   let fractions: any[] = []
-  let tpStart = `tp @p 31 96 107 facing 31 96 100`;
-  let clearBlock = `fill 30 95 104 30 95 93 tallgrass replace`;
-  let replenishGrass = `fill 30 94 104 30 94 93 grass_block replace`;
-  overworld.runCommandAsync(clearBlock);
-  overworld.runCommandAsync(replenishGrass);
-  let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === 30);
-  rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === 30));
-  let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === 30);
-  let combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
-
-  for (let i = 0; i < combinedRods.length; i++)  {
-    ((index) => {
-      system.runTimeout(async () => {
-        let x = combinedRods[index].location.x;
-        world.getAllPlayers().forEach(async (player) => {
-          await setCameraView(x, player);
-          fractions.push(combinedRods[index].successMessage);
-          await replayMessage(beginningMessage, fractions);
-          let block = overworld.getBlock(combinedRods[index].location);
-          placeRods(block, combinedRods[index].blockName, combinedRods[index].rodLength, combinedRods[index].direction);
-          if (i === combinedRods.length - 1) {
-            //resets the camera 2 seconds after last rod placed.
-            endReplay(player, tpStart, clearBlock, replenishGrass, combinedRods);
-          }
-        });
-      }, 50 * index);
-      return;
-    })(i);
+  let combinedRods: any[] = [];
+  let replayConfig = replaySettings[index]; //stores all the replay settings for the different rods.
+  overworld.runCommandAsync(replayConfig.clearBlock);
+  overworld.runCommandAsync(replayConfig.replenishGrass);
+  if (replayConfig.cartesianDirection === 'x') {
+    let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
+    rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === replayConfig.cartesionValue));
+    let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
+    combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
+  } else if (replayConfig.cartesianDirection === 'z'){
+      let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
+      rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.z === replayConfig.cartesionValue));
+      let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
+      combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
   }
+  if (combinedRods.length > 0) {
+    for (let i = 0; i < combinedRods.length; i++)  {
+      ((index) => {
+        system.runTimeout(async () => {
+          let x = combinedRods[index].location.x;
+          world.getAllPlayers().forEach(async (player) => {
+            await setCameraView(x, player);
+            fractions.push(combinedRods[index].successMessage);
+            await replayMessage(replayConfig.beginningMessage, fractions);
+            let block = overworld.getBlock(combinedRods[index].location);
+            placeRods(block, combinedRods[index].blockName, combinedRods[index].rodLength, combinedRods[index].direction);
+            if (i === combinedRods.length - 1) {
+              //resets the camera 2 seconds after last rod placed.
+              endReplay(player, replayConfig.tpStart, replayConfig.clearBlock, replayConfig.replenishGrass, combinedRods);
+            }
+          });
+        }, 50 * index);
+        return;
+      })(i);
+  }
+}
 
 }
 
