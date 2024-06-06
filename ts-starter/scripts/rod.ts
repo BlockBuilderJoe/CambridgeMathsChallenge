@@ -7,6 +7,7 @@ import {
   EntityInventoryComponent,
   EquipmentSlot,
   EntityItemComponent,
+  PressurePlatePopAfterEvent,
 } from "@minecraft/server";
 import { roundToDigits } from "./numberHandler";
 import { perfectRun, validRanges, finalBlock } from "./perfectRun";
@@ -120,9 +121,17 @@ export async function getBlockBehind(event: any, oppositeDirection: string) {
 }
 
 async function replayMessage(beginningMessage: string, fractions: any []) {
+  
   if (fractions.length > 0) {
-    const fractionsSum = fractions.join(" + ");
-    overworld.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
+    const playerPlacedFractions = fractions.filter(fraction => fraction.startsWith("1")); //filters out the fractions
+    const perfectRunFractions = fractions.filter(fraction => !fraction.startsWith("1")); //filters out the fractions
+    if (perfectRunFractions.length > 0) { //if you've reached the end of the list
+      const perfectRunFractionsSum = perfectRunFractions.join(" + ");
+      overworld.runCommandAsync(`title @p actionbar ${perfectRunFractionsSum}`);
+    } else if (playerPlacedFractions.length > 0) { //else if there are fractions print them
+      const fractionsSum = playerPlacedFractions.join(" + ");
+      overworld.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
+    }
   }
 }
   
@@ -155,7 +164,7 @@ export async function replay(index: number) {
             endReplay(player, tpStart, clearBlock, replenishGrass);
           }
         });
-      }, 40 * index);
+      }, 50 * index);
       return;
     })(i);
   }
@@ -167,7 +176,7 @@ function endReplay(player: any, tpStart: string, clearCommand: string, replenish
     player.runCommandAsync(clearCommand);
     player.runCommandAsync(replenishGrass);
     player.runCommandAsync(`camera ${player.name} clear`);
-  }, 40);
+  }, 50);
 }
 
 //Resets the area to the original state, one area at a time.

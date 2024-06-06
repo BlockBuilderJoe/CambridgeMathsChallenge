@@ -314,7 +314,7 @@ import {
 
 // scripts/perfectRun.ts
 var perfectRun = [
-  { location: { z: 104, y: 95, x: 30 }, direction: "north", rodLength: 12, blockName: "yellow_concrete", successMessage: `Instead use 1/2` },
+  { location: { z: 104, y: 95, x: 30 }, direction: "north", rodLength: 12, blockName: "yellow_concrete", successMessage: `To optimise use a 1/2 rod` },
   //1/2
   { location: { z: 92, y: 95, x: 31 }, direction: "east", rodLength: 6, blockName: "green_concrete" },
   //1/4
@@ -457,8 +457,15 @@ async function getBlockBehind(event, oppositeDirection) {
 }
 async function replayMessage(beginningMessage, fractions) {
   if (fractions.length > 0) {
-    const fractionsSum = fractions.join(" + ");
-    overworld4.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
+    const playerPlacedFractions = fractions.filter((fraction) => fraction.startsWith("1"));
+    const perfectRunFractions = fractions.filter((fraction) => !fraction.startsWith("1"));
+    if (perfectRunFractions.length > 0) {
+      const perfectRunFractionsSum = perfectRunFractions.join(" + ");
+      overworld4.runCommandAsync(`title @p actionbar ${perfectRunFractionsSum}`);
+    } else if (playerPlacedFractions.length > 0) {
+      const fractionsSum = playerPlacedFractions.join(" + ");
+      overworld4.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
+    }
   }
 }
 async function replay(index) {
@@ -487,7 +494,7 @@ async function replay(index) {
             endReplay(player, tpStart, clearBlock, replenishGrass);
           }
         });
-      }, 40 * index2);
+      }, 50 * index2);
       return;
     })(i);
   }
@@ -498,7 +505,7 @@ function endReplay(player, tpStart, clearCommand, replenishGrass) {
     player.runCommandAsync(clearCommand);
     player.runCommandAsync(replenishGrass);
     player.runCommandAsync(`camera ${player.name} clear`);
-  }, 40);
+  }, 50);
 }
 async function squareReset(pos1, pos2, concreteColours) {
   for (let i = 0; i < concreteColours.length; i++) {
