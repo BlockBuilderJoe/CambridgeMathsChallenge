@@ -154,9 +154,11 @@ export async function replay(index: number) {
   overworld.runCommandAsync(clearBlock);
   overworld.runCommandAsync(replenishGrass);
   let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === 30);
+  rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === 30));
   let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === 30);
   let combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
-  for (let i = 0; i < combinedRods.length; i++) {
+
+  for (let i = 0; i < combinedRods.length; i++)  {
     ((index) => {
       system.runTimeout(async () => {
         let x = combinedRods[index].location.x;
@@ -164,28 +166,27 @@ export async function replay(index: number) {
           await setCameraView(x, player);
           fractions.push(combinedRods[index].successMessage);
           await replayMessage(beginningMessage, fractions);
-          
           let block = overworld.getBlock(combinedRods[index].location);
           placeRods(block, combinedRods[index].blockName, combinedRods[index].rodLength, combinedRods[index].direction);
           if (i === combinedRods.length - 1) {
             //resets the camera 2 seconds after last rod placed.
-            endReplay(player, tpStart, clearBlock, replenishGrass);
+            endReplay(player, tpStart, clearBlock, replenishGrass, combinedRods);
           }
         });
       }, 50 * index);
       return;
     })(i);
   }
-  
+
 }
 
-function endReplay(player: any, tpStart: string, clearCommand: string, replenishGrass: string) {
+function endReplay(player: any, tpStart: string, clearCommand: string, replenishGrass: string, combinedRods: any[]) {
   system.runTimeout(() => {
     player.runCommandAsync(tpStart);
     player.runCommandAsync(clearCommand);
     player.runCommandAsync(replenishGrass);
     player.runCommandAsync(`camera ${player.name} clear`);
-
+    combinedRods = []; //clears the combined rods to stop looping values
   }, 50);
 }
 

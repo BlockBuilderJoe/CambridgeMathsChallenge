@@ -479,6 +479,7 @@ async function replay(index) {
   overworld4.runCommandAsync(clearBlock);
   overworld4.runCommandAsync(replenishGrass);
   let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === 30);
+  rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === 30));
   let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === 30);
   let combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
   for (let i = 0; i < combinedRods.length; i++) {
@@ -492,7 +493,7 @@ async function replay(index) {
           let block = overworld4.getBlock(combinedRods[index2].location);
           placeRods(block, combinedRods[index2].blockName, combinedRods[index2].rodLength, combinedRods[index2].direction);
           if (i === combinedRods.length - 1) {
-            endReplay(player, tpStart, clearBlock, replenishGrass);
+            endReplay(player, tpStart, clearBlock, replenishGrass, combinedRods);
           }
         });
       }, 50 * index2);
@@ -500,12 +501,13 @@ async function replay(index) {
     })(i);
   }
 }
-function endReplay(player, tpStart, clearCommand, replenishGrass) {
+function endReplay(player, tpStart, clearCommand, replenishGrass, combinedRods) {
   system.runTimeout(() => {
     player.runCommandAsync(tpStart);
     player.runCommandAsync(clearCommand);
     player.runCommandAsync(replenishGrass);
     player.runCommandAsync(`camera ${player.name} clear`);
+    combinedRods = [];
   }, 50);
 }
 async function squareReset(pos1, pos2, concreteColours) {
