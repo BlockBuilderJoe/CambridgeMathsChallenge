@@ -35,7 +35,7 @@ export function cuisenaire(block, blockName, rodLength, successMessage, directio
                 }
             }
             if (runPlaceRods) {
-                let rodToPlace = { location: block.location, direction: direction, rodLength: rodLength, blockName: blockName };
+                let rodToPlace = { location: block.location, direction: direction, rodLength: rodLength, blockName: blockName, successMessage: successMessage };
                 rodsPlaced.push(rodToPlace);
                 placeRods(block, blockName, rodLength, direction);
                 const matchingRodIndex = perfectRun.findIndex((rod) => JSON.stringify(rod) === JSON.stringify(rodToPlace));
@@ -107,8 +107,18 @@ export function getBlockBehind(event, oppositeDirection) {
         return hasColour;
     });
 }
+function replayMessage(beginningMessage, fractions) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (fractions.length > 0) {
+            const fractionsSum = fractions.join(" + ");
+            overworld.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
+        }
+    });
+}
 export function replay(index) {
     return __awaiter(this, void 0, void 0, function* () {
+        let beginningMessage = `To make 1/2 you placed: `;
+        let fractions = [];
         let tpStart = `tp @p 31 96 107 facing 31 96 100`;
         let clearBlock = `fill 30 95 104 30 95 93 tallgrass replace`;
         let replenishGrass = `fill 30 94 104 30 94 93 grass_block replace`;
@@ -123,6 +133,9 @@ export function replay(index) {
                     let x = combinedRods[index].location.x;
                     world.getAllPlayers().forEach((player) => __awaiter(this, void 0, void 0, function* () {
                         yield setCameraView(x, player);
+                        world.sendMessage(`${combinedRods[index].successMessage}`);
+                        fractions.push(combinedRods[index].successMessage);
+                        yield replayMessage(beginningMessage, fractions);
                         let block = overworld.getBlock(combinedRods[index].location);
                         placeRods(block, combinedRods[index].blockName, combinedRods[index].rodLength, combinedRods[index].direction);
                         if (i === combinedRods.length - 1) {

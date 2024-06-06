@@ -314,7 +314,7 @@ import {
 
 // scripts/perfectRun.ts
 var perfectRun = [
-  { location: { z: 104, y: 95, x: 30 }, direction: "north", rodLength: 12, blockName: "yellow_concrete" },
+  { location: { z: 104, y: 95, x: 30 }, direction: "north", rodLength: 12, blockName: "yellow_concrete", successMessage: `Instead use 1/2` },
   //1/2
   { location: { z: 92, y: 95, x: 31 }, direction: "east", rodLength: 6, blockName: "green_concrete" },
   //1/4
@@ -399,7 +399,7 @@ async function cuisenaire(block, blockName, rodLength, successMessage, direction
       }
     }
     if (runPlaceRods) {
-      let rodToPlace = { location: block.location, direction, rodLength, blockName };
+      let rodToPlace = { location: block.location, direction, rodLength, blockName, successMessage };
       rodsPlaced.push(rodToPlace);
       placeRods(block, blockName, rodLength, direction);
       const matchingRodIndex = perfectRun.findIndex((rod) => JSON.stringify(rod) === JSON.stringify(rodToPlace));
@@ -455,7 +455,15 @@ async function getBlockBehind(event, oppositeDirection) {
   let hasColour = event.block[oppositeDirection](1)?.permutation?.getState("color");
   return hasColour;
 }
+async function replayMessage(beginningMessage, fractions) {
+  if (fractions.length > 0) {
+    const fractionsSum = fractions.join(" + ");
+    overworld4.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
+  }
+}
 async function replay(index) {
+  let beginningMessage = `To make 1/2 you placed: `;
+  let fractions = [];
   let tpStart = `tp @p 31 96 107 facing 31 96 100`;
   let clearBlock = `fill 30 95 104 30 95 93 tallgrass replace`;
   let replenishGrass = `fill 30 94 104 30 94 93 grass_block replace`;
@@ -470,6 +478,9 @@ async function replay(index) {
         let x = combinedRods[index2].location.x;
         world7.getAllPlayers().forEach(async (player) => {
           await setCameraView(x, player);
+          world7.sendMessage(`${combinedRods[index2].successMessage}`);
+          fractions.push(combinedRods[index2].successMessage);
+          await replayMessage(beginningMessage, fractions);
           let block = overworld4.getBlock(combinedRods[index2].location);
           placeRods(block, combinedRods[index2].blockName, combinedRods[index2].rodLength, combinedRods[index2].direction);
           if (i === combinedRods.length - 1) {

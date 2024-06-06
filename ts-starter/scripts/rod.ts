@@ -54,7 +54,7 @@ export async function cuisenaire(
       }
     }
     if (runPlaceRods) {
-      let rodToPlace = { location: block.location, direction: direction, rodLength: rodLength, blockName: blockName };
+      let rodToPlace = { location: block.location, direction: direction, rodLength: rodLength, blockName: blockName, successMessage: successMessage };
       rodsPlaced.push(rodToPlace);
       placeRods(block, blockName, rodLength, direction);
       
@@ -119,7 +119,17 @@ export async function getBlockBehind(event: any, oppositeDirection: string) {
   return hasColour;
 }
 
+async function replayMessage(beginningMessage: string, fractions: any []) {
+  if (fractions.length > 0) {
+    const fractionsSum = fractions.join(" + ");
+    overworld.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
+  }
+}
+  
+
 export async function replay(index: number) {
+  let beginningMessage = `To make 1/2 you placed: `;
+  let fractions: any[] = []
   let tpStart = `tp @p 31 96 107 facing 31 96 100`;
   let clearBlock = `fill 30 95 104 30 95 93 tallgrass replace`;
   let replenishGrass = `fill 30 94 104 30 94 93 grass_block replace`;
@@ -134,7 +144,10 @@ export async function replay(index: number) {
         let x = combinedRods[index].location.x;
         world.getAllPlayers().forEach(async (player) => {
           await setCameraView(x, player);
-
+          world.sendMessage(`${combinedRods[index].successMessage}`);
+          fractions.push(combinedRods[index].successMessage);
+          await replayMessage(beginningMessage, fractions);
+          
           let block = overworld.getBlock(combinedRods[index].location);
           placeRods(block, combinedRods[index].blockName, combinedRods[index].rodLength, combinedRods[index].direction);
           if (i === combinedRods.length - 1) {
