@@ -328,6 +328,9 @@ var perfectRun = [
   //1/1
   { location: { z: 99, y: 95, x: 93 }, direction: "east", rodLength: 24, blockName: "blue_concrete" },
   //1/1
+  // If this code remains you need to fix this issue.
+  // The problem is having two values on the same rod puts out the index.
+  // You'll need a handler for all the values that do that.
   { location: { z: 95, y: 95, x: 115 }, direction: "west", rodLength: 3, blockName: "lime_concrete" },
   //{ location: { z: 94, y: 95, x: 109 }, direction: "west", rodLength: 6, blockName: "green_concrete" },
   { location: { z: 94, y: 95, x: 103 }, direction: "west", rodLength: 3, blockName: "lime_concrete" },
@@ -440,13 +443,13 @@ function placeRods(block, blockName, rodLength, direction) {
   }
 }
 async function setCameraView(x, player) {
-  if (x >= 25 && x <= 48) {
-    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 36 120 44 facing 36 94 44`);
-  } else if (x >= 0 && x <= 23) {
+  if (x >= 19 && x <= 42) {
+    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 30 120 92 facing 30 90 92`);
+  } else if (x >= 44 && x <= 67) {
     player.runCommandAsync(`camera ${player.name} set minecraft:free pos 11 120 44 facing 11 94 44`);
-  } else if (x >= -25 && x <= -2) {
+  } else if (x >= 69 && x <= 92) {
     player.runCommandAsync(`camera ${player.name} set minecraft:free pos -14 120 44 facing -14 94 44`);
-  } else if (x >= -50 && x <= -27) {
+  } else if (x >= 94 && x <= 117) {
     player.runCommandAsync(`camera ${player.name} set minecraft:free pos -39 120 44 facing -39 94 44`);
   }
 }
@@ -455,13 +458,15 @@ async function getBlockBehind(event, oppositeDirection) {
   return hasColour;
 }
 async function replay(index) {
-  let tpStart = `tp @p 37 95 31 facing 37 95 45`;
-  let clearCommand = `fill 37 94 33 37 94 44 tallgrass replace`;
-  overworld4.runCommandAsync(clearCommand);
-  let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === 37);
-  let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === 37);
+  let tpStart = `tp @p 31 96 107 facing 31 96 100`;
+  let clearBlock = `fill 30 95 104 30 95 93 tallgrass replace`;
+  let replenishGrass = `fill 30 94 104 30 94 93 grass_block replace`;
+  world7.sendMessage(`${index}`);
+  overworld4.runCommandAsync(clearBlock);
+  overworld4.runCommandAsync(replenishGrass);
+  let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === 30);
+  let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === 30);
   let combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
-  world7.sendMessage(`Replaying rods ${combinedRods}`);
   for (let i = 0; i < combinedRods.length; i++) {
     ((index2) => {
       system.runTimeout(async () => {
@@ -471,7 +476,7 @@ async function replay(index) {
           let block = overworld4.getBlock(combinedRods[index2].location);
           placeRods(block, combinedRods[index2].blockName, combinedRods[index2].rodLength, combinedRods[index2].direction);
           if (i === combinedRods.length - 1) {
-            endReplay(player, tpStart, clearCommand);
+            endReplay(player, tpStart, clearBlock, replenishGrass);
           }
         });
       }, 40 * index2);
@@ -480,10 +485,11 @@ async function replay(index) {
     world7.sendMessage(`Replaying Rods ${JSON.stringify(combinedRods)}`);
   }
 }
-function endReplay(player, tpStart, clearCommand) {
+function endReplay(player, tpStart, clearCommand, replenishGrass) {
   system.runTimeout(() => {
     player.runCommandAsync(tpStart);
     player.runCommandAsync(clearCommand);
+    player.runCommandAsync(replenishGrass);
     player.runCommandAsync(`camera ${player.name} clear`);
   }, 40);
 }
