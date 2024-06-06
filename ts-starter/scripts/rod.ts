@@ -72,11 +72,8 @@ export async function cuisenaire(
 async function changeNPC(matchingRodIndex: number, win: boolean) {
   //changes the NPC to the success state based on the matchingRodIndex in cuisenaire function.
   if (win) {
-    world.sendMessage(`Success! npc` + matchingRodIndex);
     overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
   } else {//changes the NPC
-    world.sendMessage(`Fail! npc` + matchingRodIndex);
-
     overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Fail`);
 }
 }

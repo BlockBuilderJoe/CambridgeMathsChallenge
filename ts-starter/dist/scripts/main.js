@@ -413,10 +413,8 @@ async function cuisenaire(block, blockName, rodLength, successMessage, direction
 }
 async function changeNPC(matchingRodIndex, win) {
   if (win) {
-    world7.sendMessage(`Success! npc` + matchingRodIndex);
     overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
   } else {
-    world7.sendMessage(`Fail! npc` + matchingRodIndex);
     overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Fail`);
   }
 }
