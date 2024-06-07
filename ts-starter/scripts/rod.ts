@@ -104,7 +104,6 @@ export async function getBlockBehind(event: any, oppositeDirection: string) {
 }
 
 async function replayMessage(beginningMessage: string, fractions: any []) {
-  
   if (fractions){
     if (fractions.length > 0) {
       const playerPlacedFractions = fractions.filter(fraction => fraction !== undefined && fraction.startsWith("1")); // filters out the fractions
