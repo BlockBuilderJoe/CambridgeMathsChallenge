@@ -114,17 +114,22 @@ export function getBlockBehind(event, oppositeDirection) {
 }
 function replayMessage(beginningMessage, fractions) {
     return __awaiter(this, void 0, void 0, function* () {
-        if (fractions.length > 0) {
-            const playerPlacedFractions = fractions.filter(fraction => fraction.startsWith("1")); //filters out the fractions
-            const perfectRunFractions = fractions.filter(fraction => !fraction.startsWith("1")); //filters out the fractions
-            if (perfectRunFractions.length > 0) { //if you've reached the end of the list
-                const perfectRunFractionsSum = perfectRunFractions.join(" + ");
-                overworld.runCommandAsync(`title @p actionbar ${perfectRunFractionsSum}`);
+        if (fractions) {
+            if (fractions.length > 0) {
+                const playerPlacedFractions = fractions.filter(fraction => fraction !== undefined && fraction.startsWith("1")); // filters out the fractions
+                const perfectRunFractions = fractions.filter(fraction => fraction !== undefined && !fraction.startsWith("1")); //filters out the fractions
+                if (perfectRunFractions.length > 0) { //if you've reached the end of the list
+                    const perfectRunFractionsSum = perfectRunFractions.join(" + ");
+                    overworld.runCommandAsync(`title @p actionbar ${perfectRunFractionsSum}`);
+                }
+                else if (playerPlacedFractions.length > 0) { //else if there are fractions print them
+                    const fractionsSum = playerPlacedFractions.join(" + ");
+                    overworld.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
+                }
             }
-            else if (playerPlacedFractions.length > 0) { //else if there are fractions print them
-                const fractionsSum = playerPlacedFractions.join(" + ");
-                overworld.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
-            }
+        }
+        else {
+            world.sendMessage(`Error: No fractions found`);
         }
     });
 }

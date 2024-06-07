@@ -314,9 +314,9 @@ import {
 
 // scripts/perfectRun.ts
 var perfectRun = [
-  { location: { z: 104, y: 95, x: 30 }, direction: "north", rodLength: 12, blockName: "yellow_concrete", successMessage: `To optimise use a 1/2 rod` },
+  { location: { z: 104, y: 95, x: 30 }, direction: "north", rodLength: 12, blockName: "yellow_concrete", successMessage: `Instead use a 1/2 rod as that is half of 24.` },
   //1/2
-  { location: { z: 92, y: 95, x: 31 }, direction: "east", rodLength: 6, blockName: "green_concrete" },
+  { location: { z: 92, y: 95, x: 31 }, direction: "east", rodLength: 6, blockName: "green_concrete", successMessage: `To 1/4 of 24 use a 6 rod.` },
   //1/4
   { location: { z: 91, y: 95, x: 44 }, direction: "east", rodLength: 8, blockName: "brown_concrete" },
   //1/3
@@ -369,7 +369,8 @@ var finalBlock = [
   { location: { z: 89, y: 95, x: 80 } }
 ];
 var replaySettings = [
-  { beginningMessage: `To make 1/2 you placed: `, tpStart: `tp @p 31 96 107 facing 31 96 100`, clearBlock: `fill 30 95 104 30 95 93 tallgrass replace`, replenishGrass: `fill 30 94 104 30 94 93 grass_block replace`, cartesianDirection: "x", cartesionValue: 30 }
+  { beginningMessage: `To make 1/2 you placed: `, tpStart: `tp @p 31 96 107 facing 31 96 100`, clearBlock: `fill 30 95 104 30 95 93 tallgrass replace`, replenishGrass: `fill 30 94 104 30 94 93 grass_block replace`, cartesianDirection: "x", cartesionValue: 30 },
+  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 }
 ];
 
 // scripts/rod.ts
@@ -461,16 +462,20 @@ async function getBlockBehind(event, oppositeDirection) {
   return hasColour;
 }
 async function replayMessage(beginningMessage, fractions) {
-  if (fractions.length > 0) {
-    const playerPlacedFractions = fractions.filter((fraction) => fraction.startsWith("1"));
-    const perfectRunFractions = fractions.filter((fraction) => !fraction.startsWith("1"));
-    if (perfectRunFractions.length > 0) {
-      const perfectRunFractionsSum = perfectRunFractions.join(" + ");
-      overworld4.runCommandAsync(`title @p actionbar ${perfectRunFractionsSum}`);
-    } else if (playerPlacedFractions.length > 0) {
-      const fractionsSum = playerPlacedFractions.join(" + ");
-      overworld4.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
+  if (fractions) {
+    if (fractions.length > 0) {
+      const playerPlacedFractions = fractions.filter((fraction) => fraction !== void 0 && fraction.startsWith("1"));
+      const perfectRunFractions = fractions.filter((fraction) => fraction !== void 0 && !fraction.startsWith("1"));
+      if (perfectRunFractions.length > 0) {
+        const perfectRunFractionsSum = perfectRunFractions.join(" + ");
+        overworld4.runCommandAsync(`title @p actionbar ${perfectRunFractionsSum}`);
+      } else if (playerPlacedFractions.length > 0) {
+        const fractionsSum = playerPlacedFractions.join(" + ");
+        overworld4.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
+      }
     }
+  } else {
+    world7.sendMessage(`Error: No fractions found`);
   }
 }
 async function replay(index) {
@@ -723,6 +728,7 @@ import { system as system3, world as world9 } from "@minecraft/server";
 system3.afterEvents.scriptEventReceive.subscribe((event) => {
   switch (event.id) {
     case "rod:npcReplay": {
+      world9.sendMessage(`Replay Version ${event.message}`);
       replay(parseInt(event.message));
       break;
     }

@@ -131,18 +131,23 @@ export async function getBlockBehind(event: any, oppositeDirection: string) {
 
 async function replayMessage(beginningMessage: string, fractions: any []) {
   
-  if (fractions.length > 0) {
-    const playerPlacedFractions = fractions.filter(fraction => fraction.startsWith("1")); //filters out the fractions
-    const perfectRunFractions = fractions.filter(fraction => !fraction.startsWith("1")); //filters out the fractions
-    if (perfectRunFractions.length > 0) { //if you've reached the end of the list
-      const perfectRunFractionsSum = perfectRunFractions.join(" + ");
-      overworld.runCommandAsync(`title @p actionbar ${perfectRunFractionsSum}`);
-    } else if (playerPlacedFractions.length > 0) { //else if there are fractions print them
-      const fractionsSum = playerPlacedFractions.join(" + ");
-      overworld.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
+  if (fractions){
+    if (fractions.length > 0) {
+      const playerPlacedFractions = fractions.filter(fraction => fraction !== undefined && fraction.startsWith("1")); // filters out the fractions
+      const perfectRunFractions = fractions.filter(fraction => fraction !== undefined && !fraction.startsWith("1")); //filters out the fractions
+      if (perfectRunFractions.length > 0) { //if you've reached the end of the list
+        const perfectRunFractionsSum = perfectRunFractions.join(" + ");
+        overworld.runCommandAsync(`title @p actionbar ${perfectRunFractionsSum}`);
+      } else if (playerPlacedFractions.length > 0) { //else if there are fractions print them
+        const fractionsSum = playerPlacedFractions.join(" + ");
+        overworld.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
+      }
     }
+  } else {
+    world.sendMessage(`Error: No fractions found`);
   }
 }
+
   
 
 export async function replay(index: number) {
@@ -170,6 +175,7 @@ export async function replay(index: number) {
           world.getAllPlayers().forEach(async (player) => {
             await setCameraView(x, player);
             fractions.push(combinedRods[index].successMessage);
+            
             await replayMessage(replayConfig.beginningMessage, fractions);
             let block = overworld.getBlock(combinedRods[index].location);
             placeRods(block, combinedRods[index].blockName, combinedRods[index].rodLength, combinedRods[index].direction);

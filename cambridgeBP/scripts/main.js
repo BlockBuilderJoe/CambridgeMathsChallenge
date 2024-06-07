@@ -462,16 +462,21 @@ async function getBlockBehind(event, oppositeDirection) {
   return hasColour;
 }
 async function replayMessage(beginningMessage, fractions) {
-  if (fractions.length > 0) {
-    const playerPlacedFractions = fractions.filter((fraction) => fraction.startsWith("1"));
-    const perfectRunFractions = fractions.filter((fraction) => !fraction.startsWith("1"));
-    if (perfectRunFractions.length > 0) {
-      const perfectRunFractionsSum = perfectRunFractions.join(" + ");
-      overworld4.runCommandAsync(`title @p actionbar ${perfectRunFractionsSum}`);
-    } else if (playerPlacedFractions.length > 0) {
-      const fractionsSum = playerPlacedFractions.join(" + ");
-      overworld4.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
+
+  if (fractions){
+    if (fractions.length > 0) {
+      const playerPlacedFractions = fractions.filter((fraction) => fraction.startsWith("1"));
+      const perfectRunFractions = fractions.filter((fraction) => !fraction.startsWith("1"));
+      if (perfectRunFractions.length > 0) {
+        const perfectRunFractionsSum = perfectRunFractions.join(" + ");
+        overworld4.runCommandAsync(`title @p actionbar ${perfectRunFractionsSum}`);
+      } else if (playerPlacedFractions.length > 0) {
+        const fractionsSum = playerPlacedFractions.join(" + ");
+        overworld4.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
+      }
     }
+  } else {
+    world.sendMessage(`fractions is empty`);
   }
 }
 async function replay(index) {
