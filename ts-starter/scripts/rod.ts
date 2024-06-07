@@ -87,7 +87,7 @@ async function changeNPC(matchingRodIndex: number, win: boolean) {
   } else {//changes the NPC
     overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Fail`);
 }
-}
+} 
 
 export async function resetNPC(npcAmount: number) {
   rodsPlaced = []; //resets the rods placed array.
@@ -104,6 +104,7 @@ function placeRods(block: any, blockName: string, rodLength: number, direction: 
       const newRodIndex = finalBlock.findIndex((finalBlockElement) => 
         JSON.stringify(finalBlockElement.location) === JSON.stringify(block[direction](i).location)
       );
+      world.sendMessage(JSON.stringify(newRodIndex));
       if (newRodIndex >= 0) {
         changeNPC(newRodIndex, false);
       }

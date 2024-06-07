@@ -469,6 +469,7 @@ function placeRods(block, blockName, rodLength, direction) {
       const newRodIndex = finalBlock.findIndex(
         (finalBlockElement) => JSON.stringify(finalBlockElement.location) === JSON.stringify(block[direction](i).location)
       );
+      world7.sendMessage(JSON.stringify(newRodIndex));
       if (newRodIndex >= 0) {
         changeNPC(newRodIndex, false);
       }

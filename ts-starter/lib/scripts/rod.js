@@ -81,6 +81,7 @@ function placeRods(block, blockName, rodLength, direction) {
         for (let i = 0; i < rodLength; i++) {
             block[direction](i).setPermutation(BlockPermutation.resolve(blockName));
             const newRodIndex = finalBlock.findIndex((finalBlockElement) => JSON.stringify(finalBlockElement.location) === JSON.stringify(block[direction](i).location));
+            world.sendMessage(JSON.stringify(newRodIndex));
             if (newRodIndex >= 0) {
                 changeNPC(newRodIndex, false);
             }
