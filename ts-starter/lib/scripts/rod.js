@@ -138,7 +138,7 @@ function replayMessage(beginningMessage, fractions) {
 }
 export function replay(index) {
     return __awaiter(this, void 0, void 0, function* () {
-        overworld.runCommandAsync(`tp @p 30 96 120`); //moves the player out of frame.
+        overworld.runCommandAsync(`tp @p 31 96 116`); //moves the player out of frame.
         let npcIndex = index;
         let fractions = [];
         let combinedRods = [];
@@ -149,13 +149,18 @@ export function replay(index) {
             let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
             rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === replayConfig.cartesionValue));
             let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
+            if (perfectRunToReplay.length > 1) {
+                perfectRunToReplay = perfectRunToReplay.slice(0, -1); //gets the last one so you don't have a bunch of them appearing.
+            }
             combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
         }
         else if (replayConfig.cartesianDirection === 'z') {
             let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
             rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.z === replayConfig.cartesionValue));
             let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
-            perfectRunToReplay = perfectRunToReplay.slice(0, -1); //gets the last one so you don't have a bunch of them appearing.
+            if (perfectRunToReplay.length > 1) {
+                perfectRunToReplay = perfectRunToReplay.slice(0, -1); //gets the last one so you don't have a bunch of them appearing.
+            }
             combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
         }
         if (combinedRods.length > 0) {
