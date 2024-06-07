@@ -332,10 +332,6 @@ var perfectRun = [
   //1/3
   { location: { z: 94, y: 95, x: 109 }, direction: "west", rodLength: 6, blockName: "green_concrete", successMessage: `Simplify 2/8 to 1/4 to get the most efficient way across` },
   //1/6
-  // If this code remains you need to fix this issue.
-  // The problem is having two values on the same rod puts out the index.
-  // You'll need a handler for all the values that do that.
-  //{ location: { z: 94, y: 95, x: 103 }, direction: "west", rodLength: 3, blockName: "lime_concrete" },
   { location: { z: 92, y: 95, x: 99 }, direction: "north", rodLength: 2, blockName: "red_concrete", successMessage: `Two is 1/2 of 24.` },
   //1/2
   { location: { z: 89, y: 95, x: 97 }, direction: "west", rodLength: 4, blockName: "purple_concrete", successMessage: `Simplify 2/12 to get the most optimum route` },
@@ -376,6 +372,20 @@ var finalBlock = [
 ];
 var replaySettings = [
   { beginningMessage: `To make 1/2 you placed: `, tpStart: `tp @p 31 96 107 facing 31 96 100`, clearBlock: `fill 30 95 104 30 95 93 tallgrass replace`, replenishGrass: `fill 30 94 104 30 94 93 grass_block replace`, cartesianDirection: "x", cartesionValue: 30 },
+  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
+  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
+  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
+  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
+  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
+  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
+  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
+  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
+  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
+  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
+  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
+  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
+  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
+  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
   { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 }
 ];
 
@@ -487,7 +497,7 @@ async function replayMessage(beginningMessage, fractions) {
   }
 }
 async function replay(index) {
-  overworld4.runCommandAsync(`tp @p 22 88 108`);
+  overworld4.runCommandAsync(`tp @p 30 96 120`);
   let npcIndex = index;
   let fractions = [];
   let combinedRods = [];
@@ -503,6 +513,7 @@ async function replay(index) {
     let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
     rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.z === replayConfig.cartesionValue));
     let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
+    perfectRunToReplay = perfectRunToReplay.slice(0, -1);
     combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
   }
   if (combinedRods.length > 0) {
@@ -556,13 +567,13 @@ async function resetGrid(location) {
 }
 async function giveRods(player, rodsRemoved) {
   let rods = [
-    { block: "red_concrete", amount: 10 },
-    { block: "lime_concrete", amount: 10 },
-    { block: "purple_concrete", amount: 10 },
-    { block: "green_concrete", amount: 10 },
-    { block: "brown_concrete", amount: 10 },
-    { block: "yellow_concrete", amount: 10 },
-    { block: "blue_concrete", amount: 10 }
+    { block: "red_concrete", amount: 2 },
+    { block: "lime_concrete", amount: 1 },
+    { block: "purple_concrete", amount: 2 },
+    { block: "green_concrete", amount: 2 },
+    { block: "brown_concrete", amount: 3 },
+    { block: "yellow_concrete", amount: 1 },
+    { block: "blue_concrete", amount: 2 }
   ];
   player.runCommandAsync(`clear ${player.name}`);
   for (let i = 0; i < rods.length; i++) {

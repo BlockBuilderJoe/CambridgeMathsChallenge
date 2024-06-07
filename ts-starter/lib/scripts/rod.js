@@ -138,7 +138,7 @@ function replayMessage(beginningMessage, fractions) {
 }
 export function replay(index) {
     return __awaiter(this, void 0, void 0, function* () {
-        overworld.runCommandAsync(`tp @p 22 88 108`); //moves the player to the underground place to stop them wandering around.
+        overworld.runCommandAsync(`tp @p 30 96 120`); //moves the player out of frame.
         let npcIndex = index;
         let fractions = [];
         let combinedRods = [];
@@ -155,6 +155,7 @@ export function replay(index) {
             let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
             rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.z === replayConfig.cartesionValue));
             let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
+            perfectRunToReplay = perfectRunToReplay.slice(0, -1); //gets the last one so you don't have a bunch of them appearing.
             combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
         }
         if (combinedRods.length > 0) {
@@ -215,13 +216,13 @@ export function resetGrid(location) {
 export function giveRods(player, rodsRemoved) {
     return __awaiter(this, void 0, void 0, function* () {
         let rods = [
-            { block: "red_concrete", amount: 10 },
-            { block: "lime_concrete", amount: 10 },
-            { block: "purple_concrete", amount: 10 },
-            { block: "green_concrete", amount: 10 },
-            { block: "brown_concrete", amount: 10 },
-            { block: "yellow_concrete", amount: 10 },
-            { block: "blue_concrete", amount: 10 },
+            { block: "red_concrete", amount: 2 },
+            { block: "lime_concrete", amount: 1 },
+            { block: "purple_concrete", amount: 2 },
+            { block: "green_concrete", amount: 2 },
+            { block: "brown_concrete", amount: 3 },
+            { block: "yellow_concrete", amount: 1 },
+            { block: "blue_concrete", amount: 2 },
         ];
         player.runCommandAsync(`clear ${player.name}`);
         for (let i = 0; i < rods.length; i++) {

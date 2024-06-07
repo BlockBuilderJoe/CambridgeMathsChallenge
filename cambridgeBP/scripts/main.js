@@ -550,13 +550,13 @@ async function resetGrid(location) {
 }
 async function giveRods(player, rodsRemoved) {
   let rods = [
-    { block: "red_concrete", amount: 10 },
-    { block: "lime_concrete", amount: 10 },
-    { block: "purple_concrete", amount: 10 },
-    { block: "green_concrete", amount: 10 },
-    { block: "brown_concrete", amount: 10 },
-    { block: "yellow_concrete", amount: 10 },
-    { block: "blue_concrete", amount: 10 }
+    { block: "red_concrete", amount: 2 },
+    { block: "lime_concrete", amount: 1 },
+    { block: "purple_concrete", amount: 2 },
+    { block: "green_concrete", amount: 2 },
+    { block: "brown_concrete", amount: 3 },
+    { block: "yellow_concrete", amount: 1 },
+    { block: "blue_concrete", amount: 2 }
   ];
   player.runCommandAsync(`clear ${player.name}`);
   for (let i = 0; i < rods.length; i++) {
