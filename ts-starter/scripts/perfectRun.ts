@@ -72,7 +72,7 @@ export const replaySettings = [
 
 
   //Todo
-  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: 'z', cartesionValue: 92},
+  { beginningMessage: `To make 1/6 you placed: `, tpStart: `tp @p 53 96 92 facing 53 96 98`, clearBlock: `fill 53 95 94 53 95 97 tallgrass replace`, replenishGrass: `fill 53 94 94 53 94 97 grass_block replace`, cartesianDirection: 'x', cartesionValue: 53},
   { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: 'z', cartesionValue: 92},
   { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: 'z', cartesionValue: 92},
   { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: 'z', cartesionValue: 92},
