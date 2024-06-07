@@ -79,6 +79,7 @@ function placeRods(block, blockName, rodLength, direction) {
     const validDirections = ["east", "west", "north", "south"];
     if (validDirections.includes(direction)) {
         for (let i = 0; i < rodLength; i++) {
+            world.sendMessage('hello isaac');
             block[direction](i).setPermutation(BlockPermutation.resolve(blockName));
             const newRodIndex = finalBlock.findIndex((finalBlockElement) => JSON.stringify(finalBlockElement.location) === JSON.stringify(block[direction](i).location));
             world.sendMessage(JSON.stringify(newRodIndex));
