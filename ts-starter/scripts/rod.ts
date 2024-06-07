@@ -91,9 +91,9 @@ async function setCameraView(player: any, index: number) {
     player.runCommandAsync(`camera ${player.name} set minecraft:free pos 55 120 92 facing 55 90 92`);
   } else if (index == 5) {//room3
     player.runCommandAsync(`camera ${player.name} set minecraft:free pos 93 120 92 facing 93 90 92`);
-    } else if (index == 6, index == 7, index == 8, index == 9) {//room4
+    } else if (index == 6 || index == 7 || index == 8 || index == 9) {//room4
     player.runCommandAsync(`camera ${player.name} set minecraft:free pos 105 120 92 facing 105 90 92`);
-  } else if (index == 10, index == 11, index == 12) {//room4
+  } else if (index == 10 || index == 11 || index == 12) {//room4
     player.runCommandAsync(`camera ${player.name} set minecraft:free pos -39 120 44 facing -39 94 44`);
   }
 }
@@ -130,22 +130,27 @@ export async function replay(index: number) {
   let replayConfig = replaySettings[index]; //stores all the replay settings for the different rods.
   overworld.runCommandAsync(replayConfig.clearBlock);
   overworld.runCommandAsync(replayConfig.replenishGrass);
+
   if (replayConfig.cartesianDirection === 'x') {
+
     let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
     rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === replayConfig.cartesionValue));
     let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
-    if (perfectRunToReplay.length > 1) {
-      perfectRunToReplay = perfectRunToReplay.slice(0, -1); //gets the last one so you don't have a bunch of them appearing.
-    }
+    //if (perfectRunToReplay.length > 1) {
+      //perfectRunToReplay = perfectRunToReplay.slice(0, -1); //gets the last one so you don't have a bunch of them appearing.
+    //}
     combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
+    world.sendMessage(JSON.stringify(combinedRods));
+
   } else if (replayConfig.cartesianDirection === 'z'){
       let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
       rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.z === replayConfig.cartesionValue));
       let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
-      if (perfectRunToReplay.length > 1) {
-        perfectRunToReplay = perfectRunToReplay.slice(0, -1); //gets the last one so you don't have a bunch of them appearing.
-      }
+      //if (perfectRunToReplay.length > 1) {
+        //perfectRunToReplay = perfectRunToReplay.slice(0, -1); //gets the last one so you don't have a bunch of them appearing.
+      //}
       combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
+      world.sendMessage(JSON.stringify(combinedRods));
   }
   if (combinedRods.length > 0) {
     for (let i = 0; i < combinedRods.length; i++)  {
