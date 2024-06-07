@@ -68,6 +68,7 @@ export async function cuisenaire(
         rod.rodLength === rodToPlace.rodLength &&
         rod.blockName === rodToPlace.blockName
       );
+      world.sendMessage(JSON.stringify(matchingRodIndex));
       
       if (matchingRodIndex >= 0) {
         //means you match the perfect run.

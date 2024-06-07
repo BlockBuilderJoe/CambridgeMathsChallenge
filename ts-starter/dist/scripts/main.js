@@ -439,6 +439,7 @@ async function cuisenaire(block, blockName, rodLength, successMessage, direction
       const matchingRodIndex = perfectRun.findIndex(
         (rod) => rod.location.x === rodToPlace.location.x && rod.location.y === rodToPlace.location.y && rod.location.z === rodToPlace.location.z && rod.direction === rodToPlace.direction && rod.rodLength === rodToPlace.rodLength && rod.blockName === rodToPlace.blockName
       );
+      world7.sendMessage(JSON.stringify(matchingRodIndex));
       if (matchingRodIndex >= 0) {
         await changeNPC(matchingRodIndex, true);
       }
