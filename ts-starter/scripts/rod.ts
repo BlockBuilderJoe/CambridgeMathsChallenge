@@ -226,12 +226,14 @@ export async function giveRods() {
 
 async function checkFinalBlock(){
   for (let i = 0; i < finalBlock.length; i++){
-    let block = overworld.getBlock(finalBlock[i].location);
-    if (block?.permutation?.matches(finalBlock[i].blockName)){
+    let rodEnd = overworld.getBlock(finalBlock[i].location);
+    let hasColour = rodEnd?.permutation?.getState("color");
+    world.sendMessage(`hasColour: ${hasColour}`);
+    if (rodEnd?.permutation?.matches(finalBlock[i].blockName)){
       changeNPC(i, true);
-    } else {
+    } else if (hasColour){
       changeNPC(i, false);
-    }
+    } 
     }
 }
 
