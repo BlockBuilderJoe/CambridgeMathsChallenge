@@ -356,19 +356,19 @@ var validRanges = [
   { xMin: 80, xMax: 87, z: 89 }
 ];
 var finalBlock = [
-  { location: { z: 93, y: 95, x: 30 } },
-  { location: { z: 92, y: 95, x: 36 } },
-  { location: { z: 91, y: 95, x: 51 } },
-  { location: { z: 97, y: 95, x: 53 } },
-  { location: { z: 99, y: 95, x: 62 } },
-  { location: { z: 99, y: 95, x: 92 } },
-  { location: { z: 99, y: 95, x: 116 } },
-  { location: { z: 95, y: 95, x: 113 } },
-  { location: { z: 94, y: 95, x: 101 } },
-  { location: { z: 91, y: 95, x: 99 } },
-  { location: { z: 89, y: 95, x: 94 } },
-  { location: { z: 89, y: 95, x: 91 } },
-  { location: { z: 89, y: 95, x: 80 } }
+  { location: { z: 93, y: 95, x: 30 }, blockName: "yellow_concrete" },
+  { location: { z: 92, y: 95, x: 36 }, blockName: "green_concrete" },
+  { location: { z: 91, y: 95, x: 51 }, blockName: "brown_concrete" },
+  { location: { z: 97, y: 95, x: 53 }, blockName: "purple_concrete" },
+  { location: { z: 99, y: 95, x: 62 }, blockName: "brown_concrete" },
+  { location: { z: 99, y: 95, x: 92 }, blockName: "blue_concrete" },
+  { location: { z: 99, y: 95, x: 116 }, blockName: "blue_concrete" },
+  { location: { z: 95, y: 95, x: 113 }, blockName: "lime_concrete" },
+  { location: { z: 94, y: 95, x: 101 }, blockName: "green_concrete" },
+  { location: { z: 91, y: 95, x: 99 }, blockName: "red_concrete" },
+  { location: { z: 89, y: 95, x: 94 }, blockName: "purple_concrete" },
+  { location: { z: 89, y: 95, x: 91 }, blockName: "red_concrete" },
+  { location: { z: 89, y: 95, x: 80 }, blockName: "brown_concrete" }
 ];
 var replaySettings = [
   {
@@ -388,19 +388,15 @@ var replaySettings = [
   { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
   { beginningMessage: `To make 1/3 you placed: `, tpStart: `tp @p 41 96 91 facing 53 96 91`, clearBlock: `fill 51 95 91 44 95 91 tallgrass replace`, replenishGrass: `fill 51 94 91 44 94 91 grass_block replace`, cartesianDirection: "z", cartesionValue: 91 },
   //Todo
-  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
-  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
-  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
-  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
-  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
-  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
-  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
-  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
-  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
-  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
-  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
-  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
-  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 }
+  { beginningMessage: `To make 1/6 you placed: `, tpStart: `tp @p 53 96 92 facing 53 96 98`, clearBlock: `fill 53 95 94 53 95 97 tallgrass replace`, replenishGrass: `fill 53 94 94 53 94 97 grass_block replace`, cartesianDirection: "x", cartesionValue: 53 },
+  { beginningMessage: `To make 2/6 you placed: `, tpStart: `tp @p 54 96 99 facing 63 96 99`, clearBlock: `fill 55 95 99 62 95 99 tallgrass replace`, replenishGrass: `fill 55 94 99 62 94 99 grass_block replace`, cartesianDirection: "z", cartesionValue: 99 },
+  { beginningMessage: `To make 2/1 you placed: `, tpStart: `tp @p 67 96 99 facing 117 96 99`, clearBlock: `fill 69 95 99 116 95 99 tallgrass replace`, replenishGrass: `fill 69 94 99 116 94 99 grass_block replace`, cartesianDirection: "z", cartesionValue: 99 },
+  { beginningMessage: `To make 1/8 you placed: `, tpStart: `tp @p 117 96 95 facing 112 96 95`, clearBlock: `fill 115 95 95 113 95 95 tallgrass replace`, replenishGrass: `fill 115 94 95 113 94 95 grass_block replace`, cartesianDirection: "z", cartesionValue: 95 },
+  { beginningMessage: `To make 2/8 you placed: `, tpStart: `tp @p 111 96 94 facing 103 96 94`, clearBlock: `fill 109 95 94 104 95 94 tallgrass replace`, replenishGrass: `fill 109 94 94 104 94 94 grass_block replace`, cartesianDirection: "z", cartesionValue: 94 },
+  { beginningMessage: `To make 1/12 you placed: `, tpStart: `tp @p 99 96 94 facing 99 96 90`, clearBlock: `fill 99 95 92 99 95 91 tallgrass replace`, replenishGrass: `fill 99 94 92 99 94 91 grass_block replace`, cartesianDirection: "x", cartesionValue: 99 },
+  { beginningMessage: `To make 2/12 you placed: `, tpStart: `tp @p 99 96 89 facing 93 96 89`, clearBlock: `fill 97 95 89 94 95 89 tallgrass replace`, replenishGrass: `fill 97 94 89 94 94 89 grass_block replace`, cartesianDirection: "z", cartesionValue: 89 },
+  { beginningMessage: `To make 1/12 you placed: `, tpStart: `tp @p 93 96 88 facing 90 96 89`, clearBlock: `fill 92 95 89 91 95 89 tallgrass replace`, replenishGrass: `fill 92 94 89 91 94 89 grass_block replace`, cartesianDirection: "z", cartesionValue: 89 },
+  { beginningMessage: `To make 1/3 you placed: `, tpStart: `tp @p 89 96 89 facing 79 96 89`, clearBlock: `fill 87 95 89 80 95 89 tallgrass replace`, replenishGrass: `fill 87 94 89 80 94 89 grass_block replace`, cartesianDirection: "z", cartesionValue: 89 }
 ];
 
 // scripts/rod.ts
@@ -436,23 +432,10 @@ async function cuisenaire(block, blockName, rodLength, successMessage, direction
       let rodToPlace = { location: block.location, direction, rodLength, blockName, successMessage };
       rodsPlaced.push(rodToPlace);
       placeRods(block, blockName, rodLength, direction);
-      const matchingRodIndex = perfectRun.findIndex(
-        (rod) => rod.location.x === rodToPlace.location.x && rod.location.y === rodToPlace.location.y && rod.location.z === rodToPlace.location.z && rod.direction === rodToPlace.direction && rod.rodLength === rodToPlace.rodLength && rod.blockName === rodToPlace.blockName
-      );
-      world7.sendMessage(JSON.stringify(matchingRodIndex));
-      if (matchingRodIndex >= 0) {
-        await changeNPC(matchingRodIndex, true);
-      }
+      checkFinalBlock();
     } else {
       block?.setPermutation(BlockPermutation4.resolve("tallgrass"));
     }
-  }
-}
-async function changeNPC(matchingRodIndex, win) {
-  if (win) {
-    overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
-  } else {
-    overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Fail`);
   }
 }
 async function resetNPC(npcAmount) {
@@ -465,15 +448,7 @@ function placeRods(block, blockName, rodLength, direction) {
   const validDirections = ["east", "west", "north", "south"];
   if (validDirections.includes(direction)) {
     for (let i = 0; i < rodLength; i++) {
-      world7.sendMessage("hello isaac");
       block[direction](i).setPermutation(BlockPermutation4.resolve(blockName));
-      const newRodIndex = finalBlock.findIndex(
-        (finalBlockElement) => JSON.stringify(finalBlockElement.location) === JSON.stringify(block[direction](i).location)
-      );
-      world7.sendMessage(JSON.stringify(newRodIndex));
-      if (newRodIndex >= 0) {
-        changeNPC(newRodIndex, false);
-      }
     }
   } else {
     throw new Error(`Invalid direction: ${direction}`);
@@ -514,6 +489,7 @@ async function replayMessage(beginningMessage, fractions) {
   }
 }
 async function replay(index) {
+  giveRods();
   overworld4.runCommandAsync(`tp @p 31 96 116`);
   let npcIndex = index;
   let fractions = [];
@@ -587,7 +563,7 @@ async function resetGrid(location) {
     await squareReset(pos1, pos2, concreteColours);
   }
 }
-async function giveRods(player, rodsRemoved) {
+async function giveRods() {
   let rods = [
     { block: "red_concrete", amount: 2 },
     { block: "lime_concrete", amount: 1 },
@@ -597,12 +573,29 @@ async function giveRods(player, rodsRemoved) {
     { block: "yellow_concrete", amount: 1 },
     { block: "blue_concrete", amount: 2 }
   ];
-  player.runCommandAsync(`clear ${player.name}`);
-  player.runCommandAsync(`gamemode adventure`);
+  overworld4.runCommandAsync(`clear @p`);
+  overworld4.runCommandAsync(`gamemode adventure`);
   for (let i = 0; i < rods.length; i++) {
-    player.runCommandAsync(
+    overworld4.runCommandAsync(
       `give @p ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
     );
+  }
+}
+async function checkFinalBlock() {
+  for (let i = 0; i < finalBlock.length; i++) {
+    let block = overworld4.getBlock(finalBlock[i].location);
+    if (block?.permutation?.matches(finalBlock[i].blockName)) {
+      changeNPC(i, true);
+    } else {
+      changeNPC(i, false);
+    }
+  }
+}
+async function changeNPC(matchingRodIndex, win) {
+  if (win) {
+    overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
+  } else {
+    overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Fail`);
   }
 }
 
@@ -832,7 +825,7 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
       let player = event.source;
       rodsToRemove = [];
       await resetNPC(13);
-      await giveRods(player, rodsToRemove);
+      await giveRods();
       await resetGrid({ x: 19, y: 95, z: 81 });
       break;
     }

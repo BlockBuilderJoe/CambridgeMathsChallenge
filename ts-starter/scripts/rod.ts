@@ -59,35 +59,12 @@ export async function cuisenaire(
       let rodToPlace = { location: block.location, direction: direction, rodLength: rodLength, blockName: blockName, successMessage: successMessage };
       rodsPlaced.push(rodToPlace);
       placeRods(block, blockName, rodLength, direction);
-      
-      const matchingRodIndex = perfectRun.findIndex((rod) =>
-        rod.location.x === rodToPlace.location.x &&
-        rod.location.y === rodToPlace.location.y &&
-        rod.location.z === rodToPlace.location.z &&
-        rod.direction === rodToPlace.direction &&
-        rod.rodLength === rodToPlace.rodLength &&
-        rod.blockName === rodToPlace.blockName
-      );
-      world.sendMessage(JSON.stringify(matchingRodIndex));
-      
-      if (matchingRodIndex >= 0) {
-        //means you match the perfect run.
-        await changeNPC(matchingRodIndex, true);
-      }
+      checkFinalBlock()
     } else {
       block?.setPermutation(BlockPermutation.resolve("tallgrass"));
     }
   }
 }
-
-async function changeNPC(matchingRodIndex: number, win: boolean) {
-  //changes the NPC to the success state based on the matchingRodIndex in cuisenaire function.
-  if (win) {
-    overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
-  } else {//changes the NPC
-    overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Fail`);
-}
-} 
 
 export async function resetNPC(npcAmount: number) {
   rodsPlaced = []; //resets the rods placed array.
@@ -100,15 +77,7 @@ function placeRods(block: any, blockName: string, rodLength: number, direction: 
   const validDirections = ["east", "west", "north", "south"];
   if (validDirections.includes(direction)) {
     for (let i = 0; i < rodLength; i++) {
-      world.sendMessage('hello isaac');
       block[direction](i).setPermutation(BlockPermutation.resolve(blockName))
-      const newRodIndex = finalBlock.findIndex((finalBlockElement) => 
-        JSON.stringify(finalBlockElement.location) === JSON.stringify(block[direction](i).location)
-      );
-      world.sendMessage(JSON.stringify(newRodIndex));
-      if (newRodIndex >= 0) {
-        changeNPC(newRodIndex, false);
-      }
     }
   } else {
     throw new Error(`Invalid direction: ${direction}`);
@@ -154,6 +123,7 @@ async function replayMessage(beginningMessage: string, fractions: any []) {
 }
 
 export async function replay(index: number) {
+  giveRods();
   overworld.runCommandAsync(`tp @p 31 96 116`); //moves the player out of frame.
   let npcIndex = index;
   let fractions: any[] = []
@@ -235,7 +205,7 @@ export async function resetGrid(location: Vector3) {
   }
 }
 
-export async function giveRods(player: any, rodsRemoved: any[]) {
+export async function giveRods() {
   let rods = [
     { block: "red_concrete", amount: 2 },
     { block: "lime_concrete", amount: 1 },
@@ -245,11 +215,33 @@ export async function giveRods(player: any, rodsRemoved: any[]) {
     { block: "yellow_concrete", amount: 1 },
     { block: "blue_concrete", amount: 2 },
   ];
-  player.runCommandAsync(`clear ${player.name}`);
-  player.runCommandAsync(`gamemode adventure`);
+  overworld.runCommandAsync(`clear @p`);
+  overworld.runCommandAsync(`gamemode adventure`);
   for (let i = 0; i < rods.length; i++) {
-    player.runCommandAsync(
+    overworld.runCommandAsync(
       `give @p ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
     );
   }
 }
+
+async function checkFinalBlock(){
+  for (let i = 0; i < finalBlock.length; i++){
+    let block = overworld.getBlock(finalBlock[i].location);
+    if (block?.permutation?.matches(finalBlock[i].blockName)){
+      changeNPC(i, true);
+    } else {
+      changeNPC(i, false);
+    }
+    }
+}
+
+ 
+async function changeNPC(matchingRodIndex: number, win: boolean) {
+  //changes the NPC to the success state based on the matchingRodIndex in cuisenaire function.
+  if (win) {
+    overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
+  } else {//changes the NPC
+    overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Fail`);
+
+}
+} 

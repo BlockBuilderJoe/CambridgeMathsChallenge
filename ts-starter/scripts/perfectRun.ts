@@ -31,19 +31,19 @@ export const validRanges = [
 ];
 
 export const finalBlock = [
-  { location: { z: 93, y: 95, x: 30 }},
-  { location: { z: 92, y: 95, x: 36 },},
-  { location: { z: 91, y: 95, x: 51 },},
-  { location: { z: 97, y: 95, x: 53 },},
-  { location: { z: 99, y: 95, x: 62},},
-  { location: { z: 99, y: 95, x: 92 },},
-  { location: { z: 99, y: 95, x: 116 },},
-  { location: { z: 95, y: 95, x: 113 },},
-  { location: { z: 94, y: 95, x: 101 },},
-  { location: { z: 91, y: 95, x: 99 },},
-  { location: { z: 89, y: 95, x: 94 },},
-  { location: { z: 89, y: 95, x: 91 },},
-  { location: { z: 89, y: 95, x: 80 },},
+  { location: { z: 93, y: 95, x: 30 }, blockName: "yellow_concrete" },
+  { location: { z: 92, y: 95, x: 36 }, blockName: "green_concrete" },
+  { location: { z: 91, y: 95, x: 51 }, blockName: "brown_concrete" },
+  { location: { z: 97, y: 95, x: 53 }, blockName: "purple_concrete" },
+  { location: { z: 99, y: 95, x: 62}, blockName: "brown_concrete" },
+  { location: { z: 99, y: 95, x: 92 }, blockName: "blue_concrete" },
+  { location: { z: 99, y: 95, x: 116 }, blockName: "blue_concrete" },
+  { location: { z: 95, y: 95, x: 113 }, blockName: "lime_concrete" },
+  { location: { z: 94, y: 95, x: 101 }, blockName: "green_concrete" },
+  { location: { z: 91, y: 95, x: 99 }, blockName: "red_concrete" },
+  { location: { z: 89, y: 95, x: 94 }, blockName: "purple_concrete" },
+  { location: { z: 89, y: 95, x: 91 }, blockName: "red_concrete" },
+  { location: { z: 89, y: 95, x: 80 }, blockName: "brown_concrete" },
 ]
 
 export const replaySettings = [

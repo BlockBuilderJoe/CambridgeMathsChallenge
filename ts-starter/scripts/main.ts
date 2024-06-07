@@ -61,7 +61,7 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
       let player = event.source as Entity; // Cast event.source to Player type
       rodsToRemove = []; //resets the rods to remove array
       await resetNPC(13);
-      await giveRods(player, rodsToRemove);
+      await giveRods();
       await resetGrid({ x: 19, y: 95, z: 81 }); //top left corner of the area.
       break;
     }

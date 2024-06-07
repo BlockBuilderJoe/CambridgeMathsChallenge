@@ -38,32 +38,11 @@ export function cuisenaire(block, blockName, rodLength, successMessage, directio
                 let rodToPlace = { location: block.location, direction: direction, rodLength: rodLength, blockName: blockName, successMessage: successMessage };
                 rodsPlaced.push(rodToPlace);
                 placeRods(block, blockName, rodLength, direction);
-                const matchingRodIndex = perfectRun.findIndex((rod) => rod.location.x === rodToPlace.location.x &&
-                    rod.location.y === rodToPlace.location.y &&
-                    rod.location.z === rodToPlace.location.z &&
-                    rod.direction === rodToPlace.direction &&
-                    rod.rodLength === rodToPlace.rodLength &&
-                    rod.blockName === rodToPlace.blockName);
-                world.sendMessage(JSON.stringify(matchingRodIndex));
-                if (matchingRodIndex >= 0) {
-                    //means you match the perfect run.
-                    yield changeNPC(matchingRodIndex, true);
-                }
+                checkFinalBlock();
             }
             else {
                 block === null || block === void 0 ? void 0 : block.setPermutation(BlockPermutation.resolve("tallgrass"));
             }
-        }
-    });
-}
-function changeNPC(matchingRodIndex, win) {
-    return __awaiter(this, void 0, void 0, function* () {
-        //changes the NPC to the success state based on the matchingRodIndex in cuisenaire function.
-        if (win) {
-            overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
-        }
-        else { //changes the NPC
-            overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Fail`);
         }
     });
 }
@@ -79,13 +58,7 @@ function placeRods(block, blockName, rodLength, direction) {
     const validDirections = ["east", "west", "north", "south"];
     if (validDirections.includes(direction)) {
         for (let i = 0; i < rodLength; i++) {
-            world.sendMessage('hello isaac');
             block[direction](i).setPermutation(BlockPermutation.resolve(blockName));
-            const newRodIndex = finalBlock.findIndex((finalBlockElement) => JSON.stringify(finalBlockElement.location) === JSON.stringify(block[direction](i).location));
-            world.sendMessage(JSON.stringify(newRodIndex));
-            if (newRodIndex >= 0) {
-                changeNPC(newRodIndex, false);
-            }
         }
     }
     else {
@@ -141,6 +114,7 @@ function replayMessage(beginningMessage, fractions) {
 }
 export function replay(index) {
     return __awaiter(this, void 0, void 0, function* () {
+        giveRods();
         overworld.runCommandAsync(`tp @p 31 96 116`); //moves the player out of frame.
         let npcIndex = index;
         let fractions = [];
@@ -221,7 +195,7 @@ export function resetGrid(location) {
         }
     });
 }
-export function giveRods(player, rodsRemoved) {
+export function giveRods() {
     return __awaiter(this, void 0, void 0, function* () {
         let rods = [
             { block: "red_concrete", amount: 2 },
@@ -232,10 +206,35 @@ export function giveRods(player, rodsRemoved) {
             { block: "yellow_concrete", amount: 1 },
             { block: "blue_concrete", amount: 2 },
         ];
-        player.runCommandAsync(`clear ${player.name}`);
-        player.runCommandAsync(`gamemode adventure`);
+        overworld.runCommandAsync(`clear @p`);
+        overworld.runCommandAsync(`gamemode adventure`);
         for (let i = 0; i < rods.length; i++) {
-            player.runCommandAsync(`give @p ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
+            overworld.runCommandAsync(`give @p ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
+        }
+    });
+}
+function checkFinalBlock() {
+    return __awaiter(this, void 0, void 0, function* () {
+        var _a;
+        for (let i = 0; i < finalBlock.length; i++) {
+            let block = overworld.getBlock(finalBlock[i].location);
+            if ((_a = block === null || block === void 0 ? void 0 : block.permutation) === null || _a === void 0 ? void 0 : _a.matches(finalBlock[i].blockName)) {
+                changeNPC(i, true);
+            }
+            else {
+                changeNPC(i, false);
+            }
+        }
+    });
+}
+function changeNPC(matchingRodIndex, win) {
+    return __awaiter(this, void 0, void 0, function* () {
+        //changes the NPC to the success state based on the matchingRodIndex in cuisenaire function.
+        if (win) {
+            overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
+        }
+        else { //changes the NPC
+            overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Fail`);
         }
     });
 }
