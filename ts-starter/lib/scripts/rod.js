@@ -230,7 +230,7 @@ export function giveRods(player, rodsRemoved) {
             { block: "blue_concrete", amount: 2 },
         ];
         player.runCommandAsync(`clear ${player.name}`);
-        player.runCommandAsync(`gamemode a`);
+        player.runCommandAsync(`gamemode adventure`);
         for (let i = 0; i < rods.length; i++) {
             player.runCommandAsync(`give @p ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
         }
