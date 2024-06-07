@@ -219,7 +219,6 @@ function checkFinalBlock() {
         for (let i = 0; i < finalBlock.length; i++) {
             let rodEnd = overworld.getBlock(finalBlock[i].location);
             let hasColour = (_a = rodEnd === null || rodEnd === void 0 ? void 0 : rodEnd.permutation) === null || _a === void 0 ? void 0 : _a.getState("color");
-            world.sendMessage(`hasColour: ${hasColour}`);
             if ((_b = rodEnd === null || rodEnd === void 0 ? void 0 : rodEnd.permutation) === null || _b === void 0 ? void 0 : _b.matches(finalBlock[i].blockName)) {
                 changeNPC(i, true);
             }
