@@ -324,8 +324,7 @@ var perfectRun = [
   //1/6
   { location: { z: 99, y: 95, x: 55 }, direction: "east", rodLength: 8, blockName: "brown_concrete", successMessage: `The most efficient way is to simplify 2/6 to 1/3.` },
   //2/6
-  { location: { z: 99, y: 95, x: 69 }, direction: "east", rodLength: 24, blockName: "blue_concrete", successMessage: `The largest rod you have is a whole, so place two of them.` },
-  //1/1
+  //{ location: { z: 99, y: 95, x: 69 }, direction: "east", rodLength: 24, blockName: "blue_concrete", successMessage: `The largest rod you have is a whole, so place two of them.` }, //1/1
   { location: { z: 99, y: 95, x: 93 }, direction: "east", rodLength: 24, blockName: "blue_concrete", successMessage: `The largest rod you have is a whole, so place two of them.` },
   //1/1
   { location: { z: 95, y: 95, x: 115 }, direction: "west", rodLength: 3, blockName: "lime_concrete", successMessage: `Three is 1/8 of 24. ` },
@@ -364,7 +363,7 @@ var finalBlock = [
   { location: { z: 99, y: 95, x: 92 }, blockName: "blue_concrete" },
   { location: { z: 99, y: 95, x: 116 }, blockName: "blue_concrete" },
   { location: { z: 95, y: 95, x: 113 }, blockName: "lime_concrete" },
-  { location: { z: 94, y: 95, x: 101 }, blockName: "green_concrete" },
+  { location: { z: 94, y: 95, x: 104 }, blockName: "green_concrete" },
   { location: { z: 91, y: 95, x: 99 }, blockName: "red_concrete" },
   { location: { z: 89, y: 95, x: 94 }, blockName: "purple_concrete" },
   { location: { z: 89, y: 95, x: 91 }, blockName: "red_concrete" },
@@ -387,7 +386,6 @@ var replaySettings = [
   },
   { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
   { beginningMessage: `To make 1/3 you placed: `, tpStart: `tp @p 41 96 91 facing 53 96 91`, clearBlock: `fill 51 95 91 44 95 91 tallgrass replace`, replenishGrass: `fill 51 94 91 44 94 91 grass_block replace`, cartesianDirection: "z", cartesionValue: 91 },
-  //Todo
   { beginningMessage: `To make 1/6 you placed: `, tpStart: `tp @p 53 96 92 facing 53 96 98`, clearBlock: `fill 53 95 94 53 95 97 tallgrass replace`, replenishGrass: `fill 53 94 94 53 94 97 grass_block replace`, cartesianDirection: "x", cartesionValue: 53 },
   { beginningMessage: `To make 2/6 you placed: `, tpStart: `tp @p 54 96 99 facing 63 96 99`, clearBlock: `fill 55 95 99 62 95 99 tallgrass replace`, replenishGrass: `fill 55 94 99 62 94 99 grass_block replace`, cartesianDirection: "z", cartesionValue: 99 },
   { beginningMessage: `To make 2/1 you placed: `, tpStart: `tp @p 67 96 99 facing 117 96 99`, clearBlock: `fill 69 95 99 116 95 99 tallgrass replace`, replenishGrass: `fill 69 94 99 116 94 99 grass_block replace`, cartesianDirection: "z", cartesionValue: 99 },
