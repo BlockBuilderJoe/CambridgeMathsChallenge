@@ -439,6 +439,7 @@ async function cuisenaire(block, blockName, rodLength, successMessage, direction
       const matchingRodIndex = perfectRun.findIndex(
         (rod) => rod.location.x === rodToPlace.location.x && rod.location.y === rodToPlace.location.y && rod.location.z === rodToPlace.location.z && rod.direction === rodToPlace.direction && rod.rodLength === rodToPlace.rodLength && rod.blockName === rodToPlace.blockName
       );
+      world7.sendMessage(JSON.stringify(matchingRodIndex));
       if (matchingRodIndex >= 0) {
         await changeNPC(matchingRodIndex, true);
       }
@@ -464,10 +465,12 @@ function placeRods(block, blockName, rodLength, direction) {
   const validDirections = ["east", "west", "north", "south"];
   if (validDirections.includes(direction)) {
     for (let i = 0; i < rodLength; i++) {
+      world7.sendMessage("hello isaac");
       block[direction](i).setPermutation(BlockPermutation4.resolve(blockName));
       const newRodIndex = finalBlock.findIndex(
         (finalBlockElement) => JSON.stringify(finalBlockElement.location) === JSON.stringify(block[direction](i).location)
       );
+      world7.sendMessage(JSON.stringify(newRodIndex));
       if (newRodIndex >= 0) {
         changeNPC(newRodIndex, false);
       }
