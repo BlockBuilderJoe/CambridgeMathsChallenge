@@ -446,14 +446,16 @@ function placeRods(block, blockName, rodLength, direction) {
     throw new Error(`Invalid direction: ${direction}`);
   }
 }
-async function setCameraView(x, player) {
-  if (x >= 19 && x <= 42) {
+async function setCameraView(player, index) {
+  if (index == 0 || index == 1) {
     player.runCommandAsync(`camera ${player.name} set minecraft:free pos 30 120 92 facing 30 90 92`);
-  } else if (x >= 44 && x <= 67) {
-    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 11 120 44 facing 11 94 44`);
-  } else if (x >= 69 && x <= 92) {
-    player.runCommandAsync(`camera ${player.name} set minecraft:free pos -14 120 44 facing -14 94 44`);
-  } else if (x >= 94 && x <= 117) {
+  } else if (index == 2 || index == 3 || index == 4) {
+    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 55 120 92 facing 55 90 92`);
+  } else if (index == 5) {
+    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 93 120 92 facing 93 90 92`);
+  } else if (index == 6, index == 7, index == 8, index == 9) {
+    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 105 120 92 facing 105 90 92`);
+  } else if (index == 10, index == 11, index == 12) {
     player.runCommandAsync(`camera ${player.name} set minecraft:free pos -39 120 44 facing -39 94 44`);
   }
 }
@@ -479,6 +481,8 @@ async function replayMessage(beginningMessage, fractions) {
   }
 }
 async function replay(index) {
+  overworld4.runCommandAsync(`tp @p 22 88 108`);
+  let npcIndex = index;
   let fractions = [];
   let combinedRods = [];
   let replayConfig = replaySettings[index];
@@ -501,7 +505,7 @@ async function replay(index) {
         system.runTimeout(async () => {
           let x = combinedRods[index2].location.x;
           world7.getAllPlayers().forEach(async (player) => {
-            await setCameraView(x, player);
+            await setCameraView(player, npcIndex);
             fractions.push(combinedRods[index2].successMessage);
             await replayMessage(replayConfig.beginningMessage, fractions);
             let block = overworld4.getBlock(combinedRods[index2].location);

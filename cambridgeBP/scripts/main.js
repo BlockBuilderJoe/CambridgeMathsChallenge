@@ -314,9 +314,9 @@ import {
 
 // scripts/perfectRun.ts
 var perfectRun = [
-  { location: { z: 104, y: 95, x: 30 }, direction: "north", rodLength: 12, blockName: "yellow_concrete", successMessage: `To optimise use a 1/2 rod` },
+  { location: { z: 104, y: 95, x: 30 }, direction: "north", rodLength: 12, blockName: "yellow_concrete", successMessage: `Instead use a 1/2 rod as that is half of 24.` },
   //1/2
-  { location: { z: 92, y: 95, x: 31 }, direction: "east", rodLength: 6, blockName: "green_concrete" },
+  { location: { z: 92, y: 95, x: 31 }, direction: "east", rodLength: 6, blockName: "green_concrete", successMessage: `To 1/4 of 24 use a 6 rod.` },
   //1/4
   { location: { z: 91, y: 95, x: 44 }, direction: "east", rodLength: 8, blockName: "brown_concrete" },
   //1/3
@@ -370,7 +370,7 @@ var finalBlock = [
 ];
 var replaySettings = [
   { beginningMessage: `To make 1/2 you placed: `, tpStart: `tp @p 31 96 107 facing 31 96 100`, clearBlock: `fill 30 95 104 30 95 93 tallgrass replace`, replenishGrass: `fill 30 94 104 30 94 93 grass_block replace`, cartesianDirection: "x", cartesionValue: 30 },
-  { beginningMessage: `To make 1/2 you placed: `, tpStart: `tp @p 31 96 107 facing 31 96 100`, clearBlock: `fill 30 95 104 30 95 93 tallgrass replace`, replenishGrass: `fill 30 94 104 30 94 93 grass_block replace`, cartesianDirection: "x", cartesionValue: 30 }
+  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 }
 ];
 
 // scripts/rod.ts
@@ -446,14 +446,16 @@ function placeRods(block, blockName, rodLength, direction) {
     throw new Error(`Invalid direction: ${direction}`);
   }
 }
-async function setCameraView(x, player) {
-  if (x >= 19 && x <= 42) {
+async function setCameraView(player, index) {
+  if (index == 0 || index == 1) {
     player.runCommandAsync(`camera ${player.name} set minecraft:free pos 30 120 92 facing 30 90 92`);
-  } else if (x >= 44 && x <= 67) {
-    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 11 120 44 facing 11 94 44`);
-  } else if (x >= 69 && x <= 92) {
-    player.runCommandAsync(`camera ${player.name} set minecraft:free pos -14 120 44 facing -14 94 44`);
-  } else if (x >= 94 && x <= 117) {
+  } else if (index == 2 || index == 3 || index == 4) {
+    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 55 120 92 facing 55 90 92`);
+  } else if (index == 5) {
+    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 93 120 92 facing 93 90 92`);
+  } else if (index == 6, index == 7, index == 8, index == 9) {
+    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 105 120 92 facing 105 90 92`);
+  } else if (index == 10, index == 11, index == 12) {
     player.runCommandAsync(`camera ${player.name} set minecraft:free pos -39 120 44 facing -39 94 44`);
   }
 }
@@ -462,11 +464,10 @@ async function getBlockBehind(event, oppositeDirection) {
   return hasColour;
 }
 async function replayMessage(beginningMessage, fractions) {
-
-  if (fractions){
+  if (fractions) {
     if (fractions.length > 0) {
-      const playerPlacedFractions = fractions.filter((fraction) => fraction.startsWith("1"));
-      const perfectRunFractions = fractions.filter((fraction) => !fraction.startsWith("1"));
+      const playerPlacedFractions = fractions.filter((fraction) => fraction !== void 0 && fraction.startsWith("1"));
+      const perfectRunFractions = fractions.filter((fraction) => fraction !== void 0 && !fraction.startsWith("1"));
       if (perfectRunFractions.length > 0) {
         const perfectRunFractionsSum = perfectRunFractions.join(" + ");
         overworld4.runCommandAsync(`title @p actionbar ${perfectRunFractionsSum}`);
@@ -476,10 +477,12 @@ async function replayMessage(beginningMessage, fractions) {
       }
     }
   } else {
-    world.sendMessage(`fractions is empty`);
+    world7.sendMessage(`Error: No fractions found`);
   }
 }
 async function replay(index) {
+  overworld4.runCommandAsync(`tp @p 22 88 108`);
+  let npcIndex = index;
   let fractions = [];
   let combinedRods = [];
   let replayConfig = replaySettings[index];
@@ -502,7 +505,7 @@ async function replay(index) {
         system.runTimeout(async () => {
           let x = combinedRods[index2].location.x;
           world7.getAllPlayers().forEach(async (player) => {
-            await setCameraView(x, player);
+            await setCameraView(player, npcIndex);
             fractions.push(combinedRods[index2].successMessage);
             await replayMessage(replayConfig.beginningMessage, fractions);
             let block = overworld4.getBlock(combinedRods[index2].location);
@@ -729,6 +732,7 @@ import { system as system3, world as world9 } from "@minecraft/server";
 system3.afterEvents.scriptEventReceive.subscribe((event) => {
   switch (event.id) {
     case "rod:npcReplay": {
+      world9.sendMessage(`Replay Version ${event.message}`);
       replay(parseInt(event.message));
       break;
     }

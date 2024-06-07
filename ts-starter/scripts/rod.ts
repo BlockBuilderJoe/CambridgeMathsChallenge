@@ -112,14 +112,16 @@ function placeRods(block: any, blockName: string, rodLength: number, direction: 
   }
 }
 
-async function setCameraView(x: number, player: any) {
-  if (x >= 19 && x <= 42) {//room1
+async function setCameraView(player: any, index: number) {
+  if (index == 0 || index == 1) {//room1
     player.runCommandAsync(`camera ${player.name} set minecraft:free pos 30 120 92 facing 30 90 92`);
-  } else if (x >= 44 && x <= 67) {//room2
-    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 11 120 44 facing 11 94 44`);
-  } else if (x >= 69 && x <= 92) {//room3
-    player.runCommandAsync(`camera ${player.name} set minecraft:free pos -14 120 44 facing -14 94 44`);
-  } else if (x >= 94 && x <= 117) {//room4
+  } else if (index == 2 || index == 3 || index == 4 ) {//room2
+    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 55 120 92 facing 55 90 92`);
+  } else if (index == 5) {//room3
+    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 93 120 92 facing 93 90 92`);
+    } else if (index == 6, index == 7, index == 8, index == 9) {//room4
+    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 105 120 92 facing 105 90 92`);
+  } else if (index == 10, index == 11, index == 12) {//room4
     player.runCommandAsync(`camera ${player.name} set minecraft:free pos -39 120 44 facing -39 94 44`);
   }
 }
@@ -148,9 +150,9 @@ async function replayMessage(beginningMessage: string, fractions: any []) {
   }
 }
 
-  
-
 export async function replay(index: number) {
+  overworld.runCommandAsync(`tp @p 22 88 108`); //moves the player to the underground place to stop them wandering around.
+  let npcIndex = index;
   let fractions: any[] = []
   let combinedRods: any[] = [];
   let replayConfig = replaySettings[index]; //stores all the replay settings for the different rods.
@@ -173,9 +175,8 @@ export async function replay(index: number) {
         system.runTimeout(async () => {
           let x = combinedRods[index].location.x;
           world.getAllPlayers().forEach(async (player) => {
-            await setCameraView(x, player);
-            fractions.push(combinedRods[index].successMessage);
-            
+            await setCameraView(player, npcIndex);
+            fractions.push(combinedRods[index].successMessage); 
             await replayMessage(replayConfig.beginningMessage, fractions);
             let block = overworld.getBlock(combinedRods[index].location);
             placeRods(block, combinedRods[index].blockName, combinedRods[index].rodLength, combinedRods[index].direction);
