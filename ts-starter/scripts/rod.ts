@@ -17,7 +17,6 @@ let rodsPlaced: any[] = [];
 
 export async function directionCheck(x: number, z: number, direction: string) {
   let correctDirection = false;
-
   for (const range of validRanges) {
     //world.sendMessage(`x: ${x} z: ${z}`);
     if (
@@ -28,11 +27,16 @@ export async function directionCheck(x: number, z: number, direction: string) {
       break;
     }
   }
-
   return correctDirection;
 }
+
 function isInRange(value: number, min: any, max: any): boolean {
   return value >= min && value <= max;
+}
+
+export async function moveNPC(index:number){
+  overworld.runCommandAsync(`tp @e[type=npc,tag=npc${index}] 26 96 107`);
+  overworld.runCommandAsync('scoreboard players @p Students 1')
 }
 
 export async function cuisenaire(
@@ -135,12 +139,11 @@ export async function replay(index: number) {
 
     let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
     rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === replayConfig.cartesionValue));
-    let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
+    let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue); //ISSUE appears to be here
     //if (perfectRunToReplay.length > 1) {
       //perfectRunToReplay = perfectRunToReplay.slice(0, -1); //gets the last one so you don't have a bunch of them appearing.
     //}
     combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
-    world.sendMessage(JSON.stringify(combinedRods));
 
   } else if (replayConfig.cartesianDirection === 'z'){
       let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
@@ -150,7 +153,6 @@ export async function replay(index: number) {
         //perfectRunToReplay = perfectRunToReplay.slice(0, -1); //gets the last one so you don't have a bunch of them appearing.
       //}
       combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
-      world.sendMessage(JSON.stringify(combinedRods));
   }
   if (combinedRods.length > 0) {
     for (let i = 0; i < combinedRods.length; i++)  {
