@@ -1,0 +1,30 @@
+{
+	"format_version": 2,
+	"header": {
+		"name": "CambridgeCustomNPCs",
+		"description": "CambridgeCustomNPCs Behavior Pack",
+		"uuid": "895f9a6e-203a-3a54-d58c-e6c741ff005c",
+		"version": [1, 0, 0],
+		"min_engine_version": [1, 16, 0]
+	},
+	"metadata": {
+		"authors": ["Blockbench", "Ella Meldrum"],
+		"generated_with": {
+			"blockbench_entity_wizard": ["1.5.0"]
+		}
+	},
+	"modules": [
+		{
+			"description": "Behavior",
+			"version": [1, 0, 0],
+			"uuid": "c9a8c738-20c8-c75a-13f1-99e7dc25a04b",
+			"type": "data"
+		}
+	],
+	"dependencies": [
+		{
+			"uuid": "d3ba3cb7-190e-02e9-8c76-4bdc32b359e1",
+			"version": [1, 0, 0]
+		}
+	]
+}
