@@ -15,13 +15,17 @@ export function outputTotal(total: number, location: Vector3) {
       blockName = "blockbuilders:number_" + digit;
     }
     block?.setPermutation(BlockPermutation.resolve(blockName));
-    location.x -= 1;
+    location.x -= 1; 
   }
 }
 
 export function setBlock(location: Vector3, blockName: string) {
   let { block } = getBlockValue(location);
-  block?.setPermutation(BlockPermutation.resolve(blockName));
+  let isCopper = block?.permutation?.matches("waxed_weathered_copper")
+  world.sendMessage("isCopper = " + isCopper);
+  if(!isCopper){ //keeps the frame.
+    block?.setPermutation(BlockPermutation.resolve(blockName));
+  }
 }
 
 export async function clearAnswer(start: Vector3, end: Vector3) {

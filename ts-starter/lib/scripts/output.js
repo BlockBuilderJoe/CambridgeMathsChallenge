@@ -19,8 +19,13 @@ export function outputTotal(total, location) {
     }
 }
 export function setBlock(location, blockName) {
+    var _a;
     let { block } = getBlockValue(location);
-    block === null || block === void 0 ? void 0 : block.setPermutation(BlockPermutation.resolve(blockName));
+    let isCopper = (_a = block === null || block === void 0 ? void 0 : block.permutation) === null || _a === void 0 ? void 0 : _a.matches("waxed_weathered_copper");
+    world.sendMessage("isCopper = " + isCopper);
+    if (!isCopper) { //keeps the frame.
+        block === null || block === void 0 ? void 0 : block.setPermutation(BlockPermutation.resolve(blockName));
+    }
 }
 export function clearAnswer(start, end) {
     return __awaiter(this, void 0, void 0, function* () {

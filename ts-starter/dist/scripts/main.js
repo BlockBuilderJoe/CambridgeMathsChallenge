@@ -65,7 +65,11 @@ function outputTotal(total, location) {
 }
 function setBlock(location, blockName) {
   let { block } = getBlockValue(location);
-  block?.setPermutation(BlockPermutation2.resolve(blockName));
+  let isCopper = block?.permutation?.matches("waxed_weathered_copper");
+  world2.sendMessage("isCopper = " + isCopper);
+  if (!isCopper) {
+    block?.setPermutation(BlockPermutation2.resolve(blockName));
+  }
 }
 async function clearAnswer(start, end) {
   overworld2.runCommandAsync(`fill ${start.x} ${start.y} ${start.z} ${end.x} ${end.y} ${end.z} air replace`);
