@@ -227,14 +227,16 @@ function calculateRatio(ratioInput) {
 // scripts/scaler.ts
 import { world as world6 } from "@minecraft/server";
 var overworld3 = world6.getDimension("overworld");
-async function scale() {
-  const blocks = await getCube({ x: 69, y: 98, z: 225 }, { x: 69, y: 102, z: 225 });
+async function scale(cubePos1, cubePos2, inputNumber) {
+  const blocks = await getCube(cubePos1, cubePos2);
   let shape = [];
-  let scaleFactor = getInput([{ x: 71, y: 99, z: 225 }]);
+  let scaleFactor = getInput([inputNumber]);
   for (const block of blocks) {
     let colour = block.permutation?.getState(`color`);
-    let location = { x: block.block?.x, y: block.block?.y, z: block.block?.z, colour };
-    shape.push(location);
+    if (colour) {
+      let location = { x: block.block?.x, y: block.block?.y, z: block.block?.z, colour };
+      shape.push(location);
+    }
   }
   let scaledShape = await scaleShape(shape, scaleFactor, "yx");
   for (const block of scaledShape) {
@@ -244,12 +246,9 @@ async function scale() {
     setBlock({ x: offset_x, y: offset_y, z: offset_z }, block.colour + "_stained_glass");
   }
 }
-async function resetArea() {
-  await overworld3.runCommandAsync("fill 20 -60 153 32 -40 221 air replace");
-  await overworld3.runCommandAsync("fill 20 -40 153 32 -20 221 air replace");
-  await overworld3.runCommandAsync("fill 20 -20 153 32 0 221 air replace");
-  await overworld3.runCommandAsync("fill 20 0 153 32 30 221 air replace");
-  await overworld3.runCommandAsync("clone -49 -60 151 -47 -23 175 21 -60 153 replace");
+async function resetArea(from, to, into) {
+  await overworld3.runCommandAsync(`clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`);
+  await overworld3.runCommandAsync(`fill ${from.x} 130 ${from.z} ${to.x} 150 ${to.z} air replace`);
 }
 async function scaleShape(shape, scaleFactor, axes) {
   const scaledShape = [];
@@ -787,11 +786,17 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
     }
     case "71,96,226": {
       world10.sendMessage("scaling");
-      scale();
+      let cubePos1 = { x: 69, y: 98, z: 225 };
+      let cubePos2 = { x: 69, y: 102, z: 225 };
+      let inputNumber = { x: 71, y: 99, z: 225 };
+      scale(cubePos1, cubePos2, inputNumber);
       break;
     }
-    case "-3,-60,153": {
-      await resetArea();
+    case "72,96,226": {
+      let from = { x: 67, y: 47, z: 218 };
+      let to = { x: 80, y: 82, z: 218 };
+      let into = { x: 67, y: 97, z: 218 };
+      await resetArea({ x: 67, y: 47, z: 218 }, { x: 80, y: 82, z: 218 }, { x: 67, y: 97, z: 218 });
       break;
     }
     case "29,97,106": {

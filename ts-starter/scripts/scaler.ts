@@ -2,39 +2,22 @@ import { world } from "@minecraft/server";
 import { getCube } from "./input";
 import { setBlock } from "./output";
 import { getInput } from "./input";
+import { Vector3 } from "@minecraft/server";
 
 let overworld = world.getDimension("overworld");
 
-
-let glass = [
-  "magenta",
-  "orange",
-  "light_blue",
-  "yellow",
-  "lime",
-  "pink",
-  "gray",
-  "light_gray",
-  "cyan",
-  "purple",
-  "blue",
-  "brown",
-  "green",
-  "red",
-  "black",
-  "white",
-];
-
-export async function scale() {
+export async function scale(cubePos1: Vector3, cubePos2: Vector3, inputNumber: Vector3) {
   //if it doesn't work make sure pos1 is the bottom left corner and pos2 is the top right corner
-  const blocks = await getCube({ x: 69, y: 98, z: 225 }, { x: 69, y: 102, z: 225 });
+  const blocks = await getCube(cubePos1, cubePos2);
   let shape = [];
-  let scaleFactor = getInput([{ x: 71, y: 99, z: 225 }]);
+  let scaleFactor = getInput([inputNumber]);
 
   for (const block of blocks) {
       let colour = block.permutation?.getState(`color`)
-      let location = { x: block.block?.x, y: block.block?.y, z: block.block?.z, colour: colour };
-      shape.push(location);
+      if (colour) {
+        let location = { x: block.block?.x, y: block.block?.y, z: block.block?.z, colour: colour };
+        shape.push(location);
+      }
     }
   let scaledShape = await scaleShape(shape, scaleFactor, "yx");
   for (const block of scaledShape) {
@@ -45,12 +28,9 @@ export async function scale() {
   }
   }
 
-export async function resetArea() {
-  await overworld.runCommandAsync("fill 20 -60 153 32 -40 221 air replace");
-  await overworld.runCommandAsync("fill 20 -40 153 32 -20 221 air replace");
-  await overworld.runCommandAsync("fill 20 -20 153 32 0 221 air replace");
-  await overworld.runCommandAsync("fill 20 0 153 32 30 221 air replace");
-  await overworld.runCommandAsync("clone -49 -60 151 -47 -23 175 21 -60 153 replace");
+export async function resetArea(from: Vector3, to: Vector3, into: Vector3) {
+  await overworld.runCommandAsync(`clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`); //clones from below.
+  await overworld.runCommandAsync(`fill ${from.x} 130 ${from.z} ${to.x} 150 ${to.z} air replace`); //cleans any extra above 
 }
 
 export async function scaleShape(shape: any, scaleFactor: any, axes: string) {

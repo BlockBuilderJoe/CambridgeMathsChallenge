@@ -51,11 +51,17 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
     }
     case "71,96,226": {
       world.sendMessage("scaling");
-      scale();
+      let cubePos1 = { x: 69, y: 98, z: 225 }
+      let cubePos2 = { x: 69, y: 102, z: 225 }
+      let inputNumber = { x: 71, y: 99, z: 225 }
+      scale(cubePos1, cubePos2, inputNumber);
       break;
     }
-    case "-3,-60,153": {
-      await resetArea();
+    case "72,96,226": {
+      let from = {x: 67, y: 47, z: 218}
+      let to = {x: 80, y: 82, z: 218}
+      let into = {x: 67, y:97, z: 218}
+      await resetArea({x: 67, y: 47, z: 218}, {x: 80, y: 82, z: 218}, {x: 67, y:97, z: 218});
       break;
     }
     case "29,97,106": {
