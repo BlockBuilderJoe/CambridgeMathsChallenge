@@ -5,6 +5,7 @@ import { getInput } from "./input";
 
 let overworld = world.getDimension("overworld");
 
+
 let glass = [
   "magenta",
   "orange",
@@ -25,26 +26,24 @@ let glass = [
 ];
 
 export async function scale() {
-  const blocks = await getCube({ x: 13, y: -60, z: 142 }, { x: 13, y: -51, z: 148 });
+  //if it doesn't work make sure pos1 is the bottom left corner and pos2 is the top right corner
+  const blocks = await getCube({ x: 69, y: 98, z: 225 }, { x: 69, y: 102, z: 225 });
   let shape = [];
-  let scaleFactor = getInput([{ x: 12, y: -58, z: 149 }]);
+  let scaleFactor = getInput([{ x: 71, y: 99, z: 225 }]);
 
   for (const block of blocks) {
-    for (const colour of glass) {
-      if (block.permutation?.matches(colour + "_stained_glass")) {
-        let location = { x: block.block?.x, y: block.block?.y, z: block.block?.z, colour: colour };
-        shape.push(location);
-      }
+      let colour = block.permutation?.getState(`color`)
+      let location = { x: block.block?.x, y: block.block?.y, z: block.block?.z, colour: colour };
+      shape.push(location);
     }
-    let scaledShape = await scaleShape(shape, scaleFactor, "yz");
-    for (const block of scaledShape) {
-      let offset_z = block.z + 15; //shifts the shape to the right
-      let offset_x = block.x + 10;
-      let offset_y = block.y + 5;
-      setBlock({ x: offset_x, y: offset_y, z: offset_z }, block.colour + "_stained_glass");
-    }
+  let scaledShape = await scaleShape(shape, scaleFactor, "yx");
+  for (const block of scaledShape) {
+    let offset_z = block.z - 7; //shifts the shape to the right
+    let offset_x = block.x;
+    let offset_y = block.y + 1;
+    setBlock({ x: offset_x, y: offset_y, z: offset_z }, block.colour + "_stained_glass");
   }
-}
+  }
 
 export async function resetArea() {
   await overworld.runCommandAsync("fill 20 -60 153 32 -40 221 air replace");

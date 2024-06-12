@@ -43,7 +43,8 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
             ratio1();
             break;
         }
-        case "-3,-60,154": {
+        case "71,96,226": {
+            world.sendMessage("scaling");
             scale();
             break;
         }

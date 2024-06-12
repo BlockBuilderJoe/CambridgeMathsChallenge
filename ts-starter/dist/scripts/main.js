@@ -227,42 +227,21 @@ function calculateRatio(ratioInput) {
 // scripts/scaler.ts
 import { world as world6 } from "@minecraft/server";
 var overworld3 = world6.getDimension("overworld");
-var glass = [
-  "magenta",
-  "orange",
-  "light_blue",
-  "yellow",
-  "lime",
-  "pink",
-  "gray",
-  "light_gray",
-  "cyan",
-  "purple",
-  "blue",
-  "brown",
-  "green",
-  "red",
-  "black",
-  "white"
-];
 async function scale() {
-  const blocks = await getCube({ x: 13, y: -60, z: 142 }, { x: 13, y: -51, z: 148 });
+  const blocks = await getCube({ x: 69, y: 98, z: 225 }, { x: 69, y: 102, z: 225 });
   let shape = [];
-  let scaleFactor = getInput([{ x: 12, y: -58, z: 149 }]);
+  let scaleFactor = getInput([{ x: 71, y: 99, z: 225 }]);
   for (const block of blocks) {
-    for (const colour of glass) {
-      if (block.permutation?.matches(colour + "_stained_glass")) {
-        let location = { x: block.block?.x, y: block.block?.y, z: block.block?.z, colour };
-        shape.push(location);
-      }
-    }
-    let scaledShape = await scaleShape(shape, scaleFactor, "yz");
-    for (const block2 of scaledShape) {
-      let offset_z = block2.z + 15;
-      let offset_x = block2.x + 10;
-      let offset_y = block2.y + 5;
-      setBlock({ x: offset_x, y: offset_y, z: offset_z }, block2.colour + "_stained_glass");
-    }
+    let colour = block.permutation?.getState(`color`);
+    let location = { x: block.block?.x, y: block.block?.y, z: block.block?.z, colour };
+    shape.push(location);
+  }
+  let scaledShape = await scaleShape(shape, scaleFactor, "yx");
+  for (const block of scaledShape) {
+    let offset_z = block.z - 7;
+    let offset_x = block.x;
+    let offset_y = block.y + 1;
+    setBlock({ x: offset_x, y: offset_y, z: offset_z }, block.colour + "_stained_glass");
   }
 }
 async function resetArea() {
@@ -500,13 +479,11 @@ async function replay(index) {
     rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === replayConfig.cartesionValue));
     let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
     combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
-    world7.sendMessage(JSON.stringify(combinedRods));
   } else if (replayConfig.cartesianDirection === "z") {
     let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
     rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.z === replayConfig.cartesionValue));
     let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
     combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
-    world7.sendMessage(JSON.stringify(combinedRods));
   }
   if (combinedRods.length > 0) {
     for (let i = 0; i < combinedRods.length; i++) {
@@ -808,7 +785,8 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
       ratio1();
       break;
     }
-    case "-3,-60,154": {
+    case "71,96,226": {
+      world10.sendMessage("scaling");
       scale();
       break;
     }

@@ -24,23 +24,21 @@ let glass = [
 export function scale() {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b, _c, _d;
-        const blocks = yield getCube({ x: 13, y: -60, z: 142 }, { x: 13, y: -51, z: 148 });
+        //if it doesn't work make sure pos1 is the bottom left corner and pos2 is the top right corner
+        const blocks = yield getCube({ x: 69, y: 98, z: 225 }, { x: 69, y: 102, z: 225 });
         let shape = [];
-        let scaleFactor = getInput([{ x: 12, y: -58, z: 149 }]);
+        let scaleFactor = getInput([{ x: 71, y: 99, z: 225 }]);
         for (const block of blocks) {
-            for (const colour of glass) {
-                if ((_a = block.permutation) === null || _a === void 0 ? void 0 : _a.matches(colour + "_stained_glass")) {
-                    let location = { x: (_b = block.block) === null || _b === void 0 ? void 0 : _b.x, y: (_c = block.block) === null || _c === void 0 ? void 0 : _c.y, z: (_d = block.block) === null || _d === void 0 ? void 0 : _d.z, colour: colour };
-                    shape.push(location);
-                }
-            }
-            let scaledShape = yield scaleShape(shape, scaleFactor, "yz");
-            for (const block of scaledShape) {
-                let offset_z = block.z + 15; //shifts the shape to the right
-                let offset_x = block.x + 10;
-                let offset_y = block.y + 5;
-                setBlock({ x: offset_x, y: offset_y, z: offset_z }, block.colour + "_stained_glass");
-            }
+            let colour = (_a = block.permutation) === null || _a === void 0 ? void 0 : _a.getState(`color`);
+            let location = { x: (_b = block.block) === null || _b === void 0 ? void 0 : _b.x, y: (_c = block.block) === null || _c === void 0 ? void 0 : _c.y, z: (_d = block.block) === null || _d === void 0 ? void 0 : _d.z, colour: colour };
+            shape.push(location);
+        }
+        let scaledShape = yield scaleShape(shape, scaleFactor, "yx");
+        for (const block of scaledShape) {
+            let offset_z = block.z - 7; //shifts the shape to the right
+            let offset_x = block.x;
+            let offset_y = block.y + 1;
+            setBlock({ x: offset_x, y: offset_y, z: offset_z }, block.colour + "_stained_glass");
         }
     });
 }

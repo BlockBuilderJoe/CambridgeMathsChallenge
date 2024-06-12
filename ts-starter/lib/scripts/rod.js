@@ -19,6 +19,12 @@ export function directionCheck(x, z, direction) {
 function isInRange(value, min, max) {
     return value >= min && value <= max;
 }
+export function moveNPC(index) {
+    return __awaiter(this, void 0, void 0, function* () {
+        overworld.runCommandAsync(`tp @e[type=npc,tag=npc${index}] 26 96 107`);
+        overworld.runCommandAsync('scoreboard players @p Students 1');
+    });
+}
 export function cuisenaire(block, blockName, rodLength, successMessage, direction) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b, _c, _d, _e;
@@ -125,12 +131,11 @@ export function replay(index) {
         if (replayConfig.cartesianDirection === 'x') {
             let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
             rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === replayConfig.cartesionValue));
-            let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
+            let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue); //ISSUE appears to be here
             //if (perfectRunToReplay.length > 1) {
             //perfectRunToReplay = perfectRunToReplay.slice(0, -1); //gets the last one so you don't have a bunch of them appearing.
             //}
             combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
-            world.sendMessage(JSON.stringify(combinedRods));
         }
         else if (replayConfig.cartesianDirection === 'z') {
             let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
@@ -140,7 +145,6 @@ export function replay(index) {
             //perfectRunToReplay = perfectRunToReplay.slice(0, -1); //gets the last one so you don't have a bunch of them appearing.
             //}
             combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
-            world.sendMessage(JSON.stringify(combinedRods));
         }
         if (combinedRods.length > 0) {
             for (let i = 0; i < combinedRods.length; i++) {
