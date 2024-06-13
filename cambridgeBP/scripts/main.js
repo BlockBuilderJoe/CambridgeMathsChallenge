@@ -472,6 +472,7 @@ async function facing(blockLocation) {
 
 // scripts/potion.ts
 import { BlockPermutation as BlockPermutation4, system as system2, world as world5 } from "@minecraft/server";
+var overworld5 = world5.getDimension("overworld");
 async function getSlots(event) {
   let hopper = event.block.getComponent("inventory");
   let slots = [];
@@ -576,7 +577,7 @@ async function barChart(slots) {
   return ingredients;
 }
 async function setGlass(slot, blockName) {
-  let { block } = getBlockValue({ x: -52, y: 61, z: 126 });
+  let { block } = getBlockValue({ x: -12, y: 97, z: 145 });
   block?.north(slot.slotNumber)?.setPermutation(BlockPermutation4.resolve(blockName));
   if (slot.amount > 10) {
     slot.amount = 10;
@@ -586,13 +587,12 @@ async function setGlass(slot, blockName) {
   }
 }
 async function setItemFrame(offset_z, slotNumber) {
-  let cloneFrom = 126 - offset_z;
-  let cloneTo = 126 - slotNumber;
-  world5.getDimension("overworld").runCommandAsync(`clone -40 60 ${cloneFrom} -40 60 ${cloneFrom} -50 60 ${cloneTo} replace`);
+  let cloneFrom = 145 - offset_z;
+  let cloneTo = 145 - slotNumber;
+  world5.getDimension("overworld").runCommandAsync(`clone -11 109 ${cloneFrom} -11 109 ${cloneFrom} -11 97 ${cloneTo} replace`);
 }
-async function potionMaker(event) {
+async function potionMaker(slots) {
   await resetArea();
-  let slots = await getSlots(event);
   let ingredients = await barChart(slots);
   let { potion: potion2, seconds: seconds2 } = await calculateRatio(ingredients);
   if (potion2 !== "empty") {
@@ -601,7 +601,7 @@ async function potionMaker(event) {
   return { potion: potion2, seconds: seconds2 };
 }
 async function resetArea() {
-  await world5.getDimension("overworld").runCommandAsync("fill -52 60 126 -52 69 122 black_stained_glass replace");
+  await world5.getDimension("overworld").runCommandAsync("fill -12 106 141 -12 96 145 black_stained_glass replace");
 }
 function displayTimer(potionStart2, seconds2, player, potionDescription) {
   let timeLeft = (potionStart2 + seconds2 * 20 - system2.currentTick) / 20;
@@ -613,9 +613,9 @@ function displayTimer(potionStart2, seconds2, player, potionDescription) {
 
 // scripts/wand.ts
 import { world as world6 } from "@minecraft/server";
-var overworld5 = world6.getDimension("overworld");
+var overworld6 = world6.getDimension("overworld");
 function giveWand() {
-  overworld5.runCommandAsync(`give @p[hasitem={item=stick,quantity=0}] minecraft:stick 1 0 {"item_lock": { "mode": "lock_in_slot" }, "minecraft:can_destroy":{"blocks":["blockbuilders:number_0","blockbuilders:number_1","blockbuilders:number_2","blockbuilders:number_3","blockbuilders:number_4","blockbuilders:number_5","blockbuilders:number_6","blockbuilders:number_7","blockbuilders:number_8","blockbuilders:number_9","blockbuilders:symbol_subtract"]}}`);
+  overworld6.runCommandAsync(`give @p[hasitem={item=stick,quantity=0}] minecraft:stick 1 0 {"item_lock": { "mode": "lock_in_slot" }, "minecraft:can_destroy":{"blocks":["minecraft:hopper", "blockbuilders:number_0","blockbuilders:number_1","blockbuilders:number_2","blockbuilders:number_3","blockbuilders:number_4","blockbuilders:number_5","blockbuilders:number_6","blockbuilders:number_7","blockbuilders:number_8","blockbuilders:number_9","blockbuilders:symbol_subtract"]}}`);
 }
 
 // scripts/npcscriptEventHandler.ts
@@ -635,6 +635,7 @@ system3.afterEvents.scriptEventReceive.subscribe((event) => {
 });
 
 // scripts/main.ts
+var overworld7 = world8.getDimension("overworld");
 var potion = "";
 var seconds = 0;
 var currentPlayer = null;
@@ -705,6 +706,17 @@ world8.afterEvents.playerPlaceBlock.subscribe(async (event) => {
     }
   }
 });
+world8.beforeEvents.playerBreakBlock.subscribe(
+  async (event) => {
+    let block = event.block;
+    if (block.permutation?.matches("hopper")) {
+      event.cancel;
+      overworld7.runCommandAsync(`kill @e[type=item]`);
+      let slots = await getSlots(event);
+      ({ potion, seconds } = await potionMaker(slots));
+    }
+  }
+);
 world8.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId;
   let block = clickEvent.block;
@@ -722,14 +734,9 @@ world8.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
 });
 world8.beforeEvents.itemUseOn.subscribe(
   async (event) => {
-    if (event.itemStack?.typeId === "minecraft:stick") {
-      let block = event.block;
-      if (block.permutation?.matches("hopper")) {
-        ({ potion, seconds } = await potionMaker(event));
-      }
-      if (block.permutation?.matches("blockbuilders:symbol_subtract")) {
-        await windowScaleHandler(block.location);
-      }
+    let block = event.block;
+    if (block.permutation?.matches("blockbuilders:symbol_subtract")) {
+      await windowScaleHandler(block.location);
     }
   }
 );
@@ -764,7 +771,8 @@ function applyPotionEffect(player, potion2, seconds2) {
 function mainTick() {
   world8.getAllPlayers().forEach((player) => {
     if (player.isInWater == true) {
-      meters = 58 - Math.floor(player.location.y);
+      player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
+      meters = 95 - Math.floor(player.location.y);
       player.runCommand(`scoreboard players set Meters Depth ${meters}`);
       if (potionDrank) {
         applyPotionEffect(player, potion, seconds);
@@ -787,12 +795,12 @@ function mainTick() {
   system4.run(mainTick);
 }
 async function surface(player) {
-  player.teleport({ x: -50, y: 60, z: 132 });
+  player.runCommand("scoreboard objectives setdisplay sidebar");
+  player.teleport({ x: -3, y: 96, z: 144 });
   player.addEffect("instant_health", 5);
   player.removeEffect("blindness");
   player.removeEffect("night_vision");
   player.removeEffect("water_breathing");
-  player.runCommand("scoreboard objectives setdisplay sidebar");
 }
 world8.afterEvents.itemCompleteUse.subscribe(async (event) => {
   let player = event.source;
@@ -812,7 +820,12 @@ world8.afterEvents.entityHealthChanged.subscribe(async (event) => {
   if (event.entity.typeId === "minecraft:player") {
     let player = event.entity;
     if (player.isInWater == true) {
-      await surface(player);
+      if (event.newValue === 18) {
+        player.runCommandAsync("scoreboard objectives setdisplay sidebar");
+        await surface(player);
+        player.sendMessage(`\xA7fYou made it to a depth of: \xA72${meters} meters 
+\xA7fOnly ${98 - meters} meters to the bottom. `);
+      }
     }
   }
 });

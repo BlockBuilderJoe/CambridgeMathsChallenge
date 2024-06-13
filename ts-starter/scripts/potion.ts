@@ -1,7 +1,9 @@
 import { BlockPermutation, BlockInventoryComponent, system, world } from "@minecraft/server";
 import { getBlockValue } from "./input";
 
-async function getSlots(event: any) {
+let overworld = world.getDimension("overworld");
+
+export async function getSlots(event: any) {
   let hopper: BlockInventoryComponent | undefined = event.block.getComponent("inventory");
   let slots = [];
   for (let i = 0; i <= 4; i++) {
@@ -109,7 +111,7 @@ async function barChart(slots: any) {
   return ingredients;
 }
 async function setGlass(slot: any, blockName: string) {
-  let { block } = getBlockValue({ x: -52, y: 61, z: 126 });
+  let { block } = getBlockValue({ x: -12, y: 97, z: 145 });
   block?.north(slot.slotNumber)?.setPermutation(BlockPermutation.resolve(blockName));
   if (slot.amount > 10) {
     slot.amount = 10;
@@ -119,16 +121,15 @@ async function setGlass(slot: any, blockName: string) {
   }
 }
 async function setItemFrame(offset_z: number, slotNumber: number) {
-  let cloneFrom = 126 - offset_z;
-  let cloneTo = 126 - slotNumber;
+  let cloneFrom = 145 - offset_z;
+  let cloneTo = 145 - slotNumber;
   world
     .getDimension("overworld")
-    .runCommandAsync(`clone -40 60 ${cloneFrom} -40 60 ${cloneFrom} -50 60 ${cloneTo} replace`);
+    .runCommandAsync(`clone -11 109 ${cloneFrom} -11 109 ${cloneFrom} -11 97 ${cloneTo} replace`);
 }
 
-export async function potionMaker(event: any) {
+export async function potionMaker(slots: any) {
   await resetArea();
-  let slots = await getSlots(event);
   let ingredients = await barChart(slots);
   let { potion, seconds } = await calculateRatio(ingredients);
   if (potion !== "empty") {
@@ -138,9 +139,16 @@ export async function potionMaker(event: any) {
 }
 
 async function resetArea() {
-  await world.getDimension("overworld").runCommandAsync("fill -52 60 126 -52 69 122 black_stained_glass replace");
+  await world.getDimension("overworld").runCommandAsync("fill -12 106 141 -12 96 145 black_stained_glass replace");
 }
 
+export async function giveIngredients(){
+    overworld.runCommand("replaceitem entity @p slot.hotbar 1 apple 10");
+    overworld.runCommand("replaceitem entity @p slot.hotbar 2 carrot 10");
+    overworld.runCommand("replaceitem entity @p slot.hotbar 3 beetroot 10");
+    overworld.runCommand("replaceitem entity @p slot.hotbar 4 potato 10");
+    overworld.runCommand("replaceitem entity @p slot.hotbar 5 melon_slice 10");
+}
 
 export function displayTimer(potionStart: number, seconds: number, player: any, potionDescription: string) {
   let timeLeft = (potionStart + seconds * 20 - system.currentTick)/20;

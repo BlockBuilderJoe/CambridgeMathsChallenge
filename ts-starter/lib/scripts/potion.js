@@ -1,6 +1,7 @@
 import { BlockPermutation, system, world } from "@minecraft/server";
 import { getBlockValue } from "./input";
-function getSlots(event) {
+let overworld = world.getDimension("overworld");
+export function getSlots(event) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
         let hopper = event.block.getComponent("inventory");
@@ -121,7 +122,7 @@ function barChart(slots) {
 function setGlass(slot, blockName) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b, _c;
-        let { block } = getBlockValue({ x: -52, y: 61, z: 126 });
+        let { block } = getBlockValue({ x: -12, y: 97, z: 145 });
         (_a = block === null || block === void 0 ? void 0 : block.north(slot.slotNumber)) === null || _a === void 0 ? void 0 : _a.setPermutation(BlockPermutation.resolve(blockName));
         if (slot.amount > 10) {
             slot.amount = 10;
@@ -133,17 +134,16 @@ function setGlass(slot, blockName) {
 }
 function setItemFrame(offset_z, slotNumber) {
     return __awaiter(this, void 0, void 0, function* () {
-        let cloneFrom = 126 - offset_z;
-        let cloneTo = 126 - slotNumber;
+        let cloneFrom = 145 - offset_z;
+        let cloneTo = 145 - slotNumber;
         world
             .getDimension("overworld")
-            .runCommandAsync(`clone -40 60 ${cloneFrom} -40 60 ${cloneFrom} -50 60 ${cloneTo} replace`);
+            .runCommandAsync(`clone -11 109 ${cloneFrom} -11 109 ${cloneFrom} -11 97 ${cloneTo} replace`);
     });
 }
-export function potionMaker(event) {
+export function potionMaker(slots) {
     return __awaiter(this, void 0, void 0, function* () {
         yield resetArea();
-        let slots = yield getSlots(event);
         let ingredients = yield barChart(slots);
         let { potion, seconds } = yield calculateRatio(ingredients);
         if (potion !== "empty") {
@@ -154,7 +154,16 @@ export function potionMaker(event) {
 }
 function resetArea() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield world.getDimension("overworld").runCommandAsync("fill -52 60 126 -52 69 122 black_stained_glass replace");
+        yield world.getDimension("overworld").runCommandAsync("fill -12 106 141 -12 96 145 black_stained_glass replace");
+    });
+}
+export function giveIngredients() {
+    return __awaiter(this, void 0, void 0, function* () {
+        overworld.runCommand("replaceitem entity @p slot.hotbar 1 apple 10");
+        overworld.runCommand("replaceitem entity @p slot.hotbar 2 carrot 10");
+        overworld.runCommand("replaceitem entity @p slot.hotbar 3 beetroot 10");
+        overworld.runCommand("replaceitem entity @p slot.hotbar 4 potato 10");
+        overworld.runCommand("replaceitem entity @p slot.hotbar 5 melon_slice 10");
     });
 }
 export function displayTimer(potionStart, seconds, player, potionDescription) {

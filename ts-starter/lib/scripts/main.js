@@ -3,9 +3,10 @@ import { windowUndoHandler, windowScaleHandler } from "./scaler";
 import { cuisenaire, getBlockBehind, resetGrid, giveRods, resetNPC, directionCheck } from "./rod";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
-import { potionMaker, displayTimer } from "./potion";
+import { potionMaker, displayTimer, getSlots, giveIngredients } from "./potion";
 import { giveWand } from "./wand";
 import "./npcscriptEventHandler"; //handles the NPC script events
+let overworld = world.getDimension("overworld");
 let potion = "";
 let seconds = 0;
 let currentPlayer = null;
@@ -41,6 +42,12 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
             let player = event.source; // Cast event.source to Player type
             //await replayRods(player, perfectRun); // Pass the casted player as an argument
             break;
+        }
+        case "1,97,151": {
+            overworld.runCommandAsync(`clear @p`);
+            overworld.runCommandAsync(`effect @p haste 9999 99 true`);
+            yield giveWand();
+            yield giveIngredients();
         }
     }
 }));
@@ -84,10 +91,20 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0
         }
     }
 }));
-//left click
-world.afterEvents.playerBreakBlock.subscribe((clickEvent) => __awaiter(void 0, void 0, void 0, function* () {
+world.beforeEvents.playerBreakBlock.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
     var _b;
-    let hand_item = (_b = clickEvent.itemStackAfterBreak) === null || _b === void 0 ? void 0 : _b.typeId; //gets the item in the players hand
+    let block = event.block;
+    if ((_b = block.permutation) === null || _b === void 0 ? void 0 : _b.matches("hopper")) {
+        event.cancel;
+        overworld.runCommandAsync(`kill @e[type=item]`);
+        let slots = yield getSlots(event);
+        ({ potion, seconds } = yield potionMaker(slots));
+    }
+}));
+//left click after break
+world.afterEvents.playerBreakBlock.subscribe((clickEvent) => __awaiter(void 0, void 0, void 0, function* () {
+    var _c;
+    let hand_item = (_c = clickEvent.itemStackAfterBreak) === null || _c === void 0 ? void 0 : _c.typeId; //gets the item in the players hand
     let block = clickEvent.block;
     let brokenBlock = clickEvent.brokenBlockPermutation;
     if (hand_item === "minecraft:stick") {
@@ -108,18 +125,13 @@ world.afterEvents.playerBreakBlock.subscribe((clickEvent) => __awaiter(void 0, v
 }));
 //right click
 world.beforeEvents.itemUseOn.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _c, _d, _e;
-    if (((_c = event.itemStack) === null || _c === void 0 ? void 0 : _c.typeId) === "minecraft:stick") {
-        let block = event.block;
-        if ((_d = block.permutation) === null || _d === void 0 ? void 0 : _d.matches("hopper")) {
-            ({ potion, seconds } = yield potionMaker(event));
-        }
-        if ((_e = block.permutation) === null || _e === void 0 ? void 0 : _e.matches("blockbuilders:symbol_subtract")) {
-            yield windowScaleHandler(block.location);
-        }
+    var _d;
+    let block = event.block;
+    if ((_d = block.permutation) === null || _d === void 0 ? void 0 : _d.matches("blockbuilders:symbol_subtract")) {
+        yield windowScaleHandler(block.location);
     }
 }));
-//wellwellwell
+//well
 function applyPotionEffect(player, potion, seconds) {
     player.runCommand("scoreboard objectives setdisplay sidebar Depth");
     let tick = seconds * 20; //converts seconds to ticks
@@ -151,7 +163,8 @@ function applyPotionEffect(player, potion, seconds) {
 function mainTick() {
     world.getAllPlayers().forEach((player) => {
         if (player.isInWater == true) {
-            meters = 58 - Math.floor(player.location.y);
+            player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
+            meters = 95 - Math.floor(player.location.y);
             player.runCommand(`scoreboard players set Meters Depth ${meters}`);
             if (potionDrank) {
                 //applies the potion effect once
@@ -180,19 +193,19 @@ function mainTick() {
 }
 function surface(player) {
     return __awaiter(this, void 0, void 0, function* () {
-        player.teleport({ x: -50, y: 60, z: 132 });
+        player.runCommand("scoreboard objectives setdisplay sidebar");
+        player.teleport({ x: -3, y: 96, z: 144 });
         player.addEffect("instant_health", 5);
         player.removeEffect("blindness");
         player.removeEffect("night_vision");
         player.removeEffect("water_breathing");
-        player.runCommand("scoreboard objectives setdisplay sidebar");
     });
 }
 //listens for the potion to be fully drunk.
 world.afterEvents.itemCompleteUse.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _f;
+    var _e;
     let player = event.source;
-    if (((_f = event.itemStack) === null || _f === void 0 ? void 0 : _f.typeId) === "minecraft:potion") {
+    if (((_e = event.itemStack) === null || _e === void 0 ? void 0 : _e.typeId) === "minecraft:potion") {
         if (potion === "poison") {
             player.sendMessage("§fYou mixed the potion with the §2wrong ingredients. \n§fIt has had no effect.\nMake sure you're using the correct ingredients.");
         }
@@ -208,8 +221,11 @@ world.afterEvents.entityHealthChanged.subscribe((event) => __awaiter(void 0, voi
     if (event.entity.typeId === "minecraft:player") {
         let player = event.entity;
         if (player.isInWater == true) {
-            yield surface(player);
-            //player.sendMessage(`§fYou made it to a depth of: §2${meters} meters \n§fOnly ${98 - meters} meters to the bottom. `);
+            if (event.newValue === 18) {
+                player.runCommandAsync("scoreboard objectives setdisplay sidebar");
+                yield surface(player);
+                player.sendMessage(`§fYou made it to a depth of: §2${meters} meters \n§fOnly ${98 - meters} meters to the bottom. `);
+            }
         }
     }
 }));

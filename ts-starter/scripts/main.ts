@@ -6,10 +6,11 @@ import { windowUndoHandler, windowScaleHandler } from "./scaler";
 import { cuisenaire, getBlockBehind, resetGrid, giveRods, resetNPC, directionCheck } from "./rod";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
-import { potionMaker, displayTimer } from "./potion";
+import { potionMaker, displayTimer, getSlots, giveIngredients } from "./potion";
 import { giveWand } from "./wand";
 import "./npcscriptEventHandler"; //handles the NPC script events
 
+let overworld = world.getDimension("overworld");
 let potion: string = "";
 let seconds: number = 0;
 let currentPlayer = null;
@@ -46,6 +47,12 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
       let player = event.source as Entity; // Cast event.source to Player type
       //await replayRods(player, perfectRun); // Pass the casted player as an argument
       break;
+    }
+    case "1,97,151": {
+      overworld.runCommandAsync(`clear @p`)
+      overworld.runCommandAsync(`effect @p haste 9999 99 true`)
+      await giveWand();
+      await giveIngredients();
     }
   }
 });
@@ -90,7 +97,19 @@ world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   }
 });
 
-//left click
+
+world.beforeEvents.playerBreakBlock.subscribe(async (event) => {
+    let block = event.block;
+    if (block.permutation?.matches("hopper")) {
+      event.cancel;
+      overworld.runCommandAsync(`kill @e[type=item]`)
+      let slots = await getSlots(event);
+      ({ potion, seconds } = await potionMaker(slots));
+    } 
+}
+)
+
+//left click after break
 world.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId; //gets the item in the players hand
   let block = clickEvent.block;
@@ -113,19 +132,14 @@ world.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
 
 //right click
 world.beforeEvents.itemUseOn.subscribe(async (event) => {
-  if (event.itemStack?.typeId === "minecraft:stick") {
     let block = event.block;
-    if (block.permutation?.matches("hopper")) {
-      ({ potion, seconds } = await potionMaker(event));
-    } 
     if (block.permutation?.matches("blockbuilders:symbol_subtract")){
       await windowScaleHandler(block.location);
-    }
     }
   }
 );
 
-//wellwellwell
+//well
 function applyPotionEffect(player: any, potion: string, seconds: number) {
   player.runCommand("scoreboard objectives setdisplay sidebar Depth");
   let tick = seconds * 20; //converts seconds to ticks
@@ -158,7 +172,8 @@ function applyPotionEffect(player: any, potion: string, seconds: number) {
 function mainTick() {
   world.getAllPlayers().forEach((player) => {
     if (player.isInWater == true) {
-      meters = 58 - Math.floor(player.location.y);
+      player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
+      meters = 95 - Math.floor(player.location.y);
       player.runCommand(`scoreboard players set Meters Depth ${meters}`);
 
       if (potionDrank) {
@@ -184,13 +199,15 @@ function mainTick() {
   system.run(mainTick);
 }
 async function surface(player: any) {
-  player.teleport({ x: -50, y: 60, z: 132 });
+  player.runCommand("scoreboard objectives setdisplay sidebar");
+  player.teleport({ x: -3, y: 96, z: 144 });
   player.addEffect("instant_health", 5);
   player.removeEffect("blindness");
   player.removeEffect("night_vision");
   player.removeEffect("water_breathing");
-  player.runCommand("scoreboard objectives setdisplay sidebar");
 }
+
+
 //listens for the potion to be fully drunk.
 world.afterEvents.itemCompleteUse.subscribe(async (event) => {
   let player = event.source;
@@ -207,13 +224,17 @@ world.afterEvents.itemCompleteUse.subscribe(async (event) => {
   }
 });
 
+
 //listens for the entity health changed event so they don't drown.
 world.afterEvents.entityHealthChanged.subscribe(async (event) => {
   if (event.entity.typeId === "minecraft:player") {
     let player: Player = event.entity as Player;
-    if (player.isInWater == true) {
-      await surface(player);
-      //player.sendMessage(`§fYou made it to a depth of: §2${meters} meters \n§fOnly ${98 - meters} meters to the bottom. `);
+    if (player.isInWater == true){
+      if (event.newValue === 18){
+        player.runCommandAsync("scoreboard objectives setdisplay sidebar");
+        await surface(player);
+        player.sendMessage(`§fYou made it to a depth of: §2${meters} meters \n§fOnly ${98 - meters} meters to the bottom. `);
+      }      
     }
   }
 });
