@@ -30,17 +30,16 @@ export function setBlock(location: Vector3, blockName: string) {
 export async function clearAnswer(start: Vector3, end: Vector3) {
   overworld.runCommandAsync(`fill ${start.x} ${start.y} ${start.z} ${end.x} ${end.y} ${end.z} air replace`);
 }
-
 export function cycleNumberBlock(clickEvent: any) {
-  for (let i = 0; i < 9; i++) {
-    //check for element_0 toplement_8
-    if (clickEvent.brokenBlockPermutation?.matches("blockbuilders:number_" + i)) {
-      let nextNumber = i + 1;
-      let blockname = "blockbuilders:number_" + nextNumber;
-      clickEvent.block.setPermutation(BlockPermutation.resolve(blockname));
+    for (let i = 0; i < 9; i++) {
+      //check for element_0 toplement_8
+      if (clickEvent.brokenBlockPermutation?.matches("blockbuilders:number_" + i)) {
+        let nextNumber = i + 1;
+        let blockname = "blockbuilders:number_" + nextNumber;
+        clickEvent.block.setPermutation(BlockPermutation.resolve(blockname));
+      }
+      if (clickEvent.brokenBlockPermutation?.matches("blockbuilders:number_9")) {
+        clickEvent.block.setPermutation(BlockPermutation.resolve("blockbuilders:number_0"));
+      }
     }
-    if (clickEvent.brokenBlockPermutation?.matches("blockbuilders:number_9")) {
-      clickEvent.block.setPermutation(BlockPermutation.resolve("blockbuilders:number_0"));
-    }
-  }
 }

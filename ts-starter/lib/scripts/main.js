@@ -119,12 +119,18 @@ world.afterEvents.playerBreakBlock.subscribe((clickEvent) => __awaiter(void 0, v
     let block = clickEvent.block;
     let brokenBlock = clickEvent.brokenBlockPermutation;
     if (hand_item === "minecraft:stick") {
-        if (brokenBlock.matches("blockbuilders:symbol_subtract")) {
+        if (brokenBlock.matches("blockbuilders:symbol_subtract") && block.location.z === 225) {
+            // if it is the window vinculum run the undo function. 
             yield windowUndoHandler(block.location);
             block.setPermutation(BlockPermutation.resolve("blockbuilders:symbol_subtract"));
         }
-        else {
+        else if (block.location.x === 71 && block.location.y === 98 && block.location.z === 225 || block.location.x === 82 && block.location.y === 98 && block.location.z === 225) {
+            // if it is the window numerator cycle the number. 
             cycleNumberBlock(clickEvent);
+        }
+        else {
+            //if it is anything else replace the block. 
+            block.setPermutation(brokenBlock);
         }
     }
 }));
