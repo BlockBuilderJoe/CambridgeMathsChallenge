@@ -44,5 +44,6 @@ tile.blockbuilders:number_10.name=number_10
 tile.blockbuilders:number_10.name=number_10
 entity.myname:cartography_professor.name=Cartography Professor
 item.spawn_egg.entity.myname:cartography_professor.name=Spawn Cartography Professor
-
+entity.blockbuilders:coin.name=Coin
+item.spawn_egg.entity.blockbuilders:coin.name=Spawn Coin
 

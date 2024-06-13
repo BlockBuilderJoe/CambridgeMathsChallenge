@@ -128,7 +128,8 @@ async function scale(cubePos1, cubePos2, inputNumber) {
 }
 async function windowUndo(from, to, into) {
   await overworld3.runCommandAsync(`clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`);
-  await overworld3.runCommandAsync(`fill ${from.x} 116 ${from.z} ${to.x} 140 ${to.z} air replace`);
+  await overworld3.runCommandAsync(`fill ${from.x} 116 ${from.z} ${to.x} 120 ${to.z} air replace`);
+  await overworld3.runCommandAsync(`fill ${from.x} 120 ${from.z} ${to.x} 150 ${to.z} air replace`);
 }
 async function scaleShape(shape, scaleFactor, axes) {
   const scaledShape = [];
@@ -603,6 +604,13 @@ async function potionMaker(slots) {
 async function resetArea() {
   await world5.getDimension("overworld").runCommandAsync("fill -12 106 141 -12 96 145 black_stained_glass replace");
 }
+async function giveIngredients() {
+  overworld5.runCommand("replaceitem entity @p slot.hotbar 1 apple 10");
+  overworld5.runCommand("replaceitem entity @p slot.hotbar 2 carrot 10");
+  overworld5.runCommand("replaceitem entity @p slot.hotbar 3 beetroot 10");
+  overworld5.runCommand("replaceitem entity @p slot.hotbar 4 potato 10");
+  overworld5.runCommand("replaceitem entity @p slot.hotbar 5 melon_slice 10");
+}
 function displayTimer(potionStart2, seconds2, player, potionDescription) {
   let timeLeft = (potionStart2 + seconds2 * 20 - system2.currentTick) / 20;
   if (timeLeft % 1 === 0) {
@@ -614,7 +622,7 @@ function displayTimer(potionStart2, seconds2, player, potionDescription) {
 // scripts/wand.ts
 import { world as world6 } from "@minecraft/server";
 var overworld6 = world6.getDimension("overworld");
-function giveWand() {
+async function giveWand() {
   overworld6.runCommandAsync(`give @p[hasitem={item=stick,quantity=0}] minecraft:stick 1 0 {"item_lock": { "mode": "lock_in_slot" }, "minecraft:can_destroy":{"blocks":["minecraft:hopper", "blockbuilders:number_0","blockbuilders:number_1","blockbuilders:number_2","blockbuilders:number_3","blockbuilders:number_4","blockbuilders:number_5","blockbuilders:number_6","blockbuilders:number_7","blockbuilders:number_8","blockbuilders:number_9","blockbuilders:symbol_subtract"]}}`);
 }
 
@@ -664,9 +672,19 @@ world8.afterEvents.buttonPush.subscribe(async (event) => {
       await resetGrid({ x: 19, y: 95, z: 81 });
       break;
     }
+    case "66,97,224": {
+      overworld7.runCommandAsync(`clear @p`);
+      await giveWand();
+    }
     case "24,95,45": {
       let player = event.source;
       break;
+    }
+    case "1,97,151": {
+      overworld7.runCommandAsync(`clear @p`);
+      overworld7.runCommandAsync(`effect @p haste 9999 99 true`);
+      await giveWand();
+      await giveIngredients();
     }
   }
 });
@@ -795,7 +813,7 @@ function mainTick() {
   system4.run(mainTick);
 }
 async function surface(player) {
-  player.runCommand("scoreboard objectives setdisplay sidebar");
+  player.runCommandAsync("scoreboard objectives setdisplay sidebar");
   player.teleport({ x: -3, y: 96, z: 144 });
   player.addEffect("instant_health", 5);
   player.removeEffect("blindness");
