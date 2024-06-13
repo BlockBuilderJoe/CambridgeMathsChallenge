@@ -43,6 +43,11 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
       await resetGrid({ x: 19, y: 95, z: 81 }); //top left corner of the area.
       break;
     }
+    case "66,97,224": {
+      overworld.runCommandAsync(`clear @p`)
+      await giveWand();
+      
+    }
     case "24,95,45": {
       let player = event.source as Entity; // Cast event.source to Player type
       //await replayRods(player, perfectRun); // Pass the casted player as an argument
@@ -199,7 +204,7 @@ function mainTick() {
   system.run(mainTick);
 }
 async function surface(player: any) {
-  player.runCommand("scoreboard objectives setdisplay sidebar");
+  player.runCommandAsync("scoreboard objectives setdisplay sidebar");
   player.teleport({ x: -3, y: 96, z: 144 });
   player.addEffect("instant_health", 5);
   player.removeEffect("blindness");

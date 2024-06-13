@@ -128,7 +128,8 @@ async function scale(cubePos1, cubePos2, inputNumber) {
 }
 async function windowUndo(from, to, into) {
   await overworld3.runCommandAsync(`clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`);
-  await overworld3.runCommandAsync(`fill ${from.x} 116 ${from.z} ${to.x} 140 ${to.z} air replace`);
+  await overworld3.runCommandAsync(`fill ${from.x} 116 ${from.z} ${to.x} 120 ${to.z} air replace`);
+  await overworld3.runCommandAsync(`fill ${from.x} 120 ${from.z} ${to.x} 150 ${to.z} air replace`);
 }
 async function scaleShape(shape, scaleFactor, axes) {
   const scaledShape = [];
@@ -671,6 +672,10 @@ world8.afterEvents.buttonPush.subscribe(async (event) => {
       await resetGrid({ x: 19, y: 95, z: 81 });
       break;
     }
+    case "66,97,224": {
+      overworld7.runCommandAsync(`clear @p`);
+      await giveWand();
+    }
     case "24,95,45": {
       let player = event.source;
       break;
@@ -808,7 +813,7 @@ function mainTick() {
   system4.run(mainTick);
 }
 async function surface(player) {
-  player.runCommand("scoreboard objectives setdisplay sidebar");
+  player.runCommandAsync("scoreboard objectives setdisplay sidebar");
   player.teleport({ x: -3, y: 96, z: 144 });
   player.addEffect("instant_health", 5);
   player.removeEffect("blindness");

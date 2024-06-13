@@ -73,7 +73,9 @@ export async function scale(cubePos1: Vector3, cubePos2: Vector3, inputNumber: V
 
 export async function windowUndo(from: Vector3, to: Vector3, into: Vector3) {
   await overworld.runCommandAsync(`clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`); //clones from below.
-  await overworld.runCommandAsync(`fill ${from.x} 116 ${from.z} ${to.x} 140 ${to.z} air replace`); //cleans any extra above 
+  await overworld.runCommandAsync(`fill ${from.x} 116 ${from.z} ${to.x} 120 ${to.z} air replace`);
+  await overworld.runCommandAsync(`fill ${from.x} 120 ${from.z} ${to.x} 150 ${to.z} air replace`); //cleans any extra above 
+  //cleans any extra above 
 }
 
 export async function scaleShape(shape: any, scaleFactor: any, axes: string) {
