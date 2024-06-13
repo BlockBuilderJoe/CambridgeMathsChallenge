@@ -1,5 +1,8 @@
 // scripts/main.ts
-import { world as world10, system as system4, BlockPermutation as BlockPermutation6 } from "@minecraft/server";
+import { world as world8, system as system4, BlockPermutation as BlockPermutation5 } from "@minecraft/server";
+
+// scripts/scaler.ts
+import { world as world3 } from "@minecraft/server";
 
 // scripts/input.ts
 import { BlockPermutation, world } from "@minecraft/server";
@@ -42,36 +45,15 @@ function getBlockValue(location) {
   return { block, permutation };
 }
 
-// scripts/calculator.ts
-import { world as world3 } from "@minecraft/server";
-
 // scripts/output.ts
 import { BlockPermutation as BlockPermutation2, world as world2 } from "@minecraft/server";
 var overworld2 = world2.getDimension("overworld");
-function outputTotal(total, location) {
-  let blockName = "";
-  let totalString = ("" + total).split("").reverse().join("");
-  for (let i = 0; i < totalString.length; i++) {
-    let { block, permutation } = getBlockValue(location);
-    if (totalString[i] === ".") {
-      blockName = "blockbuilders:symbol_decimalpoint";
-    } else {
-      let digit = parseInt(totalString[i]);
-      blockName = "blockbuilders:number_" + digit;
-    }
-    block?.setPermutation(BlockPermutation2.resolve(blockName));
-    location.x -= 1;
-  }
-}
 function setBlock(location, blockName) {
   let { block } = getBlockValue(location);
   let isCopper = block?.permutation?.matches("waxed_weathered_copper");
   if (!isCopper) {
     block?.setPermutation(BlockPermutation2.resolve(blockName));
   }
-}
-async function clearAnswer(start, end) {
-  overworld2.runCommandAsync(`fill ${start.x} ${start.y} ${start.z} ${end.x} ${end.y} ${end.z} air replace`);
 }
 function cycleNumberBlock(clickEvent) {
   for (let i = 0; i < 9; i++) {
@@ -86,150 +68,8 @@ function cycleNumberBlock(clickEvent) {
   }
 }
 
-// scripts/numberHandler.ts
-function roundToDigits(num, digits) {
-  let numStr = num.toString();
-  if (numStr.length > digits) {
-    if (numStr.includes(".")) {
-      let [whole, decimal] = numStr.split(".");
-      if (whole.length >= digits) {
-        return parseFloat(whole.slice(0, digits));
-      } else {
-        let decimalDigits = digits - whole.length;
-        return parseFloat(num.toFixed(decimalDigits));
-      }
-    } else {
-      return parseFloat(numStr.slice(0, digits));
-    }
-  } else {
-    return num;
-  }
-}
-
-// scripts/calculator.ts
-function calculateTotal(leftvalue, rightvalue) {
-  let { block, permutation } = getBlockValue({ x: -11, y: -59, z: 93 });
-  world3.sendMessage("The sum is:");
-  if (permutation?.matches("blockbuilders:symbol_plus")) {
-    world3.sendMessage(leftvalue + "+" + rightvalue);
-    let total = leftvalue + rightvalue;
-    return total;
-  } else if (permutation?.matches("blockbuilders:symbol_subtract")) {
-    world3.sendMessage(leftvalue + "-" + rightvalue);
-    let total = leftvalue - rightvalue;
-    return total;
-  } else if (permutation?.matches("blockbuilders:symbol_times")) {
-    world3.sendMessage(leftvalue + "*" + rightvalue);
-    let total = leftvalue * rightvalue;
-    return total;
-  } else if (permutation?.matches("blockbuilders:symbol_divide")) {
-    world3.sendMessage(leftvalue + "/" + rightvalue);
-    let total = leftvalue / rightvalue;
-    return total;
-  } else {
-    world3.sendMessage("Add a +, -, *, or / block to the center to perform an operation.");
-  }
-}
-async function calculate() {
-  await clearAnswer({ x: -14, y: -57, z: 93 }, { x: -8, y: -57, z: 93 });
-  let leftInput = getInput([
-    { x: -14, y: -59, z: 93 },
-    { x: -13, y: -59, z: 93 },
-    { x: -12, y: -59, z: 93 }
-  ]);
-  let rightInput = getInput([
-    { x: -10, y: -59, z: 93 },
-    { x: -9, y: -59, z: 93 },
-    { x: -8, y: -59, z: 93 }
-  ]);
-  let total = calculateTotal(leftInput, rightInput);
-  if (total !== null && total !== void 0) {
-    let roundedTotal = roundToDigits(total, 6);
-    outputTotal(roundedTotal, { x: -8, y: -57, z: 93 });
-    world3.sendMessage("The total is:");
-    if (roundedTotal === total) {
-      world3.sendMessage(`${total}.`);
-    } else {
-      world3.sendMessage(`${total} and has been rounded to ${roundedTotal}.`);
-    }
-  } else {
-    world3.sendMessage("Please input a number.");
-  }
-}
-
-// scripts/fraction.ts
-import { world as world4 } from "@minecraft/server";
-async function fraction1() {
-  let outputRight = { x: -22, y: -59, z: 93 };
-  let outputLeft = { x: -26, y: -59, z: 93 };
-  await clearAnswer(outputRight, outputLeft);
-  let numerator = getInput([{ x: -28, y: -57, z: 93 }]);
-  let denominator = getInput([{ x: -28, y: -59, z: 93 }]);
-  let input = getInput([
-    { x: -26, y: -57, z: 93 },
-    { x: -25, y: -57, z: 93 },
-    { x: -24, y: -57, z: 93 }
-  ]);
-  world4.sendMessage("The fraction is:");
-  world4.sendMessage(numerator + "/" + denominator + " of " + input);
-  let fraction = calculateFraction(numerator, denominator);
-  let result = fraction * input;
-  world4.sendMessage("The Output is:");
-  let roundedFraction = roundToDigits(result, 4);
-  if (result === roundedFraction) {
-    world4.sendMessage("" + roundedFraction);
-  } else {
-    world4.sendMessage("" + result + " which has been rounded to " + roundedFraction);
-  }
-  outputTotal(roundedFraction, outputRight);
-}
-function calculateFraction(numerator, denominator) {
-  if (denominator === 0) {
-    world4.sendMessage("The denominator cannot be 0. Please input a different number.");
-  }
-  return numerator / denominator;
-}
-
-// scripts/ratio.ts
-import { world as world5 } from "@minecraft/server";
-async function ratio1() {
-  let output1 = { x: -42, y: -59, z: 93 };
-  let output2 = { x: -40, y: -59, z: 93 };
-  world5.sendMessage("Calculating the ratio of pink to yellow blocks.");
-  let ratioInput = [
-    { x: -37, y: -58, z: 93 },
-    { x: -39, y: -60, z: 93 },
-    { x: -38, y: -60, z: 93 },
-    { x: -37, y: -60, z: 93 },
-    { x: -36, y: -60, z: 93 },
-    { x: -35, y: -60, z: 93 },
-    { x: -38, y: -59, z: 93 },
-    { x: -37, y: -59, z: 93 },
-    { x: -36, y: -59, z: 93 }
-  ];
-  let { pink, yellow } = calculateRatio(ratioInput);
-  world5.sendMessage("The ratio is:");
-  world5.sendMessage(pink + ":" + yellow);
-  outputTotal(pink, output1);
-  outputTotal(yellow, output2);
-}
-function calculateRatio(ratioInput) {
-  let yellow = 0;
-  let pink = 0;
-  for (let i = 0; i < ratioInput.length; i++) {
-    let { block, permutation } = getBlockValue(ratioInput[i]);
-    if (permutation?.matches("yellow_concrete")) {
-      yellow++;
-    } else if (permutation?.matches("pink_concrete")) {
-      pink++;
-    }
-  }
-  return { pink, yellow };
-}
-
 // scripts/scaler.ts
-import { world as world6 } from "@minecraft/server";
-var overworld3 = world6.getDimension("overworld");
+var overworld3 = world3.getDimension("overworld");
 async function windowScaleHandler(location) {
   switch (true) {
     case (location.x === 71 && location.y === 97 && location.z === 225): {
@@ -245,6 +85,7 @@ async function windowScaleHandler(location) {
   }
 }
 async function windowUndoHandler(location) {
+  giveGlass();
   switch (true) {
     case (location.x === 71 && location.y === 97 && location.z === 225): {
       await windowUndo({ x: 67, y: 47, z: 218 }, { x: 80, y: 82, z: 218 }, { x: 67, y: 97, z: 218 });
@@ -255,6 +96,16 @@ async function windowUndoHandler(location) {
       break;
     }
   }
+}
+function giveGlass() {
+  overworld3.runCommand("replaceitem entity @p slot.hotbar 1 yellow_stained_glass 10");
+  overworld3.runCommand("replaceitem entity @p slot.hotbar 2 green_stained_glass 10");
+  overworld3.runCommand("replaceitem entity @p slot.hotbar 3 blue_stained_glass 10");
+  overworld3.runCommand("replaceitem entity @p slot.hotbar 4 purple_stained_glass 10");
+  overworld3.runCommand("replaceitem entity @p slot.hotbar 5 red_stained_glass 10");
+  overworld3.runCommand("replaceitem entity @p slot.hotbar 6 lime_stained_glass 10");
+  overworld3.runCommand("replaceitem entity @p slot.hotbar 7 black_stained_glass 10");
+  overworld3.runCommand("replaceitem entity @p slot.hotbar 8 brown_stained_glass 10");
 }
 async function scale(cubePos1, cubePos2, inputNumber) {
   const blocks = await getCube(cubePos1, cubePos2);
@@ -314,8 +165,8 @@ async function scaleShape(shape, scaleFactor, axes) {
 
 // scripts/rod.ts
 import {
-  BlockPermutation as BlockPermutation4,
-  world as world7,
+  BlockPermutation as BlockPermutation3,
+  world as world4,
   system
 } from "@minecraft/server";
 
@@ -405,7 +256,7 @@ var replaySettings = [
 ];
 
 // scripts/rod.ts
-var overworld4 = world7.getDimension("overworld");
+var overworld4 = world4.getDimension("overworld");
 var rodsPlaced = [];
 async function directionCheck(x, z, direction) {
   let correctDirection = false;
@@ -424,7 +275,7 @@ async function cuisenaire(block, blockName, rodLength, successMessage, direction
   if (block.permutation?.matches(blockName)) {
     let runPlaceRods = true;
     overworld4.runCommand(`title @p actionbar ${successMessage} placed`);
-    block.setPermutation(BlockPermutation4.resolve("tallgrass"));
+    block.setPermutation(BlockPermutation3.resolve("tallgrass"));
     for (let i = 0; i < rodLength; i++) {
       let colour = block[direction](i)?.permutation?.getState("color");
       if (colour || block[direction](i)?.permutation?.matches("sandstone")) {
@@ -439,7 +290,7 @@ async function cuisenaire(block, blockName, rodLength, successMessage, direction
       placeRods(block, blockName, rodLength, direction);
       checkFinalBlock();
     } else {
-      block?.setPermutation(BlockPermutation4.resolve("tallgrass"));
+      block?.setPermutation(BlockPermutation3.resolve("tallgrass"));
     }
   }
 }
@@ -453,7 +304,7 @@ function placeRods(block, blockName, rodLength, direction) {
   const validDirections = ["east", "west", "north", "south"];
   if (validDirections.includes(direction)) {
     for (let i = 0; i < rodLength; i++) {
-      block[direction](i).setPermutation(BlockPermutation4.resolve(blockName));
+      block[direction](i).setPermutation(BlockPermutation3.resolve(blockName));
     }
   } else {
     throw new Error(`Invalid direction: ${direction}`);
@@ -490,7 +341,7 @@ async function replayMessage(beginningMessage, fractions) {
       }
     }
   } else {
-    world7.sendMessage(`Error: No fractions found`);
+    world4.sendMessage(`Error: No fractions found`);
   }
 }
 async function replay(index) {
@@ -518,7 +369,7 @@ async function replay(index) {
       ((index2) => {
         system.runTimeout(async () => {
           let x = combinedRods[index2].location.x;
-          world7.getAllPlayers().forEach(async (player) => {
+          world4.getAllPlayers().forEach(async (player) => {
             await setCameraView(player, npcIndex);
             fractions.push(combinedRods[index2].successMessage);
             await replayMessage(replayConfig.beginningMessage, fractions);
@@ -620,7 +471,7 @@ async function facing(blockLocation) {
 }
 
 // scripts/potion.ts
-import { BlockPermutation as BlockPermutation5, system as system2, world as world8 } from "@minecraft/server";
+import { BlockPermutation as BlockPermutation4, system as system2, world as world5 } from "@minecraft/server";
 async function getSlots(event) {
   let hopper = event.block.getComponent("inventory");
   let slots = [];
@@ -635,10 +486,10 @@ async function getSlots(event) {
   return slots;
 }
 async function givePotion() {
-  world8.getDimension("overworld").runCommandAsync(`clear @p minecraft:potion`);
-  world8.getDimension("overworld").runCommandAsync(`give @p minecraft:potion 1`);
+  world5.getDimension("overworld").runCommandAsync(`clear @p minecraft:potion`);
+  world5.getDimension("overworld").runCommandAsync(`give @p minecraft:potion 1`);
 }
-async function calculateRatio2(ingredients) {
+async function calculateRatio(ingredients) {
   let wrongIngredientsSight = ingredients.potato + ingredients.beetroot + ingredients.melon;
   let wrongIngredientsDive = ingredients.apple + ingredients.carrot;
   let appleRatio = ingredients.apple + ingredients.potato + ingredients.beetroot + ingredients.melon;
@@ -726,31 +577,31 @@ async function barChart(slots) {
 }
 async function setGlass(slot, blockName) {
   let { block } = getBlockValue({ x: -52, y: 61, z: 126 });
-  block?.north(slot.slotNumber)?.setPermutation(BlockPermutation5.resolve(blockName));
+  block?.north(slot.slotNumber)?.setPermutation(BlockPermutation4.resolve(blockName));
   if (slot.amount > 10) {
     slot.amount = 10;
   }
   for (let i = 0; i < slot.amount; i++) {
-    block?.above(i)?.north(slot.slotNumber)?.setPermutation(BlockPermutation5.resolve(blockName));
+    block?.above(i)?.north(slot.slotNumber)?.setPermutation(BlockPermutation4.resolve(blockName));
   }
 }
 async function setItemFrame(offset_z, slotNumber) {
   let cloneFrom = 126 - offset_z;
   let cloneTo = 126 - slotNumber;
-  world8.getDimension("overworld").runCommandAsync(`clone -40 60 ${cloneFrom} -40 60 ${cloneFrom} -50 60 ${cloneTo} replace`);
+  world5.getDimension("overworld").runCommandAsync(`clone -40 60 ${cloneFrom} -40 60 ${cloneFrom} -50 60 ${cloneTo} replace`);
 }
 async function potionMaker(event) {
   await resetArea();
   let slots = await getSlots(event);
   let ingredients = await barChart(slots);
-  let { potion: potion2, seconds: seconds2 } = await calculateRatio2(ingredients);
+  let { potion: potion2, seconds: seconds2 } = await calculateRatio(ingredients);
   if (potion2 !== "empty") {
     await givePotion();
   }
   return { potion: potion2, seconds: seconds2 };
 }
 async function resetArea() {
-  await world8.getDimension("overworld").runCommandAsync("fill -52 60 126 -52 69 122 black_stained_glass replace");
+  await world5.getDimension("overworld").runCommandAsync("fill -52 60 126 -52 69 122 black_stained_glass replace");
 }
 function displayTimer(potionStart2, seconds2, player, potionDescription) {
   let timeLeft = (potionStart2 + seconds2 * 20 - system2.currentTick) / 20;
@@ -760,17 +611,24 @@ function displayTimer(potionStart2, seconds2, player, potionDescription) {
   }
 }
 
+// scripts/wand.ts
+import { world as world6 } from "@minecraft/server";
+var overworld5 = world6.getDimension("overworld");
+function giveWand() {
+  overworld5.runCommandAsync(`give @p[hasitem={item=stick,quantity=0}] minecraft:stick 1 0 {"item_lock": { "mode": "lock_in_slot" }, "minecraft:can_destroy":{"blocks":["blockbuilders:number_0","blockbuilders:number_1","blockbuilders:number_2","blockbuilders:number_3","blockbuilders:number_4","blockbuilders:number_5","blockbuilders:number_6","blockbuilders:number_7","blockbuilders:number_8","blockbuilders:number_9","blockbuilders:symbol_subtract"]}}`);
+}
+
 // scripts/npcscriptEventHandler.ts
-import { system as system3, world as world9 } from "@minecraft/server";
+import { system as system3, world as world7 } from "@minecraft/server";
 system3.afterEvents.scriptEventReceive.subscribe((event) => {
   switch (event.id) {
     case "rod:npcReplay": {
-      world9.sendMessage(`Replay Version ${event.message}`);
+      world7.sendMessage(`Replay Version ${event.message}`);
       replay(parseInt(event.message));
       break;
     }
     case "rod:npcComplete": {
-      world9.sendMessage(`Complete Version ${event.message}`);
+      world7.sendMessage(`Complete Version ${event.message}`);
       break;
     }
   }
@@ -784,47 +642,19 @@ var potionStart = 0;
 var potionDrank = false;
 var meters = 0;
 var rodsToRemove = [];
-world10.afterEvents.playerSpawn.subscribe((eventData) => {
+world8.afterEvents.playerSpawn.subscribe((eventData) => {
   currentPlayer = eventData.player;
   let initialSpawn = eventData.initialSpawn;
   if (initialSpawn) {
     currentPlayer.sendMessage(`\xA73Welcome back ${currentPlayer.name}!`);
-    currentPlayer.runCommandAsync(
-      `give @p[hasitem={item=stick,quantity=0}] stick 1 0 {"item_lock": { "mode": "lock_in_slot" }}`
-    );
+    giveWand();
   } else {
-    currentPlayer.sendMessage(`<BlockBuilderAI> \xA73Welcome ${currentPlayer.name}!`);
-    currentPlayer.runCommandAsync(
-      `give @a[hasitem={item=stick,quantity=0}] stick 1 0 {"item_lock": { "mode": "lock_in_slot" }}`
-    );
+    currentPlayer.sendMessage(`\xA73Welcome ${currentPlayer.name}!`);
+    giveWand();
   }
 });
-world10.afterEvents.buttonPush.subscribe(async (event) => {
+world8.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
-    case "-11,-60,94": {
-      calculate();
-      break;
-    }
-    case "-27,-60,94": {
-      fraction1();
-      break;
-    }
-    case "-40,-60,94": {
-      ratio1();
-      break;
-    }
-    case "71,96,226": {
-      let cubePos1 = { x: 69, y: 98, z: 225 };
-      let cubePos2 = { x: 69, y: 102, z: 225 };
-      let inputNumber = { x: 71, y: 99, z: 225 };
-      break;
-    }
-    case "72,96,226": {
-      let from = { x: 67, y: 47, z: 218 };
-      let to = { x: 80, y: 82, z: 218 };
-      let into = { x: 67, y: 97, z: 218 };
-      break;
-    }
     case "29,97,106": {
       let player = event.source;
       rodsToRemove = [];
@@ -839,7 +669,7 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
     }
   }
 });
-world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
+world8.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let block = event.block;
   let player = event.player;
   let colour = block.permutation?.getState("color");
@@ -860,12 +690,12 @@ world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
       };
       if (!hasColour) {
         player.runCommandAsync(`title ${player.name} actionbar Place the rod in front of the magical connector.`);
-        event.block.setPermutation(BlockPermutation6.resolve("tallgrass"));
+        event.block.setPermutation(BlockPermutation5.resolve("tallgrass"));
         return;
       }
       if (!correctDirection) {
         player.runCommandAsync(`title ${player.name} actionbar You're facing the wrong way.`);
-        event.block.setPermutation(BlockPermutation6.resolve("tallgrass"));
+        event.block.setPermutation(BlockPermutation5.resolve("tallgrass"));
         return;
       }
       const rod = rodPermutations[colour];
@@ -875,20 +705,22 @@ world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
     }
   }
 });
-world10.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
+world8.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId;
   let block = clickEvent.block;
   let brokenBlock = clickEvent.brokenBlockPermutation;
   if (hand_item === "minecraft:stick") {
-    if (brokenBlock.matches("blockbuilders:symbol_subtract")) {
+    if (brokenBlock.matches("blockbuilders:symbol_subtract") && block.location.z === 225) {
       await windowUndoHandler(block.location);
-      block.setPermutation(BlockPermutation6.resolve("blockbuilders:symbol_subtract"));
-    } else {
+      block.setPermutation(BlockPermutation5.resolve("blockbuilders:symbol_subtract"));
+    } else if (block.location.x === 71 && block.location.y === 98 && block.location.z === 225 || block.location.x === 82 && block.location.y === 98 && block.location.z === 225) {
       cycleNumberBlock(clickEvent);
+    } else {
+      block.setPermutation(brokenBlock);
     }
   }
 });
-world10.beforeEvents.itemUseOn.subscribe(
+world8.beforeEvents.itemUseOn.subscribe(
   async (event) => {
     if (event.itemStack?.typeId === "minecraft:stick") {
       let block = event.block;
@@ -930,7 +762,7 @@ function applyPotionEffect(player, potion2, seconds2) {
   player.runCommand("clear @p minecraft:glass_bottle");
 }
 function mainTick() {
-  world10.getAllPlayers().forEach((player) => {
+  world8.getAllPlayers().forEach((player) => {
     if (player.isInWater == true) {
       meters = 58 - Math.floor(player.location.y);
       player.runCommand(`scoreboard players set Meters Depth ${meters}`);
@@ -962,7 +794,7 @@ async function surface(player) {
   player.removeEffect("water_breathing");
   player.runCommand("scoreboard objectives setdisplay sidebar");
 }
-world10.afterEvents.itemCompleteUse.subscribe(async (event) => {
+world8.afterEvents.itemCompleteUse.subscribe(async (event) => {
   let player = event.source;
   if (event.itemStack?.typeId === "minecraft:potion") {
     if (potion === "poison") {
@@ -976,7 +808,7 @@ world10.afterEvents.itemCompleteUse.subscribe(async (event) => {
     event.source.runCommand("clear @p minecraft:glass_bottle");
   }
 });
-world10.afterEvents.entityHealthChanged.subscribe(async (event) => {
+world8.afterEvents.entityHealthChanged.subscribe(async (event) => {
   if (event.entity.typeId === "minecraft:player") {
     let player = event.entity;
     if (player.isInWater == true) {

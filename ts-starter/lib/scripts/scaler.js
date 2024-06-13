@@ -21,6 +21,7 @@ export function windowScaleHandler(location) {
 }
 export function windowUndoHandler(location) {
     return __awaiter(this, void 0, void 0, function* () {
+        giveGlass();
         switch (true) {
             case location.x === 71 && location.y === 97 && location.z === 225: {
                 yield windowUndo({ x: 67, y: 47, z: 218 }, { x: 80, y: 82, z: 218 }, { x: 67, y: 97, z: 218 });
@@ -32,6 +33,16 @@ export function windowUndoHandler(location) {
             }
         }
     });
+}
+export function giveGlass() {
+    overworld.runCommand("replaceitem entity @p slot.hotbar 1 yellow_stained_glass 10");
+    overworld.runCommand("replaceitem entity @p slot.hotbar 2 green_stained_glass 10");
+    overworld.runCommand("replaceitem entity @p slot.hotbar 3 blue_stained_glass 10");
+    overworld.runCommand("replaceitem entity @p slot.hotbar 4 purple_stained_glass 10");
+    overworld.runCommand("replaceitem entity @p slot.hotbar 5 red_stained_glass 10");
+    overworld.runCommand("replaceitem entity @p slot.hotbar 6 lime_stained_glass 10");
+    overworld.runCommand("replaceitem entity @p slot.hotbar 7 black_stained_glass 10");
+    overworld.runCommand("replaceitem entity @p slot.hotbar 8 brown_stained_glass 10");
 }
 export function scale(cubePos1, cubePos2, inputNumber) {
     return __awaiter(this, void 0, void 0, function* () {

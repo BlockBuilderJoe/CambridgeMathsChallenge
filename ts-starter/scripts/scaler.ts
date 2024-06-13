@@ -24,6 +24,7 @@ export async function windowScaleHandler(location: Vector3) {
 }
 
 export async function windowUndoHandler(location: Vector3) {
+  giveGlass();
   switch (true) {
     case location.x === 71 && location.y === 97 && location.z === 225: {
       await windowUndo({x: 67, y: 47, z: 218}, {x: 80, y: 82, z: 218}, {x: 67, y:97, z: 218});
@@ -35,6 +36,17 @@ export async function windowUndoHandler(location: Vector3) {
     }
 
   }
+}
+
+export function giveGlass(){
+  overworld.runCommand("replaceitem entity @p slot.hotbar 1 yellow_stained_glass 10");
+  overworld.runCommand("replaceitem entity @p slot.hotbar 2 green_stained_glass 10");
+  overworld.runCommand("replaceitem entity @p slot.hotbar 3 blue_stained_glass 10");
+  overworld.runCommand("replaceitem entity @p slot.hotbar 4 purple_stained_glass 10");
+  overworld.runCommand("replaceitem entity @p slot.hotbar 5 red_stained_glass 10");
+  overworld.runCommand("replaceitem entity @p slot.hotbar 6 lime_stained_glass 10");
+  overworld.runCommand("replaceitem entity @p slot.hotbar 7 black_stained_glass 10");
+  overworld.runCommand("replaceitem entity @p slot.hotbar 8 brown_stained_glass 10");
 }
 
 export async function scale(cubePos1: Vector3, cubePos2: Vector3, inputNumber: Vector3) {

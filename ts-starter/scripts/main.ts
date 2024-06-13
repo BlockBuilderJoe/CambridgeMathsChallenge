@@ -7,6 +7,7 @@ import { cuisenaire, getBlockBehind, resetGrid, giveRods, resetNPC, directionChe
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
 import { potionMaker, displayTimer } from "./potion";
+import { giveWand } from "./wand";
 import "./npcscriptEventHandler"; //handles the NPC script events
 
 let potion: string = "";
@@ -23,46 +24,16 @@ world.afterEvents.playerSpawn.subscribe((eventData) => {
   let initialSpawn = eventData.initialSpawn;
   if (initialSpawn) {
     currentPlayer.sendMessage(`§3Welcome back ${currentPlayer.name}!`);
-    currentPlayer.runCommandAsync(
-      `give @p[hasitem={item=stick,quantity=0}] stick 1 0 {"item_lock": { "mode": "lock_in_slot" }}`
-    );
+    giveWand();
   } else {
-    currentPlayer.sendMessage(`<BlockBuilderAI> §3Welcome ${currentPlayer.name}!`);
-    currentPlayer.runCommandAsync(
-      `give @a[hasitem={item=stick,quantity=0}] stick 1 0 {"item_lock": { "mode": "lock_in_slot" }}`
-    );
+    currentPlayer.sendMessage(`§3Welcome ${currentPlayer.name}!`);
+    giveWand();
   }
 });
 
 //listens for the button push event.
 world.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
-    case "-11,-60,94": {
-      calculate();
-      break;
-    }
-    case "-27,-60,94": {
-      fraction1();
-      break;
-    }
-    case "-40,-60,94": {
-      ratio1();
-      break;
-    }
-    case "71,96,226": {
-      let cubePos1 = { x: 69, y: 98, z: 225 }
-      let cubePos2 = { x: 69, y: 102, z: 225 }
-      let inputNumber = { x: 71, y: 99, z: 225 }
-      //scale(cubePos1, cubePos2, inputNumber);
-      break;
-    }
-    case "72,96,226": {
-      let from = {x: 67, y: 47, z: 218}
-      let to = {x: 80, y: 82, z: 218}
-      let into = {x: 67, y:97, z: 218}
-      //await windowUndoHandler({x: 67, y: 47, z: 218}, {x: 80, y: 82, z: 218}, {x: 67, y:97, z: 218});
-      break;
-    }
     case "29,97,106": {
       let player = event.source as Entity; // Cast event.source to Player type
       rodsToRemove = []; //resets the rods to remove array
@@ -78,7 +49,6 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
     }
   }
 });
-
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let block = event.block;
