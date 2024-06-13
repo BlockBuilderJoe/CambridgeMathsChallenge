@@ -2,7 +2,7 @@ import { world, system, Player, BlockPermutation, Block, Entity, Scoreboard } fr
 import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
-import { scale, resetArea } from "./scaler";
+import { windowUndoHandler, windowScaleHandler } from "./scaler";
 import { cuisenaire, getBlockBehind, resetGrid, giveRods, resetNPC, directionCheck } from "./rod";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
@@ -50,18 +50,17 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
       break;
     }
     case "71,96,226": {
-      world.sendMessage("scaling");
       let cubePos1 = { x: 69, y: 98, z: 225 }
       let cubePos2 = { x: 69, y: 102, z: 225 }
       let inputNumber = { x: 71, y: 99, z: 225 }
-      scale(cubePos1, cubePos2, inputNumber);
+      //scale(cubePos1, cubePos2, inputNumber);
       break;
     }
     case "72,96,226": {
       let from = {x: 67, y: 47, z: 218}
       let to = {x: 80, y: 82, z: 218}
       let into = {x: 67, y:97, z: 218}
-      await resetArea({x: 67, y: 47, z: 218}, {x: 80, y: 82, z: 218}, {x: 67, y:97, z: 218});
+      //await windowUndoHandler({x: 67, y: 47, z: 218}, {x: 80, y: 82, z: 218}, {x: 67, y:97, z: 218});
       break;
     }
     case "29,97,106": {
@@ -86,7 +85,7 @@ world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let player = event.player;
   let colour = block.permutation?.getState("color");
   if (colour) {
-    //is it a rod block?w wsa   w
+    //is it a rod block?
     if (block.location.y === 95) {
       //is it placed on the grid?
       let viewDirection = event.player.getViewDirection();
@@ -121,22 +120,34 @@ world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   }
 });
 
-world.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
+//left click
+world.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId; //gets the item in the players hand
+  let block = clickEvent.block;
+  let brokenBlock = clickEvent.brokenBlockPermutation;
   if (hand_item === "minecraft:stick") {
-    cycleNumberBlock(clickEvent);
+    if (brokenBlock.matches("blockbuilders:symbol_subtract")) {
+      await windowUndoHandler(block.location);
+      block.setPermutation(BlockPermutation.resolve("blockbuilders:symbol_subtract"));
+    } else {
+      cycleNumberBlock(clickEvent);
+    }
   }
 });
 
+//right click
 world.beforeEvents.itemUseOn.subscribe(async (event) => {
   if (event.itemStack?.typeId === "minecraft:stick") {
     let block = event.block;
     if (block.permutation?.matches("hopper")) {
-      event.cancel = true;
       ({ potion, seconds } = await potionMaker(event));
+    } 
+    if (block.permutation?.matches("blockbuilders:symbol_subtract")){
+      await windowScaleHandler(block.location);
+    }
     }
   }
-});
+);
 
 //wellwellwell
 function applyPotionEffect(player: any, potion: string, seconds: number) {

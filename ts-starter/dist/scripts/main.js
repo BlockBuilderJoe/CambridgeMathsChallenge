@@ -66,7 +66,6 @@ function outputTotal(total, location) {
 function setBlock(location, blockName) {
   let { block } = getBlockValue(location);
   let isCopper = block?.permutation?.matches("waxed_weathered_copper");
-  world2.sendMessage("isCopper = " + isCopper);
   if (!isCopper) {
     block?.setPermutation(BlockPermutation2.resolve(blockName));
   }
@@ -231,6 +230,40 @@ function calculateRatio(ratioInput) {
 // scripts/scaler.ts
 import { world as world6 } from "@minecraft/server";
 var overworld3 = world6.getDimension("overworld");
+async function windowScaleHandler(location) {
+  world6.sendMessage(`location = ${location.x}, ${location.y}, ${location.z}`);
+  switch (true) {
+    case (location.x === 71 && location.y === 97 && location.z === 225): {
+      await windowUndo({ x: 67, y: 47, z: 218 }, { x: 80, y: 82, z: 218 }, { x: 67, y: 97, z: 218 });
+      let cubePos1 = { x: 69, y: 98, z: 225 };
+      let cubePos2 = { x: 69, y: 102, z: 225 };
+      let inputNumber = { x: 71, y: 98, z: 225 };
+      scale(cubePos1, cubePos2, inputNumber);
+      break;
+    }
+    case (location.x === 82 && location.y === 97 && location.z === 225): {
+      await windowUndo({ x: 75, y: 47, z: 218 }, { x: 107, y: 66, z: 218 }, { x: 75, y: 97, z: 218 });
+      world6.sendMessage("Scaling the cube.");
+      let cubePos1 = { x: 78, y: 97, z: 225 };
+      let cubePos2 = { x: 80, y: 100, z: 225 };
+      let inputNumber = { x: 82, y: 98, z: 225 };
+      scale(cubePos1, cubePos2, inputNumber);
+      break;
+    }
+  }
+}
+async function windowUndoHandler(location) {
+  switch (true) {
+    case (location.x === 71 && location.y === 97 && location.z === 225): {
+      await windowUndo({ x: 67, y: 47, z: 218 }, { x: 80, y: 82, z: 218 }, { x: 67, y: 97, z: 218 });
+      break;
+    }
+    case (location.x === 82 && location.y === 97 && location.z === 225): {
+      await windowUndo({ x: 75, y: 47, z: 218 }, { x: 107, y: 66, z: 218 }, { x: 75, y: 97, z: 218 });
+      break;
+    }
+  }
+}
 async function scale(cubePos1, cubePos2, inputNumber) {
   const blocks = await getCube(cubePos1, cubePos2);
   let shape = [];
@@ -250,9 +283,10 @@ async function scale(cubePos1, cubePos2, inputNumber) {
     setBlock({ x: offset_x, y: offset_y, z: offset_z }, block.colour + "_stained_glass");
   }
 }
-async function resetArea(from, to, into) {
+async function windowUndo(from, to, into) {
   await overworld3.runCommandAsync(`clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`);
-  await overworld3.runCommandAsync(`fill ${from.x} 130 ${from.z} ${to.x} 150 ${to.z} air replace`);
+  await overworld3.runCommandAsync(`fill ${from.x} 130 ${from.z} ${to.x} 140 ${to.z} air replace`);
+  await overworld3.runCommandAsync(`fill ${from.x} 140 ${from.z} ${to.x} 150 ${to.z} air replace`);
 }
 async function scaleShape(shape, scaleFactor, axes) {
   const scaledShape = [];
@@ -715,7 +749,7 @@ async function setItemFrame(offset_z, slotNumber) {
   world8.getDimension("overworld").runCommandAsync(`clone -40 60 ${cloneFrom} -40 60 ${cloneFrom} -50 60 ${cloneTo} replace`);
 }
 async function potionMaker(event) {
-  await resetArea2();
+  await resetArea();
   let slots = await getSlots(event);
   let ingredients = await barChart(slots);
   let { potion: potion2, seconds: seconds2 } = await calculateRatio2(ingredients);
@@ -724,7 +758,7 @@ async function potionMaker(event) {
   }
   return { potion: potion2, seconds: seconds2 };
 }
-async function resetArea2() {
+async function resetArea() {
   await world8.getDimension("overworld").runCommandAsync("fill -52 60 126 -52 69 122 black_stained_glass replace");
 }
 function displayTimer(potionStart2, seconds2, player, potionDescription) {
@@ -789,18 +823,15 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
       break;
     }
     case "71,96,226": {
-      world10.sendMessage("scaling");
       let cubePos1 = { x: 69, y: 98, z: 225 };
       let cubePos2 = { x: 69, y: 102, z: 225 };
       let inputNumber = { x: 71, y: 99, z: 225 };
-      scale(cubePos1, cubePos2, inputNumber);
       break;
     }
     case "72,96,226": {
       let from = { x: 67, y: 47, z: 218 };
       let to = { x: 80, y: 82, z: 218 };
       let into = { x: 67, y: 97, z: 218 };
-      await resetArea({ x: 67, y: 47, z: 218 }, { x: 80, y: 82, z: 218 }, { x: 67, y: 97, z: 218 });
       break;
     }
     case "29,97,106": {
@@ -853,21 +884,32 @@ world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
     }
   }
 });
-world10.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
+world10.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId;
+  let block = clickEvent.block;
+  let brokenBlock = clickEvent.brokenBlockPermutation;
   if (hand_item === "minecraft:stick") {
-    cycleNumberBlock(clickEvent);
-  }
-});
-world10.beforeEvents.itemUseOn.subscribe(async (event) => {
-  if (event.itemStack?.typeId === "minecraft:stick") {
-    let block = event.block;
-    if (block.permutation?.matches("hopper")) {
-      event.cancel = true;
-      ({ potion, seconds } = await potionMaker(event));
+    if (brokenBlock.matches("blockbuilders:symbol_subtract")) {
+      await windowUndoHandler(block.location);
+      block.setPermutation(BlockPermutation6.resolve("blockbuilders:symbol_subtract"));
+    } else {
+      cycleNumberBlock(clickEvent);
     }
   }
 });
+world10.beforeEvents.itemUseOn.subscribe(
+  async (event) => {
+    if (event.itemStack?.typeId === "minecraft:stick") {
+      let block = event.block;
+      if (block.permutation?.matches("hopper")) {
+        ({ potion, seconds } = await potionMaker(event));
+      }
+      if (block.permutation?.matches("blockbuilders:symbol_subtract")) {
+        await windowScaleHandler(block.location);
+      }
+    }
+  }
+);
 function applyPotionEffect(player, potion2, seconds2) {
   player.runCommand("scoreboard objectives setdisplay sidebar Depth");
   let tick = seconds2 * 20;

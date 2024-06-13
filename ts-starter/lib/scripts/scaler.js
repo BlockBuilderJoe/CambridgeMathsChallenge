@@ -3,6 +3,44 @@ import { getCube } from "./input";
 import { setBlock } from "./output";
 import { getInput } from "./input";
 let overworld = world.getDimension("overworld");
+export function windowScaleHandler(location) {
+    return __awaiter(this, void 0, void 0, function* () {
+        world.sendMessage(`location = ${location.x}, ${location.y}, ${location.z}`);
+        switch (true) {
+            case location.x === 71 && location.y === 97 && location.z === 225: {
+                yield windowUndo({ x: 67, y: 47, z: 218 }, { x: 80, y: 82, z: 218 }, { x: 67, y: 97, z: 218 });
+                let cubePos1 = { x: 69, y: 98, z: 225 };
+                let cubePos2 = { x: 69, y: 102, z: 225 };
+                let inputNumber = { x: 71, y: 98, z: 225 };
+                scale(cubePos1, cubePos2, inputNumber);
+                break;
+            }
+            case location.x === 82 && location.y === 97 && location.z === 225: {
+                yield windowUndo({ x: 75, y: 47, z: 218 }, { x: 107, y: 66, z: 218 }, { x: 75, y: 97, z: 218 });
+                world.sendMessage("Scaling the cube.");
+                let cubePos1 = { x: 78, y: 97, z: 225 };
+                let cubePos2 = { x: 80, y: 100, z: 225 };
+                let inputNumber = { x: 82, y: 98, z: 225 };
+                scale(cubePos1, cubePos2, inputNumber);
+                break;
+            }
+        }
+    });
+}
+export function windowUndoHandler(location) {
+    return __awaiter(this, void 0, void 0, function* () {
+        switch (true) {
+            case location.x === 71 && location.y === 97 && location.z === 225: {
+                yield windowUndo({ x: 67, y: 47, z: 218 }, { x: 80, y: 82, z: 218 }, { x: 67, y: 97, z: 218 });
+                break;
+            }
+            case location.x === 82 && location.y === 97 && location.z === 225: {
+                yield windowUndo({ x: 75, y: 47, z: 218 }, { x: 107, y: 66, z: 218 }, { x: 75, y: 97, z: 218 });
+                break;
+            }
+        }
+    });
+}
 export function scale(cubePos1, cubePos2, inputNumber) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b, _c, _d;
@@ -26,10 +64,11 @@ export function scale(cubePos1, cubePos2, inputNumber) {
         }
     });
 }
-export function resetArea(from, to, into) {
+export function windowUndo(from, to, into) {
     return __awaiter(this, void 0, void 0, function* () {
         yield overworld.runCommandAsync(`clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`); //clones from below.
-        yield overworld.runCommandAsync(`fill ${from.x} 130 ${from.z} ${to.x} 150 ${to.z} air replace`); //cleans any extra above 
+        yield overworld.runCommandAsync(`fill ${from.x} 130 ${from.z} ${to.x} 140 ${to.z} air replace`); //cleans any extra above 
+        yield overworld.runCommandAsync(`fill ${from.x} 140 ${from.z} ${to.x} 150 ${to.z} air replace`); //cleans any extra above 
     });
 }
 export function scaleShape(shape, scaleFactor, axes) {

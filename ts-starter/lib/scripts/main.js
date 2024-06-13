@@ -2,7 +2,7 @@ import { world, system, BlockPermutation } from "@minecraft/server";
 import { calculate } from "./calculator";
 import { fraction1 } from "./fraction";
 import { ratio1 } from "./ratio";
-import { scale, resetArea } from "./scaler";
+import { windowUndoHandler, windowScaleHandler } from "./scaler";
 import { cuisenaire, getBlockBehind, resetGrid, giveRods, resetNPC, directionCheck } from "./rod";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
@@ -44,18 +44,17 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
             break;
         }
         case "71,96,226": {
-            world.sendMessage("scaling");
             let cubePos1 = { x: 69, y: 98, z: 225 };
             let cubePos2 = { x: 69, y: 102, z: 225 };
             let inputNumber = { x: 71, y: 99, z: 225 };
-            scale(cubePos1, cubePos2, inputNumber);
+            //scale(cubePos1, cubePos2, inputNumber);
             break;
         }
         case "72,96,226": {
             let from = { x: 67, y: 47, z: 218 };
             let to = { x: 80, y: 82, z: 218 };
             let into = { x: 67, y: 97, z: 218 };
-            yield resetArea({ x: 67, y: 47, z: 218 }, { x: 80, y: 82, z: 218 }, { x: 67, y: 97, z: 218 });
+            //await windowUndoHandler({x: 67, y: 47, z: 218}, {x: 80, y: 82, z: 218}, {x: 67, y:97, z: 218});
             break;
         }
         case "29,97,106": {
@@ -80,7 +79,7 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0
     let player = event.player;
     let colour = (_a = block.permutation) === null || _a === void 0 ? void 0 : _a.getState("color");
     if (colour) {
-        //is it a rod block?w wsa   w
+        //is it a rod block?
         if (block.location.y === 95) {
             //is it placed on the grid?
             let viewDirection = event.player.getViewDirection();
@@ -113,20 +112,32 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0
         }
     }
 }));
-world.afterEvents.playerBreakBlock.subscribe((clickEvent) => {
-    var _a;
-    let hand_item = (_a = clickEvent.itemStackAfterBreak) === null || _a === void 0 ? void 0 : _a.typeId; //gets the item in the players hand
+//left click
+world.afterEvents.playerBreakBlock.subscribe((clickEvent) => __awaiter(void 0, void 0, void 0, function* () {
+    var _b;
+    let hand_item = (_b = clickEvent.itemStackAfterBreak) === null || _b === void 0 ? void 0 : _b.typeId; //gets the item in the players hand
+    let block = clickEvent.block;
+    let brokenBlock = clickEvent.brokenBlockPermutation;
     if (hand_item === "minecraft:stick") {
-        cycleNumberBlock(clickEvent);
+        if (brokenBlock.matches("blockbuilders:symbol_subtract")) {
+            yield windowUndoHandler(block.location);
+            block.setPermutation(BlockPermutation.resolve("blockbuilders:symbol_subtract"));
+        }
+        else {
+            cycleNumberBlock(clickEvent);
+        }
     }
-});
+}));
+//right click
 world.beforeEvents.itemUseOn.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _b, _c;
-    if (((_b = event.itemStack) === null || _b === void 0 ? void 0 : _b.typeId) === "minecraft:stick") {
+    var _c, _d, _e;
+    if (((_c = event.itemStack) === null || _c === void 0 ? void 0 : _c.typeId) === "minecraft:stick") {
         let block = event.block;
-        if ((_c = block.permutation) === null || _c === void 0 ? void 0 : _c.matches("hopper")) {
-            event.cancel = true;
+        if ((_d = block.permutation) === null || _d === void 0 ? void 0 : _d.matches("hopper")) {
             ({ potion, seconds } = yield potionMaker(event));
+        }
+        if ((_e = block.permutation) === null || _e === void 0 ? void 0 : _e.matches("blockbuilders:symbol_subtract")) {
+            yield windowScaleHandler(block.location);
         }
     }
 }));
@@ -201,9 +212,9 @@ function surface(player) {
 }
 //listens for the potion to be fully drunk.
 world.afterEvents.itemCompleteUse.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _d;
+    var _f;
     let player = event.source;
-    if (((_d = event.itemStack) === null || _d === void 0 ? void 0 : _d.typeId) === "minecraft:potion") {
+    if (((_f = event.itemStack) === null || _f === void 0 ? void 0 : _f.typeId) === "minecraft:potion") {
         if (potion === "poison") {
             player.sendMessage("§fYou mixed the potion with the §2wrong ingredients. \n§fIt has had no effect.\nMake sure you're using the correct ingredients.");
         }
