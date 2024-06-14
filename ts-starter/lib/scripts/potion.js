@@ -38,12 +38,12 @@ function calculateRatio(ingredients) {
         let melonPotatoRatio = melonRatio / potatoRatio;
         if (beetrootMelonRatio === 1.5 && melonPotatoRatio === 2) {
             let potion = "water_breathing";
-            let seconds = Math.ceil(beetrootRatio + melonRatio + potatoRatio);
+            let seconds = Math.ceil((beetrootRatio + melonRatio + potatoRatio) * 1.7);
             return { potion, seconds };
         }
         else if (nightVision === 2) {
             let potion = "night_vision";
-            let seconds = Math.ceil(ingredients.apple + ingredients.carrot);
+            let seconds = Math.ceil((ingredients.apple + ingredients.carrot) * 1.7);
             return { potion, seconds };
         }
         else if (wrongIngredientsSight === 0 && potatoRatio + carrotRatio > 0) {

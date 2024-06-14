@@ -169,7 +169,7 @@ function mainTick() {
     world.getAllPlayers().forEach((player) => {
         if (player.isInWater == true) {
             player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
-            meters = 95 - Math.floor(player.location.y);
+            meters = 94 - Math.floor(player.location.y);
             player.runCommand(`scoreboard players set Meters Depth ${meters}`);
             if (potionDrank) {
                 //applies the potion effect once
@@ -198,8 +198,9 @@ function mainTick() {
 }
 function surface(player) {
     return __awaiter(this, void 0, void 0, function* () {
-        player.runCommandAsync("scoreboard objectives setdisplay sidebar");
+        player.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
         player.teleport({ x: -3, y: 96, z: 144 });
+        player.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
         player.addEffect("instant_health", 5);
         player.removeEffect("blindness");
         player.removeEffect("night_vision");
@@ -227,9 +228,12 @@ world.afterEvents.entityHealthChanged.subscribe((event) => __awaiter(void 0, voi
         let player = event.entity;
         if (player.isInWater == true) {
             if (event.newValue === 18) {
-                player.runCommandAsync("scoreboard objectives setdisplay sidebar");
+                //this is the moment they start to take damage in the water.
                 yield surface(player);
-                player.sendMessage(`§fYou made it to a depth of: §2${meters} meters \n§fOnly ${98 - meters} meters to the bottom. `);
+                player.runCommandAsync("scoreboard objectives setdisplay sidebar");
+                if (meters > 0) {
+                    player.sendMessage(`§fYou made it to a depth of: §2${meters}m \n§fOnly ${20 - meters}m to the bottom. `);
+                }
             }
         }
     }

@@ -673,11 +673,11 @@ async function calculateRatio(ingredients) {
   let melonPotatoRatio = melonRatio / potatoRatio;
   if (beetrootMelonRatio === 1.5 && melonPotatoRatio === 2) {
     let potion2 = "water_breathing";
-    let seconds2 = Math.ceil(beetrootRatio + melonRatio + potatoRatio);
+    let seconds2 = Math.ceil((beetrootRatio + melonRatio + potatoRatio) * 1.7);
     return { potion: potion2, seconds: seconds2 };
   } else if (nightVision === 2) {
     let potion2 = "night_vision";
-    let seconds2 = Math.ceil(ingredients.apple + ingredients.carrot);
+    let seconds2 = Math.ceil((ingredients.apple + ingredients.carrot) * 1.7);
     return { potion: potion2, seconds: seconds2 };
   } else if (wrongIngredientsSight === 0 && potatoRatio + carrotRatio > 0) {
     let seconds2 = 4;
@@ -956,7 +956,7 @@ function mainTick() {
   world8.getAllPlayers().forEach((player) => {
     if (player.isInWater == true) {
       player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
-      meters = 95 - Math.floor(player.location.y);
+      meters = 94 - Math.floor(player.location.y);
       player.runCommand(`scoreboard players set Meters Depth ${meters}`);
       if (potionDrank) {
         applyPotionEffect(player, potion, seconds);
@@ -979,8 +979,9 @@ function mainTick() {
   system4.run(mainTick);
 }
 async function surface(player) {
-  player.runCommandAsync("scoreboard objectives setdisplay sidebar");
+  player.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
   player.teleport({ x: -3, y: 96, z: 144 });
+  player.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
   player.addEffect("instant_health", 5);
   player.removeEffect("blindness");
   player.removeEffect("night_vision");
@@ -1005,12 +1006,12 @@ world8.afterEvents.entityHealthChanged.subscribe(async (event) => {
     let player = event.entity;
     if (player.isInWater == true) {
       if (event.newValue === 18) {
-        player.runCommandAsync("scoreboard objectives setdisplay sidebar");
         await surface(player);
-        player.sendMessage(
-          `\xA7fYou made it to a depth of: \xA72${meters} meters 
-\xA7fOnly ${98 - meters} meters to the bottom. `
-        );
+        player.runCommandAsync("scoreboard objectives setdisplay sidebar");
+        if (meters > 0) {
+          player.sendMessage(`\xA7fYou made it to a depth of: \xA72${meters}m 
+\xA7fOnly ${20 - meters}m to the bottom. `);
+        }
       }
     }
   }
