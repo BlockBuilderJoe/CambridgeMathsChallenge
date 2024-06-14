@@ -1,7 +1,15 @@
 import { BlockPermutation, BlockInventoryComponent, system, world } from "@minecraft/server";
 import { getBlockValue } from "./input";
+import { giveWand } from "./wand";
 
 let overworld = world.getDimension("overworld");
+
+export async function startPotionGame() {
+  overworld.runCommandAsync(`clear @p`);
+  overworld.runCommandAsync(`effect @p haste 9999 99 true`);
+  await giveWand();
+  await giveIngredients();
+}
 
 export async function getSlots(event: any) {
   let hopper: BlockInventoryComponent | undefined = event.block.getComponent("inventory");

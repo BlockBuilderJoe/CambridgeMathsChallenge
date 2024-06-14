@@ -2,11 +2,17 @@ import { BlockPermutation, world, system } from "@minecraft/server";
 import { perfectRun, validRanges, finalBlock, replaySettings } from "./perfectRun";
 let overworld = world.getDimension("overworld");
 let rodsPlaced = [];
+export function startCuisenaireGame() {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield resetNPC(13);
+        yield giveRods();
+        yield resetGrid({ x: 19, y: 95, z: 81 }); //top left corner of the area.
+    });
+}
 export function directionCheck(x, z, direction) {
     return __awaiter(this, void 0, void 0, function* () {
         let correctDirection = false;
         for (const range of validRanges) {
-            //world.sendMessage(`x: ${x} z: ${z}`);
             if ((range.x !== undefined && x === range.x && isInRange(z, range.zMin, range.zMax)) ||
                 (range.z !== undefined && z === range.z && isInRange(x, range.xMin, range.xMax))) {
                 correctDirection = true;
@@ -145,18 +151,18 @@ export function replay(index) {
             let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
             rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === replayConfig.cartesionValue));
             let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue); //ISSUE appears to be here
-            //if (perfectRunToReplay.length > 1) {
-            //perfectRunToReplay = perfectRunToReplay.slice(0, -1); //gets the last one so you don't have a bunch of them appearing.
-            //}
+            if (perfectRunToReplay.length > 1) {
+                perfectRunToReplay = perfectRunToReplay.slice(0, -1); //gets the last one so you don't have a bunch of them appearing.
+            }
             combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
         }
         else if (replayConfig.cartesianDirection === "z") {
             let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
             rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.z === replayConfig.cartesionValue));
             let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
-            //if (perfectRunToReplay.length > 1) {
-            //perfectRunToReplay = perfectRunToReplay.slice(0, -1); //gets the last one so you don't have a bunch of them appearing.
-            //}
+            if (perfectRunToReplay.length > 1) {
+                perfectRunToReplay = perfectRunToReplay.slice(0, -1); //gets the last one so you don't have a bunch of them appearing.
+            }
             combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
         }
         if (combinedRods.length > 0) {

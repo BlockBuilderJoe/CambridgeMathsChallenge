@@ -1,9 +1,9 @@
 import { world, system, BlockPermutation } from "@minecraft/server";
 import { windowUndoHandler, windowScaleHandler, startWindowGame } from "./stainedGlassWindow";
-import { cuisenaire, getBlockBehind, resetGrid, giveRods, resetNPC, directionCheck } from "./cuisenaireRods";
+import { cuisenaire, getBlockBehind, directionCheck, startCuisenaireGame, } from "./cuisenaireRods";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
-import { potionMaker, displayTimer, getSlots, giveIngredients } from "./potionGame";
+import { potionMaker, displayTimer, getSlots, startPotionGame } from "./potionGame";
 import { giveWand } from "./wand";
 import "./npcscriptEventHandler"; //handles the NPC script events
 let overworld = world.getDimension("overworld");
@@ -13,8 +13,7 @@ let currentPlayer = null;
 let potionStart = 0;
 let potionDrank = false;
 let meters = 0;
-let rodsToRemove = [];
-//welcome player
+//getPlayer
 world.afterEvents.playerSpawn.subscribe((eventData) => {
     currentPlayer = eventData.player; //gets player for use later on.
     let initialSpawn = eventData.initialSpawn;
@@ -24,26 +23,16 @@ world.afterEvents.playerSpawn.subscribe((eventData) => {
 world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
     switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
         case "29,97,106": {
-            let player = event.source; // Cast event.source to Player type
-            rodsToRemove = []; //resets the rods to remove array
-            yield resetNPC(13);
-            yield giveRods();
-            yield resetGrid({ x: 19, y: 95, z: 81 }); //top left corner of the area.
+            yield startCuisenaireGame();
             break;
         }
         case "66,97,224": {
             yield startWindowGame();
-        }
-        case "24,95,45": {
-            let player = event.source; // Cast event.source to Player type
-            //await replayRods(player, perfectRun); // Pass the casted player as an argument
             break;
         }
         case "1,97,151": {
-            overworld.runCommandAsync(`clear @p`);
-            overworld.runCommandAsync(`effect @p haste 9999 99 true`);
-            yield giveWand();
-            yield giveIngredients();
+            yield startPotionGame();
+            break;
         }
     }
 }));

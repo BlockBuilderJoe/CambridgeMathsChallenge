@@ -427,6 +427,11 @@ var replaySettings = [
 // scripts/cuisenaireRods.ts
 var overworld5 = world5.getDimension("overworld");
 var rodsPlaced = [];
+async function startCuisenaireGame() {
+  await resetNPC(13);
+  await giveRods();
+  await resetGrid({ x: 19, y: 95, z: 81 });
+}
 async function directionCheck(x, z, direction) {
   let correctDirection = false;
   for (const range of validRanges) {
@@ -532,11 +537,17 @@ async function replay(index) {
     let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
     rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === replayConfig.cartesionValue));
     let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
+    if (perfectRunToReplay.length > 1) {
+      perfectRunToReplay = perfectRunToReplay.slice(0, -1);
+    }
     combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
   } else if (replayConfig.cartesianDirection === "z") {
     let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
     rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.z === replayConfig.cartesionValue));
     let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
+    if (perfectRunToReplay.length > 1) {
+      perfectRunToReplay = perfectRunToReplay.slice(0, -1);
+    }
     combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
   }
   if (combinedRods.length > 0) {
@@ -659,6 +670,12 @@ async function facing(blockLocation) {
 // scripts/potionGame.ts
 import { BlockPermutation as BlockPermutation4, system as system2, world as world6 } from "@minecraft/server";
 var overworld6 = world6.getDimension("overworld");
+async function startPotionGame() {
+  overworld6.runCommandAsync(`clear @p`);
+  overworld6.runCommandAsync(`effect @p haste 9999 99 true`);
+  await giveWand();
+  await giveIngredients();
+}
 async function getSlots(event) {
   let hopper = event.block.getComponent("inventory");
   let slots = [];
@@ -828,7 +845,6 @@ var currentPlayer = null;
 var potionStart = 0;
 var potionDrank = false;
 var meters = 0;
-var rodsToRemove = [];
 world8.afterEvents.playerSpawn.subscribe((eventData) => {
   currentPlayer = eventData.player;
   let initialSpawn = eventData.initialSpawn;
@@ -837,25 +853,16 @@ world8.afterEvents.playerSpawn.subscribe((eventData) => {
 world8.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
     case "29,97,106": {
-      let player = event.source;
-      rodsToRemove = [];
-      await resetNPC(13);
-      await giveRods();
-      await resetGrid({ x: 19, y: 95, z: 81 });
+      await startCuisenaireGame();
       break;
     }
     case "66,97,224": {
       await startWindowGame();
-    }
-    case "24,95,45": {
-      let player = event.source;
       break;
     }
     case "1,97,151": {
-      overworld7.runCommandAsync(`clear @p`);
-      overworld7.runCommandAsync(`effect @p haste 9999 99 true`);
-      await giveWand();
-      await giveIngredients();
+      await startPotionGame();
+      break;
     }
   }
 });

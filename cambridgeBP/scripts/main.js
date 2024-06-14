@@ -1,8 +1,8 @@
 // scripts/main.ts
 import { world as world8, system as system4, BlockPermutation as BlockPermutation5 } from "@minecraft/server";
 
-// scripts/scaler.ts
-import { world as world3 } from "@minecraft/server";
+// scripts/stainedGlassWindow.ts
+import { world as world4 } from "@minecraft/server";
 
 // scripts/input.ts
 import { BlockPermutation, world } from "@minecraft/server";
@@ -68,8 +68,29 @@ function cycleNumberBlock(clickEvent) {
   }
 }
 
-// scripts/scaler.ts
+// scripts/wand.ts
+import { world as world3 } from "@minecraft/server";
 var overworld3 = world3.getDimension("overworld");
+async function giveWand() {
+  overworld3.runCommandAsync(
+    `give @p[hasitem={item=stick,quantity=0}] minecraft:stick 1 0 {"item_lock": { "mode": "lock_in_slot" }, "minecraft:can_destroy":{"blocks":["minecraft:hopper", "blockbuilders:number_0","blockbuilders:number_1","blockbuilders:number_2","blockbuilders:number_3","blockbuilders:number_4","blockbuilders:number_5","blockbuilders:number_6","blockbuilders:number_7","blockbuilders:number_8","blockbuilders:number_9","blockbuilders:symbol_subtract"]}}`
+  );
+}
+
+// scripts/stainedGlassWindow.ts
+var overworld4 = world4.getDimension("overworld");
+async function startWindowGame() {
+  overworld4.runCommandAsync(`clear @p`);
+  await giveWand();
+  overworld4.runCommandAsync(`fill 69 98 225 69 102 225 air replace`);
+  overworld4.runCommandAsync(`fill 78 98 225 80 98 225 air replace`);
+  overworld4.runCommandAsync(`fill 78 99 225 79 99 225 air replace`);
+  overworld4.runCommandAsync(`fill 78 100 225 78 100 225 air replace`);
+  overworld4.runCommandAsync(`setblock 71 98 225 blockbuilders:number_0`);
+  overworld4.runCommandAsync(`setblock 82 98 225 blockbuilders:number_0`);
+  windowUndoHandler({ x: 71, y: 97, z: 225 });
+  windowUndoHandler({ x: 82, y: 97, z: 225 });
+}
 async function windowScaleHandler(location) {
   switch (true) {
     case (location.x === 71 && location.y === 97 && location.z === 225): {
@@ -98,14 +119,14 @@ async function windowUndoHandler(location) {
   }
 }
 function giveGlass() {
-  overworld3.runCommand("replaceitem entity @p slot.hotbar 1 yellow_stained_glass 10");
-  overworld3.runCommand("replaceitem entity @p slot.hotbar 2 green_stained_glass 10");
-  overworld3.runCommand("replaceitem entity @p slot.hotbar 3 blue_stained_glass 10");
-  overworld3.runCommand("replaceitem entity @p slot.hotbar 4 purple_stained_glass 10");
-  overworld3.runCommand("replaceitem entity @p slot.hotbar 5 red_stained_glass 10");
-  overworld3.runCommand("replaceitem entity @p slot.hotbar 6 lime_stained_glass 10");
-  overworld3.runCommand("replaceitem entity @p slot.hotbar 7 black_stained_glass 10");
-  overworld3.runCommand("replaceitem entity @p slot.hotbar 8 brown_stained_glass 10");
+  overworld4.runCommand("replaceitem entity @p slot.hotbar 1 yellow_stained_glass 10");
+  overworld4.runCommand("replaceitem entity @p slot.hotbar 2 green_stained_glass 10");
+  overworld4.runCommand("replaceitem entity @p slot.hotbar 3 blue_stained_glass 10");
+  overworld4.runCommand("replaceitem entity @p slot.hotbar 4 purple_stained_glass 10");
+  overworld4.runCommand("replaceitem entity @p slot.hotbar 5 red_stained_glass 10");
+  overworld4.runCommand("replaceitem entity @p slot.hotbar 6 lime_stained_glass 10");
+  overworld4.runCommand("replaceitem entity @p slot.hotbar 7 black_stained_glass 10");
+  overworld4.runCommand("replaceitem entity @p slot.hotbar 8 brown_stained_glass 10");
 }
 async function scale(cubePos1, cubePos2, inputNumber) {
   const blocks = await getCube(cubePos1, cubePos2);
@@ -127,11 +148,11 @@ async function scale(cubePos1, cubePos2, inputNumber) {
   }
 }
 async function windowUndo(from, to, into) {
-  await overworld3.runCommandAsync(
+  await overworld4.runCommandAsync(
     `clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`
   );
-  await overworld3.runCommandAsync(`fill ${from.x} 116 ${from.z} ${to.x} 120 ${to.z} air replace`);
-  await overworld3.runCommandAsync(`fill ${from.x} 120 ${from.z} ${to.x} 150 ${to.z} air replace`);
+  await overworld4.runCommandAsync(`fill ${from.x} 116 ${from.z} ${to.x} 120 ${to.z} air replace`);
+  await overworld4.runCommandAsync(`fill ${from.x} 120 ${from.z} ${to.x} 150 ${to.z} air replace`);
 }
 async function scaleShape(shape, scaleFactor, axes) {
   const scaledShape = [];
@@ -166,12 +187,8 @@ async function scaleShape(shape, scaleFactor, axes) {
   return scaledShape;
 }
 
-// scripts/rod.ts
-import {
-  BlockPermutation as BlockPermutation3,
-  world as world4,
-  system
-} from "@minecraft/server";
+// scripts/cuisenaireRods.ts
+import { BlockPermutation as BlockPermutation3, world as world5, system } from "@minecraft/server";
 
 // scripts/perfectRun.ts
 var perfectRun = [
@@ -407,8 +424,8 @@ var replaySettings = [
   }
 ];
 
-// scripts/rod.ts
-var overworld4 = world4.getDimension("overworld");
+// scripts/cuisenaireRods.ts
+var overworld5 = world5.getDimension("overworld");
 var rodsPlaced = [];
 async function directionCheck(x, z, direction) {
   let correctDirection = false;
@@ -426,12 +443,12 @@ function isInRange(value, min, max) {
 async function cuisenaire(block, blockName, rodLength, successMessage, direction) {
   if (block.permutation?.matches(blockName)) {
     let runPlaceRods = true;
-    overworld4.runCommand(`title @p actionbar ${successMessage} placed`);
+    overworld5.runCommand(`title @p actionbar ${successMessage} placed`);
     block.setPermutation(BlockPermutation3.resolve("tallgrass"));
     for (let i = 0; i < rodLength; i++) {
       let colour = block[direction](i)?.permutation?.getState("color");
       if (colour || block[direction](i)?.permutation?.matches("sandstone")) {
-        overworld4.runCommand("title @p actionbar That rod is too long!");
+        overworld5.runCommand("title @p actionbar That rod is too long!");
         runPlaceRods = false;
         break;
       }
@@ -455,7 +472,7 @@ async function cuisenaire(block, blockName, rodLength, successMessage, direction
 async function resetNPC(npcAmount) {
   rodsPlaced = [];
   for (let i = 0; i < npcAmount; i++) {
-    overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Default`);
+    overworld5.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Default`);
   }
 }
 function placeRods(block, blockName, rodLength, direction) {
@@ -492,25 +509,25 @@ async function replayMessage(beginningMessage, fractions) {
       const perfectRunFractions = fractions.filter((fraction) => fraction !== void 0 && !fraction.startsWith("1"));
       if (perfectRunFractions.length > 0) {
         const perfectRunFractionsSum = perfectRunFractions.join(" + ");
-        overworld4.runCommandAsync(`title @p actionbar ${perfectRunFractionsSum}`);
+        overworld5.runCommandAsync(`title @p actionbar ${perfectRunFractionsSum}`);
       } else if (playerPlacedFractions.length > 0) {
         const fractionsSum = playerPlacedFractions.join(" + ");
-        overworld4.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
+        overworld5.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
       }
     }
   } else {
-    world4.sendMessage(`Error: No fractions found`);
+    world5.sendMessage(`Error: No fractions found`);
   }
 }
 async function replay(index) {
   giveRods();
-  overworld4.runCommandAsync(`tp @p 31 96 116`);
+  overworld5.runCommandAsync(`tp @p 31 96 116`);
   let npcIndex = index;
   let fractions = [];
   let combinedRods = [];
   let replayConfig = replaySettings[index];
-  overworld4.runCommandAsync(replayConfig.clearBlock);
-  overworld4.runCommandAsync(replayConfig.replenishGrass);
+  overworld5.runCommandAsync(replayConfig.clearBlock);
+  overworld5.runCommandAsync(replayConfig.replenishGrass);
   if (replayConfig.cartesianDirection === "x") {
     let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
     rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === replayConfig.cartesionValue));
@@ -527,11 +544,11 @@ async function replay(index) {
       ((index2) => {
         system.runTimeout(async () => {
           let x = combinedRods[index2].location.x;
-          world4.getAllPlayers().forEach(async (player) => {
+          world5.getAllPlayers().forEach(async (player) => {
             await setCameraView(player, npcIndex);
             fractions.push(combinedRods[index2].successMessage);
             await replayMessage(replayConfig.beginningMessage, fractions);
-            let block = overworld4.getBlock(combinedRods[index2].location);
+            let block = overworld5.getBlock(combinedRods[index2].location);
             placeRods(
               block,
               combinedRods[index2].blockName,
@@ -566,12 +583,12 @@ function endReplay(player, tpStart, clearCommand, replenishGrass, combinedRods) 
 async function squareReset(pos1, pos2, concreteColours) {
   for (let i = 0; i < concreteColours.length; i++) {
     let command = `fill ${pos1.x} ${pos1.y} ${pos1.z} ${pos2.x} ${pos2.y} ${pos2.z} tallgrass replace ${concreteColours[i]}_concrete`;
-    overworld4.runCommand(command);
+    overworld5.runCommand(command);
   }
-  overworld4.runCommandAsync(
+  overworld5.runCommandAsync(
     `fill ${pos1.x} ${pos1.y - 1} ${pos1.z} ${pos2.x} ${pos2.y - 1} ${pos2.z} grass replace dirt`
   );
-  overworld4.runCommandAsync(`fill ${pos1.x} ${pos1.y} ${pos1.z} ${pos2.x} ${pos2.y} ${pos2.z} tallgrass replace air`);
+  overworld5.runCommandAsync(`fill ${pos1.x} ${pos1.y} ${pos1.z} ${pos2.x} ${pos2.y} ${pos2.z} tallgrass replace air`);
 }
 async function resetGrid(location) {
   let concreteColours = ["red", "green", "purple", "brown", "blue", "lime", "yellow"];
@@ -592,17 +609,17 @@ async function giveRods() {
     { block: "yellow_concrete", amount: 1 },
     { block: "blue_concrete", amount: 2 }
   ];
-  overworld4.runCommandAsync(`clear @p`);
-  overworld4.runCommandAsync(`gamemode adventure`);
+  overworld5.runCommandAsync(`clear @p`);
+  overworld5.runCommandAsync(`gamemode adventure`);
   for (let i = 0; i < rods.length; i++) {
-    overworld4.runCommandAsync(
+    overworld5.runCommandAsync(
       `give @p ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
     );
   }
 }
 async function checkFinalBlock() {
   for (let i = 0; i < finalBlock.length; i++) {
-    let rodEnd = overworld4.getBlock(finalBlock[i].location);
+    let rodEnd = overworld5.getBlock(finalBlock[i].location);
     let hasColour = rodEnd?.permutation?.getState("color");
     if (rodEnd?.permutation?.matches(finalBlock[i].blockName)) {
       changeNPC(i, true);
@@ -613,9 +630,9 @@ async function checkFinalBlock() {
 }
 async function changeNPC(matchingRodIndex, win) {
   if (win) {
-    overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
+    overworld5.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
   } else {
-    overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Fail`);
+    overworld5.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Fail`);
   }
 }
 
@@ -639,9 +656,15 @@ async function facing(blockLocation) {
   return { direction, oppositeDirection };
 }
 
-// scripts/potion.ts
-import { BlockPermutation as BlockPermutation4, system as system2, world as world5 } from "@minecraft/server";
-var overworld5 = world5.getDimension("overworld");
+// scripts/potionGame.ts
+import { BlockPermutation as BlockPermutation4, system as system2, world as world6 } from "@minecraft/server";
+var overworld6 = world6.getDimension("overworld");
+async function startPotionGame() {
+  overworld6.runCommandAsync(`clear @p`);
+  overworld6.runCommandAsync(`effect @p haste 9999 99 true`);
+  await giveWand();
+  await giveIngredients();
+}
 async function getSlots(event) {
   let hopper = event.block.getComponent("inventory");
   let slots = [];
@@ -656,8 +679,8 @@ async function getSlots(event) {
   return slots;
 }
 async function givePotion() {
-  world5.getDimension("overworld").runCommandAsync(`clear @p minecraft:potion`);
-  world5.getDimension("overworld").runCommandAsync(`give @p minecraft:potion 1`);
+  world6.getDimension("overworld").runCommandAsync(`clear @p minecraft:potion`);
+  world6.getDimension("overworld").runCommandAsync(`give @p minecraft:potion 1`);
 }
 async function calculateRatio(ingredients) {
   let wrongIngredientsSight = ingredients.potato + ingredients.beetroot + ingredients.melon;
@@ -673,11 +696,11 @@ async function calculateRatio(ingredients) {
   let melonPotatoRatio = melonRatio / potatoRatio;
   if (beetrootMelonRatio === 1.5 && melonPotatoRatio === 2) {
     let potion2 = "water_breathing";
-    let seconds2 = Math.ceil(beetrootRatio + melonRatio + potatoRatio);
+    let seconds2 = Math.ceil((beetrootRatio + melonRatio + potatoRatio) * 1.7);
     return { potion: potion2, seconds: seconds2 };
   } else if (nightVision === 2) {
     let potion2 = "night_vision";
-    let seconds2 = Math.ceil(ingredients.apple + ingredients.carrot);
+    let seconds2 = Math.ceil((ingredients.apple + ingredients.carrot) * 1.7);
     return { potion: potion2, seconds: seconds2 };
   } else if (wrongIngredientsSight === 0 && potatoRatio + carrotRatio > 0) {
     let seconds2 = 4;
@@ -758,7 +781,7 @@ async function setGlass(slot, blockName) {
 async function setItemFrame(offset_z, slotNumber) {
   let cloneFrom = 145 - offset_z;
   let cloneTo = 145 - slotNumber;
-  world5.getDimension("overworld").runCommandAsync(`clone -11 109 ${cloneFrom} -11 109 ${cloneFrom} -11 97 ${cloneTo} replace`);
+  world6.getDimension("overworld").runCommandAsync(`clone -11 109 ${cloneFrom} -11 109 ${cloneFrom} -11 97 ${cloneTo} replace`);
 }
 async function potionMaker(slots) {
   await resetArea();
@@ -770,14 +793,14 @@ async function potionMaker(slots) {
   return { potion: potion2, seconds: seconds2 };
 }
 async function resetArea() {
-  await world5.getDimension("overworld").runCommandAsync("fill -12 106 141 -12 96 145 black_stained_glass replace");
+  await world6.getDimension("overworld").runCommandAsync("fill -12 106 141 -12 96 145 black_stained_glass replace");
 }
 async function giveIngredients() {
-  overworld5.runCommand("replaceitem entity @p slot.hotbar 1 apple 10");
-  overworld5.runCommand("replaceitem entity @p slot.hotbar 2 carrot 10");
-  overworld5.runCommand("replaceitem entity @p slot.hotbar 3 beetroot 10");
-  overworld5.runCommand("replaceitem entity @p slot.hotbar 4 potato 10");
-  overworld5.runCommand("replaceitem entity @p slot.hotbar 5 melon_slice 10");
+  overworld6.runCommand("replaceitem entity @p slot.hotbar 1 apple 10");
+  overworld6.runCommand("replaceitem entity @p slot.hotbar 2 carrot 10");
+  overworld6.runCommand("replaceitem entity @p slot.hotbar 3 beetroot 10");
+  overworld6.runCommand("replaceitem entity @p slot.hotbar 4 potato 10");
+  overworld6.runCommand("replaceitem entity @p slot.hotbar 5 melon_slice 10");
 }
 function displayTimer(potionStart2, seconds2, player, potionDescription) {
   let timeLeft = (potionStart2 + seconds2 * 20 - system2.currentTick) / 20;
@@ -785,15 +808,6 @@ function displayTimer(potionStart2, seconds2, player, potionDescription) {
     player.onScreenDisplay.setActionBar(`Time left:
  ${potionDescription} ${timeLeft} seconds`);
   }
-}
-
-// scripts/wand.ts
-import { world as world6 } from "@minecraft/server";
-var overworld6 = world6.getDimension("overworld");
-async function giveWand() {
-  overworld6.runCommandAsync(
-    `give @p[hasitem={item=stick,quantity=0}] minecraft:stick 1 0 {"item_lock": { "mode": "lock_in_slot" }, "minecraft:can_destroy":{"blocks":["minecraft:hopper", "blockbuilders:number_0","blockbuilders:number_1","blockbuilders:number_2","blockbuilders:number_3","blockbuilders:number_4","blockbuilders:number_5","blockbuilders:number_6","blockbuilders:number_7","blockbuilders:number_8","blockbuilders:number_9","blockbuilders:symbol_subtract"]}}`
-  );
 }
 
 // scripts/npcscriptEventHandler.ts
@@ -824,13 +838,7 @@ var rodsToRemove = [];
 world8.afterEvents.playerSpawn.subscribe((eventData) => {
   currentPlayer = eventData.player;
   let initialSpawn = eventData.initialSpawn;
-  if (initialSpawn) {
-    currentPlayer.sendMessage(`\xA73Welcome back ${currentPlayer.name}!`);
-    giveWand();
-  } else {
-    currentPlayer.sendMessage(`\xA73Welcome ${currentPlayer.name}!`);
-    giveWand();
-  }
+  giveWand();
 });
 world8.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
@@ -843,18 +851,14 @@ world8.afterEvents.buttonPush.subscribe(async (event) => {
       break;
     }
     case "66,97,224": {
-      overworld7.runCommandAsync(`clear @p`);
-      await giveWand();
+      await startWindowGame();
     }
     case "24,95,45": {
       let player = event.source;
       break;
     }
     case "1,97,151": {
-      overworld7.runCommandAsync(`clear @p`);
-      overworld7.runCommandAsync(`effect @p haste 9999 99 true`);
-      await giveWand();
-      await giveIngredients();
+      await startPotionGame();
     }
   }
 });
@@ -956,7 +960,7 @@ function mainTick() {
   world8.getAllPlayers().forEach((player) => {
     if (player.isInWater == true) {
       player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
-      meters = 95 - Math.floor(player.location.y);
+      meters = 94 - Math.floor(player.location.y);
       player.runCommand(`scoreboard players set Meters Depth ${meters}`);
       if (potionDrank) {
         applyPotionEffect(player, potion, seconds);
@@ -979,8 +983,9 @@ function mainTick() {
   system4.run(mainTick);
 }
 async function surface(player) {
-  player.runCommandAsync("scoreboard objectives setdisplay sidebar");
+  player.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
   player.teleport({ x: -3, y: 96, z: 144 });
+  player.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
   player.addEffect("instant_health", 5);
   player.removeEffect("blindness");
   player.removeEffect("night_vision");
@@ -1005,12 +1010,12 @@ world8.afterEvents.entityHealthChanged.subscribe(async (event) => {
     let player = event.entity;
     if (player.isInWater == true) {
       if (event.newValue === 18) {
-        player.runCommandAsync("scoreboard objectives setdisplay sidebar");
         await surface(player);
-        player.sendMessage(
-          `\xA7fYou made it to a depth of: \xA72${meters} meters 
-\xA7fOnly ${98 - meters} meters to the bottom. `
-        );
+        player.runCommandAsync("scoreboard objectives setdisplay sidebar");
+        if (meters > 0) {
+          player.sendMessage(`\xA7fYou made it to a depth of: \xA72${meters}m 
+\xA7fOnly ${20 - meters}m to the bottom. `);
+        }
       }
     }
   }

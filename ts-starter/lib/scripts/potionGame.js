@@ -1,6 +1,15 @@
 import { BlockPermutation, system, world } from "@minecraft/server";
 import { getBlockValue } from "./input";
+import { giveWand } from "./wand";
 let overworld = world.getDimension("overworld");
+export function startPotionGame() {
+    return __awaiter(this, void 0, void 0, function* () {
+        overworld.runCommandAsync(`clear @p`);
+        overworld.runCommandAsync(`effect @p haste 9999 99 true`);
+        yield giveWand();
+        yield giveIngredients();
+    });
+}
 export function getSlots(event) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;

@@ -1,9 +1,17 @@
 import { world, system, Player, BlockPermutation, Block, Entity, Scoreboard } from "@minecraft/server";
 import { windowUndoHandler, windowScaleHandler, startWindowGame } from "./stainedGlassWindow";
-import { cuisenaire, getBlockBehind, resetGrid, giveRods, resetNPC, directionCheck } from "./cuisenaireRods";
+import {
+  cuisenaire,
+  getBlockBehind,
+  resetGrid,
+  giveRods,
+  resetNPC,
+  directionCheck,
+  startCuisenaireGame,
+} from "./cuisenaireRods";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
-import { potionMaker, displayTimer, getSlots, giveIngredients } from "./potionGame";
+import { potionMaker, displayTimer, getSlots, giveIngredients, startPotionGame } from "./potionGame";
 import { giveWand } from "./wand";
 import "./npcscriptEventHandler"; //handles the NPC script events
 
@@ -14,9 +22,8 @@ let currentPlayer = null;
 let potionStart = 0;
 let potionDrank = false;
 let meters = 0;
-let rodsToRemove: any[] = [];
 
-//welcome player
+//getPlayer
 world.afterEvents.playerSpawn.subscribe((eventData) => {
   currentPlayer = eventData.player; //gets player for use later on.
   let initialSpawn = eventData.initialSpawn;
@@ -27,29 +34,20 @@ world.afterEvents.playerSpawn.subscribe((eventData) => {
 world.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
     case "29,97,106": {
-      let player = event.source as Entity; // Cast event.source to Player type
-      rodsToRemove = []; //resets the rods to remove array
-      await resetNPC(13);
-      await giveRods();
-      await resetGrid({ x: 19, y: 95, z: 81 }); //top left corner of the area.
+      await startCuisenaireGame();
       break;
     }
     case "66,97,224": {
       await startWindowGame();
-    }
-    case "24,95,45": {
-      let player = event.source as Entity; // Cast event.source to Player type
-      //await replayRods(player, perfectRun); // Pass the casted player as an argument
       break;
     }
     case "1,97,151": {
-      overworld.runCommandAsync(`clear @p`);
-      overworld.runCommandAsync(`effect @p haste 9999 99 true`);
-      await giveWand();
-      await giveIngredients();
+      await startPotionGame();
+      break;
     }
   }
 });
+
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let block = event.block;
