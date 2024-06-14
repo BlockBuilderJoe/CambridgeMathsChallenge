@@ -1,4 +1,5 @@
-//defines the perfect run for the Cuisneaire Rods game.
+//defines variables for the cuisneaire rod game.
+
 export const perfectRun = [
   {
     location: { z: 104, y: 95, x: 30 },

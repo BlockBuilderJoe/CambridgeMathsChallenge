@@ -1,5 +1,5 @@
 import { system, world } from "@minecraft/server";
-import { replay } from "./rod";
+import { replay } from "./cuisenaireRods";
 import { perfectRun } from "./perfectRun";
 
 //handles the scriptEventReceive from NPCs

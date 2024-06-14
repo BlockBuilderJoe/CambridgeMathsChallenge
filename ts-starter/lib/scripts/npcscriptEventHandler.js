@@ -1,5 +1,5 @@
 import { system, world } from "@minecraft/server";
-import { replay } from "./rod";
+import { replay } from "./cuisenaireRods";
 //handles the scriptEventReceive from NPCs
 system.afterEvents.scriptEventReceive.subscribe((event) => {
     switch (event.id) {

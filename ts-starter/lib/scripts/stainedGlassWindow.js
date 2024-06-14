@@ -110,4 +110,4 @@ export function scaleShape(shape, scaleFactor, axes) {
         return scaledShape;
     });
 }
-//# sourceMappingURL=scaler.js.map
+//# sourceMappingURL=stainedGlassWindow.js.map

@@ -1,14 +1,4 @@
-import {
-  BlockPermutation,
-  world,
-  system,
-  Vector3,
-  Player,
-  EntityInventoryComponent,
-  EquipmentSlot,
-  EntityItemComponent,
-  PressurePlatePopAfterEvent,
-} from "@minecraft/server";
+import { BlockPermutation, world, system, Vector3 } from "@minecraft/server";
 import { roundToDigits } from "./numberHandler";
 import { perfectRun, validRanges, finalBlock, replaySettings } from "./perfectRun";
 

@@ -1,4 +1,4 @@
-import { BlockPermutation, world, system, } from "@minecraft/server";
+import { BlockPermutation, world, system } from "@minecraft/server";
 import { perfectRun, validRanges, finalBlock, replaySettings } from "./perfectRun";
 let overworld = world.getDimension("overworld");
 let rodsPlaced = [];
@@ -259,4 +259,4 @@ function changeNPC(matchingRodIndex, win) {
         }
     });
 }
-//# sourceMappingURL=rod.js.map
+//# sourceMappingURL=cuisenaireRods.js.map

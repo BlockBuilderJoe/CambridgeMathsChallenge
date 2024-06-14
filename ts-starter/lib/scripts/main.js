@@ -1,9 +1,9 @@
 import { world, system, BlockPermutation } from "@minecraft/server";
-import { windowUndoHandler, windowScaleHandler } from "./scaler";
-import { cuisenaire, getBlockBehind, resetGrid, giveRods, resetNPC, directionCheck } from "./rod";
+import { windowUndoHandler, windowScaleHandler } from "./stainedGlassWindow";
+import { cuisenaire, getBlockBehind, resetGrid, giveRods, resetNPC, directionCheck } from "./cuisenaireRods";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
-import { potionMaker, displayTimer, getSlots, giveIngredients } from "./potion";
+import { potionMaker, displayTimer, getSlots, giveIngredients } from "./potionGame";
 import { giveWand } from "./wand";
 import "./npcscriptEventHandler"; //handles the NPC script events
 let overworld = world.getDimension("overworld");

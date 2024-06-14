@@ -174,4 +174,4 @@ export function displayTimer(potionStart, seconds, player, potionDescription) {
         player.onScreenDisplay.setActionBar(`Time left:\n ${potionDescription} ${timeLeft} seconds`);
     }
 }
-//# sourceMappingURL=potion.js.map
+//# sourceMappingURL=potionGame.js.map

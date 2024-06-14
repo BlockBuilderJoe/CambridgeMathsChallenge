@@ -1,7 +1,7 @@
 // scripts/main.ts
 import { world as world8, system as system4, BlockPermutation as BlockPermutation5 } from "@minecraft/server";
 
-// scripts/scaler.ts
+// scripts/stainedGlassWindow.ts
 import { world as world3 } from "@minecraft/server";
 
 // scripts/input.ts
@@ -68,7 +68,7 @@ function cycleNumberBlock(clickEvent) {
   }
 }
 
-// scripts/scaler.ts
+// scripts/stainedGlassWindow.ts
 var overworld3 = world3.getDimension("overworld");
 async function windowScaleHandler(location) {
   switch (true) {
@@ -166,12 +166,8 @@ async function scaleShape(shape, scaleFactor, axes) {
   return scaledShape;
 }
 
-// scripts/rod.ts
-import {
-  BlockPermutation as BlockPermutation3,
-  world as world4,
-  system
-} from "@minecraft/server";
+// scripts/cuisenaireRods.ts
+import { BlockPermutation as BlockPermutation3, world as world4, system } from "@minecraft/server";
 
 // scripts/perfectRun.ts
 var perfectRun = [
@@ -407,7 +403,7 @@ var replaySettings = [
   }
 ];
 
-// scripts/rod.ts
+// scripts/cuisenaireRods.ts
 var overworld4 = world4.getDimension("overworld");
 var rodsPlaced = [];
 async function directionCheck(x, z, direction) {
@@ -639,7 +635,7 @@ async function facing(blockLocation) {
   return { direction, oppositeDirection };
 }
 
-// scripts/potion.ts
+// scripts/potionGame.ts
 import { BlockPermutation as BlockPermutation4, system as system2, world as world5 } from "@minecraft/server";
 var overworld5 = world5.getDimension("overworld");
 async function getSlots(event) {
