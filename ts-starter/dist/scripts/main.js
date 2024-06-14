@@ -823,6 +823,7 @@ function displayTimer(potionStart2, seconds2, player, potionDescription) {
 
 // scripts/npcscriptEventHandler.ts
 import { system as system3, world as world7 } from "@minecraft/server";
+var overworld7 = world7.getDimension("overworld");
 system3.afterEvents.scriptEventReceive.subscribe((event) => {
   switch (event.id) {
     case "rod:npcReplay": {
@@ -831,14 +832,14 @@ system3.afterEvents.scriptEventReceive.subscribe((event) => {
       break;
     }
     case "rod:npcComplete": {
-      world7.sendMessage(`Complete Version ${event.message}`);
+      overworld7.runCommandAsync(`tp @e[type=npc,tag=npc${event.message}] 26 96 107`);
       break;
     }
   }
 });
 
 // scripts/main.ts
-var overworld7 = world8.getDimension("overworld");
+var overworld8 = world8.getDimension("overworld");
 var potion = "";
 var seconds = 0;
 var currentPlayer = null;
@@ -906,7 +907,7 @@ world8.beforeEvents.playerBreakBlock.subscribe(async (event) => {
   let block = event.block;
   if (block.permutation?.matches("hopper")) {
     event.cancel;
-    overworld7.runCommandAsync(`kill @e[type=item]`);
+    overworld8.runCommandAsync(`kill @e[type=item]`);
     let slots = await getSlots(event);
     ({ potion, seconds } = await potionMaker(slots));
   }

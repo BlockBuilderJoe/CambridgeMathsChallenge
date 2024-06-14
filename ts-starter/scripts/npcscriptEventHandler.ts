@@ -2,6 +2,7 @@ import { system, world } from "@minecraft/server";
 import { replay } from "./cuisenaireRods";
 import { perfectRun } from "./perfectRun";
 
+let overworld = world.getDimension("overworld");
 //handles the scriptEventReceive from NPCs
 system.afterEvents.scriptEventReceive.subscribe((event) => {
   switch (event.id) {
@@ -11,7 +12,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
       break;
     }
     case "rod:npcComplete": {
-      world.sendMessage(`Complete Version ${event.message}`);
+      overworld.runCommandAsync(`tp @e[type=npc,tag=npc${event.message}] 26 96 107`);
       break;
     }
   }

@@ -427,6 +427,11 @@ var replaySettings = [
 // scripts/cuisenaireRods.ts
 var overworld5 = world5.getDimension("overworld");
 var rodsPlaced = [];
+async function startCuisenaireGame() {
+  await resetNPC(13);
+  await giveRods();
+  await resetGrid({ x: 19, y: 95, z: 81 });
+}
 async function directionCheck(x, z, direction) {
   let correctDirection = false;
   for (const range of validRanges) {
@@ -532,11 +537,17 @@ async function replay(index) {
     let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
     rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === replayConfig.cartesionValue));
     let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
+    if (perfectRunToReplay.length > 1) {
+      perfectRunToReplay = perfectRunToReplay.slice(0, -1);
+    }
     combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
   } else if (replayConfig.cartesianDirection === "z") {
     let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
     rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.z === replayConfig.cartesionValue));
     let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
+    if (perfectRunToReplay.length > 1) {
+      perfectRunToReplay = perfectRunToReplay.slice(0, -1);
+    }
     combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
   }
   if (combinedRods.length > 0) {
@@ -812,6 +823,7 @@ function displayTimer(potionStart2, seconds2, player, potionDescription) {
 
 // scripts/npcscriptEventHandler.ts
 import { system as system3, world as world7 } from "@minecraft/server";
+var overworld7 = world7.getDimension("overworld");
 system3.afterEvents.scriptEventReceive.subscribe((event) => {
   switch (event.id) {
     case "rod:npcReplay": {
@@ -820,21 +832,20 @@ system3.afterEvents.scriptEventReceive.subscribe((event) => {
       break;
     }
     case "rod:npcComplete": {
-      world7.sendMessage(`Complete Version ${event.message}`);
+      overworld7.runCommandAsync(`tp @e[type=npc,tag=npc${event.message}] 26 96 107`);
       break;
     }
   }
 });
 
 // scripts/main.ts
-var overworld7 = world8.getDimension("overworld");
+var overworld8 = world8.getDimension("overworld");
 var potion = "";
 var seconds = 0;
 var currentPlayer = null;
 var potionStart = 0;
 var potionDrank = false;
 var meters = 0;
-var rodsToRemove = [];
 world8.afterEvents.playerSpawn.subscribe((eventData) => {
   currentPlayer = eventData.player;
   let initialSpawn = eventData.initialSpawn;
@@ -843,22 +854,16 @@ world8.afterEvents.playerSpawn.subscribe((eventData) => {
 world8.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
     case "29,97,106": {
-      let player = event.source;
-      rodsToRemove = [];
-      await resetNPC(13);
-      await giveRods();
-      await resetGrid({ x: 19, y: 95, z: 81 });
+      await startCuisenaireGame();
       break;
     }
     case "66,97,224": {
       await startWindowGame();
-    }
-    case "24,95,45": {
-      let player = event.source;
       break;
     }
     case "1,97,151": {
       await startPotionGame();
+      break;
     }
   }
 });
@@ -902,7 +907,7 @@ world8.beforeEvents.playerBreakBlock.subscribe(async (event) => {
   let block = event.block;
   if (block.permutation?.matches("hopper")) {
     event.cancel;
-    overworld7.runCommandAsync(`kill @e[type=item]`);
+    overworld8.runCommandAsync(`kill @e[type=item]`);
     let slots = await getSlots(event);
     ({ potion, seconds } = await potionMaker(slots));
   }
