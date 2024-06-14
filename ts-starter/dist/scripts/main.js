@@ -858,6 +858,7 @@ import { system as system4, world as world9 } from "@minecraft/server";
 import { world as world7 } from "@minecraft/server";
 var overworld7 = world7.getDimension("overworld");
 async function openGate(location) {
+  world7.sendMessage(`Opening gate ${location}`);
   switch (location) {
     case "spawn": {
       overworld7.runCommandAsync(`setblock 62 97 148 air`);
@@ -994,11 +995,14 @@ async function npcWalk(type) {
   }
 }
 async function moveNpc2(path, type) {
-  for (let i = 0; i < path.length; i++) {
+  for (let i = 0; i < path.length - 1; i++) {
     let { x, y, z } = path[i];
+    const nextPoint = path[i + 1];
+    const facingX = nextPoint.x;
+    const facingY = nextPoint.y;
+    const facingZ = nextPoint.z;
     system3.runTimeout(async () => {
-      await overworld8.runCommandAsync(`tp @e[tag=${type}Npc] ${x} ${y} ${z} `);
-      await overworld8.runCommandAsync(`scoreboard players add Saved Students 1`);
+      await overworld8.runCommandAsync(`tp @e[tag=${type}Npc] ${x} ${y} ${z} facing ${facingX} ${facingY} ${facingZ}`);
     }, i * 5);
   }
 }
@@ -1027,7 +1031,6 @@ async function generatePath(path) {
 // scripts/npcscriptEventHandler.ts
 var overworld9 = world9.getDimension("overworld");
 system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
-  world9.sendMessage(`${event.message}, ${event.id}`);
   switch (event.id) {
     case "rod:npcReplay": {
       replay(parseInt(event.message));
@@ -1038,6 +1041,7 @@ system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
       break;
     }
     case "spawn:npc": {
+      world9.sendMessage(`spawnNpc triggered`);
       openGate("spawn");
       if (event.message === "fraction") {
         overworld9.runCommandAsync(`tp @e[tag=fractionNpc] 56 96 139`);
@@ -1045,15 +1049,23 @@ system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
         overworld9.runCommandAsync(`tp @e[tag=ratioNpc] 46 96 149`);
       } else if (event.message === "scale") {
         overworld9.runCommandAsync(`tp @e[tag=scaleNpc] 59 96 156`);
+      } else {
+        world9.sendMessage(`spawnNpc triggered with invalid message`);
       }
+      break;
     }
     case "gate:open": {
+      world9.sendMessage(`openGate triggered`);
       openGate(event.message);
+      break;
     }
     case "gate:close": {
+      world9.sendMessage(`closeGate triggered`);
       closeGate(event.message);
+      break;
     }
     case "scale:npc": {
+      world9.sendMessage(`scale triggered`);
       switch (event.message) {
         case "0": {
           openGate("scale");
@@ -1063,25 +1075,32 @@ system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
           break;
         }
       }
+      break;
     }
     case "ratio:npc": {
+      world9.sendMessage(`ratio triggered`);
       switch (event.message) {
-        case "0": {
-          openGate("ratio");
-          closeGate("scale");
-          closeGate("fraction");
+        case "0":
+          {
+            openGate("ratio");
+            closeGate("scale");
+            closeGate("fraction");
+            break;
+          }
           break;
-        }
       }
     }
     case "fraction:npc": {
+      world9.sendMessage(`fraction triggered`);
       switch (event.message) {
-        case "0": {
-          openGate("fraction");
-          closeGate("scale");
-          closeGate("ratio");
+        case "0":
+          {
+            openGate("fraction");
+            closeGate("scale");
+            closeGate("ratio");
+            break;
+          }
           break;
-        }
       }
     }
   }

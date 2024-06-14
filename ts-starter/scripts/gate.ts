@@ -3,6 +3,7 @@ import { world } from "@minecraft/server";
 let overworld = world.getDimension("overworld");
 
 export async function openGate(location: string) {
+  world.sendMessage(`Opening gate ${location}`);
   switch (location) {
     case "spawn": {
       //clear

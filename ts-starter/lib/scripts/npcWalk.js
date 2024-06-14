@@ -16,11 +16,14 @@ export function npcWalk(type) {
 }
 function moveNpc(path, type) {
     return __awaiter(this, void 0, void 0, function* () {
-        for (let i = 0; i < path.length; i++) {
+        for (let i = 0; i < path.length - 1; i++) {
             let { x, y, z } = path[i];
+            const nextPoint = path[i + 1];
+            const facingX = nextPoint.x;
+            const facingY = nextPoint.y;
+            const facingZ = nextPoint.z;
             system.runTimeout(() => __awaiter(this, void 0, void 0, function* () {
-                yield overworld.runCommandAsync(`tp @e[tag=${type}Npc] ${x} ${y} ${z} `);
-                yield overworld.runCommandAsync(`scoreboard players add Saved Students 1`);
+                yield overworld.runCommandAsync(`tp @e[tag=${type}Npc] ${x} ${y} ${z} facing ${facingX} ${facingY} ${facingZ}`);
             }), i * 5);
         }
     });
