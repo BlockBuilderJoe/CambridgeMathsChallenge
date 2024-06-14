@@ -1,7 +1,7 @@
 import { system, world } from "@minecraft/server";
 import { moveNpc, replay } from "./cuisenaireRods";
 import { perfectRun } from "./perfectRun";
-import { openGates } from "./spawn";
+import { openGate, closeGate } from "./gate";
 
 let overworld = world.getDimension("overworld");
 //handles the scriptEventReceive from NPCs
@@ -17,7 +17,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
       break;
     }
     case "spawn:npc": {
-      openGates("spawn");
+      openGate("spawn");
       if (event.message === "fraction") {
         overworld.runCommandAsync(`tp @e[tag=fractionNpc] 56 96 139`);
       } else if (event.message === "ratio") {
@@ -25,6 +25,24 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
       } else if (event.message === "scale") {
         overworld.runCommandAsync(`tp @e[tag=scaleNpc] 59 96 156`);
       }
+    }
+    case "gate:open": {
+      openGate(event.message);
+    }
+    case "gate:close": {
+      closeGate(event.message);
+    }
+    case "scale:npc": {
+      switch (event.message) {
+        case "0": {
+          openGate("scale");
+          break;
+        }
+      }
+    }
+    case "ratio:npc": {
+    }
+    case "fraction:npc": {
     }
   }
 });

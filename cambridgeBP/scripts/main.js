@@ -854,10 +854,10 @@ function displayTimer(potionStart2, seconds2, player, potionDescription) {
 // scripts/npcscriptEventHandler.ts
 import { system as system3, world as world8 } from "@minecraft/server";
 
-// scripts/spawn.ts
+// scripts/gate.ts
 import { world as world7 } from "@minecraft/server";
 var overworld7 = world7.getDimension("overworld");
-async function openGates(location) {
+async function openGate(location) {
   switch (location) {
     case "spawn": {
       overworld7.runCommandAsync(`setblock 62 97 148 air`);
@@ -872,6 +872,56 @@ async function openGates(location) {
       overworld7.runCommandAsync(`setblock 60 97 149 iron_bars`);
       overworld7.runCommandAsync(`setblock 61 98 149 iron_bars`);
       overworld7.runCommandAsync(`setblock 60 98 149 iron_bars`);
+    }
+    case "scale": {
+      overworld7.runCommandAsync(`setblock 56 96 158 air`);
+      overworld7.runCommandAsync(`setblock 57 96 158 air`);
+      overworld7.runCommandAsync(`setblock 56 97 158 air`);
+      overworld7.runCommandAsync(`setblock 57 97 158 air`);
+      overworld7.runCommandAsync(`setblock 58 96 159 iron_bars`);
+      overworld7.runCommandAsync(`setblock 58 96 160 iron_bars`);
+      overworld7.runCommandAsync(`setblock 58 97 159 iron_bars`);
+      overworld7.runCommandAsync(`setblock 58 97 160 iron_bars`);
+      overworld7.runCommandAsync(`setblock 55 96 159 iron_bars`);
+      overworld7.runCommandAsync(`setblock 55 96 160 iron_bars`);
+      overworld7.runCommandAsync(`setblock 55 97 159 iron_bars`);
+      overworld7.runCommandAsync(`setblock 55 97 160 iron_bars`);
+    }
+    case "ratio": {
+    }
+    case "scale": {
+    }
+  }
+}
+async function closeGate(location) {
+  switch (location) {
+    case "spawn": {
+      overworld7.runCommandAsync(`setblock 62 97 148 iron_bars`);
+      overworld7.runCommandAsync(`setblock 62 97 147 iron_bars`);
+      overworld7.runCommandAsync(`setblock 62 98 148 iron_bars`);
+      overworld7.runCommandAsync(`setblock 62 98 147 iron_bars`);
+      overworld7.runCommandAsync(`setblock 61 97 146 air`);
+      overworld7.runCommandAsync(`setblock 60 97 146 air`);
+      overworld7.runCommandAsync(`setblock 61 98 146 air`);
+      overworld7.runCommandAsync(`setblock 60 98 146 air`);
+      overworld7.runCommandAsync(`setblock 61 97 149 air`);
+      overworld7.runCommandAsync(`setblock 60 97 149 air`);
+      overworld7.runCommandAsync(`setblock 61 98 149 air`);
+      overworld7.runCommandAsync(`setblock 60 98 149 air`);
+    }
+    case "scale": {
+      overworld7.runCommandAsync(`setblock 56 96 158 iron_bars`);
+      overworld7.runCommandAsync(`setblock 57 96 158 iron_bars`);
+      overworld7.runCommandAsync(`setblock 56 97 158 iron_bars`);
+      overworld7.runCommandAsync(`setblock 57 97 158 iron_bars`);
+      overworld7.runCommandAsync(`setblock 58 96 159 air`);
+      overworld7.runCommandAsync(`setblock 58 96 160 air`);
+      overworld7.runCommandAsync(`setblock 58 97 159 air`);
+      overworld7.runCommandAsync(`setblock 58 97 160 air`);
+      overworld7.runCommandAsync(`setblock 55 96 159 air`);
+      overworld7.runCommandAsync(`setblock 55 96 160 air`);
+      overworld7.runCommandAsync(`setblock 55 97 159 air`);
+      overworld7.runCommandAsync(`setblock 55 97 160 air`);
     }
   }
 }
@@ -890,7 +940,7 @@ system3.afterEvents.scriptEventReceive.subscribe((event) => {
       break;
     }
     case "spawn:npc": {
-      openGates("spawn");
+      openGate("spawn");
       if (event.message === "fraction") {
         overworld8.runCommandAsync(`tp @e[tag=fractionNpc] 56 96 139`);
       } else if (event.message === "ratio") {
@@ -898,6 +948,24 @@ system3.afterEvents.scriptEventReceive.subscribe((event) => {
       } else if (event.message === "scale") {
         overworld8.runCommandAsync(`tp @e[tag=scaleNpc] 59 96 156`);
       }
+    }
+    case "gate:open": {
+      openGate(event.message);
+    }
+    case "gate:close": {
+      closeGate(event.message);
+    }
+    case "scale:npc": {
+      switch (event.message) {
+        case "0": {
+          openGate("scale");
+          break;
+        }
+      }
+    }
+    case "ratio:npc": {
+    }
+    case "fraction:npc": {
     }
   }
 });

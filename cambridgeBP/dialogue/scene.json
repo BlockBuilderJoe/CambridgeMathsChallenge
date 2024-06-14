@@ -1634,7 +1634,7 @@
                             ]
                         },
                         "commands": [
-                            ""
+                            "scriptevent scale:npc 0"
                         ]
                     }
                 ]
@@ -1665,7 +1665,7 @@
                             ]
                         },
                         "commands": [
-                            ""
+                            "scriptevent ratio:npc 0"
                         ]
                     }
                 ]
@@ -1696,7 +1696,7 @@
                             ]
                         },
                         "commands": [
-                            ""
+                            "scriptevent fraction:npc 0"
                         ]
                     }
                 ]

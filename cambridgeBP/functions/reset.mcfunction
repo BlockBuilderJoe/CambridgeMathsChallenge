@@ -11,8 +11,6 @@ tp @p 69 97 147 facing 41 97 147
 scoreboard objectives setdisplay sidebar
 clear @p
 
-#lobby gates
-setblock 62 97 148 iron_bars
-setblock 62 97 147 iron_bars
-setblock 62 98 148 iron_bars
-setblock 62 98 147 iron_bars
+#Gates
+scriptevent gate:close spawn
+scriptevent gate:close scale
