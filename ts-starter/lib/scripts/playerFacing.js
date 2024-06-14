@@ -10,10 +10,10 @@ export function facing(blockLocation) {
             direction = blockLocation.z > 0 ? "south" : "north";
         }
         const oppositeDirections = {
-            "east": "west",
-            "west": "east",
-            "south": "north",
-            "north": "south"
+            east: "west",
+            west: "east",
+            south: "north",
+            north: "south",
         };
         let oppositeDirection = oppositeDirections[direction];
         return { direction, oppositeDirection };

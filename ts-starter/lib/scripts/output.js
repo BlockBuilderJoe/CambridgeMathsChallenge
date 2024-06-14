@@ -22,7 +22,8 @@ export function setBlock(location, blockName) {
     var _a;
     let { block } = getBlockValue(location);
     let isCopper = (_a = block === null || block === void 0 ? void 0 : block.permutation) === null || _a === void 0 ? void 0 : _a.matches("waxed_weathered_copper");
-    if (!isCopper) { //keeps the frame.
+    if (!isCopper) {
+        //keeps the frame.
         block === null || block === void 0 ? void 0 : block.setPermutation(BlockPermutation.resolve(blockName));
     }
 }

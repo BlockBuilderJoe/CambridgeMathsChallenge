@@ -127,7 +127,9 @@ async function scale(cubePos1, cubePos2, inputNumber) {
   }
 }
 async function windowUndo(from, to, into) {
-  await overworld3.runCommandAsync(`clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`);
+  await overworld3.runCommandAsync(
+    `clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`
+  );
   await overworld3.runCommandAsync(`fill ${from.x} 116 ${from.z} ${to.x} 120 ${to.z} air replace`);
   await overworld3.runCommandAsync(`fill ${from.x} 120 ${from.z} ${to.x} 150 ${to.z} air replace`);
 }
@@ -173,30 +175,102 @@ import {
 
 // scripts/perfectRun.ts
 var perfectRun = [
-  { location: { z: 104, y: 95, x: 30 }, direction: "north", rodLength: 12, blockName: "yellow_concrete", successMessage: `Instead use a 1/2 rod as that is half of 24.` },
+  {
+    location: { z: 104, y: 95, x: 30 },
+    direction: "north",
+    rodLength: 12,
+    blockName: "yellow_concrete",
+    successMessage: `Instead use a 1/2 rod as that is half of 24.`
+  },
   //1/2
-  { location: { z: 92, y: 95, x: 31 }, direction: "east", rodLength: 6, blockName: "green_concrete", successMessage: `For 1/4 of 24 use a 6 rod.` },
+  {
+    location: { z: 92, y: 95, x: 31 },
+    direction: "east",
+    rodLength: 6,
+    blockName: "green_concrete",
+    successMessage: `For 1/4 of 24 use a 6 rod.`
+  },
   //1/4
-  { location: { z: 91, y: 95, x: 44 }, direction: "east", rodLength: 8, blockName: "brown_concrete", successMessage: `Use an 8 rod to make up a 1/3.` },
+  {
+    location: { z: 91, y: 95, x: 44 },
+    direction: "east",
+    rodLength: 8,
+    blockName: "brown_concrete",
+    successMessage: `Use an 8 rod to make up a 1/3.`
+  },
   //1/3
-  { location: { z: 94, y: 95, x: 53 }, direction: "south", rodLength: 4, blockName: "purple_concrete", successMessage: `Four is a sixth of 24.` },
+  {
+    location: { z: 94, y: 95, x: 53 },
+    direction: "south",
+    rodLength: 4,
+    blockName: "purple_concrete",
+    successMessage: `Four is a sixth of 24.`
+  },
   //1/6
-  { location: { z: 100, y: 95, x: 55 }, direction: "east", rodLength: 8, blockName: "brown_concrete", successMessage: `The most efficient way is to simplify 2/6 to 1/3.` },
+  {
+    location: { z: 100, y: 95, x: 55 },
+    direction: "east",
+    rodLength: 8,
+    blockName: "brown_concrete",
+    successMessage: `The most efficient way is to simplify 2/6 to 1/3.`
+  },
   //2/6
   //{ location: { z: 99, y: 95, x: 69 }, direction: "east", rodLength: 24, blockName: "blue_concrete", successMessage: `The largest rod you have is a whole, so place two of them.` }, //1/1
-  { location: { z: 99, y: 95, x: 93 }, direction: "east", rodLength: 24, blockName: "blue_concrete", successMessage: `The largest rod you have is a whole, so place two of them.` },
+  {
+    location: { z: 99, y: 95, x: 93 },
+    direction: "east",
+    rodLength: 24,
+    blockName: "blue_concrete",
+    successMessage: `The largest rod you have is a whole, so place two of them.`
+  },
   //1/1
-  { location: { z: 95, y: 95, x: 115 }, direction: "west", rodLength: 3, blockName: "lime_concrete", successMessage: `Three is 1/8 of 24. ` },
+  {
+    location: { z: 95, y: 95, x: 115 },
+    direction: "west",
+    rodLength: 3,
+    blockName: "lime_concrete",
+    successMessage: `Three is 1/8 of 24. `
+  },
   //1/3
-  { location: { z: 94, y: 95, x: 109 }, direction: "west", rodLength: 6, blockName: "green_concrete", successMessage: `Simplify 2/8 to 1/4 to get the most efficient way across` },
+  {
+    location: { z: 94, y: 95, x: 109 },
+    direction: "west",
+    rodLength: 6,
+    blockName: "green_concrete",
+    successMessage: `Simplify 2/8 to 1/4 to get the most efficient way across`
+  },
   //1/6
-  { location: { z: 92, y: 95, x: 99 }, direction: "north", rodLength: 2, blockName: "red_concrete", successMessage: `Two is 1/2 of 24.` },
+  {
+    location: { z: 92, y: 95, x: 99 },
+    direction: "north",
+    rodLength: 2,
+    blockName: "red_concrete",
+    successMessage: `Two is 1/2 of 24.`
+  },
   //1/2
-  { location: { z: 89, y: 95, x: 97 }, direction: "west", rodLength: 4, blockName: "purple_concrete", successMessage: `Simplify 2/12 to get the most optimum route` },
+  {
+    location: { z: 89, y: 95, x: 97 },
+    direction: "west",
+    rodLength: 4,
+    blockName: "purple_concrete",
+    successMessage: `Simplify 2/12 to get the most optimum route`
+  },
   //1/4
-  { location: { z: 89, y: 95, x: 92 }, direction: "west", rodLength: 2, blockName: "red_concrete", successMessage: `Two is 1/2 of 24.` },
+  {
+    location: { z: 89, y: 95, x: 92 },
+    direction: "west",
+    rodLength: 2,
+    blockName: "red_concrete",
+    successMessage: `Two is 1/2 of 24.`
+  },
   //1/2
-  { location: { z: 89, y: 95, x: 87 }, direction: "west", rodLength: 8, blockName: "brown_concrete", successMessage: `Error this message shouldn't be able to be seen. It means the rod amounts are incorrect.` }
+  {
+    location: { z: 89, y: 95, x: 87 },
+    direction: "west",
+    rodLength: 8,
+    blockName: "brown_concrete",
+    successMessage: `Error this message shouldn't be able to be seen. It means the rod amounts are incorrect.`
+  }
   //1/3
 ];
 var validRanges = [
@@ -238,22 +312,99 @@ var replaySettings = [
     clearBlock: `fill 30 95 104 30 95 93 tallgrass replace`,
     // Command to replenish the grass under the rods they just placed, same coordinates as above with y axis 94.
     replenishGrass: `fill 30 94 104 30 94 93 grass_block replace`,
-    // Direction along which the rods are placed ('x' or 'z'). This will be the value that is always the same. 
+    // Direction along which the rods are placed ('x' or 'z'). This will be the value that is always the same.
     cartesianDirection: "x",
     // Specific value of the x or z that is the same on all the coordinates.
     cartesionValue: 30
   },
-  { beginningMessage: `To make 1/4 you placed: `, tpStart: `tp @p 30 96 92 facing 38 96 92`, clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`, replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`, cartesianDirection: "z", cartesionValue: 92 },
-  { beginningMessage: `To make 1/3 you placed: `, tpStart: `tp @p 41 96 91 facing 53 96 91`, clearBlock: `fill 51 95 91 44 95 91 tallgrass replace`, replenishGrass: `fill 51 94 91 44 94 91 grass_block replace`, cartesianDirection: "z", cartesionValue: 91 },
-  { beginningMessage: `To make 1/6 you placed: `, tpStart: `tp @p 53 96 92 facing 53 96 98`, clearBlock: `fill 53 95 94 53 95 97 tallgrass replace`, replenishGrass: `fill 53 94 94 53 94 97 grass_block replace`, cartesianDirection: "x", cartesionValue: 53 },
-  { beginningMessage: `To make 2/6 you placed: `, tpStart: `tp @p 54 96 99 facing 63 96 99`, clearBlock: `fill 55 95 100 62 95 100 tallgrass replace`, replenishGrass: `fill 55 94 100 62 94 100 grass_block replace`, cartesianDirection: "z", cartesionValue: 100 },
-  { beginningMessage: `To make 2/1 you placed: `, tpStart: `tp @p 67 96 99 facing 117 96 99`, clearBlock: `fill 69 95 99 116 95 99 tallgrass replace`, replenishGrass: `fill 69 94 99 116 94 99 grass_block replace`, cartesianDirection: "z", cartesionValue: 99 },
-  { beginningMessage: `To make 1/8 you placed: `, tpStart: `tp @p 117 96 95 facing 112 96 95`, clearBlock: `fill 115 95 95 113 95 95 tallgrass replace`, replenishGrass: `fill 115 94 95 113 94 95 grass_block replace`, cartesianDirection: "z", cartesionValue: 95 },
-  { beginningMessage: `To make 2/8 you placed: `, tpStart: `tp @p 111 96 94 facing 103 96 94`, clearBlock: `fill 109 95 94 104 95 94 tallgrass replace`, replenishGrass: `fill 109 94 94 104 94 94 grass_block replace`, cartesianDirection: "z", cartesionValue: 94 },
-  { beginningMessage: `To make 1/12 you placed: `, tpStart: `tp @p 99 96 94 facing 99 96 90`, clearBlock: `fill 99 95 92 99 95 91 tallgrass replace`, replenishGrass: `fill 99 94 92 99 94 91 grass_block replace`, cartesianDirection: "x", cartesionValue: 99 },
-  { beginningMessage: `To make 2/12 you placed: `, tpStart: `tp @p 99 96 89 facing 93 96 89`, clearBlock: `fill 97 95 89 94 95 89 tallgrass replace`, replenishGrass: `fill 97 94 89 94 94 89 grass_block replace`, cartesianDirection: "z", cartesionValue: 89 },
-  { beginningMessage: `To make 1/12 you placed: `, tpStart: `tp @p 93 96 88 facing 90 96 89`, clearBlock: `fill 92 95 89 91 95 89 tallgrass replace`, replenishGrass: `fill 92 94 89 91 94 89 grass_block replace`, cartesianDirection: "z", cartesionValue: 89 },
-  { beginningMessage: `To make 1/3 you placed: `, tpStart: `tp @p 89 96 89 facing 79 96 89`, clearBlock: `fill 87 95 89 80 95 89 tallgrass replace`, replenishGrass: `fill 87 94 89 80 94 89 grass_block replace`, cartesianDirection: "z", cartesionValue: 89 }
+  {
+    beginningMessage: `To make 1/4 you placed: `,
+    tpStart: `tp @p 30 96 92 facing 38 96 92`,
+    clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`,
+    replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`,
+    cartesianDirection: "z",
+    cartesionValue: 92
+  },
+  {
+    beginningMessage: `To make 1/3 you placed: `,
+    tpStart: `tp @p 41 96 91 facing 53 96 91`,
+    clearBlock: `fill 51 95 91 44 95 91 tallgrass replace`,
+    replenishGrass: `fill 51 94 91 44 94 91 grass_block replace`,
+    cartesianDirection: "z",
+    cartesionValue: 91
+  },
+  {
+    beginningMessage: `To make 1/6 you placed: `,
+    tpStart: `tp @p 53 96 92 facing 53 96 98`,
+    clearBlock: `fill 53 95 94 53 95 97 tallgrass replace`,
+    replenishGrass: `fill 53 94 94 53 94 97 grass_block replace`,
+    cartesianDirection: "x",
+    cartesionValue: 53
+  },
+  {
+    beginningMessage: `To make 2/6 you placed: `,
+    tpStart: `tp @p 54 96 99 facing 63 96 99`,
+    clearBlock: `fill 55 95 100 62 95 100 tallgrass replace`,
+    replenishGrass: `fill 55 94 100 62 94 100 grass_block replace`,
+    cartesianDirection: "z",
+    cartesionValue: 100
+  },
+  {
+    beginningMessage: `To make 2/1 you placed: `,
+    tpStart: `tp @p 67 96 99 facing 117 96 99`,
+    clearBlock: `fill 69 95 99 116 95 99 tallgrass replace`,
+    replenishGrass: `fill 69 94 99 116 94 99 grass_block replace`,
+    cartesianDirection: "z",
+    cartesionValue: 99
+  },
+  {
+    beginningMessage: `To make 1/8 you placed: `,
+    tpStart: `tp @p 117 96 95 facing 112 96 95`,
+    clearBlock: `fill 115 95 95 113 95 95 tallgrass replace`,
+    replenishGrass: `fill 115 94 95 113 94 95 grass_block replace`,
+    cartesianDirection: "z",
+    cartesionValue: 95
+  },
+  {
+    beginningMessage: `To make 2/8 you placed: `,
+    tpStart: `tp @p 111 96 94 facing 103 96 94`,
+    clearBlock: `fill 109 95 94 104 95 94 tallgrass replace`,
+    replenishGrass: `fill 109 94 94 104 94 94 grass_block replace`,
+    cartesianDirection: "z",
+    cartesionValue: 94
+  },
+  {
+    beginningMessage: `To make 1/12 you placed: `,
+    tpStart: `tp @p 99 96 94 facing 99 96 90`,
+    clearBlock: `fill 99 95 92 99 95 91 tallgrass replace`,
+    replenishGrass: `fill 99 94 92 99 94 91 grass_block replace`,
+    cartesianDirection: "x",
+    cartesionValue: 99
+  },
+  {
+    beginningMessage: `To make 2/12 you placed: `,
+    tpStart: `tp @p 99 96 89 facing 93 96 89`,
+    clearBlock: `fill 97 95 89 94 95 89 tallgrass replace`,
+    replenishGrass: `fill 97 94 89 94 94 89 grass_block replace`,
+    cartesianDirection: "z",
+    cartesionValue: 89
+  },
+  {
+    beginningMessage: `To make 1/12 you placed: `,
+    tpStart: `tp @p 93 96 88 facing 90 96 89`,
+    clearBlock: `fill 92 95 89 91 95 89 tallgrass replace`,
+    replenishGrass: `fill 92 94 89 91 94 89 grass_block replace`,
+    cartesianDirection: "z",
+    cartesionValue: 89
+  },
+  {
+    beginningMessage: `To make 1/3 you placed: `,
+    tpStart: `tp @p 89 96 89 facing 79 96 89`,
+    clearBlock: `fill 87 95 89 80 95 89 tallgrass replace`,
+    replenishGrass: `fill 87 94 89 80 94 89 grass_block replace`,
+    cartesianDirection: "z",
+    cartesionValue: 89
+  }
 ];
 
 // scripts/rod.ts
@@ -286,7 +437,13 @@ async function cuisenaire(block, blockName, rodLength, successMessage, direction
       }
     }
     if (runPlaceRods) {
-      let rodToPlace = { location: block.location, direction, rodLength, blockName, successMessage };
+      let rodToPlace = {
+        location: block.location,
+        direction,
+        rodLength,
+        blockName,
+        successMessage
+      };
       rodsPlaced.push(rodToPlace);
       placeRods(block, blockName, rodLength, direction);
       checkFinalBlock();
@@ -375,9 +532,20 @@ async function replay(index) {
             fractions.push(combinedRods[index2].successMessage);
             await replayMessage(replayConfig.beginningMessage, fractions);
             let block = overworld4.getBlock(combinedRods[index2].location);
-            placeRods(block, combinedRods[index2].blockName, combinedRods[index2].rodLength, combinedRods[index2].direction);
+            placeRods(
+              block,
+              combinedRods[index2].blockName,
+              combinedRods[index2].rodLength,
+              combinedRods[index2].direction
+            );
             if (i === combinedRods.length - 1) {
-              endReplay(player, replayConfig.tpStart, replayConfig.clearBlock, replayConfig.replenishGrass, combinedRods);
+              endReplay(
+                player,
+                replayConfig.tpStart,
+                replayConfig.clearBlock,
+                replayConfig.replenishGrass,
+                combinedRods
+              );
             }
           });
         }, 50 * index2);
@@ -462,10 +630,10 @@ async function facing(blockLocation) {
     direction = blockLocation.z > 0 ? "south" : "north";
   }
   const oppositeDirections = {
-    "east": "west",
-    "west": "east",
-    "south": "north",
-    "north": "south"
+    east: "west",
+    west: "east",
+    south: "north",
+    north: "south"
   };
   let oppositeDirection = oppositeDirections[direction];
   return { direction, oppositeDirection };
@@ -512,11 +680,11 @@ async function calculateRatio(ingredients) {
     let seconds2 = Math.ceil(ingredients.apple + ingredients.carrot);
     return { potion: potion2, seconds: seconds2 };
   } else if (wrongIngredientsSight === 0 && potatoRatio + carrotRatio > 0) {
-    let seconds2 = Math.ceil(potatoRatio + carrotRatio);
+    let seconds2 = 4;
     let potion2 = "blindness";
     return { potion: potion2, seconds: seconds2 };
   } else if (wrongIngredientsDive === 0 && beetrootRatio + melonRatio + potatoRatio > 0) {
-    let seconds2 = Math.ceil(beetrootRatio + melonRatio + potatoRatio);
+    let seconds2 = 4;
     let potion2 = "levitation";
     return { potion: potion2, seconds: seconds2 };
   } else if (total === 0) {
@@ -623,7 +791,9 @@ function displayTimer(potionStart2, seconds2, player, potionDescription) {
 import { world as world6 } from "@minecraft/server";
 var overworld6 = world6.getDimension("overworld");
 async function giveWand() {
-  overworld6.runCommandAsync(`give @p[hasitem={item=stick,quantity=0}] minecraft:stick 1 0 {"item_lock": { "mode": "lock_in_slot" }, "minecraft:can_destroy":{"blocks":["minecraft:hopper", "blockbuilders:number_0","blockbuilders:number_1","blockbuilders:number_2","blockbuilders:number_3","blockbuilders:number_4","blockbuilders:number_5","blockbuilders:number_6","blockbuilders:number_7","blockbuilders:number_8","blockbuilders:number_9","blockbuilders:symbol_subtract"]}}`);
+  overworld6.runCommandAsync(
+    `give @p[hasitem={item=stick,quantity=0}] minecraft:stick 1 0 {"item_lock": { "mode": "lock_in_slot" }, "minecraft:can_destroy":{"blocks":["minecraft:hopper", "blockbuilders:number_0","blockbuilders:number_1","blockbuilders:number_2","blockbuilders:number_3","blockbuilders:number_4","blockbuilders:number_5","blockbuilders:number_6","blockbuilders:number_7","blockbuilders:number_8","blockbuilders:number_9","blockbuilders:symbol_subtract"]}}`
+  );
 }
 
 // scripts/npcscriptEventHandler.ts
@@ -724,17 +894,15 @@ world8.afterEvents.playerPlaceBlock.subscribe(async (event) => {
     }
   }
 });
-world8.beforeEvents.playerBreakBlock.subscribe(
-  async (event) => {
-    let block = event.block;
-    if (block.permutation?.matches("hopper")) {
-      event.cancel;
-      overworld7.runCommandAsync(`kill @e[type=item]`);
-      let slots = await getSlots(event);
-      ({ potion, seconds } = await potionMaker(slots));
-    }
+world8.beforeEvents.playerBreakBlock.subscribe(async (event) => {
+  let block = event.block;
+  if (block.permutation?.matches("hopper")) {
+    event.cancel;
+    overworld7.runCommandAsync(`kill @e[type=item]`);
+    let slots = await getSlots(event);
+    ({ potion, seconds } = await potionMaker(slots));
   }
-);
+});
 world8.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId;
   let block = clickEvent.block;
@@ -750,14 +918,12 @@ world8.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
     }
   }
 });
-world8.beforeEvents.itemUseOn.subscribe(
-  async (event) => {
-    let block = event.block;
-    if (block.permutation?.matches("blockbuilders:symbol_subtract")) {
-      await windowScaleHandler(block.location);
-    }
+world8.beforeEvents.itemUseOn.subscribe(async (event) => {
+  let block = event.block;
+  if (block.permutation?.matches("blockbuilders:symbol_subtract")) {
+    await windowScaleHandler(block.location);
   }
-);
+});
 function applyPotionEffect(player, potion2, seconds2) {
   player.runCommand("scoreboard objectives setdisplay sidebar Depth");
   let tick = seconds2 * 20;
@@ -841,8 +1007,10 @@ world8.afterEvents.entityHealthChanged.subscribe(async (event) => {
       if (event.newValue === 18) {
         player.runCommandAsync("scoreboard objectives setdisplay sidebar");
         await surface(player);
-        player.sendMessage(`\xA7fYou made it to a depth of: \xA72${meters} meters 
-\xA7fOnly ${98 - meters} meters to the bottom. `);
+        player.sendMessage(
+          `\xA7fYou made it to a depth of: \xA72${meters} meters 
+\xA7fOnly ${98 - meters} meters to the bottom. `
+        );
       }
     }
   }

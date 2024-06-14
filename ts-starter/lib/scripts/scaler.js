@@ -71,8 +71,8 @@ export function windowUndo(from, to, into) {
     return __awaiter(this, void 0, void 0, function* () {
         yield overworld.runCommandAsync(`clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`); //clones from below.
         yield overworld.runCommandAsync(`fill ${from.x} 116 ${from.z} ${to.x} 120 ${to.z} air replace`);
-        yield overworld.runCommandAsync(`fill ${from.x} 120 ${from.z} ${to.x} 150 ${to.z} air replace`); //cleans any extra above 
-        //cleans any extra above 
+        yield overworld.runCommandAsync(`fill ${from.x} 120 ${from.z} ${to.x} 150 ${to.z} air replace`); //cleans any extra above
+        //cleans any extra above
     });
 }
 export function scaleShape(shape, scaleFactor, axes) {

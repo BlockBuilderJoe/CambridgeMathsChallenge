@@ -22,7 +22,7 @@ function isInRange(value, min, max) {
 export function moveNPC(index) {
     return __awaiter(this, void 0, void 0, function* () {
         overworld.runCommandAsync(`tp @e[type=npc,tag=npc${index}] 26 96 107`);
-        overworld.runCommandAsync('scoreboard players @p Students 1');
+        overworld.runCommandAsync("scoreboard players @p Students 1");
     });
 }
 export function cuisenaire(block, blockName, rodLength, successMessage, direction) {
@@ -41,7 +41,13 @@ export function cuisenaire(block, blockName, rodLength, successMessage, directio
                 }
             }
             if (runPlaceRods) {
-                let rodToPlace = { location: block.location, direction: direction, rodLength: rodLength, blockName: blockName, successMessage: successMessage };
+                let rodToPlace = {
+                    location: block.location,
+                    direction: direction,
+                    rodLength: rodLength,
+                    blockName: blockName,
+                    successMessage: successMessage,
+                };
                 rodsPlaced.push(rodToPlace);
                 placeRods(block, blockName, rodLength, direction);
                 checkFinalBlock();
@@ -73,19 +79,24 @@ function placeRods(block, blockName, rodLength, direction) {
 }
 function setCameraView(player, index) {
     return __awaiter(this, void 0, void 0, function* () {
-        if (index == 0 || index == 1) { //room1
+        if (index == 0 || index == 1) {
+            //room1
             player.runCommandAsync(`camera ${player.name} set minecraft:free pos 30 120 92 facing 30 90 92`);
         }
-        else if (index == 2 || index == 3 || index == 4) { //room2
+        else if (index == 2 || index == 3 || index == 4) {
+            //room2
             player.runCommandAsync(`camera ${player.name} set minecraft:free pos 55 120 92 facing 55 90 92`);
         }
-        else if (index == 5) { //room3
+        else if (index == 5) {
+            //room3
             player.runCommandAsync(`camera ${player.name} set minecraft:free pos 93 120 92 facing 93 90 92`);
         }
-        else if (index == 6 || index == 7 || index == 8 || index == 9) { //room4
+        else if (index == 6 || index == 7 || index == 8 || index == 9) {
+            //room4
             player.runCommandAsync(`camera ${player.name} set minecraft:free pos 105 120 92 facing 105 90 92`);
         }
-        else if (index == 10 || index == 11 || index == 12) { //room4
+        else if (index == 10 || index == 11 || index == 12) {
+            //room4
             player.runCommandAsync(`camera ${player.name} set minecraft:free pos -39 120 44 facing -39 94 44`);
         }
     });
@@ -101,13 +112,15 @@ function replayMessage(beginningMessage, fractions) {
     return __awaiter(this, void 0, void 0, function* () {
         if (fractions) {
             if (fractions.length > 0) {
-                const playerPlacedFractions = fractions.filter(fraction => fraction !== undefined && fraction.startsWith("1")); // filters out the fractions
-                const perfectRunFractions = fractions.filter(fraction => fraction !== undefined && !fraction.startsWith("1")); //filters out the fractions
-                if (perfectRunFractions.length > 0) { //if you've reached the end of the list
+                const playerPlacedFractions = fractions.filter((fraction) => fraction !== undefined && fraction.startsWith("1")); // filters out the fractions
+                const perfectRunFractions = fractions.filter((fraction) => fraction !== undefined && !fraction.startsWith("1")); //filters out the fractions
+                if (perfectRunFractions.length > 0) {
+                    //if you've reached the end of the list
                     const perfectRunFractionsSum = perfectRunFractions.join(" + ");
                     overworld.runCommandAsync(`title @p actionbar ${perfectRunFractionsSum}`);
                 }
-                else if (playerPlacedFractions.length > 0) { //else if there are fractions print them
+                else if (playerPlacedFractions.length > 0) {
+                    //else if there are fractions print them
                     const fractionsSum = playerPlacedFractions.join(" + ");
                     overworld.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
                 }
@@ -128,7 +141,7 @@ export function replay(index) {
         let replayConfig = replaySettings[index]; //stores all the replay settings for the different rods.
         overworld.runCommandAsync(replayConfig.clearBlock);
         overworld.runCommandAsync(replayConfig.replenishGrass);
-        if (replayConfig.cartesianDirection === 'x') {
+        if (replayConfig.cartesianDirection === "x") {
             let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
             rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === replayConfig.cartesionValue));
             let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue); //ISSUE appears to be here
@@ -137,7 +150,7 @@ export function replay(index) {
             //}
             combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
         }
-        else if (replayConfig.cartesianDirection === 'z') {
+        else if (replayConfig.cartesianDirection === "z") {
             let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
             rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.z === replayConfig.cartesionValue));
             let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
@@ -240,7 +253,8 @@ function changeNPC(matchingRodIndex, win) {
         if (win) {
             overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
         }
-        else { //changes the NPC
+        else {
+            //changes the NPC
             overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Fail`);
         }
     });

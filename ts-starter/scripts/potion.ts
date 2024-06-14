@@ -43,11 +43,13 @@ async function calculateRatio(ingredients: any) {
     let seconds = Math.ceil(ingredients.apple + ingredients.carrot);
     return { potion, seconds };
   } else if (wrongIngredientsSight === 0 && potatoRatio + carrotRatio > 0) {
-    let seconds = Math.ceil(potatoRatio + carrotRatio);
+    //let seconds = Math.ceil(potatoRatio + carrotRatio);
+    let seconds = 4;
     let potion = "blindness";
     return { potion, seconds };
   } else if (wrongIngredientsDive === 0 && beetrootRatio + melonRatio + potatoRatio > 0) {
-    let seconds = Math.ceil(beetrootRatio + melonRatio + potatoRatio);
+    //let seconds = Math.ceil(beetrootRatio + melonRatio + potatoRatio);
+    let seconds = 4;
     let potion = "levitation";
     return { potion, seconds };
   } else if (total === 0) {
