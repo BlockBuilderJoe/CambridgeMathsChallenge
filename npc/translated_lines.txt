@@ -157,6 +157,6 @@ Okay=
 Professor of Alchemy=
 I’m hungry I’ve dropped my lunch money down the well, will you help?=
 For sure!=
-Professor of CartographyThis is emb=
+Professor of Cartography=
 This is embarrassing, I’ve lost my cartography class in the walled gardens and need your help!=
 On my way!=

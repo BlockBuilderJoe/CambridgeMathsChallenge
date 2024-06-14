@@ -1579,7 +1579,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent spawnNPC fraction"
+                            "scriptevent spawnNpc fraction"
                         ]
                     },
                     {
@@ -1591,7 +1591,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent spawnNPC ratio"
+                            "scriptevent spawnNpc ratio"
                         ]
                     },
                     {
@@ -1603,7 +1603,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent spawnNPC scale"
+                            "scriptevent spawnNpc scale"
                         ]
                     }
                 ]
@@ -1675,7 +1675,7 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Professor of CartographyThis is emb"
+                            "translate": "Professor of Cartography"
                         }
                     ]
                 },

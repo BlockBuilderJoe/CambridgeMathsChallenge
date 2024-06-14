@@ -5,6 +5,7 @@ import { perfectRun } from "./perfectRun";
 let overworld = world.getDimension("overworld");
 //handles the scriptEventReceive from NPCs
 system.afterEvents.scriptEventReceive.subscribe((event) => {
+  world.sendMessage(`${event.message}, ${event.id}`);
   switch (event.id) {
     case "rod:npcReplay": {
       replay(parseInt(event.message));

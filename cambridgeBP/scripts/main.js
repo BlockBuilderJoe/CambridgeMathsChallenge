@@ -838,6 +838,7 @@ function displayTimer(potionStart2, seconds2, player, potionDescription) {
 import { system as system3, world as world7 } from "@minecraft/server";
 var overworld7 = world7.getDimension("overworld");
 system3.afterEvents.scriptEventReceive.subscribe((event) => {
+  world7.sendMessage(`${event.message}, ${event.id}`);
   switch (event.id) {
     case "rod:npcReplay": {
       replay(parseInt(event.message));

@@ -720,7 +720,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = Professor of CartographyThis is emb 
+ NAME = Professor of Cartography 
  TAG = fractionNpc 
  
  1. Stand in front of the NPC and copy this command: 
