@@ -38,7 +38,8 @@ async function calculateRatio(ingredients: any) {
   let melonRatio = ingredients.melon + ingredients.apple + ingredients.carrot;
   let total: number =
     ingredients.apple + ingredients.carrot + ingredients.potato + ingredients.beetroot + ingredients.melon;
-  let nightVision: number = carrotRatio / appleRatio;
+
+  let nightVision: number = ingredients.carrot / ingredients.apple;
   let beetrootMelonRatio: number = beetrootRatio / melonRatio;
   let melonPotatoRatio: number = melonRatio / potatoRatio;
 

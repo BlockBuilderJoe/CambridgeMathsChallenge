@@ -1579,7 +1579,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent spawnNpc fraction"
+                            "scriptevent spawn:npc fraction"
                         ]
                     },
                     {
@@ -1591,7 +1591,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent spawnNpc ratio"
+                            "scriptevent spawn:npc ratio"
                         ]
                     },
                     {
@@ -1603,7 +1603,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent spawnNpc scale"
+                            "scriptevent spawn:npc scale"
                         ]
                     }
                 ]

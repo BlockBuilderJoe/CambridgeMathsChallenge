@@ -42,7 +42,7 @@ function calculateRatio(ingredients) {
         let beetrootRatio = ingredients.beetroot + ingredients.apple + ingredients.carrot;
         let melonRatio = ingredients.melon + ingredients.apple + ingredients.carrot;
         let total = ingredients.apple + ingredients.carrot + ingredients.potato + ingredients.beetroot + ingredients.melon;
-        let nightVision = carrotRatio / appleRatio;
+        let nightVision = ingredients.carrot / ingredients.apple;
         let beetrootMelonRatio = beetrootRatio / melonRatio;
         let melonPotatoRatio = melonRatio / potatoRatio;
         if (beetrootMelonRatio === 1.5 && melonPotatoRatio === 2) {

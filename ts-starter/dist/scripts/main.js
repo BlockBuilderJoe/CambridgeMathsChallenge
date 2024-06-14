@@ -715,7 +715,7 @@ async function calculateRatio(ingredients) {
   let beetrootRatio = ingredients.beetroot + ingredients.apple + ingredients.carrot;
   let melonRatio = ingredients.melon + ingredients.apple + ingredients.carrot;
   let total = ingredients.apple + ingredients.carrot + ingredients.potato + ingredients.beetroot + ingredients.melon;
-  let nightVision = carrotRatio / appleRatio;
+  let nightVision = ingredients.carrot / ingredients.apple;
   let beetrootMelonRatio = beetrootRatio / melonRatio;
   let melonPotatoRatio = melonRatio / potatoRatio;
   if (beetrootMelonRatio === 1.5 && melonPotatoRatio === 2) {
@@ -851,13 +851,13 @@ system3.afterEvents.scriptEventReceive.subscribe((event) => {
       `);
       break;
     }
-    case "spawnNPC": {
+    case "spawn:npc": {
       if (event.message === "fraction") {
-        world7.sendMessage("Starting Fraction Game...");
+        overworld7.runCommandAsync(`tp @e[tag=fractionNpc] 56 96 139`);
       } else if (event.message === "ratio") {
-        world7.sendMessage("Starting Ratio Game...");
+        overworld7.runCommandAsync(`tp @e[tag=ratioNpc] 46 96 149`);
       } else if (event.message === "scale") {
-        world7.sendMessage("Starting Scale Game...");
+        overworld7.runCommandAsync(`tp @e[tag=scaleNpc] 59 96 156`);
       }
     }
   }

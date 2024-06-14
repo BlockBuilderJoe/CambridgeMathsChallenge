@@ -16,15 +16,15 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
       `);
             break;
         }
-        case "spawnNPC": {
+        case "spawn:npc": {
             if (event.message === "fraction") {
-                world.sendMessage("Starting Fraction Game...");
+                overworld.runCommandAsync(`tp @e[tag=fractionNpc] 56 96 139`);
             }
             else if (event.message === "ratio") {
-                world.sendMessage("Starting Ratio Game...");
+                overworld.runCommandAsync(`tp @e[tag=ratioNpc] 46 96 149`);
             }
             else if (event.message === "scale") {
-                world.sendMessage("Starting Scale Game...");
+                overworld.runCommandAsync(`tp @e[tag=scaleNpc] 59 96 156`);
             }
         }
     }
