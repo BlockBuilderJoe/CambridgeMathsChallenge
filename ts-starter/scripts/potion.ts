@@ -142,17 +142,17 @@ async function resetArea() {
   await world.getDimension("overworld").runCommandAsync("fill -12 106 141 -12 96 145 black_stained_glass replace");
 }
 
-export async function giveIngredients(){
-    overworld.runCommand("replaceitem entity @p slot.hotbar 1 apple 10");
-    overworld.runCommand("replaceitem entity @p slot.hotbar 2 carrot 10");
-    overworld.runCommand("replaceitem entity @p slot.hotbar 3 beetroot 10");
-    overworld.runCommand("replaceitem entity @p slot.hotbar 4 potato 10");
-    overworld.runCommand("replaceitem entity @p slot.hotbar 5 melon_slice 10");
+export async function giveIngredients() {
+  overworld.runCommand("replaceitem entity @p slot.hotbar 1 apple 10");
+  overworld.runCommand("replaceitem entity @p slot.hotbar 2 carrot 10");
+  overworld.runCommand("replaceitem entity @p slot.hotbar 3 beetroot 10");
+  overworld.runCommand("replaceitem entity @p slot.hotbar 4 potato 10");
+  overworld.runCommand("replaceitem entity @p slot.hotbar 5 melon_slice 10");
 }
 
 export function displayTimer(potionStart: number, seconds: number, player: any, potionDescription: string) {
-  let timeLeft = (potionStart + seconds * 20 - system.currentTick)/20;
-  if (timeLeft % 1 === 0 ){
-            player.onScreenDisplay.setActionBar(`Time left:\n ${potionDescription} ${timeLeft} seconds`);
-          }
-}; 
+  let timeLeft = (potionStart + seconds * 20 - system.currentTick) / 20;
+  if (timeLeft % 1 === 0) {
+    player.onScreenDisplay.setActionBar(`Time left:\n ${potionDescription} ${timeLeft} seconds`);
+  }
+}

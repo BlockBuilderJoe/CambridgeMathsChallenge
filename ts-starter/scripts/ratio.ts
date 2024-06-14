@@ -36,6 +36,5 @@ function calculateRatio(ratioInput: Vector3[]) {
       pink++;
     }
   }
-
   return { pink, yellow };
 }

@@ -44,9 +44,8 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
       break;
     }
     case "66,97,224": {
-      overworld.runCommandAsync(`clear @p`)
+      overworld.runCommandAsync(`clear @p`);
       await giveWand();
-      
     }
     case "24,95,45": {
       let player = event.source as Entity; // Cast event.source to Player type
@@ -54,8 +53,8 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
       break;
     }
     case "1,97,151": {
-      overworld.runCommandAsync(`clear @p`)
-      overworld.runCommandAsync(`effect @p haste 9999 99 true`)
+      overworld.runCommandAsync(`clear @p`);
+      overworld.runCommandAsync(`effect @p haste 9999 99 true`);
       await giveWand();
       await giveIngredients();
     }
@@ -102,17 +101,15 @@ world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   }
 });
 
-
 world.beforeEvents.playerBreakBlock.subscribe(async (event) => {
-    let block = event.block;
-    if (block.permutation?.matches("hopper")) {
-      event.cancel;
-      overworld.runCommandAsync(`kill @e[type=item]`)
-      let slots = await getSlots(event);
-      ({ potion, seconds } = await potionMaker(slots));
-    } 
-}
-)
+  let block = event.block;
+  if (block.permutation?.matches("hopper")) {
+    event.cancel;
+    overworld.runCommandAsync(`kill @e[type=item]`);
+    let slots = await getSlots(event);
+    ({ potion, seconds } = await potionMaker(slots));
+  }
+});
 
 //left click after break
 world.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
@@ -121,28 +118,29 @@ world.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
   let brokenBlock = clickEvent.brokenBlockPermutation;
   if (hand_item === "minecraft:stick") {
     if (brokenBlock.matches("blockbuilders:symbol_subtract") && block.location.z === 225) {
-      // if it is the window vinculum run the undo function. 
+      // if it is the window vinculum run the undo function.
       await windowUndoHandler(block.location);
       block.setPermutation(BlockPermutation.resolve("blockbuilders:symbol_subtract"));
-    } else if (block.location.x === 71 && block.location.y === 98 && block.location.z === 225 || block.location.x === 82 && block.location.y === 98 && block.location.z === 225) {
-      // if it is the window numerator cycle the number. 
+    } else if (
+      (block.location.x === 71 && block.location.y === 98 && block.location.z === 225) ||
+      (block.location.x === 82 && block.location.y === 98 && block.location.z === 225)
+    ) {
+      // if it is the window numerator cycle the number.
       cycleNumberBlock(clickEvent);
     } else {
-      //if it is anything else replace the block. 
-      block.setPermutation(brokenBlock)
+      //if it is anything else replace the block.
+      block.setPermutation(brokenBlock);
     }
   }
 });
 
-
 //right click
 world.beforeEvents.itemUseOn.subscribe(async (event) => {
-    let block = event.block;
-    if (block.permutation?.matches("blockbuilders:symbol_subtract")){
-      await windowScaleHandler(block.location);
-    }
+  let block = event.block;
+  if (block.permutation?.matches("blockbuilders:symbol_subtract")) {
+    await windowScaleHandler(block.location);
   }
-);
+});
 
 //well
 function applyPotionEffect(player: any, potion: string, seconds: number) {
@@ -212,7 +210,6 @@ async function surface(player: any) {
   player.removeEffect("water_breathing");
 }
 
-
 //listens for the potion to be fully drunk.
 world.afterEvents.itemCompleteUse.subscribe(async (event) => {
   let player = event.source;
@@ -229,17 +226,18 @@ world.afterEvents.itemCompleteUse.subscribe(async (event) => {
   }
 });
 
-
 //listens for the entity health changed event so they don't drown.
 world.afterEvents.entityHealthChanged.subscribe(async (event) => {
   if (event.entity.typeId === "minecraft:player") {
     let player: Player = event.entity as Player;
-    if (player.isInWater == true){
-      if (event.newValue === 18){
+    if (player.isInWater == true) {
+      if (event.newValue === 18) {
         player.runCommandAsync("scoreboard objectives setdisplay sidebar");
         await surface(player);
-        player.sendMessage(`§fYou made it to a depth of: §2${meters} meters \n§fOnly ${98 - meters} meters to the bottom. `);
-      }      
+        player.sendMessage(
+          `§fYou made it to a depth of: §2${meters} meters \n§fOnly ${98 - meters} meters to the bottom. `
+        );
+      }
     }
   }
 });
