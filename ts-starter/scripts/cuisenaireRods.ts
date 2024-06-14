@@ -1,12 +1,14 @@
 import { BlockPermutation, world, system, Vector3 } from "@minecraft/server";
 import { roundToDigits } from "./numberHandler";
-import { perfectRun, validRanges, finalBlock, replaySettings } from "./perfectRun";
+import { perfectRun, validRanges, finalBlock, replaySettings, npcLocation } from "./perfectRun";
 
 let overworld = world.getDimension("overworld");
 let rodsPlaced: any[] = [];
 
 export async function startCuisenaireGame() {
-  await resetNPC(13);
+  await overworld.runCommandAsync(`scoreboard objectives setdisplay sidebar Students`);
+  await overworld.runCommandAsync(`scoreboard players set Saved Students 0`);
+  await resetNPC(5);
   await giveRods();
   await resetGrid({ x: 19, y: 95, z: 81 }); //top left corner of the area.
 }
@@ -27,11 +29,6 @@ export async function directionCheck(x: number, z: number, direction: string) {
 
 function isInRange(value: number, min: any, max: any): boolean {
   return value >= min && value <= max;
-}
-
-export async function moveNPC(index: number) {
-  overworld.runCommandAsync(`tp @e[type=npc,tag=npc${index}] 26 96 107`);
-  overworld.runCommandAsync("scoreboard players @p Students 1");
 }
 
 export async function cuisenaire(
@@ -74,6 +71,10 @@ export async function resetNPC(npcAmount: number) {
   rodsPlaced = []; //resets the rods placed array.
   for (let i = 0; i < npcAmount; i++) {
     overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Default`);
+    overworld.runCommandAsync(
+      //tps the npc back based on the location parameter in npcLocation.
+      `tp @e[type=npc,tag=rodNpc${i}] ${npcLocation[i].x} ${npcLocation[i].y} ${npcLocation[i].z}`
+    );
   }
 }
 

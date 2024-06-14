@@ -219,4 +219,11 @@ export const replaySettings = [
         cartesionValue: 89,
     },
 ];
+export const npcLocation = [
+    { x: 29, y: 96, z: 90 },
+    { x: 38, y: 96, z: 92 },
+    { x: 53, y: 96, z: 90 },
+    { x: 53, y: 96, z: 100 },
+    { x: 66, y: 96, z: 100 },
+];
 //# sourceMappingURL=perfectRun.js.map

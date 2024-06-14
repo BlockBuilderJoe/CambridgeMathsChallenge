@@ -45,6 +45,21 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
+ NAME = npc0 
+ TAG = rodNpc0 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add rodNpc0 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=rodNpc0] rodNpc0Saved 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
  NAME = npc1 
  TAG = rodNpc1 
  
@@ -85,6 +100,21 @@
  2. Then paste this command: 
 
 /dialogue change @e[tag=rodNpc1] rodNpc1Default 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME = npc1 
+ TAG = rodNpc1 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add rodNpc1 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=rodNpc1] rodNpc1Saved 
  
  ######################################################## 
  
@@ -135,6 +165,21 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
+ NAME = npc2 
+ TAG = rodNpc2 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add rodNpc2 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=rodNpc2] rodNpc2Saved 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
  NAME = npc3 
  TAG = rodNpc3 
  
@@ -175,6 +220,21 @@
  2. Then paste this command: 
 
 /dialogue change @e[tag=rodNpc3] rodNpc3Default 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME = npc3 
+ TAG = rodNpc3 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add rodNpc3 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=rodNpc3] rodNpc3Saved 
  
  ######################################################## 
  
@@ -225,6 +285,21 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
+ NAME = npc4 
+ TAG = rodNpc4 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add rodNpc4 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=rodNpc4] rodNpc4Saved 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
  NAME = npc5 
  TAG = rodNpc5 
  
@@ -265,6 +340,21 @@
  2. Then paste this command: 
 
 /dialogue change @e[tag=rodNpc5] rodNpc5Default 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME = npc5 
+ TAG = rodNpc5 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add rodNpc5 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=rodNpc5] rodNpc5Saved 
  
  ######################################################## 
  
@@ -580,6 +670,21 @@
  2. Then paste this command: 
 
 /dialogue change @e[tag=rodNpc12] rodNpc12Default 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME =  
+ TAG =  
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add  
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=]  
  
  ######################################################## 
  

@@ -423,12 +423,21 @@ var replaySettings = [
     cartesionValue: 89
   }
 ];
+var npcLocation = [
+  { x: 29, y: 96, z: 90 },
+  { x: 38, y: 96, z: 92 },
+  { x: 53, y: 96, z: 90 },
+  { x: 53, y: 96, z: 100 },
+  { x: 66, y: 96, z: 100 }
+];
 
 // scripts/cuisenaireRods.ts
 var overworld5 = world5.getDimension("overworld");
 var rodsPlaced = [];
 async function startCuisenaireGame() {
-  await resetNPC(13);
+  await overworld5.runCommandAsync(`scoreboard objectives setdisplay sidebar Students`);
+  await overworld5.runCommandAsync(`scoreboard players set Saved Students 0`);
+  await resetNPC(5);
   await giveRods();
   await resetGrid({ x: 19, y: 95, z: 81 });
 }
@@ -478,6 +487,10 @@ async function resetNPC(npcAmount) {
   rodsPlaced = [];
   for (let i = 0; i < npcAmount; i++) {
     overworld5.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Default`);
+    overworld5.runCommandAsync(
+      //tps the npc back based on the location parameter in npcLocation.
+      `tp @e[type=npc,tag=rodNpc${i}] ${npcLocation[i].x} ${npcLocation[i].y} ${npcLocation[i].z}`
+    );
   }
 }
 function placeRods(block, blockName, rodLength, direction) {
@@ -827,12 +840,14 @@ var overworld7 = world7.getDimension("overworld");
 system3.afterEvents.scriptEventReceive.subscribe((event) => {
   switch (event.id) {
     case "rod:npcReplay": {
-      world7.sendMessage(`Replay Version ${event.message}`);
       replay(parseInt(event.message));
       break;
     }
     case "rod:npcComplete": {
-      overworld7.runCommandAsync(`tp @e[type=npc,tag=npc${event.message}] 26 96 107`);
+      overworld7.runCommandAsync(`tp @e[tag=rodNpc${event.message}] 26 96 107`);
+      overworld7.runCommandAsync(`scoreboard players add Saved Students 1`);
+      overworld7.runCommandAsync(`dialogue change @e[tag=rodNpc${event.message}] rodNpc${event.message}Saved 
+      `);
       break;
     }
   }

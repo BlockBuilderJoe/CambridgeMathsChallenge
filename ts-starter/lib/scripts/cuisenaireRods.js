@@ -1,10 +1,12 @@
 import { BlockPermutation, world, system } from "@minecraft/server";
-import { perfectRun, validRanges, finalBlock, replaySettings } from "./perfectRun";
+import { perfectRun, validRanges, finalBlock, replaySettings, npcLocation } from "./perfectRun";
 let overworld = world.getDimension("overworld");
 let rodsPlaced = [];
 export function startCuisenaireGame() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield resetNPC(13);
+        yield overworld.runCommandAsync(`scoreboard objectives setdisplay sidebar Students`);
+        yield overworld.runCommandAsync(`scoreboard players set Saved Students 0`);
+        yield resetNPC(5);
         yield giveRods();
         yield resetGrid({ x: 19, y: 95, z: 81 }); //top left corner of the area.
     });
@@ -24,12 +26,6 @@ export function directionCheck(x, z, direction) {
 }
 function isInRange(value, min, max) {
     return value >= min && value <= max;
-}
-export function moveNPC(index) {
-    return __awaiter(this, void 0, void 0, function* () {
-        overworld.runCommandAsync(`tp @e[type=npc,tag=npc${index}] 26 96 107`);
-        overworld.runCommandAsync("scoreboard players @p Students 1");
-    });
 }
 export function cuisenaire(block, blockName, rodLength, successMessage, direction) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -69,6 +65,9 @@ export function resetNPC(npcAmount) {
         rodsPlaced = []; //resets the rods placed array.
         for (let i = 0; i < npcAmount; i++) {
             overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Default`);
+            overworld.runCommandAsync(
+            //tps the npc back based on the location parameter in npcLocation.
+            `tp @e[type=npc,tag=rodNpc${i}] ${npcLocation[i].x} ${npcLocation[i].y} ${npcLocation[i].z}`);
         }
     });
 }
