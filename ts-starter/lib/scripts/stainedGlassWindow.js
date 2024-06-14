@@ -2,7 +2,27 @@ import { world } from "@minecraft/server";
 import { getCube } from "./input";
 import { setBlock } from "./output";
 import { getInput } from "./input";
+import { giveWand } from "./wand";
 let overworld = world.getDimension("overworld");
+export function startWindowGame() {
+    return __awaiter(this, void 0, void 0, function* () {
+        //sets up inventory
+        overworld.runCommandAsync(`clear @p`);
+        yield giveWand();
+        //window1 clear
+        overworld.runCommandAsync(`fill 69 98 225 69 102 225 air replace`);
+        //window2 clear
+        overworld.runCommandAsync(`fill 78 98 225 80 98 225 air replace`);
+        overworld.runCommandAsync(`fill 78 99 225 79 99 225 air replace`);
+        overworld.runCommandAsync(`fill 78 100 225 78 100 225 air replace`);
+        //replace the numerator with 0
+        overworld.runCommandAsync(`setblock 71 98 225 blockbuilders:number_0`);
+        overworld.runCommandAsync(`setblock 82 98 225 blockbuilders:number_0`);
+        //clear the stained glass windows
+        windowUndoHandler({ x: 71, y: 97, z: 225 });
+        windowUndoHandler({ x: 82, y: 97, z: 225 });
+    });
+}
 export function windowScaleHandler(location) {
     return __awaiter(this, void 0, void 0, function* () {
         switch (true) {

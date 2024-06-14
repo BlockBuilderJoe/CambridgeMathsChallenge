@@ -1,5 +1,5 @@
 import { world, system, BlockPermutation } from "@minecraft/server";
-import { windowUndoHandler, windowScaleHandler } from "./stainedGlassWindow";
+import { windowUndoHandler, windowScaleHandler, startWindowGame } from "./stainedGlassWindow";
 import { cuisenaire, getBlockBehind, resetGrid, giveRods, resetNPC, directionCheck } from "./cuisenaireRods";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
@@ -32,8 +32,7 @@ world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void
             break;
         }
         case "66,97,224": {
-            overworld.runCommandAsync(`clear @p`);
-            yield giveWand();
+            yield startWindowGame();
         }
         case "24,95,45": {
             let player = event.source; // Cast event.source to Player type
