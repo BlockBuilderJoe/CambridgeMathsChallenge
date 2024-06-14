@@ -40,37 +40,37 @@ export async function openGate(location: string) {
     }
     case "ratio": {
       //clear
-      overworld.runCommandAsync(`setblock 56 96 158 air`);
-      overworld.runCommandAsync(`setblock 57 96 158 air`);
-      overworld.runCommandAsync(`setblock 56 97 158 air`);
-      overworld.runCommandAsync(`setblock 57 97 158 air`);
+      overworld.runCommandAsync(`setblock 45 96 148 air`);
+      overworld.runCommandAsync(`setblock 45 96 147 air`);
+      overworld.runCommandAsync(`setblock 45 97 148 air`);
+      overworld.runCommandAsync(`setblock 45 97 147 air`);
       // right gate facing out.
-      overworld.runCommandAsync(`setblock 58 96 159 iron_bars`);
-      overworld.runCommandAsync(`setblock 58 96 160 iron_bars`);
-      overworld.runCommandAsync(`setblock 58 97 159 iron_bars`);
-      overworld.runCommandAsync(`setblock 58 97 160 iron_bars`);
+      overworld.runCommandAsync(`setblock 44 96 149 iron_bars`);
+      overworld.runCommandAsync(`setblock 43 96 149 iron_bars`);
+      overworld.runCommandAsync(`setblock 44 97 149 iron_bars`);
+      overworld.runCommandAsync(`setblock 43 97 149 iron_bars`);
       // left gate facing out
-      overworld.runCommandAsync(`setblock 55 96 159 iron_bars`);
-      overworld.runCommandAsync(`setblock 55 96 160 iron_bars`);
-      overworld.runCommandAsync(`setblock 55 97 159 iron_bars`);
-      overworld.runCommandAsync(`setblock 55 97 160 iron_bars`);
+      overworld.runCommandAsync(`setblock 44 96 146 iron_bars`);
+      overworld.runCommandAsync(`setblock 43 96 146 iron_bars`);
+      overworld.runCommandAsync(`setblock 44 97 146 iron_bars`);
+      overworld.runCommandAsync(`setblock 43 97 146 iron_bars`);
     }
-    case "scale": {
+    case "fraction": {
       //clear
-      overworld.runCommandAsync(`setblock 56 96 158 air`);
-      overworld.runCommandAsync(`setblock 57 96 158 air`);
-      overworld.runCommandAsync(`setblock 56 97 158 air`);
-      overworld.runCommandAsync(`setblock 57 97 158 air`);
+      overworld.runCommandAsync(`setblock 56 96 137 air`);
+      overworld.runCommandAsync(`setblock 57 96 137 air`);
+      overworld.runCommandAsync(`setblock 56 97 137 air`);
+      overworld.runCommandAsync(`setblock 57 97 137 air`);
       // right gate facing out.
-      overworld.runCommandAsync(`setblock 58 96 159 iron_bars`);
-      overworld.runCommandAsync(`setblock 58 96 160 iron_bars`);
-      overworld.runCommandAsync(`setblock 58 97 159 iron_bars`);
-      overworld.runCommandAsync(`setblock 58 97 160 iron_bars`);
+      overworld.runCommandAsync(`setblock 55 96 136 iron_bars`);
+      overworld.runCommandAsync(`setblock 55 96 135 iron_bars`);
+      overworld.runCommandAsync(`setblock 55 97 136 iron_bars`);
+      overworld.runCommandAsync(`setblock 55 97 135 iron_bars`);
       // left gate facing out
-      overworld.runCommandAsync(`setblock 55 96 159 iron_bars`);
-      overworld.runCommandAsync(`setblock 55 96 160 iron_bars`);
-      overworld.runCommandAsync(`setblock 55 97 159 iron_bars`);
-      overworld.runCommandAsync(`setblock 55 97 160 iron_bars`);
+      overworld.runCommandAsync(`setblock 58 96 136 iron_bars`);
+      overworld.runCommandAsync(`setblock 58 96 135 iron_bars`);
+      overworld.runCommandAsync(`setblock 58 97 136 iron_bars`);
+      overworld.runCommandAsync(`setblock 58 97 135 iron_bars`);
     }
   }
 }
