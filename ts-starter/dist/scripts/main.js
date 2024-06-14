@@ -824,13 +824,7 @@ var rodsToRemove = [];
 world8.afterEvents.playerSpawn.subscribe((eventData) => {
   currentPlayer = eventData.player;
   let initialSpawn = eventData.initialSpawn;
-  if (initialSpawn) {
-    currentPlayer.sendMessage(`\xA73Welcome back ${currentPlayer.name}!`);
-    giveWand();
-  } else {
-    currentPlayer.sendMessage(`\xA73Welcome ${currentPlayer.name}!`);
-    giveWand();
-  }
+  giveWand();
 });
 world8.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {

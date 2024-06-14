@@ -16,16 +16,9 @@ let meters = 0;
 let rodsToRemove = [];
 //welcome player
 world.afterEvents.playerSpawn.subscribe((eventData) => {
-    currentPlayer = eventData.player;
+    currentPlayer = eventData.player; //gets player for use later on.
     let initialSpawn = eventData.initialSpawn;
-    if (initialSpawn) {
-        currentPlayer.sendMessage(`§3Welcome back ${currentPlayer.name}!`);
-        giveWand();
-    }
-    else {
-        currentPlayer.sendMessage(`§3Welcome ${currentPlayer.name}!`);
-        giveWand();
-    }
+    giveWand();
 });
 //listens for the button push event.
 world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
