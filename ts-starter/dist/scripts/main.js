@@ -1,5 +1,5 @@
 // scripts/main.ts
-import { world as world9, system as system4, BlockPermutation as BlockPermutation5 } from "@minecraft/server";
+import { world as world10, system as system5, BlockPermutation as BlockPermutation5 } from "@minecraft/server";
 
 // scripts/stainedGlassWindow.ts
 import { world as world4 } from "@minecraft/server";
@@ -852,7 +852,7 @@ function displayTimer(potionStart2, seconds2, player, potionDescription) {
 }
 
 // scripts/npcscriptEventHandler.ts
-import { system as system3, world as world8 } from "@minecraft/server";
+import { system as system4, world as world9 } from "@minecraft/server";
 
 // scripts/gate.ts
 import { world as world7 } from "@minecraft/server";
@@ -888,8 +888,32 @@ async function openGate(location) {
       overworld7.runCommandAsync(`setblock 55 97 160 iron_bars`);
     }
     case "ratio": {
+      overworld7.runCommandAsync(`setblock 45 96 148 air`);
+      overworld7.runCommandAsync(`setblock 45 96 147 air`);
+      overworld7.runCommandAsync(`setblock 45 97 148 air`);
+      overworld7.runCommandAsync(`setblock 45 97 147 air`);
+      overworld7.runCommandAsync(`setblock 44 96 149 iron_bars`);
+      overworld7.runCommandAsync(`setblock 43 96 149 iron_bars`);
+      overworld7.runCommandAsync(`setblock 44 97 149 iron_bars`);
+      overworld7.runCommandAsync(`setblock 43 97 149 iron_bars`);
+      overworld7.runCommandAsync(`setblock 44 96 146 iron_bars`);
+      overworld7.runCommandAsync(`setblock 43 96 146 iron_bars`);
+      overworld7.runCommandAsync(`setblock 44 97 146 iron_bars`);
+      overworld7.runCommandAsync(`setblock 43 97 146 iron_bars`);
     }
-    case "scale": {
+    case "fraction": {
+      overworld7.runCommandAsync(`setblock 56 96 137 air`);
+      overworld7.runCommandAsync(`setblock 57 96 137 air`);
+      overworld7.runCommandAsync(`setblock 56 97 137 air`);
+      overworld7.runCommandAsync(`setblock 57 97 137 air`);
+      overworld7.runCommandAsync(`setblock 55 96 136 iron_bars`);
+      overworld7.runCommandAsync(`setblock 55 96 135 iron_bars`);
+      overworld7.runCommandAsync(`setblock 55 97 136 iron_bars`);
+      overworld7.runCommandAsync(`setblock 55 97 135 iron_bars`);
+      overworld7.runCommandAsync(`setblock 58 96 136 iron_bars`);
+      overworld7.runCommandAsync(`setblock 58 96 135 iron_bars`);
+      overworld7.runCommandAsync(`setblock 58 97 136 iron_bars`);
+      overworld7.runCommandAsync(`setblock 58 97 135 iron_bars`);
     }
   }
 }
@@ -923,13 +947,87 @@ async function closeGate(location) {
       overworld7.runCommandAsync(`setblock 55 97 159 air`);
       overworld7.runCommandAsync(`setblock 55 97 160 air`);
     }
+    case "ratio": {
+      overworld7.runCommandAsync(`setblock 45 96 148 iron_bars`);
+      overworld7.runCommandAsync(`setblock 45 96 147 iron_bars`);
+      overworld7.runCommandAsync(`setblock 45 97 148 iron_bars`);
+      overworld7.runCommandAsync(`setblock 45 97 147 iron_bars`);
+      overworld7.runCommandAsync(`setblock 44 96 149 air`);
+      overworld7.runCommandAsync(`setblock 43 96 149 air`);
+      overworld7.runCommandAsync(`setblock 44 97 149 air`);
+      overworld7.runCommandAsync(`setblock 43 97 149 air`);
+      overworld7.runCommandAsync(`setblock 44 96 146 air`);
+      overworld7.runCommandAsync(`setblock 43 96 146 air`);
+      overworld7.runCommandAsync(`setblock 44 97 146 air`);
+      overworld7.runCommandAsync(`setblock 43 97 146 air`);
+    }
+    case "fraction": {
+      overworld7.runCommandAsync(`setblock 56 96 137 iron_bars`);
+      overworld7.runCommandAsync(`setblock 57 96 137 iron_bars`);
+      overworld7.runCommandAsync(`setblock 56 97 137 iron_bars`);
+      overworld7.runCommandAsync(`setblock 57 97 137 iron_bars`);
+      overworld7.runCommandAsync(`setblock 55 96 136 air`);
+      overworld7.runCommandAsync(`setblock 55 96 135 air`);
+      overworld7.runCommandAsync(`setblock 55 97 136 air`);
+      overworld7.runCommandAsync(`setblock 55 97 135 air`);
+      overworld7.runCommandAsync(`setblock 58 96 136 air`);
+      overworld7.runCommandAsync(`setblock 58 96 135 air`);
+      overworld7.runCommandAsync(`setblock 58 97 136 air`);
+      overworld7.runCommandAsync(`setblock 58 97 135 air`);
+    }
   }
 }
 
-// scripts/npcscriptEventHandler.ts
+// scripts/npcWalk.ts
+import { world as world8, system as system3 } from "@minecraft/server";
 var overworld8 = world8.getDimension("overworld");
-system3.afterEvents.scriptEventReceive.subscribe((event) => {
-  world8.sendMessage(`${event.message}, ${event.id}`);
+async function npcWalk(type) {
+  switch (type) {
+    case "scale": {
+      let path = await generatePath([
+        { x: 56, y: 96, z: 156 },
+        { x: 56, y: 96, z: 221 },
+        { x: 65, y: 96, z: 221 }
+      ]);
+      moveNpc2(path, "scale");
+    }
+  }
+}
+async function moveNpc2(path, type) {
+  for (let i = 0; i < path.length; i++) {
+    let { x, y, z } = path[i];
+    system3.runTimeout(async () => {
+      await overworld8.runCommandAsync(`tp @e[tag=${type}Npc] ${x} ${y} ${z} `);
+      await overworld8.runCommandAsync(`scoreboard players add Saved Students 1`);
+    }, i * 5);
+  }
+}
+async function generatePath(path) {
+  const generatedPath = [];
+  for (let i = 0; i < path.length - 1; i++) {
+    const startCoord = path[i];
+    const endCoord = path[i + 1];
+    const xDiff = endCoord.x - startCoord.x;
+    const yDiff = endCoord.y - startCoord.y;
+    const zDiff = endCoord.z - startCoord.z;
+    const xStep = Math.sign(xDiff);
+    const yStep = Math.sign(yDiff);
+    const zStep = Math.sign(zDiff);
+    const steps = Math.max(Math.abs(xDiff), Math.abs(yDiff), Math.abs(zDiff));
+    for (let j = 0; j <= steps; j++) {
+      const x = startCoord.x + xStep * j;
+      const y = startCoord.y + yStep * j;
+      const z = startCoord.z + zStep * j;
+      generatedPath.push({ x, y, z });
+    }
+  }
+  return generatedPath;
+}
+
+// scripts/npcscriptEventHandler.ts
+var overworld9 = world9.getDimension("overworld");
+system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
+  world9.sendMessage(`${event.message}, ${event.id}`);
   switch (event.id) {
     case "rod:npcReplay": {
       replay(parseInt(event.message));
@@ -942,11 +1040,11 @@ system3.afterEvents.scriptEventReceive.subscribe((event) => {
     case "spawn:npc": {
       openGate("spawn");
       if (event.message === "fraction") {
-        overworld8.runCommandAsync(`tp @e[tag=fractionNpc] 56 96 139`);
+        overworld9.runCommandAsync(`tp @e[tag=fractionNpc] 56 96 139`);
       } else if (event.message === "ratio") {
-        overworld8.runCommandAsync(`tp @e[tag=ratioNpc] 46 96 149`);
+        overworld9.runCommandAsync(`tp @e[tag=ratioNpc] 46 96 149`);
       } else if (event.message === "scale") {
-        overworld8.runCommandAsync(`tp @e[tag=scaleNpc] 59 96 156`);
+        overworld9.runCommandAsync(`tp @e[tag=scaleNpc] 59 96 156`);
       }
     }
     case "gate:open": {
@@ -959,31 +1057,50 @@ system3.afterEvents.scriptEventReceive.subscribe((event) => {
       switch (event.message) {
         case "0": {
           openGate("scale");
+          closeGate("ratio");
+          closeGate("fraction");
+          await npcWalk("scale");
           break;
         }
       }
     }
     case "ratio:npc": {
+      switch (event.message) {
+        case "0": {
+          openGate("ratio");
+          closeGate("scale");
+          closeGate("fraction");
+          break;
+        }
+      }
     }
     case "fraction:npc": {
+      switch (event.message) {
+        case "0": {
+          openGate("fraction");
+          closeGate("scale");
+          closeGate("ratio");
+          break;
+        }
+      }
     }
   }
 });
 
 // scripts/main.ts
-var overworld9 = world9.getDimension("overworld");
+var overworld10 = world10.getDimension("overworld");
 var potion = "";
 var seconds = 0;
 var currentPlayer = null;
 var potionStart = 0;
 var potionDrank = false;
 var meters = 0;
-world9.afterEvents.playerSpawn.subscribe((eventData) => {
+world10.afterEvents.playerSpawn.subscribe((eventData) => {
   currentPlayer = eventData.player;
   let initialSpawn = eventData.initialSpawn;
   giveWand();
 });
-world9.afterEvents.buttonPush.subscribe(async (event) => {
+world10.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
     case "29,97,106": {
       await startCuisenaireGame();
@@ -999,7 +1116,7 @@ world9.afterEvents.buttonPush.subscribe(async (event) => {
     }
   }
 });
-world9.afterEvents.playerPlaceBlock.subscribe(async (event) => {
+world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let block = event.block;
   let player = event.player;
   let colour = block.permutation?.getState("color");
@@ -1035,16 +1152,16 @@ world9.afterEvents.playerPlaceBlock.subscribe(async (event) => {
     }
   }
 });
-world9.beforeEvents.playerBreakBlock.subscribe(async (event) => {
+world10.beforeEvents.playerBreakBlock.subscribe(async (event) => {
   let block = event.block;
   if (block.permutation?.matches("hopper")) {
     event.cancel;
-    overworld9.runCommandAsync(`kill @e[type=item]`);
+    overworld10.runCommandAsync(`kill @e[type=item]`);
     let slots = await getSlots(event);
     ({ potion, seconds } = await potionMaker(slots));
   }
 });
-world9.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
+world10.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId;
   let block = clickEvent.block;
   let brokenBlock = clickEvent.brokenBlockPermutation;
@@ -1059,7 +1176,7 @@ world9.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
     }
   }
 });
-world9.beforeEvents.itemUseOn.subscribe(async (event) => {
+world10.beforeEvents.itemUseOn.subscribe(async (event) => {
   let block = event.block;
   if (block.permutation?.matches("blockbuilders:symbol_subtract")) {
     await windowScaleHandler(block.location);
@@ -1068,7 +1185,7 @@ world9.beforeEvents.itemUseOn.subscribe(async (event) => {
 function applyPotionEffect(player, potion2, seconds2) {
   player.runCommand("scoreboard objectives setdisplay sidebar Depth");
   let tick = seconds2 * 20;
-  potionStart = system4.currentTick;
+  potionStart = system5.currentTick;
   switch (potion2) {
     case "water_breathing": {
       player.addEffect("water_breathing", tick);
@@ -1094,7 +1211,7 @@ function applyPotionEffect(player, potion2, seconds2) {
   player.runCommand("clear @p minecraft:glass_bottle");
 }
 function mainTick() {
-  world9.getAllPlayers().forEach((player) => {
+  world10.getAllPlayers().forEach((player) => {
     if (player.isInWater == true) {
       player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
       meters = 94 - Math.floor(player.location.y);
@@ -1117,7 +1234,7 @@ function mainTick() {
       }
     }
   });
-  system4.run(mainTick);
+  system5.run(mainTick);
 }
 async function surface(player) {
   player.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
@@ -1129,7 +1246,7 @@ async function surface(player) {
   player.removeEffect("water_breathing");
   player.removeEffect("levitation");
 }
-world9.afterEvents.itemCompleteUse.subscribe(async (event) => {
+world10.afterEvents.itemCompleteUse.subscribe(async (event) => {
   let player = event.source;
   if (event.itemStack?.typeId === "minecraft:potion") {
     if (potion === "poison") {
@@ -1143,7 +1260,7 @@ world9.afterEvents.itemCompleteUse.subscribe(async (event) => {
     event.source.runCommand("clear @p minecraft:glass_bottle");
   }
 });
-world9.afterEvents.entityHealthChanged.subscribe(async (event) => {
+world10.afterEvents.entityHealthChanged.subscribe(async (event) => {
   if (event.entity.typeId === "minecraft:player") {
     let player = event.entity;
     if (player.isInWater == true) {
@@ -1158,6 +1275,6 @@ world9.afterEvents.entityHealthChanged.subscribe(async (event) => {
     }
   }
 });
-system4.run(mainTick);
+system5.run(mainTick);
 
 //# sourceMappingURL=../debug/main.js.map

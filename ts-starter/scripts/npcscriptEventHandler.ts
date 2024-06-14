@@ -2,10 +2,11 @@ import { system, world } from "@minecraft/server";
 import { moveNpc, replay } from "./cuisenaireRods";
 import { perfectRun } from "./perfectRun";
 import { openGate, closeGate } from "./gate";
+import { npcWalk } from "./npcWalk";
 
 let overworld = world.getDimension("overworld");
 //handles the scriptEventReceive from NPCs
-system.afterEvents.scriptEventReceive.subscribe((event) => {
+system.afterEvents.scriptEventReceive.subscribe(async (event) => {
   world.sendMessage(`${event.message}, ${event.id}`);
   switch (event.id) {
     case "rod:npcReplay": {
@@ -36,13 +37,32 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
       switch (event.message) {
         case "0": {
           openGate("scale");
+          closeGate("ratio");
+          closeGate("fraction");
+          await npcWalk("scale");
           break;
         }
       }
     }
     case "ratio:npc": {
+      switch (event.message) {
+        case "0": {
+          openGate("ratio");
+          closeGate("scale");
+          closeGate("fraction");
+          break;
+        }
+      }
     }
     case "fraction:npc": {
+      switch (event.message) {
+        case "0": {
+          openGate("fraction");
+          closeGate("scale");
+          closeGate("ratio");
+          break;
+        }
+      }
     }
   }
 });

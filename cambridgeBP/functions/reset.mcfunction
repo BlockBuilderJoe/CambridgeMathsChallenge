@@ -14,3 +14,5 @@ clear @p
 #Gates
 scriptevent gate:close spawn
 scriptevent gate:close scale
+scriptevent gate:close fraction
+scriptevent gate:close ratio
