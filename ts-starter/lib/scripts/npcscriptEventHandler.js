@@ -15,6 +15,17 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
       `);
             break;
         }
+        case "spawnNPC": {
+            if (event.message === "fraction") {
+                world.sendMessage("Starting Fraction Game...");
+            }
+            else if (event.message === "ratio") {
+                world.sendMessage("Starting Ratio Game...");
+            }
+            else if (event.message === "scale") {
+                world.sendMessage("Starting Scale Game...");
+            }
+        }
     }
 });
 //# sourceMappingURL=npcscriptEventHandler.js.map

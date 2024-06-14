@@ -675,16 +675,61 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME =  
- TAG =  
+ NAME = spawnNpc 
+ TAG = spawnNpc 
  
  1. Stand in front of the NPC and copy this command: 
  
-/tag @e[type=npc, r=2] add  
+/tag @e[type=npc, r=2] add spawnNpc 
 
  2. Then paste this command: 
 
-/dialogue change @e[tag=]  
+/dialogue change @e[tag=spawnNpc] spawnNpc 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME = Guild Master 
+ TAG = scaleNpc 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add scaleNpc 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=scaleNpc] scaleNpc0 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME = Professor of Alchemy 
+ TAG = ratioNpc 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add ratioNpc 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=ratioNpc] ratioNpc0 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME = Professor of CartographyThis is emb 
+ TAG = fractionNpc 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add fractionNpc 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=fractionNpc] fractionNpc0 
  
  ######################################################## 
  

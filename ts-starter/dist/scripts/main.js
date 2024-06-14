@@ -94,7 +94,7 @@ async function startWindowGame() {
 async function windowScaleHandler(location) {
   switch (true) {
     case (location.x === 71 && location.y === 97 && location.z === 225): {
-      await windowUndo({ x: 67, y: 47, z: 218 }, { x: 80, y: 82, z: 218 }, { x: 67, y: 97, z: 218 });
+      await windowUndo({ x: 67, y: 47, z: 218 }, { x: 76, y: 82, z: 218 }, { x: 67, y: 97, z: 218 });
       scale({ x: 69, y: 98, z: 225 }, { x: 69, y: 102, z: 225 }, { x: 71, y: 98, z: 225 });
       break;
     }
@@ -109,7 +109,7 @@ async function windowUndoHandler(location) {
   giveGlass();
   switch (true) {
     case (location.x === 71 && location.y === 97 && location.z === 225): {
-      await windowUndo({ x: 67, y: 47, z: 218 }, { x: 80, y: 82, z: 218 }, { x: 67, y: 97, z: 218 });
+      await windowUndo({ x: 67, y: 47, z: 218 }, { x: 76, y: 82, z: 218 }, { x: 67, y: 97, z: 218 });
       break;
     }
     case (location.x === 82 && location.y === 97 && location.z === 225): {
@@ -849,6 +849,15 @@ system3.afterEvents.scriptEventReceive.subscribe((event) => {
       overworld7.runCommandAsync(`dialogue change @e[tag=rodNpc${event.message}] rodNpc${event.message}Saved 
       `);
       break;
+    }
+    case "spawnNPC": {
+      if (event.message === "fraction") {
+        world7.sendMessage("Starting Fraction Game...");
+      } else if (event.message === "ratio") {
+        world7.sendMessage("Starting Ratio Game...");
+      } else if (event.message === "scale") {
+        world7.sendMessage("Starting Scale Game...");
+      }
     }
   }
 });

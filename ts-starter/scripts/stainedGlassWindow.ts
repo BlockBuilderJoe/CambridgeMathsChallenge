@@ -27,7 +27,7 @@ export async function startWindowGame() {
 export async function windowScaleHandler(location: Vector3) {
   switch (true) {
     case location.x === 71 && location.y === 97 && location.z === 225: {
-      await windowUndo({ x: 67, y: 47, z: 218 }, { x: 80, y: 82, z: 218 }, { x: 67, y: 97, z: 218 });
+      await windowUndo({ x: 67, y: 47, z: 218 }, { x: 76, y: 82, z: 218 }, { x: 67, y: 97, z: 218 });
       scale({ x: 69, y: 98, z: 225 }, { x: 69, y: 102, z: 225 }, { x: 71, y: 98, z: 225 });
       break;
     }
@@ -43,7 +43,7 @@ export async function windowUndoHandler(location: Vector3) {
   giveGlass();
   switch (true) {
     case location.x === 71 && location.y === 97 && location.z === 225: {
-      await windowUndo({ x: 67, y: 47, z: 218 }, { x: 80, y: 82, z: 218 }, { x: 67, y: 97, z: 218 });
+      await windowUndo({ x: 67, y: 47, z: 218 }, { x: 76, y: 82, z: 218 }, { x: 67, y: 97, z: 218 });
       break;
     }
     case location.x === 82 && location.y === 97 && location.z === 225: {
