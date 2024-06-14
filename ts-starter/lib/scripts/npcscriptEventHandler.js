@@ -1,5 +1,6 @@
 import { system, world } from "@minecraft/server";
-import { replay } from "./cuisenaireRods";
+import { moveNpc, replay } from "./cuisenaireRods";
+import { openGates } from "./spawn";
 let overworld = world.getDimension("overworld");
 //handles the scriptEventReceive from NPCs
 system.afterEvents.scriptEventReceive.subscribe((event) => {
@@ -10,13 +11,11 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
             break;
         }
         case "rod:npcComplete": {
-            overworld.runCommandAsync(`tp @e[tag=rodNpc${event.message}] 26 96 107`);
-            overworld.runCommandAsync(`scoreboard players add Saved Students 1`);
-            overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${event.message}] rodNpc${event.message}Saved 
-      `);
+            moveNpc(parseInt(event.message));
             break;
         }
         case "spawn:npc": {
+            openGates("spawn");
             if (event.message === "fraction") {
                 overworld.runCommandAsync(`tp @e[tag=fractionNpc] 56 96 139`);
             }

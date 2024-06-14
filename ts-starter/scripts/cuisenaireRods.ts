@@ -13,6 +13,27 @@ export async function startCuisenaireGame() {
   await resetGrid({ x: 19, y: 95, z: 81 }); //top left corner of the area.
 }
 
+export async function moveNpc(id: number) {
+  let { x, y, z } = getRandomCoordinate();
+  overworld.runCommandAsync(`tp @e[tag=rodNpc${id}] ${x} ${y} ${z}`);
+  overworld.runCommandAsync(`scoreboard players add Saved Students 1`);
+  overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${id}] rodNpc${id}Saved
+      `);
+}
+
+function getRandomCoordinate(): { x: number; y: number; z: number } {
+  const minX = 19;
+  const maxX = 28;
+  const y = 96;
+  const minZ = 106;
+  const maxZ = 110;
+
+  const x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+  const z = Math.floor(Math.random() * (maxZ - minZ + 1)) + minZ;
+
+  return { x, y, z };
+}
+
 export async function directionCheck(x: number, z: number, direction: string) {
   let correctDirection = false;
   for (const range of validRanges) {

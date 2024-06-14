@@ -1,5 +1,5 @@
 // scripts/main.ts
-import { world as world8, system as system4, BlockPermutation as BlockPermutation5 } from "@minecraft/server";
+import { world as world9, system as system4, BlockPermutation as BlockPermutation5 } from "@minecraft/server";
 
 // scripts/stainedGlassWindow.ts
 import { world as world4 } from "@minecraft/server";
@@ -441,6 +441,23 @@ async function startCuisenaireGame() {
   await giveRods();
   await resetGrid({ x: 19, y: 95, z: 81 });
 }
+async function moveNpc(id) {
+  let { x, y, z } = getRandomCoordinate();
+  overworld5.runCommandAsync(`tp @e[tag=rodNpc${id}] ${x} ${y} ${z}`);
+  overworld5.runCommandAsync(`scoreboard players add Saved Students 1`);
+  overworld5.runCommandAsync(`dialogue change @e[tag=rodNpc${id}] rodNpc${id}Saved
+      `);
+}
+function getRandomCoordinate() {
+  const minX = 19;
+  const maxX = 28;
+  const y = 96;
+  const minZ = 106;
+  const maxZ = 110;
+  const x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+  const z = Math.floor(Math.random() * (maxZ - minZ + 1)) + minZ;
+  return { x, y, z };
+}
 async function directionCheck(x, z, direction) {
   let correctDirection = false;
   for (const range of validRanges) {
@@ -835,48 +852,70 @@ function displayTimer(potionStart2, seconds2, player, potionDescription) {
 }
 
 // scripts/npcscriptEventHandler.ts
-import { system as system3, world as world7 } from "@minecraft/server";
+import { system as system3, world as world8 } from "@minecraft/server";
+
+// scripts/spawn.ts
+import { world as world7 } from "@minecraft/server";
 var overworld7 = world7.getDimension("overworld");
+async function openGates(location) {
+  switch (location) {
+    case "spawn": {
+      overworld7.runCommandAsync(`setblock 62 97 148 air`);
+      overworld7.runCommandAsync(`setblock 62 97 147 air`);
+      overworld7.runCommandAsync(`setblock 62 98 148 air`);
+      overworld7.runCommandAsync(`setblock 62 98 147 air`);
+      overworld7.runCommandAsync(`setblock 61 97 146 iron_bars`);
+      overworld7.runCommandAsync(`setblock 60 97 146 iron_bars`);
+      overworld7.runCommandAsync(`setblock 61 98 146 iron_bars`);
+      overworld7.runCommandAsync(`setblock 60 98 146 iron_bars`);
+      overworld7.runCommandAsync(`setblock 61 97 149 iron_bars`);
+      overworld7.runCommandAsync(`setblock 60 97 149 iron_bars`);
+      overworld7.runCommandAsync(`setblock 61 98 149 iron_bars`);
+      overworld7.runCommandAsync(`setblock 60 98 149 iron_bars`);
+    }
+  }
+}
+
+// scripts/npcscriptEventHandler.ts
+var overworld8 = world8.getDimension("overworld");
 system3.afterEvents.scriptEventReceive.subscribe((event) => {
-  world7.sendMessage(`${event.message}, ${event.id}`);
+  world8.sendMessage(`${event.message}, ${event.id}`);
   switch (event.id) {
     case "rod:npcReplay": {
       replay(parseInt(event.message));
       break;
     }
     case "rod:npcComplete": {
-      overworld7.runCommandAsync(`tp @e[tag=rodNpc${event.message}] 26 96 107`);
-      overworld7.runCommandAsync(`scoreboard players add Saved Students 1`);
-      overworld7.runCommandAsync(`dialogue change @e[tag=rodNpc${event.message}] rodNpc${event.message}Saved 
-      `);
+      moveNpc(parseInt(event.message));
       break;
     }
     case "spawn:npc": {
+      openGates("spawn");
       if (event.message === "fraction") {
-        overworld7.runCommandAsync(`tp @e[tag=fractionNpc] 56 96 139`);
+        overworld8.runCommandAsync(`tp @e[tag=fractionNpc] 56 96 139`);
       } else if (event.message === "ratio") {
-        overworld7.runCommandAsync(`tp @e[tag=ratioNpc] 46 96 149`);
+        overworld8.runCommandAsync(`tp @e[tag=ratioNpc] 46 96 149`);
       } else if (event.message === "scale") {
-        overworld7.runCommandAsync(`tp @e[tag=scaleNpc] 59 96 156`);
+        overworld8.runCommandAsync(`tp @e[tag=scaleNpc] 59 96 156`);
       }
     }
   }
 });
 
 // scripts/main.ts
-var overworld8 = world8.getDimension("overworld");
+var overworld9 = world9.getDimension("overworld");
 var potion = "";
 var seconds = 0;
 var currentPlayer = null;
 var potionStart = 0;
 var potionDrank = false;
 var meters = 0;
-world8.afterEvents.playerSpawn.subscribe((eventData) => {
+world9.afterEvents.playerSpawn.subscribe((eventData) => {
   currentPlayer = eventData.player;
   let initialSpawn = eventData.initialSpawn;
   giveWand();
 });
-world8.afterEvents.buttonPush.subscribe(async (event) => {
+world9.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
     case "29,97,106": {
       await startCuisenaireGame();
@@ -892,7 +931,7 @@ world8.afterEvents.buttonPush.subscribe(async (event) => {
     }
   }
 });
-world8.afterEvents.playerPlaceBlock.subscribe(async (event) => {
+world9.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let block = event.block;
   let player = event.player;
   let colour = block.permutation?.getState("color");
@@ -928,16 +967,16 @@ world8.afterEvents.playerPlaceBlock.subscribe(async (event) => {
     }
   }
 });
-world8.beforeEvents.playerBreakBlock.subscribe(async (event) => {
+world9.beforeEvents.playerBreakBlock.subscribe(async (event) => {
   let block = event.block;
   if (block.permutation?.matches("hopper")) {
     event.cancel;
-    overworld8.runCommandAsync(`kill @e[type=item]`);
+    overworld9.runCommandAsync(`kill @e[type=item]`);
     let slots = await getSlots(event);
     ({ potion, seconds } = await potionMaker(slots));
   }
 });
-world8.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
+world9.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId;
   let block = clickEvent.block;
   let brokenBlock = clickEvent.brokenBlockPermutation;
@@ -952,7 +991,7 @@ world8.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
     }
   }
 });
-world8.beforeEvents.itemUseOn.subscribe(async (event) => {
+world9.beforeEvents.itemUseOn.subscribe(async (event) => {
   let block = event.block;
   if (block.permutation?.matches("blockbuilders:symbol_subtract")) {
     await windowScaleHandler(block.location);
@@ -987,7 +1026,7 @@ function applyPotionEffect(player, potion2, seconds2) {
   player.runCommand("clear @p minecraft:glass_bottle");
 }
 function mainTick() {
-  world8.getAllPlayers().forEach((player) => {
+  world9.getAllPlayers().forEach((player) => {
     if (player.isInWater == true) {
       player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
       meters = 94 - Math.floor(player.location.y);
@@ -1020,8 +1059,9 @@ async function surface(player) {
   player.removeEffect("blindness");
   player.removeEffect("night_vision");
   player.removeEffect("water_breathing");
+  player.removeEffect("levitation");
 }
-world8.afterEvents.itemCompleteUse.subscribe(async (event) => {
+world9.afterEvents.itemCompleteUse.subscribe(async (event) => {
   let player = event.source;
   if (event.itemStack?.typeId === "minecraft:potion") {
     if (potion === "poison") {
@@ -1035,7 +1075,7 @@ world8.afterEvents.itemCompleteUse.subscribe(async (event) => {
     event.source.runCommand("clear @p minecraft:glass_bottle");
   }
 });
-world8.afterEvents.entityHealthChanged.subscribe(async (event) => {
+world9.afterEvents.entityHealthChanged.subscribe(async (event) => {
   if (event.entity.typeId === "minecraft:player") {
     let player = event.entity;
     if (player.isInWater == true) {

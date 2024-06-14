@@ -197,6 +197,7 @@ async function surface(player: any) {
   player.removeEffect("blindness");
   player.removeEffect("night_vision");
   player.removeEffect("water_breathing");
+  player.removeEffect("levitation");
 }
 
 //listens for the potion to be fully drunk.
