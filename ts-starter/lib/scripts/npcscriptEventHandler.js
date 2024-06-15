@@ -5,7 +5,10 @@ import { npcWalk } from "./npcWalk";
 let overworld = world.getDimension("overworld");
 //handles the scriptEventReceive from NPCs
 system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    switch (event.id) {
+    world.sendMessage(`scriptEventReceive triggered`);
+    world.sendMessage(`event.id: ${event.id}`);
+    world.sendMessage(`event.message: ${event.message}`);
+    switch (`${event.id}`) {
         case "rod:npcReplay": {
             replay(parseInt(event.message));
             break;
@@ -57,28 +60,26 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
         case "ratio:npc": {
             world.sendMessage(`ratio triggered`);
             switch (event.message) {
-                case "0":
-                    {
-                        openGate("ratio");
-                        closeGate("scale");
-                        closeGate("fraction");
-                        break;
-                    }
+                case "0": {
+                    openGate("ratio");
+                    closeGate("scale");
+                    closeGate("fraction");
                     break;
+                }
             }
+            break;
         }
         case "fraction:npc": {
             world.sendMessage(`fraction triggered`);
             switch (event.message) {
-                case "0":
-                    {
-                        openGate("fraction");
-                        closeGate("scale");
-                        closeGate("ratio");
-                        break;
-                    }
+                case "0": {
+                    openGate("fraction");
+                    closeGate("scale");
+                    closeGate("ratio");
                     break;
+                }
             }
+            break;
         }
     }
 }));

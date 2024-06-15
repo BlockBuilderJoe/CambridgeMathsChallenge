@@ -873,6 +873,7 @@ async function openGate(location) {
       overworld7.runCommandAsync(`setblock 60 97 149 iron_bars`);
       overworld7.runCommandAsync(`setblock 61 98 149 iron_bars`);
       overworld7.runCommandAsync(`setblock 60 98 149 iron_bars`);
+      break;
     }
     case "scale": {
       overworld7.runCommandAsync(`setblock 56 96 158 air`);
@@ -887,6 +888,7 @@ async function openGate(location) {
       overworld7.runCommandAsync(`setblock 55 96 160 iron_bars`);
       overworld7.runCommandAsync(`setblock 55 97 159 iron_bars`);
       overworld7.runCommandAsync(`setblock 55 97 160 iron_bars`);
+      break;
     }
     case "ratio": {
       overworld7.runCommandAsync(`setblock 45 96 148 air`);
@@ -901,6 +903,7 @@ async function openGate(location) {
       overworld7.runCommandAsync(`setblock 43 96 146 iron_bars`);
       overworld7.runCommandAsync(`setblock 44 97 146 iron_bars`);
       overworld7.runCommandAsync(`setblock 43 97 146 iron_bars`);
+      break;
     }
     case "fraction": {
       overworld7.runCommandAsync(`setblock 56 96 137 air`);
@@ -915,6 +918,7 @@ async function openGate(location) {
       overworld7.runCommandAsync(`setblock 58 96 135 iron_bars`);
       overworld7.runCommandAsync(`setblock 58 97 136 iron_bars`);
       overworld7.runCommandAsync(`setblock 58 97 135 iron_bars`);
+      break;
     }
   }
 }
@@ -933,6 +937,7 @@ async function closeGate(location) {
       overworld7.runCommandAsync(`setblock 60 97 149 air`);
       overworld7.runCommandAsync(`setblock 61 98 149 air`);
       overworld7.runCommandAsync(`setblock 60 98 149 air`);
+      break;
     }
     case "scale": {
       overworld7.runCommandAsync(`setblock 56 96 158 iron_bars`);
@@ -947,6 +952,7 @@ async function closeGate(location) {
       overworld7.runCommandAsync(`setblock 55 96 160 air`);
       overworld7.runCommandAsync(`setblock 55 97 159 air`);
       overworld7.runCommandAsync(`setblock 55 97 160 air`);
+      break;
     }
     case "ratio": {
       overworld7.runCommandAsync(`setblock 45 96 148 iron_bars`);
@@ -961,6 +967,7 @@ async function closeGate(location) {
       overworld7.runCommandAsync(`setblock 43 96 146 air`);
       overworld7.runCommandAsync(`setblock 44 97 146 air`);
       overworld7.runCommandAsync(`setblock 43 97 146 air`);
+      break;
     }
     case "fraction": {
       overworld7.runCommandAsync(`setblock 56 96 137 iron_bars`);
@@ -975,6 +982,7 @@ async function closeGate(location) {
       overworld7.runCommandAsync(`setblock 58 96 135 air`);
       overworld7.runCommandAsync(`setblock 58 97 136 air`);
       overworld7.runCommandAsync(`setblock 58 97 135 air`);
+      break;
     }
   }
 }
@@ -1031,7 +1039,10 @@ async function generatePath(path) {
 // scripts/npcscriptEventHandler.ts
 var overworld9 = world9.getDimension("overworld");
 system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
-  switch (event.id) {
+  world9.sendMessage(`scriptEventReceive triggered`);
+  world9.sendMessage(`event.id: ${event.id}`);
+  world9.sendMessage(`event.message: ${event.message}`);
+  switch (`${event.id}`) {
     case "rod:npcReplay": {
       replay(parseInt(event.message));
       break;
@@ -1080,28 +1091,26 @@ system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
     case "ratio:npc": {
       world9.sendMessage(`ratio triggered`);
       switch (event.message) {
-        case "0":
-          {
-            openGate("ratio");
-            closeGate("scale");
-            closeGate("fraction");
-            break;
-          }
+        case "0": {
+          openGate("ratio");
+          closeGate("scale");
+          closeGate("fraction");
           break;
+        }
       }
+      break;
     }
     case "fraction:npc": {
       world9.sendMessage(`fraction triggered`);
       switch (event.message) {
-        case "0":
-          {
-            openGate("fraction");
-            closeGate("scale");
-            closeGate("ratio");
-            break;
-          }
+        case "0": {
+          openGate("fraction");
+          closeGate("scale");
+          closeGate("ratio");
           break;
+        }
       }
+      break;
     }
   }
 });
