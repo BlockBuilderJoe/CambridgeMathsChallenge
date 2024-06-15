@@ -5,10 +5,7 @@ import { npcWalk } from "./npcWalk";
 let overworld = world.getDimension("overworld");
 //handles the scriptEventReceive from NPCs
 system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    world.sendMessage(`scriptEventReceive triggered`);
-    world.sendMessage(`event.id: ${event.id}`);
-    world.sendMessage(`event.message: ${event.message}`);
-    switch (`${event.id}`) {
+    switch (event.id) {
         case "rod:npcReplay": {
             replay(parseInt(event.message));
             break;
@@ -18,7 +15,6 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
             break;
         }
         case "spawn:npc": {
-            world.sendMessage(`spawnNpc triggered`);
             openGate("spawn");
             if (event.message === "fraction") {
                 overworld.runCommandAsync(`tp @e[tag=fractionNpc] 56 96 139`);
@@ -35,17 +31,14 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
             break;
         }
         case "gate:open": {
-            world.sendMessage(`openGate triggered`);
             openGate(event.message);
             break;
         }
         case "gate:close": {
-            world.sendMessage(`closeGate triggered`);
             closeGate(event.message);
             break;
         }
         case "scale:npc": {
-            world.sendMessage(`scale triggered`);
             switch (event.message) {
                 case "0": {
                     openGate("scale");
@@ -58,7 +51,6 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
             break;
         }
         case "ratio:npc": {
-            world.sendMessage(`ratio triggered`);
             switch (event.message) {
                 case "0": {
                     openGate("ratio");
@@ -70,7 +62,6 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
             break;
         }
         case "fraction:npc": {
-            world.sendMessage(`fraction triggered`);
             switch (event.message) {
                 case "0": {
                     openGate("fraction");

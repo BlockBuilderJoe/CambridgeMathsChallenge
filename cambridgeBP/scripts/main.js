@@ -873,6 +873,7 @@ async function openGate(location) {
       overworld7.runCommandAsync(`setblock 60 97 149 iron_bars`);
       overworld7.runCommandAsync(`setblock 61 98 149 iron_bars`);
       overworld7.runCommandAsync(`setblock 60 98 149 iron_bars`);
+      break;
     }
     case "scale": {
       overworld7.runCommandAsync(`setblock 56 96 158 air`);
@@ -887,6 +888,7 @@ async function openGate(location) {
       overworld7.runCommandAsync(`setblock 55 96 160 iron_bars`);
       overworld7.runCommandAsync(`setblock 55 97 159 iron_bars`);
       overworld7.runCommandAsync(`setblock 55 97 160 iron_bars`);
+      break;
     }
     case "ratio": {
       overworld7.runCommandAsync(`setblock 45 96 148 air`);
@@ -901,6 +903,7 @@ async function openGate(location) {
       overworld7.runCommandAsync(`setblock 43 96 146 iron_bars`);
       overworld7.runCommandAsync(`setblock 44 97 146 iron_bars`);
       overworld7.runCommandAsync(`setblock 43 97 146 iron_bars`);
+      break;
     }
     case "fraction": {
       overworld7.runCommandAsync(`setblock 56 96 137 air`);
@@ -915,6 +918,7 @@ async function openGate(location) {
       overworld7.runCommandAsync(`setblock 58 96 135 iron_bars`);
       overworld7.runCommandAsync(`setblock 58 97 136 iron_bars`);
       overworld7.runCommandAsync(`setblock 58 97 135 iron_bars`);
+      break;
     }
   }
 }
@@ -933,6 +937,7 @@ async function closeGate(location) {
       overworld7.runCommandAsync(`setblock 60 97 149 air`);
       overworld7.runCommandAsync(`setblock 61 98 149 air`);
       overworld7.runCommandAsync(`setblock 60 98 149 air`);
+      break;
     }
     case "scale": {
       overworld7.runCommandAsync(`setblock 56 96 158 iron_bars`);
@@ -947,6 +952,7 @@ async function closeGate(location) {
       overworld7.runCommandAsync(`setblock 55 96 160 air`);
       overworld7.runCommandAsync(`setblock 55 97 159 air`);
       overworld7.runCommandAsync(`setblock 55 97 160 air`);
+      break;
     }
     case "ratio": {
       overworld7.runCommandAsync(`setblock 45 96 148 iron_bars`);
@@ -961,6 +967,7 @@ async function closeGate(location) {
       overworld7.runCommandAsync(`setblock 43 96 146 air`);
       overworld7.runCommandAsync(`setblock 44 97 146 air`);
       overworld7.runCommandAsync(`setblock 43 97 146 air`);
+      break;
     }
     case "fraction": {
       overworld7.runCommandAsync(`setblock 56 96 137 iron_bars`);
@@ -975,6 +982,7 @@ async function closeGate(location) {
       overworld7.runCommandAsync(`setblock 58 96 135 air`);
       overworld7.runCommandAsync(`setblock 58 97 136 air`);
       overworld7.runCommandAsync(`setblock 58 97 135 air`);
+      break;
     }
   }
 }
@@ -1041,7 +1049,6 @@ system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
       break;
     }
     case "spawn:npc": {
-      world9.sendMessage(`spawnNpc triggered`);
       openGate("spawn");
       if (event.message === "fraction") {
         overworld9.runCommandAsync(`tp @e[tag=fractionNpc] 56 96 139`);
@@ -1055,17 +1062,14 @@ system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
       break;
     }
     case "gate:open": {
-      world9.sendMessage(`openGate triggered`);
       openGate(event.message);
       break;
     }
     case "gate:close": {
-      world9.sendMessage(`closeGate triggered`);
       closeGate(event.message);
       break;
     }
     case "scale:npc": {
-      world9.sendMessage(`scale triggered`);
       switch (event.message) {
         case "0": {
           openGate("scale");
@@ -1078,30 +1082,26 @@ system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
       break;
     }
     case "ratio:npc": {
-      world9.sendMessage(`ratio triggered`);
       switch (event.message) {
-        case "0":
-          {
-            openGate("ratio");
-            closeGate("scale");
-            closeGate("fraction");
-            break;
-          }
+        case "0": {
+          openGate("ratio");
+          closeGate("scale");
+          closeGate("fraction");
           break;
+        }
       }
+      break;
     }
     case "fraction:npc": {
-      world9.sendMessage(`fraction triggered`);
       switch (event.message) {
-        case "0":
-          {
-            openGate("fraction");
-            closeGate("scale");
-            closeGate("ratio");
-            break;
-          }
+        case "0": {
+          openGate("fraction");
+          closeGate("scale");
+          closeGate("ratio");
           break;
+        }
       }
+      break;
     }
   }
 });

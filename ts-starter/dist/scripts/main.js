@@ -1039,10 +1039,7 @@ async function generatePath(path) {
 // scripts/npcscriptEventHandler.ts
 var overworld9 = world9.getDimension("overworld");
 system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
-  world9.sendMessage(`scriptEventReceive triggered`);
-  world9.sendMessage(`event.id: ${event.id}`);
-  world9.sendMessage(`event.message: ${event.message}`);
-  switch (`${event.id}`) {
+  switch (event.id) {
     case "rod:npcReplay": {
       replay(parseInt(event.message));
       break;
@@ -1052,7 +1049,6 @@ system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
       break;
     }
     case "spawn:npc": {
-      world9.sendMessage(`spawnNpc triggered`);
       openGate("spawn");
       if (event.message === "fraction") {
         overworld9.runCommandAsync(`tp @e[tag=fractionNpc] 56 96 139`);
@@ -1066,17 +1062,14 @@ system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
       break;
     }
     case "gate:open": {
-      world9.sendMessage(`openGate triggered`);
       openGate(event.message);
       break;
     }
     case "gate:close": {
-      world9.sendMessage(`closeGate triggered`);
       closeGate(event.message);
       break;
     }
     case "scale:npc": {
-      world9.sendMessage(`scale triggered`);
       switch (event.message) {
         case "0": {
           openGate("scale");
@@ -1089,7 +1082,6 @@ system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
       break;
     }
     case "ratio:npc": {
-      world9.sendMessage(`ratio triggered`);
       switch (event.message) {
         case "0": {
           openGate("ratio");
@@ -1101,7 +1093,6 @@ system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
       break;
     }
     case "fraction:npc": {
-      world9.sendMessage(`fraction triggered`);
       switch (event.message) {
         case "0": {
           openGate("fraction");
