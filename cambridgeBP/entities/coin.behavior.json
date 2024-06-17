@@ -20,7 +20,11 @@
 			},
 			"minecraft:knockback_resistance": {
         		"value": 1000
-      		}
+      		},
+			"minecraft:health": {
+				"max": 1000,
+				"value": 1000
+			}
 		}
 	}
 }
