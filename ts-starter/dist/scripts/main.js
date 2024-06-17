@@ -1074,8 +1074,11 @@ async function generatePath(path) {
 import { world as world9 } from "@minecraft/server";
 var overworld9 = world9.getDimension("overworld");
 async function resetGame() {
+  await overworld9.runCommandAsync(`tp @p 30 96 106`);
   await resetCuisenaireGame();
+  await overworld9.runCommandAsync(`tp @p -10 97 143`);
   await resetPotionGame();
+  await overworld9.runCommandAsync(`tp @p 71 96 221`);
   await resetWindowGame();
   await overworld9.runCommandAsync(`tp @e[tag=fractionNpc] 57 88 148`);
   await overworld9.runCommandAsync(`tp @e[tag=scaleNpc] 57 88 148`);

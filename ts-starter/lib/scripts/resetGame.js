@@ -7,8 +7,11 @@ let overworld = world.getDimension("overworld");
 export function resetGame() {
     return __awaiter(this, void 0, void 0, function* () {
         //Reset the game areas
+        yield overworld.runCommandAsync(`tp @p 30 96 106`);
         yield resetCuisenaireGame();
+        yield overworld.runCommandAsync(`tp @p -10 97 143`);
         yield resetPotionGame();
+        yield overworld.runCommandAsync(`tp @p 71 96 221`);
         yield resetWindowGame();
         //Reset the NPCs
         yield overworld.runCommandAsync(`tp @e[tag=fractionNpc] 57 88 148`);

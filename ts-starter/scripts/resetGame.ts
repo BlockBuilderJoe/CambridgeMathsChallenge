@@ -8,8 +8,11 @@ let overworld = world.getDimension("overworld");
 
 export async function resetGame() {
   //Reset the game areas
+  await overworld.runCommandAsync(`tp @p 30 96 106`);
   await resetCuisenaireGame();
+  await overworld.runCommandAsync(`tp @p -10 97 143`);
   await resetPotionGame();
+  await overworld.runCommandAsync(`tp @p 71 96 221`);
   await resetWindowGame();
   //Reset the NPCs
   await overworld.runCommandAsync(`tp @e[tag=fractionNpc] 57 88 148`);
