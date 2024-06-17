@@ -1882,7 +1882,7 @@
                             ]
                         },
                         "commands": [
-                            ""
+                            "scriptevent fraction:npc 1"
                         ]
                     }
                 ]

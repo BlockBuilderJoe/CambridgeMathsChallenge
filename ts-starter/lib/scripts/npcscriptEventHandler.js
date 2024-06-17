@@ -90,6 +90,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
                     break;
                 }
                 case "1": {
+                    world.sendMessage("rods triggered");
                     startCuisenaireGame();
                     break;
                 }

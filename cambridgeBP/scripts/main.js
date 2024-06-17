@@ -1181,6 +1181,7 @@ system5.afterEvents.scriptEventReceive.subscribe(async (event) => {
           break;
         }
         case "1": {
+          world10.sendMessage("rods triggered");
           startCuisenaireGame();
           break;
         }
