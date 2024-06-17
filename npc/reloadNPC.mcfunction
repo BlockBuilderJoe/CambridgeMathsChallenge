@@ -53,3 +53,4 @@ dialogue change @e[tag=ratioNpc] ratioNpc2
 dialogue change @e[tag=fractionNpc] fractionNpc0
 dialogue change @e[tag=fractionNpc] fractionNpc1
 dialogue change @e[tag=fractionNpc] fractionNpc2
+dialogue change @e[tag=groundskeeper] groundskeeper

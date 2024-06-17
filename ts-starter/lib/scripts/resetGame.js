@@ -28,6 +28,8 @@ export function resetGame() {
         yield closeGate("ratio");
         yield closeGate("fraction");
         //Clean up the player
+        yield overworld.runCommandAsync(`gamemode adventure @p`);
+        yield overworld.runCommandAsync(`gamerule showcoordinates false`);
         yield overworld.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
         yield overworld.runCommandAsync(`clear @p`);
         yield overworld.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);

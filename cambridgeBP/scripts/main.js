@@ -1092,6 +1092,8 @@ async function resetGame() {
   await closeGate("scale");
   await closeGate("ratio");
   await closeGate("fraction");
+  await overworld9.runCommandAsync(`gamemode adventure @p`);
+  await overworld9.runCommandAsync(`gamerule showcoordinates false`);
   await overworld9.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
   await overworld9.runCommandAsync(`clear @p`);
   await overworld9.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);

@@ -1882,7 +1882,44 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent fraction:npc 1"
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "groundskeeper",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Grumpy Groundskeeper"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "Grrrrofffff me grass"
+                        }
+                    ]
+                },
+                "on_open_commands": [
+                    "tp @p 30 96 107 facing 30 96 90"
+                ],
+                "on_close_commands": [
+                    "tp @p 30 96 107 facing 30 96 90"
+                ],
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Sorry! "
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "tp @p 30 96 107 facing 30 96 90"
                         ]
                     }
                 ]

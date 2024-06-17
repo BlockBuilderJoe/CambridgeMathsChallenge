@@ -178,3 +178,6 @@ Sorry I’ll keep up!=
 Professor of Cartography=
  Take these magical rods you’ll be able to cross the garden without stepping on the grass. You;ll need to work out the fractions to cross the gaps in the garden.=
 Wish me luck=
+Grumpy Groundskeeper=
+Grrrrofffff me grass=
+Sorry! =
