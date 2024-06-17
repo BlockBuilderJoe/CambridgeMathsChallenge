@@ -48,7 +48,6 @@ async function moveNpc(path: { x: number; y: number; z: number }[], type: string
     const facingZ = nextPoint.z;
     system.runTimeout(async () => {
       await overworld.runCommandAsync(`tp @e[tag=${type}Npc] ${x} ${y} ${z} facing ${facingX} ${facingY} ${facingZ}`);
-      world.sendMessage(`npc path ${i} of ${path.length}`);
       if (path.length - 2 == i) {
         // final point.
         await overworld.runCommandAsync(`dialogue change @e[tag=${type}Npc] ${type}Npc2`); // end of walk dialogue
