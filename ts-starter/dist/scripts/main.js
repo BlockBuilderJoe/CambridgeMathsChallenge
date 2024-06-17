@@ -1360,11 +1360,9 @@ function mainTick() {
       }
       if (player.isSneaking == true) {
         surface(player);
-        player.sendMessage("\xA7fThat's poor form you can't try and sink faster! Even if I am hungry!");
       }
       if (player.isSwimming == true) {
         surface(player);
-        player.sendMessage("\xA7fThat's poor form you can't try and sink faster! Even if I am hungry!");
       }
     }
   });
