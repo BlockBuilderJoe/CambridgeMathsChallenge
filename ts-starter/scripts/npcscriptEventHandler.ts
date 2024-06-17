@@ -5,15 +5,14 @@ import { openGate, closeGate } from "./gate";
 import { npcWalk } from "./npcWalk";
 import { startWindowGame, resetWindowGame } from "./stainedGlassWindow";
 import { startPotionGame, resetPotionGame } from "./potionGame";
+import { resetGame } from "./resetGame";
 
 let overworld = world.getDimension("overworld");
 //handles the scriptEventReceive from NPCs
 system.afterEvents.scriptEventReceive.subscribe(async (event) => {
   switch (event.id) {
     case "game:reset": {
-      await resetCuisenaireGame();
-      await resetPotionGame();
-      await resetWindowGame();
+      await resetGame();
       break;
     }
     case "rod:npcReplay": {

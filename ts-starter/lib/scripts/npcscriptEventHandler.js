@@ -1,17 +1,16 @@
 import { system, world } from "@minecraft/server";
-import { moveNpc, replay, startCuisenaireGame, resetCuisenaireGame } from "./cuisenaireRods";
+import { moveNpc, replay, startCuisenaireGame } from "./cuisenaireRods";
 import { openGate, closeGate } from "./gate";
 import { npcWalk } from "./npcWalk";
-import { startWindowGame, resetWindowGame } from "./stainedGlassWindow";
-import { startPotionGame, resetPotionGame } from "./potionGame";
+import { startWindowGame } from "./stainedGlassWindow";
+import { startPotionGame } from "./potionGame";
+import { resetGame } from "./resetGame";
 let overworld = world.getDimension("overworld");
 //handles the scriptEventReceive from NPCs
 system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
     switch (event.id) {
         case "game:reset": {
-            yield resetCuisenaireGame();
-            yield resetPotionGame();
-            yield resetWindowGame();
+            yield resetGame();
             break;
         }
         case "rod:npcReplay": {

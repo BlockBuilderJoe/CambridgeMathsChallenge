@@ -1,5 +1,5 @@
 // scripts/main.ts
-import { world as world10, system as system5, BlockPermutation as BlockPermutation5 } from "@minecraft/server";
+import { world as world11, system as system6, BlockPermutation as BlockPermutation5 } from "@minecraft/server";
 
 // scripts/stainedGlassWindow.ts
 import { world as world4 } from "@minecraft/server";
@@ -860,7 +860,7 @@ function displayTimer(potionStart2, seconds2, player, potionDescription) {
 }
 
 // scripts/npcscriptEventHandler.ts
-import { system as system4, world as world9 } from "@minecraft/server";
+import { system as system5, world as world10 } from "@minecraft/server";
 
 // scripts/gate.ts
 import { world as world7 } from "@minecraft/server";
@@ -1070,14 +1070,36 @@ async function generatePath(path) {
   return generatedPath;
 }
 
-// scripts/npcscriptEventHandler.ts
+// scripts/resetGame.ts
+import { world as world9 } from "@minecraft/server";
 var overworld9 = world9.getDimension("overworld");
-system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
+async function resetGame() {
+  await resetCuisenaireGame();
+  await resetPotionGame();
+  await resetWindowGame();
+  await overworld9.runCommandAsync(`tp @e[tag=fractionNpc] 57 88 148`);
+  await overworld9.runCommandAsync(`tp @e[tag=scaleNpc] 57 88 148`);
+  await overworld9.runCommandAsync(`tp @e[tag=ratioNpc] 57 88 148`);
+  await overworld9.runCommandAsync(`tp @e[tag=spawnNpc] 63 97 146 facing 69 97 147`);
+  await overworld9.runCommandAsync(`dialogue change @e[tag=spawnNpc] spawnNpc`);
+  await overworld9.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc0`);
+  await overworld9.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc0`);
+  await overworld9.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc0`);
+  await closeGate("spawn");
+  await closeGate("scale");
+  await closeGate("ratio");
+  await closeGate("fraction");
+  await overworld9.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
+  await overworld9.runCommandAsync(`clear @p`);
+  await overworld9.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
+}
+
+// scripts/npcscriptEventHandler.ts
+var overworld10 = world10.getDimension("overworld");
+system5.afterEvents.scriptEventReceive.subscribe(async (event) => {
   switch (event.id) {
     case "game:reset": {
-      await resetCuisenaireGame();
-      await resetPotionGame();
-      await resetWindowGame();
+      await resetGame();
       break;
     }
     case "rod:npcReplay": {
@@ -1091,16 +1113,16 @@ system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
     case "spawn:npc": {
       openGate("spawn");
       if (event.message === "fraction") {
-        overworld9.runCommandAsync(`tp @e[tag=fractionNpc] 57 96 148 facing 66 96 148`);
-        overworld9.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
+        overworld10.runCommandAsync(`tp @e[tag=fractionNpc] 57 96 148 facing 66 96 148`);
+        overworld10.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
       } else if (event.message === "ratio") {
-        overworld9.runCommandAsync(`tp @e[tag=ratioNpc] 57 96 148 facing 66 96 148`);
-        overworld9.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
+        overworld10.runCommandAsync(`tp @e[tag=ratioNpc] 57 96 148 facing 66 96 148`);
+        overworld10.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
       } else if (event.message === "scale") {
-        overworld9.runCommandAsync(`tp @e[tag=scaleNpc] 57 96 148 facing 66 96 148`);
-        overworld9.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
+        overworld10.runCommandAsync(`tp @e[tag=scaleNpc] 57 96 148 facing 66 96 148`);
+        overworld10.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
       } else {
-        world9.sendMessage(`spawnNpc triggered with invalid message`);
+        world10.sendMessage(`spawnNpc triggered with invalid message`);
       }
       break;
     }
@@ -1164,19 +1186,19 @@ system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
 });
 
 // scripts/main.ts
-var overworld10 = world10.getDimension("overworld");
+var overworld11 = world11.getDimension("overworld");
 var potion = "";
 var seconds = 0;
 var currentPlayer = null;
 var potionStart = 0;
 var potionDrank = false;
 var meters = 0;
-world10.afterEvents.playerSpawn.subscribe((eventData) => {
+world11.afterEvents.playerSpawn.subscribe((eventData) => {
   currentPlayer = eventData.player;
   let initialSpawn = eventData.initialSpawn;
   giveWand();
 });
-world10.afterEvents.buttonPush.subscribe(async (event) => {
+world11.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
     case "29,97,106": {
       await startCuisenaireGame();
@@ -1192,7 +1214,7 @@ world10.afterEvents.buttonPush.subscribe(async (event) => {
     }
   }
 });
-world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
+world11.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let block = event.block;
   let player = event.player;
   let colour = block.permutation?.getState("color");
@@ -1228,16 +1250,16 @@ world10.afterEvents.playerPlaceBlock.subscribe(async (event) => {
     }
   }
 });
-world10.beforeEvents.playerBreakBlock.subscribe(async (event) => {
+world11.beforeEvents.playerBreakBlock.subscribe(async (event) => {
   let block = event.block;
   if (block.permutation?.matches("hopper")) {
     event.cancel;
-    overworld10.runCommandAsync(`kill @e[type=item]`);
+    overworld11.runCommandAsync(`kill @e[type=item]`);
     let slots = await getSlots(event);
     ({ potion, seconds } = await potionMaker(slots));
   }
 });
-world10.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
+world11.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId;
   let block = clickEvent.block;
   let brokenBlock = clickEvent.brokenBlockPermutation;
@@ -1252,7 +1274,7 @@ world10.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
     }
   }
 });
-world10.beforeEvents.itemUseOn.subscribe(async (event) => {
+world11.beforeEvents.itemUseOn.subscribe(async (event) => {
   let block = event.block;
   if (block.permutation?.matches("blockbuilders:symbol_subtract")) {
     await windowScaleHandler(block.location);
@@ -1261,7 +1283,7 @@ world10.beforeEvents.itemUseOn.subscribe(async (event) => {
 function applyPotionEffect(player, potion2, seconds2) {
   player.runCommand("scoreboard objectives setdisplay sidebar Depth");
   let tick = seconds2 * 20;
-  potionStart = system5.currentTick;
+  potionStart = system6.currentTick;
   switch (potion2) {
     case "water_breathing": {
       player.addEffect("water_breathing", tick);
@@ -1287,7 +1309,7 @@ function applyPotionEffect(player, potion2, seconds2) {
   player.runCommand("clear @p minecraft:glass_bottle");
 }
 function mainTick() {
-  world10.getAllPlayers().forEach((player) => {
+  world11.getAllPlayers().forEach((player) => {
     if (player.isInWater == true) {
       player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
       meters = 94 - Math.floor(player.location.y);
@@ -1310,7 +1332,7 @@ function mainTick() {
       }
     }
   });
-  system5.run(mainTick);
+  system6.run(mainTick);
 }
 async function surface(player) {
   player.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
@@ -1322,7 +1344,7 @@ async function surface(player) {
   player.removeEffect("water_breathing");
   player.removeEffect("levitation");
 }
-world10.afterEvents.itemCompleteUse.subscribe(async (event) => {
+world11.afterEvents.itemCompleteUse.subscribe(async (event) => {
   let player = event.source;
   if (event.itemStack?.typeId === "minecraft:potion") {
     if (potion === "poison") {
@@ -1336,7 +1358,7 @@ world10.afterEvents.itemCompleteUse.subscribe(async (event) => {
     event.source.runCommand("clear @p minecraft:glass_bottle");
   }
 });
-world10.afterEvents.entityHealthChanged.subscribe(async (event) => {
+world11.afterEvents.entityHealthChanged.subscribe(async (event) => {
   if (event.entity.typeId === "minecraft:player") {
     let player = event.entity;
     if (player.isInWater == true) {
@@ -1351,6 +1373,6 @@ world10.afterEvents.entityHealthChanged.subscribe(async (event) => {
     }
   }
 });
-system5.run(mainTick);
+system6.run(mainTick);
 
 //# sourceMappingURL=../debug/main.js.map
