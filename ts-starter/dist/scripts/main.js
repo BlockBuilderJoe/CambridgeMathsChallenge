@@ -1025,6 +1025,7 @@ async function npcWalk(type) {
   }
 }
 async function moveNpc2(path, type) {
+  overworld8.runCommandAsync(`dialogue change @e[tag=${type}Npc] ${type}Npc1`);
   for (let i = 0; i < path.length - 1; i++) {
     let { x, y, z } = path[i];
     const nextPoint = path[i + 1];
@@ -1033,6 +1034,10 @@ async function moveNpc2(path, type) {
     const facingZ = nextPoint.z;
     system3.runTimeout(async () => {
       await overworld8.runCommandAsync(`tp @e[tag=${type}Npc] ${x} ${y} ${z} facing ${facingX} ${facingY} ${facingZ}`);
+      world8.sendMessage(`npc path ${i} of ${path.length}`);
+      if (path.length - 2 == i) {
+        await overworld8.runCommandAsync(`dialogue change @e[tag=${type}Npc] ${type}Npc2`);
+      }
     }, i * 5);
   }
 }

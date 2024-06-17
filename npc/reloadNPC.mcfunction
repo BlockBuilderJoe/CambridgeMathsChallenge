@@ -45,5 +45,7 @@ dialogue change @e[tag=rodNpc12] rodNpc12Fail
 dialogue change @e[tag=rodNpc12] rodNpc12Default
 dialogue change @e[tag=spawnNpc] spawnNpc
 dialogue change @e[tag=scaleNpc] scaleNpc0
+dialogue change @e[tag=scaleNpc] scaleNpc1
+dialogue change @e[tag=scaleNpc] scaleNpc2
 dialogue change @e[tag=ratioNpc] ratioNpc0
 dialogue change @e[tag=fractionNpc] fractionNpc0

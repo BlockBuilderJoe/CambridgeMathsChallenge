@@ -39,6 +39,7 @@ export function npcWalk(type) {
 }
 function moveNpc(path, type) {
     return __awaiter(this, void 0, void 0, function* () {
+        overworld.runCommandAsync(`dialogue change @e[tag=${type}Npc] ${type}Npc1`); // in motion dialogue
         for (let i = 0; i < path.length - 1; i++) {
             let { x, y, z } = path[i];
             const nextPoint = path[i + 1];
@@ -47,6 +48,11 @@ function moveNpc(path, type) {
             const facingZ = nextPoint.z;
             system.runTimeout(() => __awaiter(this, void 0, void 0, function* () {
                 yield overworld.runCommandAsync(`tp @e[tag=${type}Npc] ${x} ${y} ${z} facing ${facingX} ${facingY} ${facingZ}`);
+                world.sendMessage(`npc path ${i} of ${path.length}`);
+                if (path.length - 2 == i) {
+                    // final point.
+                    yield overworld.runCommandAsync(`dialogue change @e[tag=${type}Npc] ${type}Npc2`); // end of walk dialogue
+                }
             }), i * 5);
         }
     });
