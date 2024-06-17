@@ -1640,6 +1640,68 @@
                 ]
             },
             {
+                "scene_tag": "scaleNpc1",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Guild Master"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "Keep up, keep up."
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Sorry! "
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "scaleNpc2",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Guild Master"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "Take this stained glass and place it in the smaller frames, when you’re ready left click the numerator to increase scaling amount. Then right click the fraction bar to scale the window."
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Will do"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent scale:npc 1"
+                        ]
+                    }
+                ]
+            },
+            {
                 "scene_tag": "ratioNpc0",
                 "npc_name": {
                     "rawtext": [
@@ -1671,6 +1733,68 @@
                 ]
             },
             {
+                "scene_tag": "ratioNpc1",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Professor of Alchemy"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "Please hurry, I’m so hungry."
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "I’m on my way."
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "ratioNpc2",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Professor of Alchemy"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "Here is the well, you’ll need potions to dive deeper and see in the dark. My students have put the ratios you’ll need to make the potions on the wall. Take these ingredients and throw them in the hopper to make the potions."
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Okay I’m on it. "
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent ratio:npc 1"
+                        ]
+                    }
+                ]
+            },
+            {
                 "scene_tag": "fractionNpc0",
                 "npc_name": {
                     "rawtext": [
@@ -1697,6 +1821,68 @@
                         },
                         "commands": [
                             "scriptevent fraction:npc 0"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "fractionNpc1",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Professor of Cartography"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "Oh dear oh dear, please keep up I cannot lose a whole class."
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Sorry I’ll keep up!"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "fractionNpc2",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Professor of Cartography"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": " Take these magical rods you’ll be able to cross the garden without stepping on the grass. You;ll need to work out the fractions to cross the gaps in the garden."
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Wish me luck"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent fraction:npc 1"
                         ]
                     }
                 ]

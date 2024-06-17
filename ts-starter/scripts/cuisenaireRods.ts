@@ -5,12 +5,15 @@ import { perfectRun, validRanges, finalBlock, replaySettings, npcLocation } from
 let overworld = world.getDimension("overworld");
 let rodsPlaced: any[] = [];
 
-export async function startCuisenaireGame() {
+export async function resetCuisenaireGame() {
   await overworld.runCommandAsync(`scoreboard objectives setdisplay sidebar Students`);
   await overworld.runCommandAsync(`scoreboard players set Saved Students 0`);
   await resetNPC(5);
-  await giveRods();
   await resetGrid({ x: 19, y: 95, z: 81 }); //top left corner of the area.
+}
+
+export async function startCuisenaireGame() {
+  await giveRods();
 }
 
 export async function moveNpc(id: number) {

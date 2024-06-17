@@ -4,11 +4,8 @@ import { setBlock } from "./output";
 import { getInput } from "./input";
 import { giveWand } from "./wand";
 let overworld = world.getDimension("overworld");
-export function startWindowGame() {
+export function resetWindowGame() {
     return __awaiter(this, void 0, void 0, function* () {
-        //sets up inventory
-        overworld.runCommandAsync(`clear @p`);
-        yield giveWand();
         //window1 clear
         overworld.runCommandAsync(`fill 69 98 225 69 102 225 air replace`);
         //window2 clear
@@ -21,6 +18,13 @@ export function startWindowGame() {
         //clear the stained glass windows
         windowUndoHandler({ x: 71, y: 97, z: 225 });
         windowUndoHandler({ x: 82, y: 97, z: 225 });
+    });
+}
+export function startWindowGame() {
+    return __awaiter(this, void 0, void 0, function* () {
+        overworld.runCommandAsync(`clear @p`);
+        yield giveWand();
+        giveGlass();
     });
 }
 export function windowScaleHandler(location) {

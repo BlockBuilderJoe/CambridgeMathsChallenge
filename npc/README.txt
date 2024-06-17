@@ -750,6 +750,36 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
+ NAME = Professor of Alchemy 
+ TAG = ratioNpc 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add ratioNpc 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=ratioNpc] ratioNpc1 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME = Professor of Alchemy 
+ TAG = ratioNpc 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add ratioNpc 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=ratioNpc] ratioNpc2 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
  NAME = Professor of Cartography 
  TAG = fractionNpc 
  
@@ -760,6 +790,36 @@
  2. Then paste this command: 
 
 /dialogue change @e[tag=fractionNpc] fractionNpc0 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME = Professor of Cartography 
+ TAG = fractionNpc 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add fractionNpc 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=fractionNpc] fractionNpc1 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME = Professor of Cartography 
+ TAG = fractionNpc 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add fractionNpc 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=fractionNpc] fractionNpc2 
  
  ######################################################## 
  

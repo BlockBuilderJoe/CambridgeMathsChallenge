@@ -82,14 +82,7 @@ var overworld4 = world4.getDimension("overworld");
 async function startWindowGame() {
   overworld4.runCommandAsync(`clear @p`);
   await giveWand();
-  overworld4.runCommandAsync(`fill 69 98 225 69 102 225 air replace`);
-  overworld4.runCommandAsync(`fill 78 98 225 80 98 225 air replace`);
-  overworld4.runCommandAsync(`fill 78 99 225 79 99 225 air replace`);
-  overworld4.runCommandAsync(`fill 78 100 225 78 100 225 air replace`);
-  overworld4.runCommandAsync(`setblock 71 98 225 blockbuilders:number_0`);
-  overworld4.runCommandAsync(`setblock 82 98 225 blockbuilders:number_0`);
-  windowUndoHandler({ x: 71, y: 97, z: 225 });
-  windowUndoHandler({ x: 82, y: 97, z: 225 });
+  giveGlass();
 }
 async function windowScaleHandler(location) {
   switch (true) {
@@ -423,23 +416,12 @@ var replaySettings = [
     cartesionValue: 89
   }
 ];
-var npcLocation = [
-  { x: 29, y: 96, z: 90 },
-  { x: 38, y: 96, z: 92 },
-  { x: 53, y: 96, z: 90 },
-  { x: 53, y: 96, z: 100 },
-  { x: 66, y: 96, z: 100 }
-];
 
 // scripts/cuisenaireRods.ts
 var overworld5 = world5.getDimension("overworld");
 var rodsPlaced = [];
 async function startCuisenaireGame() {
-  await overworld5.runCommandAsync(`scoreboard objectives setdisplay sidebar Students`);
-  await overworld5.runCommandAsync(`scoreboard players set Saved Students 0`);
-  await resetNPC(5);
   await giveRods();
-  await resetGrid({ x: 19, y: 95, z: 81 });
 }
 async function moveNpc(id) {
   let { x, y, z } = getRandomCoordinate();
@@ -498,16 +480,6 @@ async function cuisenaire(block, blockName, rodLength, successMessage, direction
     } else {
       block?.setPermutation(BlockPermutation3.resolve("tallgrass"));
     }
-  }
-}
-async function resetNPC(npcAmount) {
-  rodsPlaced = [];
-  for (let i = 0; i < npcAmount; i++) {
-    overworld5.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Default`);
-    overworld5.runCommandAsync(
-      //tps the npc back based on the location parameter in npcLocation.
-      `tp @e[type=npc,tag=rodNpc${i}] ${npcLocation[i].x} ${npcLocation[i].y} ${npcLocation[i].z}`
-    );
   }
 }
 function placeRods(block, blockName, rodLength, direction) {
@@ -620,25 +592,6 @@ function endReplay(player, tpStart, clearCommand, replenishGrass, combinedRods) 
     player.runCommandAsync(`camera ${player.name} clear`);
     combinedRods = [];
   }, 50);
-}
-async function squareReset(pos1, pos2, concreteColours) {
-  for (let i = 0; i < concreteColours.length; i++) {
-    let command = `fill ${pos1.x} ${pos1.y} ${pos1.z} ${pos2.x} ${pos2.y} ${pos2.z} tallgrass replace ${concreteColours[i]}_concrete`;
-    overworld5.runCommand(command);
-  }
-  overworld5.runCommandAsync(
-    `fill ${pos1.x} ${pos1.y - 1} ${pos1.z} ${pos2.x} ${pos2.y - 1} ${pos2.z} grass replace dirt`
-  );
-  overworld5.runCommandAsync(`fill ${pos1.x} ${pos1.y} ${pos1.z} ${pos2.x} ${pos2.y} ${pos2.z} tallgrass replace air`);
-}
-async function resetGrid(location) {
-  let concreteColours = ["red", "green", "purple", "brown", "blue", "lime", "yellow"];
-  for (let i = 0; i < 4; i++) {
-    let offset_x = location.x + i * 25;
-    let pos1 = { x: offset_x, y: location.y, z: location.z };
-    let pos2 = { x: offset_x + 24, y: location.y, z: location.z + 24 };
-    await squareReset(pos1, pos2, concreteColours);
-  }
 }
 async function giveRods() {
   let rods = [
@@ -1107,6 +1060,10 @@ system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
           await npcWalk("scale");
           break;
         }
+        case "1": {
+          startWindowGame();
+          break;
+        }
       }
       break;
     }
@@ -1119,6 +1076,10 @@ system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
           await npcWalk("ratio");
           break;
         }
+        case "1": {
+          startPotionGame();
+          break;
+        }
       }
       break;
     }
@@ -1129,6 +1090,10 @@ system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
           closeGate("scale");
           closeGate("ratio");
           await npcWalk("fraction");
+          break;
+        }
+        case "1": {
+          startCuisenaireGame();
           break;
         }
       }

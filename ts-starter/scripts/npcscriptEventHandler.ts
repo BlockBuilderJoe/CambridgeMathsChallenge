@@ -1,8 +1,10 @@
 import { system, world } from "@minecraft/server";
-import { moveNpc, replay } from "./cuisenaireRods";
+import { moveNpc, replay, startCuisenaireGame } from "./cuisenaireRods";
 import { perfectRun } from "./perfectRun";
 import { openGate, closeGate } from "./gate";
 import { npcWalk } from "./npcWalk";
+import { startWindowGame } from "./stainedGlassWindow";
+import { startPotionGame } from "./potionGame";
 
 let overworld = world.getDimension("overworld");
 //handles the scriptEventReceive from NPCs
@@ -49,6 +51,10 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
           await npcWalk("scale");
           break;
         }
+        case "1": {
+          startWindowGame();
+          break;
+        }
       }
       break;
     }
@@ -61,6 +67,10 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
           await npcWalk("ratio");
           break;
         }
+        case "1": {
+          startPotionGame();
+          break;
+        }
       }
       break;
     }
@@ -71,6 +81,10 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
           closeGate("scale");
           closeGate("ratio");
           await npcWalk("fraction");
+          break;
+        }
+        case "1": {
+          startCuisenaireGame();
           break;
         }
       }

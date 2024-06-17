@@ -2,13 +2,17 @@ import { BlockPermutation, world, system } from "@minecraft/server";
 import { perfectRun, validRanges, finalBlock, replaySettings, npcLocation } from "./perfectRun";
 let overworld = world.getDimension("overworld");
 let rodsPlaced = [];
-export function startCuisenaireGame() {
+export function resetCuisenaireGame() {
     return __awaiter(this, void 0, void 0, function* () {
         yield overworld.runCommandAsync(`scoreboard objectives setdisplay sidebar Students`);
         yield overworld.runCommandAsync(`scoreboard players set Saved Students 0`);
         yield resetNPC(5);
-        yield giveRods();
         yield resetGrid({ x: 19, y: 95, z: 81 }); //top left corner of the area.
+    });
+}
+export function startCuisenaireGame() {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield giveRods();
     });
 }
 export function moveNpc(id) {
