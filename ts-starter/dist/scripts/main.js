@@ -486,6 +486,7 @@ async function cuisenaire(block, blockName, rodLength, successMessage, direction
       let colour = block[direction](i)?.permutation?.getState("color");
       if (colour || block[direction](i)?.permutation?.matches("sandstone")) {
         overworld5.runCommand("title @p actionbar That rod is too long!");
+        overworld5.runCommandAsync(`give @p ${blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
         runPlaceRods = false;
         break;
       }

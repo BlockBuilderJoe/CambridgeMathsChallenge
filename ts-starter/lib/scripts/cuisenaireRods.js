@@ -62,6 +62,7 @@ export function cuisenaire(block, blockName, rodLength, successMessage, directio
                 let colour = (_c = (_b = block[direction](i)) === null || _b === void 0 ? void 0 : _b.permutation) === null || _c === void 0 ? void 0 : _c.getState("color");
                 if (colour || ((_e = (_d = block[direction](i)) === null || _d === void 0 ? void 0 : _d.permutation) === null || _e === void 0 ? void 0 : _e.matches("sandstone"))) {
                     overworld.runCommand("title @p actionbar That rod is too long!");
+                    overworld.runCommandAsync(`give @p ${blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
                     runPlaceRods = false;
                     break;
                 }
