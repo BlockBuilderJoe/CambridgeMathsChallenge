@@ -858,7 +858,6 @@ import { system as system4, world as world9 } from "@minecraft/server";
 import { world as world7 } from "@minecraft/server";
 var overworld7 = world7.getDimension("overworld");
 async function openGate(location) {
-  world7.sendMessage(`Opening gate ${location}`);
   switch (location) {
     case "spawn": {
       overworld7.runCommandAsync(`setblock 62 97 148 air`);
@@ -994,11 +993,34 @@ async function npcWalk(type) {
   switch (type) {
     case "scale": {
       let path = await generatePath([
-        { x: 56, y: 96, z: 156 },
-        { x: 56, y: 96, z: 221 },
-        { x: 65, y: 96, z: 221 }
+        { x: 57, y: 96, z: 148 },
+        { x: 57, y: 96, z: 221 },
+        { x: 72, y: 96, z: 221 },
+        { x: 72, y: 96, z: 226 }
       ]);
       moveNpc2(path, "scale");
+      break;
+    }
+    case "fraction": {
+      let path = await generatePath([
+        { x: 57, y: 96, z: 148 },
+        { x: 57, y: 96, z: 116 },
+        { x: 29, y: 96, z: 116 },
+        { x: 29, y: 96, z: 111 },
+        { x: 29, y: 96, z: 112 }
+      ]);
+      moveNpc2(path, "fraction");
+      break;
+    }
+    case "ratio": {
+      let path = await generatePath([
+        { x: 57, y: 96, z: 148 },
+        { x: -2, y: 96, z: 148 },
+        { x: -2, y: 96, z: 153 },
+        { x: -2, y: 96, z: 152 }
+      ]);
+      moveNpc2(path, "ratio");
+      break;
     }
   }
 }
@@ -1051,11 +1073,14 @@ system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
     case "spawn:npc": {
       openGate("spawn");
       if (event.message === "fraction") {
-        overworld9.runCommandAsync(`tp @e[tag=fractionNpc] 56 96 139`);
+        overworld9.runCommandAsync(`tp @e[tag=fractionNpc] 57 96 148 facing 66 96 148`);
+        overworld9.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
       } else if (event.message === "ratio") {
-        overworld9.runCommandAsync(`tp @e[tag=ratioNpc] 46 96 149`);
+        overworld9.runCommandAsync(`tp @e[tag=ratioNpc] 57 96 148 facing 66 96 148`);
+        overworld9.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
       } else if (event.message === "scale") {
-        overworld9.runCommandAsync(`tp @e[tag=scaleNpc] 59 96 156`);
+        overworld9.runCommandAsync(`tp @e[tag=scaleNpc] 57 96 148 facing 66 96 148`);
+        overworld9.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
       } else {
         world9.sendMessage(`spawnNpc triggered with invalid message`);
       }
@@ -1087,6 +1112,7 @@ system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
           openGate("ratio");
           closeGate("scale");
           closeGate("fraction");
+          await npcWalk("ratio");
           break;
         }
       }
@@ -1098,6 +1124,7 @@ system4.afterEvents.scriptEventReceive.subscribe(async (event) => {
           openGate("fraction");
           closeGate("scale");
           closeGate("ratio");
+          await npcWalk("fraction");
           break;
         }
       }

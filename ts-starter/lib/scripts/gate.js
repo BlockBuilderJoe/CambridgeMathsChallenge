@@ -2,7 +2,6 @@ import { world } from "@minecraft/server";
 let overworld = world.getDimension("overworld");
 export function openGate(location) {
     return __awaiter(this, void 0, void 0, function* () {
-        world.sendMessage(`Opening gate ${location}`);
         switch (location) {
             case "spawn": {
                 //clear

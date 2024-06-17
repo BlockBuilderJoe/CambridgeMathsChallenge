@@ -6,11 +6,34 @@ export async function npcWalk(type: string) {
   switch (type) {
     case "scale": {
       let path = await generatePath([
-        { x: 56, y: 96, z: 156 },
-        { x: 56, y: 96, z: 221 },
-        { x: 65, y: 96, z: 221 },
+        { x: 57, y: 96, z: 148 },
+        { x: 57, y: 96, z: 221 },
+        { x: 72, y: 96, z: 221 },
+        { x: 72, y: 96, z: 226 },
       ]);
       moveNpc(path, "scale");
+      break;
+    }
+    case "fraction": {
+      let path = await generatePath([
+        { x: 57, y: 96, z: 148 },
+        { x: 57, y: 96, z: 116 },
+        { x: 29, y: 96, z: 116 },
+        { x: 29, y: 96, z: 111 },
+        { x: 29, y: 96, z: 112 },
+      ]);
+      moveNpc(path, "fraction");
+      break;
+    }
+    case "ratio": {
+      let path = await generatePath([
+        { x: 57, y: 96, z: 148 },
+        { x: -2, y: 96, z: 148 },
+        { x: -2, y: 96, z: 153 },
+        { x: -2, y: 96, z: 152 },
+      ]);
+      moveNpc(path, "ratio");
+      break;
     }
   }
 }

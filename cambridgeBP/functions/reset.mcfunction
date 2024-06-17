@@ -1,8 +1,8 @@
 #hide characters
-tp @e[tag=fractionNpc] 68 92 150
-tp @e[tag=scaleNpc] 68 92 150
-tp @e[tag=ratioNpc] 68 92 150
-tp @e[tag=spawnNpc] 65 97 147 facing 69 97 147
+tp @e[tag=fractionNpc] 57 88 148
+tp @e[tag=scaleNpc] 57 88 148
+tp @e[tag=ratioNpc] 57 88 148
+tp @e[tag=spawnNpc] 63 97 146 facing 69 97 147
 dialogue change @e[tag=spawnNpc] spawnNpc
 dialogue change @e[tag=scaleNpc] scaleNpc0 
 dialogue change @e[tag=ratioNpc] ratioNpc0

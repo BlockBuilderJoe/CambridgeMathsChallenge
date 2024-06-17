@@ -17,13 +17,16 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
         case "spawn:npc": {
             openGate("spawn");
             if (event.message === "fraction") {
-                overworld.runCommandAsync(`tp @e[tag=fractionNpc] 56 96 139`);
+                overworld.runCommandAsync(`tp @e[tag=fractionNpc] 57 96 148 facing 66 96 148`);
+                overworld.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
             }
             else if (event.message === "ratio") {
-                overworld.runCommandAsync(`tp @e[tag=ratioNpc] 46 96 149`);
+                overworld.runCommandAsync(`tp @e[tag=ratioNpc] 57 96 148 facing 66 96 148`);
+                overworld.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
             }
             else if (event.message === "scale") {
-                overworld.runCommandAsync(`tp @e[tag=scaleNpc] 59 96 156`);
+                overworld.runCommandAsync(`tp @e[tag=scaleNpc] 57 96 148 facing 66 96 148`);
+                overworld.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
             }
             else {
                 world.sendMessage(`spawnNpc triggered with invalid message`);
@@ -56,6 +59,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
                     openGate("ratio");
                     closeGate("scale");
                     closeGate("fraction");
+                    yield npcWalk("ratio");
                     break;
                 }
             }
@@ -67,6 +71,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
                     openGate("fraction");
                     closeGate("scale");
                     closeGate("ratio");
+                    yield npcWalk("fraction");
                     break;
                 }
             }
