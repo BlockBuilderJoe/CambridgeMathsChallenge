@@ -180,7 +180,11 @@ function mainTick() {
             }
             if (player.isSneaking == true) {
                 surface(player);
-                //player.sendMessage("§fThat's poor form you can't try and sink faster, whatever happened to honour?");
+                player.sendMessage("§fThat's poor form you can't try and sink faster! Even if I am hungry!");
+            }
+            if (player.isSwimming == true) {
+                surface(player);
+                player.sendMessage("§fThat's poor form you can't try and sink faster!Even if I am hungry!");
             }
         }
     });

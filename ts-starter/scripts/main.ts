@@ -195,7 +195,11 @@ function mainTick() {
       }
       if (player.isSneaking == true) {
         surface(player);
-        //player.sendMessage("§fThat's poor form you can't try and sink faster, whatever happened to honour?");
+        player.sendMessage("§fThat's poor form you can't try and sink faster! Even if I am hungry!");
+      }
+      if (player.isSwimming == true) {
+        surface(player);
+        player.sendMessage("§fThat's poor form you can't try and sink faster!Even if I am hungry!");
       }
     }
   });
@@ -232,6 +236,7 @@ world.afterEvents.itemCompleteUse.subscribe(async (event) => {
 world.afterEvents.entityHealthChanged.subscribe(async (event) => {
   if (event.entity.typeId === "minecraft:player") {
     let player: Player = event.entity as Player;
+
     if (player.isInWater == true) {
       if (event.newValue === 18) {
         //this is the moment they start to take damage in the water.
