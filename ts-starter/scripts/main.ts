@@ -48,6 +48,18 @@ world.afterEvents.buttonPush.subscribe(async (event) => {
   }
 });
 
+//coin
+world.afterEvents.entityHitEntity.subscribe(async (event) => {
+  let hitEntity = event.hitEntity;
+  if (hitEntity.typeId === `blockbuilders:coin`) {
+    let tag = hitEntity.getTags();
+    let y_location = parseInt(tag[0].substring(4)) + 95;
+    overworld.runCommandAsync(
+      `tp @e[type=blockbuilders:coin,tag=${tag}] -1 ${y_location} 157 facing 1 ${y_location} 157`
+    );
+  }
+});
+
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let block = event.block;

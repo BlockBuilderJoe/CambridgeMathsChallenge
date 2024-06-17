@@ -716,6 +716,12 @@ async function facing(blockLocation) {
 import { BlockPermutation as BlockPermutation4, system as system2, world as world6 } from "@minecraft/server";
 var overworld6 = world6.getDimension("overworld");
 async function resetPotionGame() {
+  await overworld6.runCommandAsync("tp @e[tag=coin1] -6 90 155");
+  await overworld6.runCommandAsync("tp @e[tag=coin2] -5 86 154");
+  await overworld6.runCommandAsync("tp @e[tag=coin3] -6 82 155");
+  await overworld6.runCommandAsync("tp @e[tag=coin4] -5 78 154");
+  await overworld6.runCommandAsync("tp @e[tag=coin5] -6 75 155");
+  await overworld6.runCommandAsync("tp @e[tag=coin6] -5 75 154");
   await resetArea();
 }
 async function startPotionGame() {
@@ -1227,6 +1233,16 @@ world11.afterEvents.buttonPush.subscribe(async (event) => {
       await startPotionGame();
       break;
     }
+  }
+});
+world11.afterEvents.entityHitEntity.subscribe(async (event) => {
+  let hitEntity = event.hitEntity;
+  if (hitEntity.typeId === `blockbuilders:coin`) {
+    let tag = hitEntity.getTags();
+    let y_location = parseInt(tag[0].substring(4)) + 95;
+    overworld11.runCommandAsync(
+      `tp @e[type=blockbuilders:coin,tag=${tag}] -1 ${y_location} 157 facing 1 ${y_location} 157`
+    );
   }
 });
 world11.afterEvents.playerPlaceBlock.subscribe(async (event) => {
