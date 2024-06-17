@@ -2,6 +2,11 @@ import { BlockPermutation, system, world } from "@minecraft/server";
 import { getBlockValue } from "./input";
 import { giveWand } from "./wand";
 let overworld = world.getDimension("overworld");
+export function resetPotionGame() {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield resetArea();
+    });
+}
 export function startPotionGame() {
     return __awaiter(this, void 0, void 0, function* () {
         overworld.runCommandAsync(`clear @p`);

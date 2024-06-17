@@ -1,3 +1,5 @@
+##scriptevent game:reset
+
 #hide characters
 tp @e[tag=fractionNpc] 57 88 148
 tp @e[tag=scaleNpc] 57 88 148
@@ -7,6 +9,7 @@ dialogue change @e[tag=spawnNpc] spawnNpc
 dialogue change @e[tag=scaleNpc] scaleNpc0 
 dialogue change @e[tag=ratioNpc] ratioNpc0
 dialogue change @e[tag=fractionNpc] fractionNpc0
+
 
 #clean up the player
 tp @p 69 97 147 facing 41 97 147
@@ -18,3 +21,5 @@ scriptevent gate:close spawn
 scriptevent gate:close scale
 scriptevent gate:close fraction
 scriptevent gate:close ratio
+
+

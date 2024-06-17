@@ -4,6 +4,9 @@ import { giveWand } from "./wand";
 
 let overworld = world.getDimension("overworld");
 
+export async function resetPotionGame() {
+  await resetArea();
+}
 export async function startPotionGame() {
   overworld.runCommandAsync(`clear @p`);
   overworld.runCommandAsync(`effect @p haste 9999 99 true`);
