@@ -444,6 +444,7 @@ async function resetCuisenaireGame() {
   await resetGrid({ x: 19, y: 95, z: 81 });
 }
 async function startCuisenaireGame() {
+  resetCuisenaireGame();
   await giveRods();
 }
 async function moveNpc(id) {
@@ -560,7 +561,6 @@ async function replayMessage(beginningMessage, fractions) {
   }
 }
 async function replay(index) {
-  giveRods();
   overworld5.runCommandAsync(`tp @p 31 96 116`);
   let npcIndex = index;
   let fractions = [];
@@ -570,6 +570,11 @@ async function replay(index) {
   overworld5.runCommandAsync(replayConfig.replenishGrass);
   if (replayConfig.cartesianDirection === "x") {
     let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
+    for (let i = 0; i < rodsPlacedToReplay.length; i++) {
+      overworld5.runCommandAsync(
+        `give @p ${rodsPlacedToReplay[i].blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
+      );
+    }
     rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === replayConfig.cartesionValue));
     let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
     if (perfectRunToReplay.length > 1) {
@@ -578,6 +583,11 @@ async function replay(index) {
     combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
   } else if (replayConfig.cartesianDirection === "z") {
     let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
+    for (let i = 0; i < rodsPlacedToReplay.length; i++) {
+      overworld5.runCommandAsync(
+        `give @p ${rodsPlacedToReplay[i].blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
+      );
+    }
     rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.z === replayConfig.cartesionValue));
     let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
     if (perfectRunToReplay.length > 1) {
@@ -1181,7 +1191,6 @@ system5.afterEvents.scriptEventReceive.subscribe(async (event) => {
           break;
         }
         case "1": {
-          world10.sendMessage("rods triggered");
           startCuisenaireGame();
           break;
         }

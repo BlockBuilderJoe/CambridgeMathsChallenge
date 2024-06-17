@@ -12,6 +12,7 @@ export function resetCuisenaireGame() {
 }
 export function startCuisenaireGame() {
     return __awaiter(this, void 0, void 0, function* () {
+        resetCuisenaireGame();
         yield giveRods();
     });
 }
@@ -161,7 +162,6 @@ function replayMessage(beginningMessage, fractions) {
 }
 export function replay(index) {
     return __awaiter(this, void 0, void 0, function* () {
-        giveRods();
         overworld.runCommandAsync(`tp @p 31 96 116`); //moves the player out of frame.
         let npcIndex = index;
         let fractions = [];
@@ -171,6 +171,9 @@ export function replay(index) {
         overworld.runCommandAsync(replayConfig.replenishGrass);
         if (replayConfig.cartesianDirection === "x") {
             let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
+            for (let i = 0; i < rodsPlacedToReplay.length; i++) {
+                overworld.runCommandAsync(`give @p ${rodsPlacedToReplay[i].blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
+            }
             rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === replayConfig.cartesionValue));
             let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue); //ISSUE appears to be here
             if (perfectRunToReplay.length > 1) {
@@ -180,6 +183,9 @@ export function replay(index) {
         }
         else if (replayConfig.cartesianDirection === "z") {
             let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
+            for (let i = 0; i < rodsPlacedToReplay.length; i++) {
+                overworld.runCommandAsync(`give @p ${rodsPlacedToReplay[i].blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
+            }
             rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.z === replayConfig.cartesionValue));
             let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
             if (perfectRunToReplay.length > 1) {

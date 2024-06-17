@@ -13,6 +13,7 @@ export async function resetCuisenaireGame() {
 }
 
 export async function startCuisenaireGame() {
+  resetCuisenaireGame();
   await giveRods();
 }
 
@@ -159,7 +160,6 @@ async function replayMessage(beginningMessage: string, fractions: any[]) {
 }
 
 export async function replay(index: number) {
-  giveRods();
   overworld.runCommandAsync(`tp @p 31 96 116`); //moves the player out of frame.
   let npcIndex = index;
   let fractions: any[] = [];
@@ -170,6 +170,11 @@ export async function replay(index: number) {
 
   if (replayConfig.cartesianDirection === "x") {
     let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
+    for (let i = 0; i < rodsPlacedToReplay.length; i++) {
+      overworld.runCommandAsync(
+        `give @p ${rodsPlacedToReplay[i].blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
+      );
+    }
     rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === replayConfig.cartesionValue));
     let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue); //ISSUE appears to be here
     if (perfectRunToReplay.length > 1) {
@@ -178,6 +183,11 @@ export async function replay(index: number) {
     combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
   } else if (replayConfig.cartesianDirection === "z") {
     let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
+    for (let i = 0; i < rodsPlacedToReplay.length; i++) {
+      overworld.runCommandAsync(
+        `give @p ${rodsPlacedToReplay[i].blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
+      );
+    }
     rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.z === replayConfig.cartesionValue));
     let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
     if (perfectRunToReplay.length > 1) {
