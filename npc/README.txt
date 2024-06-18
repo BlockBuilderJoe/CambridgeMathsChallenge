@@ -1,6 +1,6 @@
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc0 
+ NAME = Annie 
  TAG = rodNpc0 
  
  1. Stand in front of the NPC and copy this command: 
@@ -15,7 +15,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc0 
+ NAME = Annie 
  TAG = rodNpc0 
  
  1. Stand in front of the NPC and copy this command: 
@@ -30,7 +30,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc0 
+ NAME = Annie 
  TAG = rodNpc0 
  
  1. Stand in front of the NPC and copy this command: 
@@ -45,7 +45,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc0 
+ NAME = Annie 
  TAG = rodNpc0 
  
  1. Stand in front of the NPC and copy this command: 
@@ -60,7 +60,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc1 
+ NAME = Ben 
  TAG = rodNpc1 
  
  1. Stand in front of the NPC and copy this command: 
@@ -75,7 +75,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc1 
+ NAME = Ben 
  TAG = rodNpc1 
  
  1. Stand in front of the NPC and copy this command: 
@@ -90,7 +90,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc1 
+ NAME = Ben 
  TAG = rodNpc1 
  
  1. Stand in front of the NPC and copy this command: 
@@ -105,7 +105,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc1 
+ NAME = Ben 
  TAG = rodNpc1 
  
  1. Stand in front of the NPC and copy this command: 
@@ -120,7 +120,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc2 
+ NAME = Callum 
  TAG = rodNpc2 
  
  1. Stand in front of the NPC and copy this command: 
@@ -135,7 +135,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc2 
+ NAME = Callum 
  TAG = rodNpc2 
  
  1. Stand in front of the NPC and copy this command: 
@@ -150,7 +150,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc2 
+ NAME = Callum 
  TAG = rodNpc2 
  
  1. Stand in front of the NPC and copy this command: 
@@ -165,7 +165,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc2 
+ NAME = Callum 
  TAG = rodNpc2 
  
  1. Stand in front of the NPC and copy this command: 
@@ -180,7 +180,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc3 
+ NAME = Deena 
  TAG = rodNpc3 
  
  1. Stand in front of the NPC and copy this command: 
@@ -195,7 +195,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc3 
+ NAME = Deena 
  TAG = rodNpc3 
  
  1. Stand in front of the NPC and copy this command: 
@@ -210,7 +210,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc3 
+ NAME = Deena 
  TAG = rodNpc3 
  
  1. Stand in front of the NPC and copy this command: 
@@ -225,7 +225,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc3 
+ NAME = Deena 
  TAG = rodNpc3 
  
  1. Stand in front of the NPC and copy this command: 
@@ -240,7 +240,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc4 
+ NAME = Eli 
  TAG = rodNpc4 
  
  1. Stand in front of the NPC and copy this command: 
@@ -255,7 +255,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc4 
+ NAME = Eli 
  TAG = rodNpc4 
  
  1. Stand in front of the NPC and copy this command: 
@@ -270,7 +270,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc4 
+ NAME = Eli 
  TAG = rodNpc4 
  
  1. Stand in front of the NPC and copy this command: 
@@ -285,7 +285,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc4 
+ NAME = Eli 
  TAG = rodNpc4 
  
  1. Stand in front of the NPC and copy this command: 
@@ -405,7 +405,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc7 
+ NAME = Fleur 
  TAG = rodNpc7 
  
  1. Stand in front of the NPC and copy this command: 
@@ -420,7 +420,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc7 
+ NAME = Fleur 
  TAG = rodNpc7 
  
  1. Stand in front of the NPC and copy this command: 
@@ -435,7 +435,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc7 
+ NAME = Fleur 
  TAG = rodNpc7 
  
  1. Stand in front of the NPC and copy this command: 
@@ -450,7 +450,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc8 
+ NAME = Fleur 
  TAG = rodNpc8 
  
  1. Stand in front of the NPC and copy this command: 
@@ -465,7 +465,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc8 
+ NAME = Guy 
  TAG = rodNpc8 
  
  1. Stand in front of the NPC and copy this command: 
@@ -480,7 +480,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc8 
+ NAME = Guy 
  TAG = rodNpc8 
  
  1. Stand in front of the NPC and copy this command: 
@@ -495,7 +495,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc9 
+ NAME = Guy 
  TAG = rodNpc9 
  
  1. Stand in front of the NPC and copy this command: 
@@ -510,7 +510,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc9 
+ NAME = Han 
  TAG = rodNpc9 
  
  1. Stand in front of the NPC and copy this command: 
@@ -525,7 +525,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc9 
+ NAME = Han 
  TAG = rodNpc9 
  
  1. Stand in front of the NPC and copy this command: 
@@ -540,7 +540,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc10 
+ NAME = Isaac 
  TAG = rodNpc10 
  
  1. Stand in front of the NPC and copy this command: 
@@ -555,7 +555,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc10 
+ NAME = Isaac 
  TAG = rodNpc10 
  
  1. Stand in front of the NPC and copy this command: 
@@ -570,7 +570,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc10 
+ NAME = Isaac 
  TAG = rodNpc10 
  
  1. Stand in front of the NPC and copy this command: 
@@ -585,7 +585,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc11 
+ NAME = Jane 
  TAG = rodNpc11 
  
  1. Stand in front of the NPC and copy this command: 
@@ -600,7 +600,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc11 
+ NAME = Jane 
  TAG = rodNpc11 
  
  1. Stand in front of the NPC and copy this command: 
@@ -615,7 +615,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc11 
+ NAME = Jane 
  TAG = rodNpc11 
  
  1. Stand in front of the NPC and copy this command: 
@@ -630,7 +630,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc12 
+ NAME = Kal 
  TAG = rodNpc12 
  
  1. Stand in front of the NPC and copy this command: 
@@ -645,7 +645,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc12 
+ NAME = Kal 
  TAG = rodNpc12 
  
  1. Stand in front of the NPC and copy this command: 
@@ -660,7 +660,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc12 
+ NAME = Kal 
  TAG = rodNpc12 
  
  1. Stand in front of the NPC and copy this command: 
@@ -675,7 +675,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = spawnNpc 
+ NAME = Dean of Students 
  TAG = spawnNpc 
  
  1. Stand in front of the NPC and copy this command: 

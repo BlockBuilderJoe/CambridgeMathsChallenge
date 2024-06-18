@@ -7,14 +7,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc0"
+                            "translate": "Annie"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Great work, 12 is half of 24, I’m saved. "
+                            "translate": "Great work, the garden is 24 across and I am halfway along. So using the 12 rod is exactly right. Thank you for saving me."
                         }
                     ]
                 },
@@ -38,14 +38,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc0"
+                            "translate": "Annie"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! You made up a half out of multiple fractions. I can show you a more optimum way. "
+                            "translate": "You saved me! However, you made up a half out of multiple fractions. I can show you a more optimum way. "
                         }
                     ]
                 },
@@ -81,14 +81,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc0"
+                            "translate": "Annie"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "HEEEEELLLLPPPPPPP!!!!"
+                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
                         }
                     ]
                 },
@@ -97,7 +97,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Coming!"
+                                    "translate": "Okay"
                                 }
                             ]
                         },
@@ -112,14 +112,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc0"
+                            "translate": "Annie"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Few I’m back all thanks to you."
+                            "translate": "Thanks for rescuing me!"
                         }
                     ]
                 },
@@ -143,14 +143,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc1"
+                            "translate": "Ben"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Woohoo, 6 is a quarter of 24."
+                            "translate": "You saved me! 6 is a quarter of 24 and you used the right rod to get here."
                         }
                     ]
                 },
@@ -174,14 +174,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc1"
+                            "translate": "Ben"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Well done you made it! Shall I show you a more optimum route? "
+                            "translate": "Well done, you made it! But there is a more optimum route to get here, can I show you?"
                         }
                     ]
                 },
@@ -217,14 +217,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc1"
+                            "translate": "Ben"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "HEEEEELLLLPPPPPPP!!!!"
+                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
                         }
                     ]
                 },
@@ -233,7 +233,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Coming!"
+                                    "translate": "Okay"
                                 }
                             ]
                         },
@@ -248,14 +248,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc1"
+                            "translate": "Ben"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Few I’m back all thanks to you."
+                            "translate": "Thanks for rescuing me!"
                         }
                     ]
                 },
@@ -279,14 +279,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc2"
+                            "translate": "Callum"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "8 is a third of 24."
+                            "translate": "You saved me! 8 is a third of 24 and you used the right rod to get here."
                         }
                     ]
                 },
@@ -310,14 +310,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc2"
+                            "translate": "Callum"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! Shall I show you a more optimum route?"
+                            "translate": "Well done, you made it! But there is a more optimum route to get here, can I show you?"
                         }
                     ]
                 },
@@ -353,14 +353,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc2"
+                            "translate": "Callum"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "HEEEEELLLLPPPPPPP!!!!"
+                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
                         }
                     ]
                 },
@@ -369,7 +369,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Coming!"
+                                    "translate": "Okay"
                                 }
                             ]
                         },
@@ -384,14 +384,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc2"
+                            "translate": "Callum"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Few I’m back all thanks to you."
+                            "translate": "Thanks for rescuing me!"
                         }
                     ]
                 },
@@ -415,14 +415,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc3"
+                            "translate": "Deena"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "4 is a sixth of 24."
+                            "translate": "You saved me! 4 is a is a sixth of 24 and you used the right rod to get here."
                         }
                     ]
                 },
@@ -446,14 +446,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc3"
+                            "translate": "Deena"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! Shall I show you a more optimum route?"
+                            "translate": "Well done, you made it! But there is a more optimum route to get here, can I show you?"
                         }
                     ]
                 },
@@ -489,14 +489,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc3"
+                            "translate": "Deena"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "HEEEEELLLLPPPPPPP!!!!"
+                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
                         }
                     ]
                 },
@@ -505,7 +505,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Coming!"
+                                    "translate": "Okay"
                                 }
                             ]
                         },
@@ -520,14 +520,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc3"
+                            "translate": "Deena"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Few I’m back all thanks to you."
+                            "translate": "Thanks for rescuing me!"
                         }
                     ]
                 },
@@ -551,14 +551,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc4"
+                            "translate": "Eli"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Well done you simplified 2/6 to 1/3!  "
+                            "translate": "Well done! You simplified 2/6 to 1/3 and used the best rod."
                         }
                     ]
                 },
@@ -567,7 +567,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "You’re Welcome"
+                                    "translate": "Great"
                                 }
                             ]
                         },
@@ -582,14 +582,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc4"
+                            "translate": "Eli"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me but if you simplify the fraction you could have got here in less rods! Shall I show you?"
+                            "translate": "Well done, you made it! But there is a more optimum route to get here, can I show you?"
                         }
                     ]
                 },
@@ -625,14 +625,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc4"
+                            "translate": "Eli"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "HEEEEELLLLPPPPPPP!!!!"
+                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
                         }
                     ]
                 },
@@ -641,7 +641,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Coming!"
+                                    "translate": "Okay"
                                 }
                             ]
                         },
@@ -656,14 +656,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc4"
+                            "translate": "Eli"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Few I’m back all thanks to you."
+                            "translate": "Thanks for rescuing me!"
                         }
                     ]
                 },
@@ -768,7 +768,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "HEEEEELLLLPPPPPPP!!!!"
+                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
                         }
                     ]
                 },
@@ -777,7 +777,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Coming!"
+                                    "translate": "Okay"
                                 }
                             ]
                         },
@@ -799,7 +799,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Few I’m back all thanks to you."
+                            "translate": "Thanks for rescuing me!"
                         }
                     ]
                 },
@@ -830,7 +830,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Yep 2/1 is 48 great work."
+                            "translate": "Well done, 2/1 is 48, great work."
                         }
                     ]
                 },
@@ -839,7 +839,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "You’re Welcome"
+                                    "translate": "Thanks"
                                 }
                             ]
                         },
@@ -861,7 +861,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! Shall I show you a more optimum route?"
+                            "translate": "Well done, you made it! But there is a more optimum route to get here, can I show you?"
                         }
                     ]
                 },
@@ -892,7 +892,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "HEEEEELLLLPPPPPPP!!!!"
+                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
                         }
                     ]
                 },
@@ -901,7 +901,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Coming!"
+                                    "translate": "Okay"
                                 }
                             ]
                         },
@@ -928,14 +928,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc7"
+                            "translate": "Fleur"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Three is indeed 1/8 of 24."
+                            "translate": "You saved me! 3 is indeed 1/8 of 24, you used the right rod."
                         }
                     ]
                 },
@@ -959,14 +959,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc7"
+                            "translate": "Fleur"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! Shall I show you a more optimum route?"
+                            "translate": "Well done, you made it! But there is a more optimum route to get here, can I show you?"
                         }
                     ]
                 },
@@ -990,14 +990,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc7"
+                            "translate": "Fleur"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "HEEEEELLLLPPPPPPP!!!!"
+                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
                         }
                     ]
                 },
@@ -1006,7 +1006,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Coming!"
+                                    "translate": "Okay"
                                 }
                             ]
                         },
@@ -1033,7 +1033,7 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc8"
+                            "translate": "Fleur"
                         }
                     ]
                 },
@@ -1064,14 +1064,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc8"
+                            "translate": "Guy"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! Shall I show you a more optimum route?"
+                            "translate": "Well done, you made it! But there is a more optimum route to get here, can I show you?"
                         }
                     ]
                 },
@@ -1095,14 +1095,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc8"
+                            "translate": "Guy"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "HEEEEELLLLPPPPPPP!!!!"
+                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
                         }
                     ]
                 },
@@ -1111,7 +1111,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Coming!"
+                                    "translate": "Okay"
                                 }
                             ]
                         },
@@ -1138,14 +1138,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc9"
+                            "translate": "Guy"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Two is 1/12 of24"
+                            "translate": "Great work, 2 is 1/12 of 24!"
                         }
                     ]
                 },
@@ -1169,14 +1169,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc9"
+                            "translate": "Han"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! Shall I show you a more optimum route?"
+                            "translate": "Well done, you made it! But there is a more optimum route to get here, can I show you?"
                         }
                     ]
                 },
@@ -1200,14 +1200,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc9"
+                            "translate": "Han"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "HEEEEELLLLPPPPPPP!!!!"
+                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
                         }
                     ]
                 },
@@ -1216,7 +1216,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Coming!"
+                                    "translate": "Okay"
                                 }
                             ]
                         },
@@ -1243,14 +1243,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc10"
+                            "translate": "Isaac"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Great work simplifying the fraction from 2/12 to 1/6."
+                            "translate": "Great work simplifying the fraction from 2/12 to 1/6!"
                         }
                     ]
                 },
@@ -1259,7 +1259,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "You’re Welcome"
+                                    "translate": "Thanks"
                                 }
                             ]
                         },
@@ -1274,14 +1274,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc10"
+                            "translate": "Isaac"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! Shall I show you a more optimum route?"
+                            "translate": "Well done, you made it! But there is a more optimum route to get here, can I show you?"
                         }
                     ]
                 },
@@ -1305,14 +1305,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc10"
+                            "translate": "Isaac"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "HEEEEELLLLPPPPPPP!!!!"
+                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
                         }
                     ]
                 },
@@ -1321,7 +1321,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Coming!"
+                                    "translate": "Okay"
                                 }
                             ]
                         },
@@ -1348,7 +1348,7 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc11"
+                            "translate": "Jane"
                         }
                     ]
                 },
@@ -1379,7 +1379,7 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc11"
+                            "translate": "Jane"
                         }
                     ]
                 },
@@ -1410,14 +1410,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc11"
+                            "translate": "Jane"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "HEEEEELLLLPPPPPPP!!!!"
+                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
                         }
                     ]
                 },
@@ -1426,7 +1426,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Coming!"
+                                    "translate": "Okay"
                                 }
                             ]
                         },
@@ -1453,14 +1453,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc12"
+                            "translate": "Kal"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Well done you saved us all!"
+                            "translate": "Well done you saved us all! Press the button to head to a special ceremony!"
                         }
                     ]
                 },
@@ -1484,7 +1484,7 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc12"
+                            "translate": "Kal"
                         }
                     ]
                 },
@@ -1515,23 +1515,26 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc12"
+                            "translate": "Kal"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "HEEEEELLLLPPPPPPP!!!!"
+                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
                         }
                     ]
                 },
+                "on_open_commands": [
+                    "w"
+                ],
                 "buttons": [
                     {
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Coming!"
+                                    "translate": "Okay"
                                 }
                             ]
                         },
@@ -1558,14 +1561,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "spawnNpc"
+                            "translate": "Dean of Students"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Welcome! What challenge do you want to take on today?"
+                            "translate": "Welcome! We need your help with three different maths challenges. Pick one below, then a Professor from that school will guide you from the courtyard ahead."
                         }
                     ]
                 },
@@ -1620,7 +1623,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "I need the help of a mathmogician to build some windows follow me!"
+                            "translate": "This old building desperately needs some new windows. The architecture team needs the help of a Mathmogician to scale it correctly. Follow me!"
                         }
                     ]
                 },
@@ -1682,7 +1685,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Take this stained glass and place it in the smaller frames, when you’re ready left click the numerator to increase scaling amount. Then right click the fraction bar to scale the window."
+                            "translate": "Take this stained glass and make a design using the smaller frames here. Once your design is ready, click the numerator to increase the amount the window needs to be scaled. Then right click the fraction bar to scale the window. If it fits perfectly you can move on to the next one."
                         }
                     ]
                 },
@@ -1713,7 +1716,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "I’m hungry I’ve dropped my lunch money down the well, will you help?"
+                            "translate": "I need your help! I am so hungry, but clumsy me managed to drop my lunch money down the well. Please follow me and use maths to get my money back!"
                         }
                     ]
                 },
@@ -1722,7 +1725,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "For sure!"
+                                    "translate": "Let's Go!"
                                 }
                             ]
                         },
@@ -1753,7 +1756,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "I’m on my way."
+                                    "translate": "On the way!"
                                 }
                             ]
                         },
@@ -1775,7 +1778,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Here is the well, you’ll need potions to dive deeper and see in the dark. My students have put the ratios you’ll need to make the potions on the wall. Take these ingredients and throw them in the hopper to make the potions."
+                            "translate": "The well is very dark and deep, you will need to make potions to see and breathe long enough to get my money back. Use the ratios on the walls to make two of the correct potions. Use the ingredients I am giving you and throw them in the hopper, then left click with the wand to make the potions. Be careful, if you get the wrong ratios there may be... side effects. Hint: If the potions you have made do not last long enough, you need to increase the ingredients. But remember as you add to make sure the ratios are still correct! We can't afford any more accidents, not on my watch."
                         }
                     ]
                 },
@@ -1784,7 +1787,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay I’m on it. "
+                                    "translate": "Okay"
                                 }
                             ]
                         },
@@ -1806,7 +1809,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "This is embarrassing, I’ve lost my cartography class in the walled gardens and need your help!"
+                            "translate": "This is embarrassing, I’ve lost my cartography students in the walled gardens (yes I know). Please help me! Follow me to the gardens."
                         }
                     ]
                 },
@@ -1815,7 +1818,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "On my way!"
+                                    "translate": "Let's Go!"
                                 }
                             ]
                         },
@@ -1846,7 +1849,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Sorry I’ll keep up!"
+                                    "translate": "Sorry! "
                                 }
                             ]
                         },
@@ -1868,7 +1871,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": " Take these magical rods you’ll be able to cross the garden without stepping on the grass. You;ll need to work out the fractions to cross the gaps in the garden."
+                            "translate": "I need you to rescue each student that is trapped. But you CANNOT touch the grass or the groundskeeper will get very angry. Use these magical rods to reach each student. You need to work out the fractions to get to the area correctly. If you make a mistake or touch the grass head back to me to start again. You can use the numbers on the walls to work out how far each student is, and therefore which rod to use! "
                         }
                     ]
                 },
