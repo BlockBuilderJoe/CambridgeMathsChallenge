@@ -1,0 +1,29 @@
+{
+	"format_version": 2,
+	"header": {
+		"name": "student8",
+		"description": "student8 Behavior Pack",
+		"uuid": "94142d95-97dc-f729-cd6e-259c261d38d5",
+		"version": [1, 0, 0],
+		"min_engine_version": [1, 16, 0]
+	},
+	"metadata": {
+		"generated_with": {
+			"blockbench_entity_wizard": ["1.5.1"]
+		}
+	},
+	"modules": [
+		{
+			"description": "Behavior",
+			"version": [1, 0, 0],
+			"uuid": "fb7ee06d-24a5-7f68-0cec-294b518532a3",
+			"type": "data"
+		}
+	],
+	"dependencies": [
+		{
+			"uuid": "770c5950-ac84-11b0-61f3-d84d22fe30a6",
+			"version": [1, 0, 0]
+		}
+	]
+}
