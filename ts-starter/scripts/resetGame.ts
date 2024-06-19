@@ -18,8 +18,8 @@ export async function resetGame() {
   await overworld.runCommandAsync(`tp @e[tag=fractionNpc] 57 88 148`);
   await overworld.runCommandAsync(`tp @e[tag=scaleNpc] 57 88 148`);
   await overworld.runCommandAsync(`tp @e[tag=ratioNpc] 57 88 148`);
-  await overworld.runCommandAsync(`tp @e[type=blockbuilders:spawn_npc] 63 97 146 facing 69 97 147`);
-  await overworld.runCommandAsync(`dialogue change @e[type=blockbuilders:spawn_npc] spawnNpc`);
+  await overworld.runCommandAsync(`tp @e[tag=spawnNpc] 63 97 146 facing 69 97 147`);
+  await overworld.runCommandAsync(`dialogue change @e[tag=spawnNpc] spawnNpc`);
   await overworld.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc0`);
   await overworld.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc0`);
   await overworld.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc0`);

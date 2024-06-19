@@ -25,15 +25,15 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
             openGate("spawn");
             if (event.message === "fraction") {
                 overworld.runCommandAsync(`tp @e[tag=fractionNpc] 57 96 148 facing 66 96 148`);
-                overworld.runCommandAsync(`tp @e[type=blockbuilders:spawn_npc] 63 92 146`);
+                overworld.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
             }
             else if (event.message === "ratio") {
                 overworld.runCommandAsync(`tp @e[tag=ratioNpc] 57 96 148 facing 66 96 148`);
-                overworld.runCommandAsync(`tp @e[type=blockbuilders:spawn_npc] 63 92 146`);
+                overworld.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
             }
             else if (event.message === "scale") {
                 overworld.runCommandAsync(`tp @e[tag=scaleNpc] 57 96 148 facing 66 96 148`);
-                overworld.runCommandAsync(`tp @e[type=blockbuilders:spawn_npc] 63 92 146`);
+                overworld.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
             }
             else {
                 world.sendMessage(`spawnNpc triggered with invalid message`);
