@@ -108,7 +108,7 @@ world.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId; //gets the item in the players hand
   let block = clickEvent.block;
   let brokenBlock = clickEvent.brokenBlockPermutation;
-  if (hand_item === "minecraft:stick") {
+  if (hand_item === "blockbuilders:mathmogicians_wand") {
     if (brokenBlock.matches("blockbuilders:symbol_subtract") && block.location.z === 225) {
       // if it is the window vinculum run the undo function.
       await windowUndoHandler(block.location);

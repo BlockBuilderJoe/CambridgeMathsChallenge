@@ -11,11 +11,13 @@ export async function resetPotionGame() {
   await overworld.runCommandAsync("tp @e[tag=coin4] -5 78 154");
   await overworld.runCommandAsync("tp @e[tag=coin5] -6 75 155");
   await overworld.runCommandAsync("tp @e[tag=coin6] -5 75 154");
+  await overworld.runCommandAsync("fill -11 97 146 -11 97 140 minecraft:air");
+  await overworld.runCommandAsync("fill -12 124 145 -12 124 141 minecraft:black_concrete");
   await resetArea();
 }
 export async function startPotionGame() {
-  overworld.runCommandAsync(`clear @p`);
-  overworld.runCommandAsync(`effect @p haste 9999 99 true`);
+  await overworld.runCommandAsync(`clear @p`);
+  await overworld.runCommandAsync("fill -12 124 145 -12 124 141 minecraft:air");
   await giveWand();
   await giveIngredients();
 }

@@ -73,7 +73,7 @@ import { world as world3 } from "@minecraft/server";
 var overworld3 = world3.getDimension("overworld");
 async function giveWand() {
   overworld3.runCommandAsync(
-    `give @p[hasitem={item=stick,quantity=0}] minecraft:stick 1 0 {"item_lock": { "mode": "lock_in_slot" }, "minecraft:can_destroy":{"blocks":["minecraft:hopper", "blockbuilders:number_0","blockbuilders:number_1","blockbuilders:number_2","blockbuilders:number_3","blockbuilders:number_4","blockbuilders:number_5","blockbuilders:number_6","blockbuilders:number_7","blockbuilders:number_8","blockbuilders:number_9","blockbuilders:symbol_subtract"]}}`
+    `give @p[hasitem={item=blockbuilders:mathmogicians_wand,quantity=0}] blockbuilders:mathmogicians_wand 1 0 {"item_lock": { "mode": "lock_in_slot" }, "minecraft:can_destroy":{"blocks":["minecraft:hopper", "blockbuilders:number_0","blockbuilders:number_1","blockbuilders:number_2","blockbuilders:number_3","blockbuilders:number_4","blockbuilders:number_5","blockbuilders:number_6","blockbuilders:number_7","blockbuilders:number_8","blockbuilders:number_9","blockbuilders:symbol_subtract"]}}`
   );
 }
 
@@ -723,11 +723,13 @@ async function resetPotionGame() {
   await overworld6.runCommandAsync("tp @e[tag=coin4] -5 78 154");
   await overworld6.runCommandAsync("tp @e[tag=coin5] -6 75 155");
   await overworld6.runCommandAsync("tp @e[tag=coin6] -5 75 154");
+  await overworld6.runCommandAsync("fill -11 97 146 -11 97 140 minecraft:air");
+  await overworld6.runCommandAsync("fill -12 124 145 -12 124 141 minecraft:black_concrete");
   await resetArea();
 }
 async function startPotionGame() {
-  overworld6.runCommandAsync(`clear @p`);
-  overworld6.runCommandAsync(`effect @p haste 9999 99 true`);
+  await overworld6.runCommandAsync(`clear @p`);
+  await overworld6.runCommandAsync("fill -12 124 145 -12 124 141 minecraft:air");
   await giveWand();
   await giveIngredients();
 }
@@ -1113,6 +1115,7 @@ async function resetGame() {
   await overworld9.runCommandAsync(`gamerule showcoordinates false`);
   await overworld9.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
   await overworld9.runCommandAsync(`clear @p`);
+  await overworld9.runCommandAsync(`effect @p clear`);
   await overworld9.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
 }
 
@@ -1289,7 +1292,7 @@ world11.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId;
   let block = clickEvent.block;
   let brokenBlock = clickEvent.brokenBlockPermutation;
-  if (hand_item === "minecraft:stick") {
+  if (hand_item === "blockbuilders:mathmogicians_wand") {
     if (brokenBlock.matches("blockbuilders:symbol_subtract") && block.location.z === 225) {
       await windowUndoHandler(block.location);
       block.setPermutation(BlockPermutation5.resolve("blockbuilders:symbol_subtract"));

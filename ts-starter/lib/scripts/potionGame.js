@@ -10,13 +10,15 @@ export function resetPotionGame() {
         yield overworld.runCommandAsync("tp @e[tag=coin4] -5 78 154");
         yield overworld.runCommandAsync("tp @e[tag=coin5] -6 75 155");
         yield overworld.runCommandAsync("tp @e[tag=coin6] -5 75 154");
+        yield overworld.runCommandAsync("fill -11 97 146 -11 97 140 minecraft:air");
+        yield overworld.runCommandAsync("fill -12 124 145 -12 124 141 minecraft:black_concrete");
         yield resetArea();
     });
 }
 export function startPotionGame() {
     return __awaiter(this, void 0, void 0, function* () {
-        overworld.runCommandAsync(`clear @p`);
-        overworld.runCommandAsync(`effect @p haste 9999 99 true`);
+        yield overworld.runCommandAsync(`clear @p`);
+        yield overworld.runCommandAsync("fill -12 124 145 -12 124 141 minecraft:air");
         yield giveWand();
         yield giveIngredients();
     });

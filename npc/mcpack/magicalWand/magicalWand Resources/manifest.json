@@ -1,0 +1,24 @@
+{
+	"format_version": 2,
+	"header": {
+		"name": "magicalWand",
+		"description": "magicalWand Resource Pack",
+		"uuid": "036615ac-c85e-8322-78bc-b184a4d196d9",
+		"version": [1, 0, 0],
+		"min_engine_version": [1, 16, 0]
+	},
+	"metadata": {
+		"authors": ["joe"],
+		"generated_with": {
+			"blockbench_item_wizard": ["1.0.4"]
+		}
+	},
+	"modules": [
+		{
+			"description": "magicalWand",
+			"type": "resources",
+			"uuid": "50acd3e1-62b9-5b70-1a8f-afc6d50be4e8",
+			"version": [1, 0, 0]
+		}
+	]
+}

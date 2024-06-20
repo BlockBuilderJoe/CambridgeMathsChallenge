@@ -1,0 +1,30 @@
+{
+	"format_version": 2,
+	"header": {
+		"name": "magicalWand",
+		"description": "magicalWand Behavior Pack",
+		"uuid": "18c14ff6-dd8c-3b96-d8b7-506c638daa5b",
+		"version": [1, 0, 0],
+		"min_engine_version": [1, 20, 0]
+	},
+	"metadata": {
+		"authors": ["joe"],
+		"generated_with": {
+			"blockbench_item_wizard": ["1.0.4"]
+		}
+	},
+	"modules": [
+		{
+			"description": "Behavior",
+			"version": [1, 0, 0],
+			"uuid": "04089baa-64a8-5ada-b7c8-6ec4944d81d9",
+			"type": "data"
+		}
+	],
+	"dependencies": [
+		{
+			"uuid": "036615ac-c85e-8322-78bc-b184a4d196d9",
+			"version": [1, 0, 0]
+		}
+	]
+}

@@ -1,18 +1,18 @@
 {
   "format_version": 2,
   "header": {
-    "name": "Cambridge Behaviour Packs",
-    "description": "Scripting and NPC files for Cambridge project.",
-    "uuid": "ae122e02-1647-47af-9ad7-5a47b8ddab53",
+    "name": "Cambridge Maths Prototype",
+    "description": "A scripting approach to the Cambridge Maths Prototype",
+    "uuid": "e8cd459a-0f01-454a-9fc6-51df53071771",
     "version": [0, 0, 1],
-    "min_engine_version": [1, 20, 30]
+    "min_engine_version": [1, 20, 0]
   },
   "modules": [
     {
       "description": "Script resources",
       "language": "javascript",
       "type": "script",
-      "uuid": "5c11c38a-eb9c-4b72-b04b-4ba70303d518",
+      "uuid": "9e4f2cbb-f648-4c6d-a842-66fb6d70fe25",
       "version": [0, 0, 1],
       "entry": "scripts/main.js"
     }
@@ -20,7 +20,7 @@
   "dependencies": [
     {
       "module_name": "@minecraft/server",
-      "version": "1.8.0"
+      "version": "1.3.0"
     }
   ]
 }
