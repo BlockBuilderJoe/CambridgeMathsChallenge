@@ -1,18 +1,25 @@
 {
-	"format_version": "1.10.0",
-	"minecraft:client_entity": {
-		"description": {
-			"identifier": "blockbuilders:alchemy_professor",
-			"materials": {
-				"default": "entity_alphatest"
-			},
-			"textures": {
-				"default": "textures/entity/alchemy_professor"
-			},
-			"geometry": {
-				"default": "geometry.alchemy_professor"
-			},
-			"render_controllers": ["controller.render.default"]
-		}
-	}
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "blockbuilders:alchemy_professor",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/alchemy_professor"
+      },
+      "geometry": {
+        "default": "geometry.alchemy_professor"
+      },
+      "render_controllers": ["controller.render.default"],
+      "scripts": {
+        "animate": [{ "move": "query.modified_move_speed" }, "look_at_target"]
+      },
+      "animations": {
+        "look_at_target": "animation.common.look_at_target",
+        "move": "animation.npc.move"
+      }
+    }
+  }
 }
