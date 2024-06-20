@@ -60,7 +60,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = Ben 
+ NAME = Lisa 
  TAG = rodNpc1 
  
  1. Stand in front of the NPC and copy this command: 
@@ -75,7 +75,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = Ben 
+ NAME = Lisa 
  TAG = rodNpc1 
  
  1. Stand in front of the NPC and copy this command: 
@@ -90,7 +90,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = Ben 
+ NAME = Lisa 
  TAG = rodNpc1 
  
  1. Stand in front of the NPC and copy this command: 
@@ -105,7 +105,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = Ben 
+ NAME = Lisa 
  TAG = rodNpc1 
  
  1. Stand in front of the NPC and copy this command: 

@@ -18,17 +18,9 @@ import "./npcscriptEventHandler"; //handles the NPC script events
 let overworld = world.getDimension("overworld");
 let potion: string = "";
 let seconds: number = 0;
-let currentPlayer = null;
 let potionStart = 0;
 let potionDrank = false;
 let meters = 0;
-
-//getPlayer
-world.afterEvents.playerSpawn.subscribe((eventData) => {
-  currentPlayer = eventData.player; //gets player for use later on.
-  let initialSpawn = eventData.initialSpawn;
-  giveWand();
-});
 
 //listens for the button push event.
 world.afterEvents.buttonPush.subscribe(async (event) => {

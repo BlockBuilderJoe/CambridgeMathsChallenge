@@ -4,21 +4,13 @@ import { cuisenaire, getBlockBehind, directionCheck, startCuisenaireGame, } from
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
 import { potionMaker, displayTimer, getSlots, startPotionGame } from "./potionGame";
-import { giveWand } from "./wand";
 import "./npcscriptEventHandler"; //handles the NPC script events
 let overworld = world.getDimension("overworld");
 let potion = "";
 let seconds = 0;
-let currentPlayer = null;
 let potionStart = 0;
 let potionDrank = false;
 let meters = 0;
-//getPlayer
-world.afterEvents.playerSpawn.subscribe((eventData) => {
-    currentPlayer = eventData.player; //gets player for use later on.
-    let initialSpawn = eventData.initialSpawn;
-    giveWand();
-});
 //listens for the button push event.
 world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
     switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {

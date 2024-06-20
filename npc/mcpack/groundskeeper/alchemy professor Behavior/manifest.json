@@ -1,0 +1,29 @@
+{
+	"format_version": 2,
+	"header": {
+		"name": "alchemy professor",
+		"description": "alchemy professor Behavior Pack",
+		"uuid": "3b2341bb-82b9-62af-94f7-cf3a5c422d48",
+		"version": [1, 0, 0],
+		"min_engine_version": [1, 16, 0]
+	},
+	"metadata": {
+		"generated_with": {
+			"blockbench_entity_wizard": ["1.5.1"]
+		}
+	},
+	"modules": [
+		{
+			"description": "Behavior",
+			"version": [1, 0, 0],
+			"uuid": "29146215-170a-cfb6-ef7d-9cf3f6182745",
+			"type": "data"
+		}
+	],
+	"dependencies": [
+		{
+			"uuid": "239cdb0d-fc52-64ce-045d-8d2a29f6a37b",
+			"version": [1, 0, 0]
+		}
+	]
+}

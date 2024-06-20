@@ -1211,15 +1211,9 @@ system5.afterEvents.scriptEventReceive.subscribe(async (event) => {
 var overworld11 = world11.getDimension("overworld");
 var potion = "";
 var seconds = 0;
-var currentPlayer = null;
 var potionStart = 0;
 var potionDrank = false;
 var meters = 0;
-world11.afterEvents.playerSpawn.subscribe((eventData) => {
-  currentPlayer = eventData.player;
-  let initialSpawn = eventData.initialSpawn;
-  giveWand();
-});
 world11.afterEvents.buttonPush.subscribe(async (event) => {
   switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
     case "29,97,106": {

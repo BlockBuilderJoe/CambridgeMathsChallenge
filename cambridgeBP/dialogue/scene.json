@@ -143,7 +143,7 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Ben"
+                            "translate": "Lisa"
                         }
                     ]
                 },
@@ -174,7 +174,7 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Ben"
+                            "translate": "Lisa"
                         }
                     ]
                 },
@@ -217,7 +217,7 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Ben"
+                            "translate": "Lisa"
                         }
                     ]
                 },
@@ -248,7 +248,7 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Ben"
+                            "translate": "Lisa"
                         }
                     ]
                 },
@@ -1577,7 +1577,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Fraction"
+                                    "translate": "Fractions"
                                 }
                             ]
                         },

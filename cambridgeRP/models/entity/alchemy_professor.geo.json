@@ -3,12 +3,12 @@
 	"minecraft:geometry": [
 		{
 			"description": {
-				"identifier": "geometry.guild_master",
-				"texture_width": 128,
-				"texture_height": 128,
-				"visible_bounds_width": 3,
-				"visible_bounds_height": 4,
-				"visible_bounds_offset": [0, 2, 0]
+				"identifier": "geometry.alchemy_professor",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 3,
+				"visible_bounds_offset": [0, 1.5, 0]
 			},
 			"bones": [
 				{
@@ -18,13 +18,13 @@
 						{
 							"origin": [-4, 12, -3],
 							"size": [8, 12, 6],
-							"uv": [28, 10]
+							"uv": [16, 20]
 						},
 						{
-							"origin": [-4, 11, -3],
-							"size": [8, 12, 6],
+							"origin": [-4, 5, -3],
+							"size": [8, 18, 6],
 							"inflate": 0.5,
-							"uv": [0, 16]
+							"uv": [0, 38]
 						}
 					]
 				},
@@ -35,7 +35,7 @@
 					"cubes": [
 						{
 							"origin": [-4, 24, -4],
-							"size": [8, 8, 8],
+							"size": [8, 10, 8],
 							"uv": [0, 0]
 						}
 					]
@@ -46,16 +46,10 @@
 					"pivot": [0, 24, 0],
 					"cubes": [
 						{
-							"origin": [-4, 30, -4],
-							"size": [8, 2, 8],
+							"origin": [-4, 24, -4],
+							"size": [8, 8, 8],
 							"inflate": 0.5,
-							"uv": [20, 28]
-						},
-						{
-							"origin": [-4, 30, -6],
-							"size": [8, 1, 1],
-							"inflate": 0.5,
-							"uv": [24, 0]
+							"uv": [32, 0]
 						}
 					]
 				},
@@ -67,25 +61,25 @@
 						{
 							"origin": [-1, 23, -6],
 							"size": [2, 4, 2],
-							"uv": [0, 0]
+							"uv": [24, 0]
 						}
 					]
 				},
 				{
 					"name": "arms",
 					"parent": "body",
-					"pivot": [0, 20, -1.62097],
-					"rotation": [-8.44, 0, 0],
+					"pivot": [0, 21, 5],
+					"rotation": [-0.47, 0, 0],
 					"cubes": [
 						{
-							"origin": [-9, 11, -2.62097],
-							"size": [5, 11, 4],
-							"uv": [23, 39]
+							"origin": [-8, 12, -2],
+							"size": [4, 11, 4],
+							"uv": [44, 22]
 						},
 						{
-							"origin": [4, 11, -2.62097],
-							"size": [5, 11, 4],
-							"uv": [2, 35]
+							"origin": [4, 12, -2],
+							"size": [4, 11, 4],
+							"uv": [44, 46]
 						}
 					]
 				},
@@ -96,7 +90,7 @@
 						{
 							"origin": [-4, 0, -2],
 							"size": [4, 12, 4],
-							"uv": [0, 50]
+							"uv": [28, 46]
 						}
 					]
 				},
@@ -107,7 +101,7 @@
 						{
 							"origin": [0, 0, -2],
 							"size": [4, 12, 4],
-							"uv": [42, 38]
+							"uv": [0, 22]
 						}
 					]
 				}
