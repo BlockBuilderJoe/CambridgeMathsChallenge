@@ -47,6 +47,7 @@ world.afterEvents.entityHitEntity.subscribe(async (event) => {
   if (hitEntity.typeId === `blockbuilders:coin`) {
     let tag = hitEntity.getTags();
     let y_location = parseInt(tag[0].substring(4)) + 95;
+    overworld.runCommandAsync(`scoreboard players add Coins Depth 1`);
     overworld.runCommandAsync(
       `tp @e[type=blockbuilders:coin,tag=${tag}] -1 ${y_location} 157 facing 1 ${y_location} 157`
     );
@@ -75,7 +76,6 @@ world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
         yellow: { block: "yellow_concrete", value: 12, message: "1/2" },
         blue: { block: "blue_concrete", value: 24, message: "1/1" },
       };
-
       if (!hasColour) {
         player.runCommandAsync(`title ${player.name} actionbar Place the rod in front of the magical connector.`);
         event.block.setPermutation(BlockPermutation.resolve("tallgrass"));

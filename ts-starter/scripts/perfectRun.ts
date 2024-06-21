@@ -29,7 +29,6 @@ export const perfectRun = [
     blockName: "purple_concrete",
     successMessage: `Four is a sixth of 24.`,
   }, //1/6
-
   {
     location: { z: 100, y: 95, x: 55 },
     direction: "east",

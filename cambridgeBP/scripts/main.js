@@ -1132,6 +1132,7 @@ async function resetGame() {
   await overworld9.runCommandAsync(`gamemode adventure @p`);
   await overworld9.runCommandAsync(`gamerule showcoordinates false`);
   await overworld9.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
+  await overworld9.runCommandAsync(`scoreboard players set Coins Depth 0`);
   await overworld9.runCommandAsync(`clear @p`);
   await overworld9.runCommandAsync(`effect @p clear`);
   await overworld9.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
@@ -1262,6 +1263,7 @@ world11.afterEvents.entityHitEntity.subscribe(async (event) => {
   if (hitEntity.typeId === `blockbuilders:coin`) {
     let tag = hitEntity.getTags();
     let y_location = parseInt(tag[0].substring(4)) + 95;
+    overworld11.runCommandAsync(`scoreboard players add Coins Depth 1`);
     overworld11.runCommandAsync(
       `tp @e[type=blockbuilders:coin,tag=${tag}] -1 ${y_location} 157 facing 1 ${y_location} 157`
     );

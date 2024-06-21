@@ -35,6 +35,7 @@ world.afterEvents.entityHitEntity.subscribe((event) => __awaiter(void 0, void 0,
     if (hitEntity.typeId === `blockbuilders:coin`) {
         let tag = hitEntity.getTags();
         let y_location = parseInt(tag[0].substring(4)) + 95;
+        overworld.runCommandAsync(`scoreboard players add Coins Depth 1`);
         overworld.runCommandAsync(`tp @e[type=blockbuilders:coin,tag=${tag}] -1 ${y_location} 157 facing 1 ${y_location} 157`);
     }
 }));
