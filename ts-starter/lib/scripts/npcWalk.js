@@ -3,15 +3,11 @@ let overworld = world.getDimension("overworld");
 const ratioMessage = [
     { message: "You should know, no one has \nwon my well game in 50 years.", step: 2 },
     {
-        message: "The trick to getting the coins, is to mix §astronger potions §fto the \n§acorrect ratios",
+        message: "The trick to getting the coins is to mix §astronger potions §fto the \n§acorrect ratios",
         step: 25,
     },
     {
         message: "You'll need to make §aNight Vision§f potion first.\nThen a strong §aBreathing§f potion to succeed.",
-        step: 45,
-    },
-    {
-        message: "Make the breathing potion §astrong §fas you can but \nkeep the §aratios the same §for else strange things will happen.",
         step: 55,
     },
 ];

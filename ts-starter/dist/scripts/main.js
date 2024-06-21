@@ -1019,15 +1019,11 @@ var overworld8 = world8.getDimension("overworld");
 var ratioMessage = [
   { message: "You should know, no one has \nwon my well game in 50 years.", step: 2 },
   {
-    message: "The trick to getting the coins, is to mix \xA7astronger potions \xA7fto the \n\xA7acorrect ratios",
+    message: "The trick to getting the coins is to mix \xA7astronger potions \xA7fto the \n\xA7acorrect ratios",
     step: 25
   },
   {
     message: "You'll need to make \xA7aNight Vision\xA7f potion first.\nThen a strong \xA7aBreathing\xA7f potion to succeed.",
-    step: 45
-  },
-  {
-    message: "Make the breathing potion \xA7astrong \xA7fas you can but \nkeep the \xA7aratios the same \xA7for else strange things will happen.",
     step: 55
   }
 ];
