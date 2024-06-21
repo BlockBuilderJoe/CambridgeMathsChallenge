@@ -11,6 +11,7 @@ let seconds = 0;
 let potionStart = 0;
 let potionDrank = false;
 let meters = 0;
+let playerCanSeeInDark = false;
 //listens for the button push event.
 world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
     switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
@@ -149,12 +150,7 @@ function applyPotionEffect(player, potion, seconds) {
 }
 function mainTick() {
     world.getAllPlayers().forEach((player) => {
-        var _a;
-        let looking = player.getBlockFromViewDirection();
-        if ((_a = looking === null || looking === void 0 ? void 0 : looking.block.permutation) === null || _a === void 0 ? void 0 : _a.matches("hopper")) {
-            overworld.runCommandAsync(`title @p actionbar Throw the ingredients in\n then tap with your wand.\n\n\n\n`);
-        }
-        if (player.isInWater == true) {
+        if (player.isInWater) {
             player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
             meters = 94 - Math.floor(player.location.y);
             player.runCommand(`scoreboard players set Meters Depth ${meters}`);
@@ -164,10 +160,17 @@ function mainTick() {
                 potionDrank = false;
             }
             if (player.getEffect("water_breathing")) {
+                if (playerCanSeeInDark) {
+                    overworld.runCommandAsync(`effect @p night_vision ${seconds} 1 true`);
+                }
                 displayTimer(potionStart, seconds, player, "Breathing underwater");
             }
             else if (player.getEffect("night_vision")) {
-                displayTimer(potionStart, seconds, player, "Great work you can see in the dark for");
+                if (!playerCanSeeInDark) {
+                    //if they currently can't see in the dark.
+                    playerCanSeeInDark = true;
+                    overworld.runCommandAsync(`title @p actionbar You can now permanently see in the dark!`);
+                }
             }
             else if (player.getEffect("blindness")) {
                 displayTimer(potionStart, seconds, player, "Oh no! The ratios were wrong, you can't see anything for");

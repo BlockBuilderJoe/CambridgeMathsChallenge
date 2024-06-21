@@ -21,6 +21,7 @@ let seconds: number = 0;
 let potionStart = 0;
 let potionDrank = false;
 let meters = 0;
+let playerCanSeeInDark = false;
 
 //listens for the button push event.
 world.afterEvents.buttonPush.subscribe(async (event) => {
@@ -166,11 +167,7 @@ function applyPotionEffect(player: any, potion: string, seconds: number) {
 
 function mainTick() {
   world.getAllPlayers().forEach((player) => {
-    let looking = player.getBlockFromViewDirection();
-    if (looking?.block.permutation?.matches("hopper")) {
-      overworld.runCommandAsync(`title @p actionbar Throw the ingredients in\n then tap with your wand.\n\n\n\n`);
-    }
-    if (player.isInWater == true) {
+    if (player.isInWater) {
       player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
       meters = 94 - Math.floor(player.location.y);
       player.runCommand(`scoreboard players set Meters Depth ${meters}`);
@@ -180,10 +177,18 @@ function mainTick() {
         applyPotionEffect(player, potion, seconds);
         potionDrank = false;
       }
+
       if (player.getEffect("water_breathing")) {
+        if (playerCanSeeInDark) {
+          overworld.runCommandAsync(`effect @p night_vision ${seconds} 1 true`);
+        }
         displayTimer(potionStart, seconds, player, "Breathing underwater");
       } else if (player.getEffect("night_vision")) {
-        displayTimer(potionStart, seconds, player, "Great work you can see in the dark for");
+        if (!playerCanSeeInDark) {
+          //if they currently can't see in the dark.
+          playerCanSeeInDark = true;
+          overworld.runCommandAsync(`title @p actionbar You can now permanently see in the dark!`);
+        }
       } else if (player.getEffect("blindness")) {
         displayTimer(potionStart, seconds, player, "Oh no! The ratios were wrong, you can't see anything for");
       } else if (player.getEffect("levitation")) {
