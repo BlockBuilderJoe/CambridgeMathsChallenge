@@ -208,11 +208,11 @@ world.afterEvents.itemCompleteUse.subscribe((event) => __awaiter(void 0, void 0,
     let player = event.source;
     if (((_e = event.itemStack) === null || _e === void 0 ? void 0 : _e.typeId) === "minecraft:potion") {
         if (potion === "poison") {
-            player.sendMessage("§fYou mixed the potion with the §2wrong ingredients. \n§fIt has had no effect.\nMake sure you're using the correct ingredients.");
+            player.runCommandAsync("title @p actionbar §fYou mixed the potion with the §2wrong ingredients. \n§fIt has had no effect.\nMake sure you're using the correct ingredients.");
         }
         else {
             potionDrank = true;
-            player.sendMessage("§fYou drank the potion. \n§2Jump in the well §fto see the effect.");
+            player.runCommandAsync("title @p actionbar You drank the potion! §2Jump in the well §fto see the effect.");
         }
         event.source.runCommand("clear @p minecraft:glass_bottle");
     }
