@@ -4,7 +4,7 @@ import { perfectRun } from "./perfectRun";
 import { openGate, closeGate } from "./gate";
 import { npcWalk } from "./npcWalk";
 import { startWindowGame, resetWindowGame } from "./stainedGlassWindow";
-import { startPotionGame, resetPotionGame } from "./potionGame";
+import { startPotionGame, resetPotionGame, giveIngredients } from "./potionGame";
 import { resetGame } from "./resetGame";
 
 let overworld = world.getDimension("overworld");
@@ -73,7 +73,12 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
           break;
         }
         case "1": {
+          overworld.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc3`);
           startPotionGame();
+          break;
+        }
+        case "2": {
+          await giveIngredients();
           break;
         }
       }

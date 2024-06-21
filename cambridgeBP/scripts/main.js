@@ -1016,6 +1016,23 @@ async function closeGate(location) {
 // scripts/npcWalk.ts
 import { world as world8, system as system3 } from "@minecraft/server";
 var overworld8 = world8.getDimension("overworld");
+var ratioMessage = [
+  { message: "<Professor of Alchemy> You should know, no one has \nwon my well game in 50 years.", step: 2 },
+  { message: "<You> Do you have any tips?", step: 15 },
+  {
+    message: "<Professor of Alchemy> Mixing \xA7astronger potions \xA7fto the \n\xA7acorrect ratios \xA7fis the key to getting all the coins.",
+    step: 25
+  },
+  { message: "<You> What potions?", step: 35 },
+  {
+    message: "<Professor of Alchemy> You'll need a \xA7aNight Vision\xA7f potion \nand a \xA7aBreathing\xA7f potion to succeed.",
+    step: 45
+  },
+  {
+    message: "<You> Make them as \xA7astrong \xA7fas you can but \nkeep the \xA7aratios the same \xA7for else strange things will happen.",
+    step: 55
+  }
+];
 async function npcWalk(type) {
   switch (type) {
     case "scale": {
@@ -1025,7 +1042,7 @@ async function npcWalk(type) {
         { x: 72, y: 96, z: 221 },
         { x: 72, y: 96, z: 226 }
       ]);
-      moveNpc2(path, "scale");
+      world8.sendMessage("scale moveNpc");
       break;
     }
     case "fraction": {
@@ -1036,7 +1053,6 @@ async function npcWalk(type) {
         { x: 29, y: 96, z: 111 },
         { x: 29, y: 96, z: 112 }
       ]);
-      moveNpc2(path, "fraction");
       break;
     }
     case "ratio": {
@@ -1046,12 +1062,12 @@ async function npcWalk(type) {
         { x: -2, y: 96, z: 153 },
         { x: -2, y: 96, z: 152 }
       ]);
-      moveNpc2(path, "ratio");
+      moveNpc2(path, "ratio", ratioMessage);
       break;
     }
   }
 }
-async function moveNpc2(path, type) {
+async function moveNpc2(path, type, messages) {
   overworld8.runCommandAsync(`dialogue change @e[tag=${type}Npc] ${type}Npc1`);
   for (let i = 0; i < path.length - 1; i++) {
     let { x, y, z } = path[i];
@@ -1061,8 +1077,12 @@ async function moveNpc2(path, type) {
     const facingZ = nextPoint.z;
     system3.runTimeout(async () => {
       await overworld8.runCommandAsync(`tp @e[tag=${type}Npc] ${x} ${y} ${z} facing ${facingX} ${facingY} ${facingZ}`);
+      const message = messages.find((msg) => msg.step === i);
+      if (message) {
+        overworld8.runCommandAsync(`title @p actionbar ${message.message}`);
+      }
       if (path.length - 2 == i) {
-        await overworld8.runCommandAsync(`dialogue change @e[tag=${type}Npc] ${type}Npc2`);
+        await overworld8.runCommandAsync(`dialogue open @e[tag=${type}Npc] @p ${type}Npc2`);
       }
     }, i * 5);
   }
@@ -1185,7 +1205,12 @@ system5.afterEvents.scriptEventReceive.subscribe(async (event) => {
           break;
         }
         case "1": {
+          overworld10.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc3`);
           startPotionGame();
+          break;
+        }
+        case "2": {
+          await giveIngredients();
           break;
         }
       }
@@ -1339,6 +1364,15 @@ function applyPotionEffect(player, potion2, seconds2) {
 }
 function mainTick() {
   world11.getAllPlayers().forEach((player) => {
+    let looking = player.getBlockFromViewDirection();
+    if (looking?.block.permutation?.matches("hopper")) {
+      overworld11.runCommandAsync(`title @p actionbar Throw the ingredients in
+ then tap with your wand.
+
+
+
+`);
+    }
     if (player.isInWater == true) {
       player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
       meters = 94 - Math.floor(player.location.y);

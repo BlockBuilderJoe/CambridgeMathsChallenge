@@ -1716,7 +1716,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "I need your help! I am so hungry, but clumsy me managed to drop my lunch money down the well. Please follow me and use maths to get my money back!"
+                            "translate": "I see you want to take on the Well diving championship, very well, follow me. "
                         }
                     ]
                 },
@@ -1725,7 +1725,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Let's Go!"
+                                    "translate": "Let's Go"
                                 }
                             ]
                         },
@@ -1747,7 +1747,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Please hurry, I’m so hungry."
+                            "translate": "The challenge awaits, please keep up."
                         }
                     ]
                 },
@@ -1778,7 +1778,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "The well is very dark and deep, you will need to make potions to see and breathe long enough to get my money back. Use the ratios on the walls to make two of the correct potions. Use the ingredients I am giving you and throw them in the hopper, then left click with the wand to make the potions. Be careful, if you get the wrong ratios there may be... side effects. Hint: If the potions you have made do not last long enough, you need to increase the ingredients. But remember as you add to make sure the ratios are still correct! We can't afford any more accidents, not on my watch."
+                            "translate": "Here take these ingredients, come back if you need anymore.\n\nThe ratios for the ingredients are on the wall. \n\nTo make a potion mix it in the cauldron and tap it with your wand."
                         }
                     ]
                 },
@@ -1787,12 +1787,86 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay"
+                                    "translate": "Thank you"
                                 }
                             ]
                         },
                         "commands": [
                             "scriptevent ratio:npc 1"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "ratioNpc3",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Professor of Alchemy"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "How can I help"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "More ingredients please"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent ratio:npc 2"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "I’m stuck"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "dialogue open @e[tag=ratioNpc] @p ratioNpc4"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "ratioNpc4",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Professor of Alchemy"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "Here are the steps for the game. \n1. Check the ratios on the wall.\n2. Chuck the ingredients in the cauldron to the correct ratio.\n3. Click on the cauldron with your wand.\n4. Check the bar chart to see if your ratios are correct. \n5. If they are correct, drink the potion and dive in the well. \n6. Remember to follow the rules and click on the coins to gather them. "
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Thank you"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
                         ]
                     }
                 ]

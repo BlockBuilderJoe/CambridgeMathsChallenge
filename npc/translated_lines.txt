@@ -161,14 +161,31 @@ Guild Master=
 Take this stained glass and make a design using the smaller frames here. Once your design is ready, click the numerator to increase the amount the window needs to be scaled. Then right click the fraction bar to scale the window. If it fits perfectly you can move on to the next one.=
 Will do=
 Professor of Alchemy=
-I need your help! I am so hungry, but clumsy me managed to drop my lunch money down the well. Please follow me and use maths to get my money back!=
-Let's Go!=
+I see you want to take on the Well diving championship, very well, follow me. =
+Let's Go=
 Professor of Alchemy=
-Please hurry, I’m so hungry.=
+The challenge awaits, please keep up.=
 On the way!=
 Professor of Alchemy=
-The well is very dark and deep, you will need to make potions to see and breathe long enough to get my money back. Use the ratios on the walls to make two of the correct potions. Use the ingredients I am giving you and throw them in the hopper, then left click with the wand to make the potions. Be careful, if you get the wrong ratios there may be... side effects. Hint: If the potions you have made do not last long enough, you need to increase the ingredients. But remember as you add to make sure the ratios are still correct! We can't afford any more accidents, not on my watch.=
-Okay=
+Here take these ingredients, come back if you need anymore.
+
+The ratios for the ingredients are on the wall. 
+
+To make a potion mix it in the cauldron and tap it with your wand.=
+Thank you=
+Professor of Alchemy=
+How can I help=
+More ingredients please=
+I’m stuck=
+Professor of Alchemy=
+Here are the steps for the game. 
+1. Check the ratios on the wall.
+2. Chuck the ingredients in the cauldron to the correct ratio.
+3. Click on the cauldron with your wand.
+4. Check the bar chart to see if your ratios are correct. 
+5. If they are correct, drink the potion and dive in the well. 
+6. Remember to follow the rules and click on the coins to gather them. =
+Thank you=
 Professor of Cartography=
 This is embarrassing, I’ve lost my cartography students in the walled gardens (yes I know). Please help me! Follow me to the gardens.=
 Let's Go!=

@@ -149,6 +149,11 @@ function applyPotionEffect(player, potion, seconds) {
 }
 function mainTick() {
     world.getAllPlayers().forEach((player) => {
+        var _a;
+        let looking = player.getBlockFromViewDirection();
+        if ((_a = looking === null || looking === void 0 ? void 0 : looking.block.permutation) === null || _a === void 0 ? void 0 : _a.matches("hopper")) {
+            overworld.runCommandAsync(`title @p actionbar Throw the ingredients in\n then tap with your wand.\n\n\n\n`);
+        }
         if (player.isInWater == true) {
             player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
             meters = 94 - Math.floor(player.location.y);

@@ -3,7 +3,7 @@ import { moveNpc, replay, startCuisenaireGame } from "./cuisenaireRods";
 import { openGate, closeGate } from "./gate";
 import { npcWalk } from "./npcWalk";
 import { startWindowGame } from "./stainedGlassWindow";
-import { startPotionGame } from "./potionGame";
+import { startPotionGame, giveIngredients } from "./potionGame";
 import { resetGame } from "./resetGame";
 let overworld = world.getDimension("overworld");
 //handles the scriptEventReceive from NPCs
@@ -74,7 +74,12 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
                     break;
                 }
                 case "1": {
+                    overworld.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc3`);
                     startPotionGame();
+                    break;
+                }
+                case "2": {
+                    yield giveIngredients();
                     break;
                 }
             }
