@@ -1017,19 +1017,17 @@ async function closeGate(location) {
 import { world as world8, system as system3 } from "@minecraft/server";
 var overworld8 = world8.getDimension("overworld");
 var ratioMessage = [
-  { message: "<Professor of Alchemy> You should know, no one has \nwon my well game in 50 years.", step: 2 },
-  { message: "<You> Do you have any tips?", step: 15 },
+  { message: "You should know, no one has \nwon my well game in 50 years.", step: 2 },
   {
-    message: "<Professor of Alchemy> Mixing \xA7astronger potions \xA7fto the \n\xA7acorrect ratios \xA7fis the key to getting all the coins.",
+    message: "The trick to getting the coins, is to mix \xA7astronger potions \xA7fto the \n\xA7acorrect ratios",
     step: 25
   },
-  { message: "<You> What potions?", step: 35 },
   {
-    message: "<Professor of Alchemy> You'll need a \xA7aNight Vision\xA7f potion \nand a \xA7aBreathing\xA7f potion to succeed.",
+    message: "You'll need to make \xA7aNight Vision\xA7f potion first.\nThen a strong \xA7aBreathing\xA7f potion to succeed.",
     step: 45
   },
   {
-    message: "<You> Make them as \xA7astrong \xA7fas you can but \nkeep the \xA7aratios the same \xA7for else strange things will happen.",
+    message: "Make the breathing potion \xA7astrong \xA7fas you can but \nkeep the \xA7aratios the same \xA7for else strange things will happen.",
     step: 55
   }
 ];

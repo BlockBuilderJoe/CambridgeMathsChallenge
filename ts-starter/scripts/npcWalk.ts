@@ -3,21 +3,18 @@ import { world, system, Player } from "@minecraft/server";
 let overworld = world.getDimension("overworld");
 
 const ratioMessage = [
-  { message: "<Professor of Alchemy> You should know, no one has \nwon my well game in 50 years.", step: 2 },
-  { message: "<You> Do you have any tips?", step: 15 },
+  { message: "You should know, no one has \nwon my well game in 50 years.", step: 2 },
   {
-    message:
-      "<Professor of Alchemy> Mixing §astronger potions §fto the \n§acorrect ratios §fis the key to getting all the coins.",
+    message: "The trick to getting the coins, is to mix §astronger potions §fto the \n§acorrect ratios",
     step: 25,
   },
-  { message: "<You> What potions?", step: 35 },
   {
-    message: "<Professor of Alchemy> You'll need a §aNight Vision§f potion \nand a §aBreathing§f potion to succeed.",
+    message: "You'll need to make §aNight Vision§f potion first.\nThen a strong §aBreathing§f potion to succeed.",
     step: 45,
   },
   {
     message:
-      "<You> Make them as §astrong §fas you can but \nkeep the §aratios the same §for else strange things will happen.",
+      "Make the breathing potion §astrong §fas you can but \nkeep the §aratios the same §for else strange things will happen.",
     step: 55,
   },
 ];
