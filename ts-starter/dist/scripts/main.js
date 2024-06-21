@@ -1017,14 +1017,14 @@ async function closeGate(location) {
 import { world as world8, system as system3 } from "@minecraft/server";
 var overworld8 = world8.getDimension("overworld");
 var ratioMessage = [
-  { message: "You should know, no one has \nwon my well game in 50 years.", step: 2 },
+  { message: "You should know, no one has \nwon my well game in 50 years.", step: 0 },
   {
-    message: "The trick to getting the coins is to mix \xA7astronger potions \xA7fto the \n\xA7acorrect ratios",
-    step: 25
+    message: "The trick to getting the coins is to mix \xA7astronger potions \xA7fto the \n\xA7acorrect ratios.",
+    step: 18
   },
   {
-    message: "You'll need to make \xA7aNight Vision\xA7f potion first.\nThen a strong \xA7aBreathing\xA7f potion to succeed.",
-    step: 55
+    message: "You'll need to make a \xA7aNight Vision\xA7f potion first.\nThen a strong \xA7aBreathing\xA7f potion to succeed.",
+    step: 38
   }
 ];
 async function npcWalk(type) {
@@ -1062,6 +1062,7 @@ async function npcWalk(type) {
   }
 }
 async function moveNpc2(path, type, messages) {
+  let message = "";
   overworld8.runCommandAsync(`dialogue change @e[tag=${type}Npc] ${type}Npc1`);
   for (let i = 0; i < path.length - 1; i++) {
     let { x, y, z } = path[i];
@@ -1071,9 +1072,12 @@ async function moveNpc2(path, type, messages) {
     const facingZ = nextPoint.z;
     system3.runTimeout(async () => {
       await overworld8.runCommandAsync(`tp @e[tag=${type}Npc] ${x} ${y} ${z} facing ${facingX} ${facingY} ${facingZ}`);
-      const message = messages.find((msg) => msg.step === i);
+      const messageMatch = messages.find((msg) => msg.step === i);
+      if (messageMatch) {
+        message = messageMatch.message;
+      }
       if (message) {
-        overworld8.runCommandAsync(`title @p actionbar ${message.message}`);
+        overworld8.runCommandAsync(`title @p actionbar ${message}`);
       }
       if (path.length - 2 == i) {
         await overworld8.runCommandAsync(`dialogue open @e[tag=${type}Npc] @p ${type}Npc2`);
