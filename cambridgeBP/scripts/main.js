@@ -1345,6 +1345,7 @@ function applyPotionEffect(player, potion2, seconds2) {
       break;
     }
     case "night_vision": {
+      playerCanSeeInDark = true;
       player.addEffect("night_vision", tick);
       break;
     }
@@ -1379,10 +1380,7 @@ function mainTick() {
         }
         displayTimer(potionStart, seconds, player, "Breathing underwater");
       } else if (player.getEffect("night_vision")) {
-        if (!playerCanSeeInDark) {
-          playerCanSeeInDark = true;
-          overworld11.runCommandAsync(`title @p actionbar You can now permanently see in the dark!`);
-        }
+        overworld11.runCommandAsync(`title @p actionbar You can now permanently see in the dark!`);
       } else if (player.getEffect("blindness")) {
         displayTimer(potionStart, seconds, player, "Oh no! The ratios were wrong, you can't see anything for");
       } else if (player.getEffect("levitation")) {

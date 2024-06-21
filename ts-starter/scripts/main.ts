@@ -146,6 +146,7 @@ function applyPotionEffect(player: any, potion: string, seconds: number) {
       break;
     }
     case "night_vision": {
+      playerCanSeeInDark = true;
       player.addEffect("night_vision", tick);
       break;
     }
@@ -177,18 +178,14 @@ function mainTick() {
         applyPotionEffect(player, potion, seconds);
         potionDrank = false;
       }
-
       if (player.getEffect("water_breathing")) {
         if (playerCanSeeInDark) {
           overworld.runCommandAsync(`effect @p night_vision ${seconds} 1 true`);
         }
         displayTimer(potionStart, seconds, player, "Breathing underwater");
       } else if (player.getEffect("night_vision")) {
-        if (!playerCanSeeInDark) {
-          //if they currently can't see in the dark.
-          playerCanSeeInDark = true;
-          overworld.runCommandAsync(`title @p actionbar You can now permanently see in the dark!`);
-        }
+        //if they currently can't see in the dark.
+        overworld.runCommandAsync(`title @p actionbar You can now permanently see in the dark!`);
       } else if (player.getEffect("blindness")) {
         displayTimer(potionStart, seconds, player, "Oh no! The ratios were wrong, you can't see anything for");
       } else if (player.getEffect("levitation")) {
