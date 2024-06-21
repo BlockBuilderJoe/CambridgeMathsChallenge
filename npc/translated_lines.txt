@@ -161,13 +161,13 @@ Guild Master=
 Take this stained glass and make a design using the smaller frames here. Once your design is ready, click the numerator to increase the amount the window needs to be scaled. Then right click the fraction bar to scale the window. If it fits perfectly you can move on to the next one.=
 Will do=
 Professor of Alchemy=
-I see you want to take on the Well diving championship, very well, follow me. =
+I hear you want to take on the Well diving championship, very well, follow me. =
 Let's Go=
 Professor of Alchemy=
 The challenge awaits, please keep up.=
 On the way!=
 Professor of Alchemy=
-Here take these ingredients, come back if you need anymore.
+Here take these ingredients, come back if you need any more
 
 The ratios for the ingredients are on the wall. 
 
@@ -186,15 +186,18 @@ Here are the steps for the game.
 5. If they are correct, drink the potion and dive in the well. 
 6. Remember to follow the rules and click on the coins to gather them. =
 Thank you=
-Professor of Cartography=
-This is embarrassing, I’ve lost my cartography students in the walled gardens (yes I know). Please help me! Follow me to the gardens.=
-Let's Go!=
-Professor of Cartography=
-Oh dear oh dear, please keep up I cannot lose a whole class.=
+Professor of Alchemy=
+You broke rule number 2, you must let the potions do the work, no swimming or diving.=
 Sorry! =
 Professor of Cartography=
+This is embarrassing, I’ve lost my cartography students in the walled gardens (yes I know). Please help me! Follow me to the gardens.=
+Professor of Cartography=
+Oh dear oh dear, please keep up I cannot lose a whole class.=
+Let's Go!=
+Professor of Cartography=
 I need you to rescue each student that is trapped. But you CANNOT touch the grass or the groundskeeper will get very angry. Use these magical rods to reach each student. You need to work out the fractions to get to the area correctly. If you make a mistake or touch the grass head back to me to start again. You can use the numbers on the walls to work out how far each student is, and therefore which rod to use! =
-Wish me luck=
+Sorry! =
 Grumpy Groundskeeper=
 Grrrrofffff me grass=
+Wish me luck=
 Sorry! =

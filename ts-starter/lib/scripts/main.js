@@ -179,9 +179,11 @@ function mainTick() {
                 displayTimer(potionStart, seconds, player, "Oh no! You're floating for");
             }
             if (player.isSneaking == true) {
+                player.runCommandAsync(`dialogue open @e[tag=ratioNpc] @p ratioNpc5`);
                 surface(player);
             }
             if (player.isSwimming == true) {
+                player.runCommandAsync(`dialogue open @e[tag=ratioNpc] @p ratioNpc5`);
                 surface(player);
             }
         }

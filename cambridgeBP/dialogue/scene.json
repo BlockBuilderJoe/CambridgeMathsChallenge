@@ -1716,7 +1716,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "I see you want to take on the Well diving championship, very well, follow me. "
+                            "translate": "I hear you want to take on the Well diving championship, very well, follow me. "
                         }
                     ]
                 },
@@ -1778,7 +1778,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Here take these ingredients, come back if you need anymore.\n\nThe ratios for the ingredients are on the wall. \n\nTo make a potion mix it in the cauldron and tap it with your wand."
+                            "translate": "Here take these ingredients, come back if you need any more\n\nThe ratios for the ingredients are on the wall. \n\nTo make a potion mix it in the cauldron and tap it with your wand."
                         }
                     ]
                 },
@@ -1872,6 +1872,37 @@
                 ]
             },
             {
+                "scene_tag": "ratioNpc5",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Professor of Alchemy"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "You broke rule number 2, you must let the potions do the work, no swimming or diving."
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Sorry! "
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
                 "scene_tag": "fractionNpc0",
                 "npc_name": {
                     "rawtext": [
@@ -1887,20 +1918,7 @@
                         }
                     ]
                 },
-                "buttons": [
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "Let's Go!"
-                                }
-                            ]
-                        },
-                        "commands": [
-                            "scriptevent fraction:npc 0"
-                        ]
-                    }
-                ]
+                "buttons": []
             },
             {
                 "scene_tag": "fractionNpc1",
@@ -1923,12 +1941,12 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Sorry! "
+                                    "translate": "Let's Go!"
                                 }
                             ]
                         },
                         "commands": [
-                            ""
+                            "scriptevent fraction:npc 0"
                         ]
                     }
                 ]
@@ -1954,12 +1972,12 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Wish me luck"
+                                    "translate": "Sorry! "
                                 }
                             ]
                         },
                         "commands": [
-                            "scriptevent fraction:npc 1"
+                            ""
                         ]
                     }
                 ]
@@ -1986,6 +2004,22 @@
                 "on_close_commands": [
                     "tp @p 30 96 107 facing 30 96 90"
                 ],
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Wish me luck"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent fraction:npc 1"
+                        ]
+                    }
+                ]
+            },
+            {
                 "buttons": [
                     {
                         "name": {
