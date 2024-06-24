@@ -3,7 +3,7 @@ import { moveNpc, replay, startCuisenaireGame, resetCuisenaireGame } from "./cui
 import { perfectRun } from "./perfectRun";
 import { openGate, closeGate } from "./gate";
 import { npcWalk } from "./npcWalk";
-import { startWindowGame, resetWindowGame } from "./stainedGlassWindow";
+import { startWindowGame, resetWindowGame, giveGlass } from "./stainedGlassWindow";
 import { startPotionGame, resetPotionGame, giveIngredients } from "./potionGame";
 import { resetGame } from "./resetGame";
 
@@ -57,7 +57,12 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
           break;
         }
         case "1": {
+          overworld.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc3`);
           startWindowGame();
+          break;
+        }
+        case "2": {
+          giveGlass();
           break;
         }
       }
@@ -94,6 +99,7 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
           break;
         }
         case "1": {
+          overworld.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc3`);
           startCuisenaireGame();
           break;
         }

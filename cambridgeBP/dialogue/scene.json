@@ -1685,7 +1685,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Take this stained glass and make a design using the smaller frames here. Once your design is ready, click the numerator to increase the amount the window needs to be scaled. Then right click the fraction bar to scale the window. If it fits perfectly you can move on to the next one."
+                            "translate": "Take this stained glass and make a design using the smaller frames here. \n\nOnce your design is ready, click the numerator to increase the amount the window needs to be scaled. \n\nThen right click the fraction bar to scale the window."
                         }
                     ]
                 },
@@ -1700,6 +1700,80 @@
                         },
                         "commands": [
                             "scriptevent scale:npc 1"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "scaleNpc3",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Guild Master"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "How can I help?"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "More glass please!"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent scale:npc 2"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "I’m stuck. "
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "dialogue open @e[tag=scaleNpc] @p scaleNpc4"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "scaleNpc4",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Guild Master"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "1. Place the stained glass in the frames. \n2. Left click the numerator (top number) with the wand to change it.\n3. Right click the fraction bar to make the window appear. \n4. If you’ve made a mistake left click the fraction bar to make it disappear."
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Thank you"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
                         ]
                     }
                 ]
@@ -1809,7 +1883,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "How can I help"
+                            "translate": "How can I help?"
                         }
                     ]
                 },
@@ -1818,7 +1892,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "More ingredients please"
+                                    "translate": "More ingredients!"
                                 }
                             ]
                         },
@@ -1830,7 +1904,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "I’m stuck"
+                                    "translate": "I’m stuck. "
                                 }
                             ]
                         },
@@ -1976,7 +2050,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "I need you to rescue each student that is trapped. But you CANNOT touch the grass or the groundskeeper will get very angry. Use these magical rods to reach each student. You need to work out the fractions to get to the area correctly. If you make a mistake or touch the grass head back to me to start again. You can use the numbers on the walls to work out how far each student is, and therefore which rod to use! "
+                            "translate": "I need you to rescue each student that is trapped.  Use these magical rods to reach each student. \n\nIf you need to start again or get stuck come back to me!"
                         }
                     ]
                 },
@@ -1991,6 +2065,80 @@
                         },
                         "commands": [
                             "scriptevent fraction:npc 1"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "fractionNpc3",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Professor of Cartography"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "How can I help?"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Start Again"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent fraction:npc 1"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "I’m stuck. "
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "dialogue open @e[tag=fractionNpc] @p fractionNpc4"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "fractionNpc4",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Professor of Cartography"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "1. The grids are 24x24 blocks wide and you need to use the rods to cross them.\n2. You can place the rods by right clicking in front of the white blocks. \n3. Talk to each student as you go, they will let you know if you have placed the most optimum rod down. "
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Thank you"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
                         ]
                     }
                 ]

@@ -1027,6 +1027,19 @@ var ratioMessage = [
     step: 38
   }
 ];
+var fractionMessage = [
+  { message: "You \xA7acan't jump or step on the grass \xA7fin the gardens.\nYou'll be told off if you do!", step: 0 },
+  { message: "I'll give you magical rods that you can cross the gardens with.", step: 25 },
+  { message: "The gardens are \xA7a24x24\xA7f blocks wide.\nEach student is a different fraction of 24 away.", step: 45 }
+];
+var scaleMessage = [
+  { message: "You'll need to change the \xA7anumerator\xA7f (the top number) \nto scale the windows.", step: 0 },
+  {
+    message: "To make the window larger you'll need to make the \n\xA7anumerator larger\xA7f than the denominator (bottom number).",
+    step: 25
+  },
+  { message: "The windows must fit in the frame!\nSo make sure you don't make the windows too big.", step: 50 }
+];
 async function npcWalk(type) {
   switch (type) {
     case "scale": {
@@ -1036,7 +1049,7 @@ async function npcWalk(type) {
         { x: 72, y: 96, z: 221 },
         { x: 72, y: 96, z: 226 }
       ]);
-      world8.sendMessage("scale moveNpc");
+      moveNpc2(path, "scale", scaleMessage);
       break;
     }
     case "fraction": {
@@ -1044,9 +1057,10 @@ async function npcWalk(type) {
         { x: 57, y: 96, z: 148 },
         { x: 57, y: 96, z: 116 },
         { x: 29, y: 96, z: 116 },
-        { x: 29, y: 96, z: 111 },
-        { x: 29, y: 96, z: 112 }
+        { x: 29, y: 96, z: 112 },
+        { x: 29, y: 96, z: 113 }
       ]);
+      moveNpc2(path, "fraction", fractionMessage);
       break;
     }
     case "ratio": {
@@ -1188,7 +1202,12 @@ system5.afterEvents.scriptEventReceive.subscribe(async (event) => {
           break;
         }
         case "1": {
+          overworld10.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc3`);
           startWindowGame();
+          break;
+        }
+        case "2": {
+          giveGlass();
           break;
         }
       }
@@ -1225,6 +1244,7 @@ system5.afterEvents.scriptEventReceive.subscribe(async (event) => {
           break;
         }
         case "1": {
+          overworld10.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc3`);
           startCuisenaireGame();
           break;
         }

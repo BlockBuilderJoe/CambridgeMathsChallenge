@@ -15,19 +15,19 @@ const ratioMessage = [
 ];
 
 const fractionMessage = [
-  { message: "You can't jump or step on the grass in the gardens.\nYou'll be told off if you do!", step: 0 },
+  { message: "You §acan't jump or step on the grass §fin the gardens.\nYou'll be told off if you do!", step: 0 },
   { message: "I'll give you magical rods that you can cross the gardens with.", step: 25 },
-  { message: "The gardens are 24x24 blocks wide.\nEach student is a different fraction away.", step: 45 },
+  { message: "The gardens are §a24x24§f blocks wide.\nEach student is a different fraction of 24 away.", step: 45 },
 ];
 
 const scaleMessage = [
-  { message: "You'll need to change the numerator (the top number) \nto scale the windows.", step: 0 },
+  { message: "You'll need to change the §anumerator§f (the top number) \nto scale the windows.", step: 0 },
   {
     message:
-      "To make the window larger you'll need to make the \nnumerator larger than the denominator (bottom number).",
+      "To make the window larger you'll need to make the \n§anumerator larger§f than the denominator (bottom number).",
     step: 25,
   },
-  { message: "The windows must fit in the frame!\nSo make sure you don't make the window too big.", step: 50 },
+  { message: "The windows must fit in the frame!\nSo make sure you don't make the windows too big.", step: 50 },
 ];
 export async function npcWalk(type: string) {
   switch (type) {

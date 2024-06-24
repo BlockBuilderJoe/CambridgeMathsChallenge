@@ -735,6 +735,36 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
+ NAME = Guild Master 
+ TAG = scaleNpc 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add scaleNpc 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=scaleNpc] scaleNpc3 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME = Guild Master 
+ TAG = scaleNpc 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add scaleNpc 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=scaleNpc] scaleNpc4 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
  NAME = Professor of Alchemy 
  TAG = ratioNpc 
  

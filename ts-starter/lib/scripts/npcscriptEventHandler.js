@@ -2,7 +2,7 @@ import { system, world } from "@minecraft/server";
 import { moveNpc, replay, startCuisenaireGame } from "./cuisenaireRods";
 import { openGate, closeGate } from "./gate";
 import { npcWalk } from "./npcWalk";
-import { startWindowGame } from "./stainedGlassWindow";
+import { startWindowGame, giveGlass } from "./stainedGlassWindow";
 import { startPotionGame, giveIngredients } from "./potionGame";
 import { resetGame } from "./resetGame";
 let overworld = world.getDimension("overworld");
@@ -58,7 +58,12 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
                     break;
                 }
                 case "1": {
+                    overworld.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc3`);
                     startWindowGame();
+                    break;
+                }
+                case "2": {
+                    giveGlass();
                     break;
                 }
             }
@@ -95,6 +100,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
                     break;
                 }
                 case "1": {
+                    overworld.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc3`);
                     startCuisenaireGame();
                     break;
                 }

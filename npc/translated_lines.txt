@@ -158,8 +158,22 @@ Guild Master=
 Keep up, keep up.=
 Sorry! =
 Guild Master=
-Take this stained glass and make a design using the smaller frames here. Once your design is ready, click the numerator to increase the amount the window needs to be scaled. Then right click the fraction bar to scale the window. If it fits perfectly you can move on to the next one.=
+Take this stained glass and make a design using the smaller frames here. 
+
+Once your design is ready, click the numerator to increase the amount the window needs to be scaled. 
+
+Then right click the fraction bar to scale the window.=
 Will do=
+Guild Master=
+How can I help?=
+More glass please!=
+I’m stuck. =
+Guild Master=
+1. Place the stained glass in the frames. 
+2. Left click the numerator (top number) with the wand to change it.
+3. Right click the fraction bar to make the window appear. 
+4. If you’ve made a mistake left click the fraction bar to make it disappear.=
+Thank you=
 Professor of Alchemy=
 I hear you want to take on the Well diving championship, very well, follow me. =
 Let's Go=
@@ -175,8 +189,8 @@ To make a potion mix it in the cauldron and tap it with your wand.=
 Thank you=
 Professor of Alchemy=
 How can I help?=
-More ingredients please=
-I’m stuck=
+More ingredients!=
+I’m stuck. =
 Professor of Alchemy=
 Here are the steps for the game. 
 1. Check the ratios on the wall.
@@ -203,7 +217,7 @@ Wish me luck=
 Professor of Cartography=
 How can I help?=
 Start Again=
-I’m stuck=
+I’m stuck. =
 Professor of Cartography=
 1. The grids are 24x24 blocks wide and you need to use the rods to cross them.
 2. You can place the rods by right clicking in front of the white blocks. 
