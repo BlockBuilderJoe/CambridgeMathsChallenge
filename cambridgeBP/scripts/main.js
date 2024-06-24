@@ -22,7 +22,6 @@ async function getCube(pos1, pos2) {
     for (let y = Math.min(pos1.y, pos2.y); y <= Math.max(pos1.y, pos2.y); y++) {
       for (let z = Math.min(pos1.z, pos2.z); z <= Math.max(pos1.z, pos2.z); z++) {
         const location = { x, y, z };
-        world.sendMessage(`${location.x} ${location.y} ${location.z}`);
         const blockValue = getBlockValue(location);
         blocks.push(blockValue);
       }
@@ -85,18 +84,18 @@ var windows = [
     pos1: { x: 68, y: 97, z: 226 },
     pos2: { x: 68, y: 101, z: 226 },
     numerator: { x: 71, y: 98, z: 225 },
-    cloneTo: { x: 68, y: 97, z: 226 },
-    cloneFrom: { x: 76, y: 82, z: 218 },
+    cloneFrom: { x: 67, y: 47, z: 218 },
+    cloneTo: { x: 76, y: 82, z: 218 },
     cloneInto: { x: 67, y: 97, z: 218 },
     scaledLeftCorner: { x: 69, y: 99, z: 218 }
     //Bottom left corner of the scaled window.
   },
   {
     pos1: { x: 77, y: 97, z: 226 },
-    pos2: { x: 77, y: 97, z: 224 },
+    pos2: { x: 77, y: 100, z: 223 },
     numerator: { x: 82, y: 98, z: 225 },
-    cloneTo: { x: 75, y: 47, z: 218 },
-    cloneFrom: { x: 107, y: 66, z: 218 },
+    cloneFrom: { x: 75, y: 47, z: 218 },
+    cloneTo: { x: 107, y: 66, z: 218 },
     cloneInto: { x: 75, y: 97, z: 218 },
     scaledLeftCorner: { x: 78, y: 99, z: 218 }
     //Bottom left corner of the scaled window.
@@ -161,19 +160,21 @@ async function scale(cubePos1, cubePos2, inputNumber, scaledLeftCorner) {
   for (const block of blocks) {
     let colour = block.permutation?.getState(`color`);
     if (colour) {
-      let location = { x: block.block?.x, y: block.block?.y, z: block.block?.z, colour };
-      shape.push(location);
+      if (block.block) {
+        let offset_x = block.block.x - cubePos1.x;
+        let offset_y = block.block.y - cubePos1.y;
+        let offset_z = cubePos1.z - block.block.z;
+        let finalWindow_x = scaledLeftCorner.x + offset_z;
+        let finalWindow_y = scaledLeftCorner.y + offset_y;
+        let finalWindow_z = scaledLeftCorner.z + offset_x;
+        let location = { x: finalWindow_x, y: finalWindow_y, z: finalWindow_z, colour };
+        shape.push(location);
+      }
     }
   }
-  let scaledShape = await scaleShape(shape, scaleFactor, "yz");
+  let scaledShape = await scaleShape(shape, scaleFactor, "yx");
   for (const block of scaledShape) {
-    let offset_x = block.x - cubePos1.x;
-    let offset_y = block.y - cubePos1.y;
-    let offset_z = block.z - cubePos1.z;
-    let finalWindow_x = scaledLeftCorner.x + offset_z;
-    let finalWindow_y = scaledLeftCorner.y + offset_y;
-    let finalWindow_z = scaledLeftCorner.z + offset_x;
-    setBlock({ x: finalWindow_x, y: finalWindow_y, z: finalWindow_z }, block.colour + "_stained_glass");
+    setBlock({ x: block.x, y: block.y, z: block.z }, block.colour + "_stained_glass");
   }
 }
 async function windowUndo(from, to, into) {
