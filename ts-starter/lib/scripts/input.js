@@ -19,7 +19,6 @@ export function getCube(pos1, pos2) {
             for (let y = Math.min(pos1.y, pos2.y); y <= Math.max(pos1.y, pos2.y); y++) {
                 for (let z = Math.min(pos1.z, pos2.z); z <= Math.max(pos1.z, pos2.z); z++) {
                     const location = { x: x, y: y, z: z };
-                    world.sendMessage(`${location.x} ${location.y} ${location.z}`);
                     const blockValue = getBlockValue(location);
                     blocks.push(blockValue);
                 }
