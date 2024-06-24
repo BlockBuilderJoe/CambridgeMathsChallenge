@@ -191,13 +191,13 @@ You broke rule number 2, you must let the potions do the work, no swimming or di
 Sorry! =
 Professor of Cartography=
 This is embarrassing, I’ve lost my cartography students in the walled gardens (yes I know). Please help me! Follow me to the gardens.=
-Professor of Cartography=
-Oh dear oh dear, please keep up I cannot lose a whole class.=
 Let's Go!=
 Professor of Cartography=
-I need you to rescue each student that is trapped. But you CANNOT touch the grass or the groundskeeper will get very angry. Use these magical rods to reach each student. You need to work out the fractions to get to the area correctly. If you make a mistake or touch the grass head back to me to start again. You can use the numbers on the walls to work out how far each student is, and therefore which rod to use! =
+Oh dear oh dear, please keep up I cannot lose a whole class.=
 Sorry! =
+Professor of Cartography=
+I need you to rescue each student that is trapped. But you CANNOT touch the grass or the groundskeeper will get very angry. Use these magical rods to reach each student. You need to work out the fractions to get to the area correctly. If you make a mistake or touch the grass head back to me to start again. You can use the numbers on the walls to work out how far each student is, and therefore which rod to use! =
+Wish me luck=
 Grumpy Groundskeeper=
 Grrrrofffff me grass=
-Wish me luck=
 Sorry! =
