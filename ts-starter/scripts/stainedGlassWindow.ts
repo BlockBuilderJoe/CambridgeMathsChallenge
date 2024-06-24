@@ -16,21 +16,29 @@ const windows = [
     cloneInto: { x: 67, y: 97, z: 218 },
     scaledLeftCorner: { x: 69, y: 99, z: 218 }, //Bottom left corner of the scaled window.
   },
-  //Clone to from etc { x: 75, y: 47, z: 218 }, { x: 107, y: 66, z: 218 }, { x: 75, y: 97, z: 218 }
+  {
+    pos1: { x: 77, y: 97, z: 226 },
+    pos2: { x: 77, y: 97, z: 224 },
+    numerator: { x: 82, y: 98, z: 225 },
+    cloneTo: { x: 75, y: 47, z: 218 },
+    cloneFrom: { x: 107, y: 66, z: 218 },
+    cloneInto: { x: 75, y: 97, z: 218 },
+    scaledLeftCorner: { x: 78, y: 99, z: 218 }, //Bottom left corner of the scaled window.
+  },
 ];
 export async function resetWindowGame() {
-  //window1 clear
-  overworld.runCommandAsync(`fill 69 98 225 69 102 225 air replace`);
-  //window2 clear
-  overworld.runCommandAsync(`fill 78 98 225 80 98 225 air replace`);
-  overworld.runCommandAsync(`fill 78 99 225 79 99 225 air replace`);
-  overworld.runCommandAsync(`fill 78 100 225 78 100 225 air replace`);
-  //replace the numerator with 0
-  overworld.runCommandAsync(`setblock 71 98 225 blockbuilders:number_0`);
-  overworld.runCommandAsync(`setblock 82 98 225 blockbuilders:number_0`);
-  //clear the stained glass windows
-  windowUndoHandler({ x: 71, y: 97, z: 225 });
-  windowUndoHandler({ x: 82, y: 97, z: 225 });
+  for (const window of windows) {
+    overworld.runCommandAsync(
+      `setblock ${window.numerator.x} ${window.numerator.y} ${window.numerator.z} blockbuilders:number_0`
+    );
+    let colours = ["yellow", "green", "blue", "purple", "red", "lime", "black", "brown"];
+    for (const colour in colours) {
+      overworld.runCommandAsync(
+        `fill ${window.pos1.x} ${window.pos1.y} ${window.pos1.z} ${window.pos2.x} ${window.pos2.y} ${window.pos2.z} air replace ${colours[colour]}_stained_glass`
+      );
+    }
+    windowUndo(window.cloneTo, window.cloneFrom, window.cloneInto);
+  }
 }
 
 export async function startWindowGame() {
@@ -39,12 +47,10 @@ export async function startWindowGame() {
   giveGlass();
 }
 export async function windowScaleHandler(location: Vector3) {
-  world.sendMessage("Scale the window " + location.x + " " + location.y + " " + location.z);
   const windowIndex = windows.findIndex(
     (window) =>
       window.numerator.x === location.x && window.numerator.y === location.y + 1 && window.numerator.z === location.z
   );
-  world.sendMessage(`${windowIndex}`);
   if (windowIndex !== -1) {
     const window = windows[windowIndex]; //gets the correct window.
     await windowUndo(window.cloneTo, window.cloneFrom, window.cloneInto);
@@ -80,14 +86,12 @@ export function giveGlass() {
 export async function scale(cubePos1: Vector3, cubePos2: Vector3, inputNumber: Vector3, scaledLeftCorner: Vector3) {
   //if it doesn't work make sure pos1 is the bottom left corner and pos2 is the top right corner
   const blocks = await getCube(cubePos1, cubePos2);
-  world.sendMessage("blocks = " + blocks.length);
   let shape = [];
   let scaleFactor = getInput([inputNumber]);
-
   for (const block of blocks) {
     let colour = block.permutation?.getState(`color`);
     if (colour) {
-      let location = { x: block.block?.x ?? 0, y: block.block?.y ?? 0, z: block.block?.z ?? 0, colour: colour };
+      let location = { x: block.block?.x, y: block.block?.y, z: block.block?.z, colour: colour };
       shape.push(location);
     }
   }
@@ -101,11 +105,6 @@ export async function scale(cubePos1: Vector3, cubePos2: Vector3, inputNumber: V
     let finalWindow_x = scaledLeftCorner.x + offset_z; //swapped x and z around
     let finalWindow_y = scaledLeftCorner.y + offset_y;
     let finalWindow_z = scaledLeftCorner.z + offset_x;
-
-    world.sendMessage("offset_x = " + offset_x + " offset_y = " + offset_y + " offset_z = " + offset_z);
-    world.sendMessage(
-      "finalWindow_x = " + finalWindow_x + " finalWindow_y = " + finalWindow_y + " finalWindow_z = " + finalWindow_z
-    );
     setBlock({ x: finalWindow_x, y: finalWindow_y, z: finalWindow_z }, block.colour + "_stained_glass");
   }
 }

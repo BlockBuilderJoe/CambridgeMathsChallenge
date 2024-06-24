@@ -15,12 +15,11 @@ export function getInput(digits) {
 export function getCube(pos1, pos2) {
     return __awaiter(this, void 0, void 0, function* () {
         const blocks = [];
-        //world.sendMessage("pos1 = " + pos1.x + "," + pos1.y + "," + pos1.z);
-        //world.sendMessage("pos2 = " + pos2.x + "," + pos2.y + "," + pos2.z);
-        for (let x3 = pos1.x; x3 <= pos2.x; x3++) {
-            for (let y3 = pos1.y; y3 <= pos2.y; y3++) {
-                for (let z3 = pos1.z; z3 <= pos2.z; z3++) {
-                    const location = { x: x3, y: y3, z: z3 };
+        for (let x = Math.min(pos1.x, pos2.x); x <= Math.max(pos1.x, pos2.x); x++) {
+            for (let y = Math.min(pos1.y, pos2.y); y <= Math.max(pos1.y, pos2.y); y++) {
+                for (let z = Math.min(pos1.z, pos2.z); z <= Math.max(pos1.z, pos2.z); z++) {
+                    const location = { x: x, y: y, z: z };
+                    world.sendMessage(`${location.x} ${location.y} ${location.z}`);
                     const blockValue = getBlockValue(location);
                     blocks.push(blockValue);
                 }

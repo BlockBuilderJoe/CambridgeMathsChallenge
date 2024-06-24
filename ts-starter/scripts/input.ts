@@ -17,12 +17,12 @@ export function getInput(digits: Vector3[]): number {
 //if it doesn't work make sure pos1 is the bottom left corner and pos2 is the top right corner
 export async function getCube(pos1: Vector3, pos2: Vector3) {
   const blocks = [];
-  //world.sendMessage("pos1 = " + pos1.x + "," + pos1.y + "," + pos1.z);
-  //world.sendMessage("pos2 = " + pos2.x + "," + pos2.y + "," + pos2.z);
-  for (let x3 = pos1.x; x3 <= pos2.x; x3++) {
-    for (let y3 = pos1.y; y3 <= pos2.y; y3++) {
-      for (let z3 = pos1.z; z3 <= pos2.z; z3++) {
-        const location = { x: x3, y: y3, z: z3 };
+
+  for (let x = Math.min(pos1.x, pos2.x); x <= Math.max(pos1.x, pos2.x); x++) {
+    for (let y = Math.min(pos1.y, pos2.y); y <= Math.max(pos1.y, pos2.y); y++) {
+      for (let z = Math.min(pos1.z, pos2.z); z <= Math.max(pos1.z, pos2.z); z++) {
+        const location = { x: x, y: y, z: z };
+        world.sendMessage(`${location.x} ${location.y} ${location.z}`);
         const blockValue = getBlockValue(location);
         blocks.push(blockValue);
       }
@@ -31,7 +31,6 @@ export async function getCube(pos1: Vector3, pos2: Vector3) {
 
   return blocks;
 }
-
 //converts a block to a number value
 function getNumberValue(location: Vector3) {
   let { block, permutation } = getBlockValue(location);
