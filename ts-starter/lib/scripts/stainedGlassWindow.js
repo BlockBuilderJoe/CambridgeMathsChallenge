@@ -4,6 +4,18 @@ import { setBlock } from "./output";
 import { getInput } from "./input";
 import { giveWand } from "./wand";
 let overworld = world.getDimension("overworld");
+const windows = [
+    {
+        pos1: { x: 68, y: 97, z: 226 },
+        pos2: { x: 68, y: 101, z: 226 },
+        numerator: { x: 71, y: 98, z: 225 },
+        cloneTo: { x: 68, y: 97, z: 226 },
+        cloneFrom: { x: 76, y: 82, z: 218 },
+        cloneInto: { x: 67, y: 97, z: 218 },
+        scaledLeftCorner: { x: 69, y: 99, z: 218 }, //Bottom left corner of the scaled window.
+    },
+    //Clone to from etc { x: 75, y: 47, z: 218 }, { x: 107, y: 66, z: 218 }, { x: 75, y: 97, z: 218 }
+];
 export function resetWindowGame() {
     return __awaiter(this, void 0, void 0, function* () {
         //window1 clear
@@ -29,17 +41,13 @@ export function startWindowGame() {
 }
 export function windowScaleHandler(location) {
     return __awaiter(this, void 0, void 0, function* () {
-        switch (true) {
-            case location.x === 71 && location.y === 97 && location.z === 225: {
-                yield windowUndo({ x: 67, y: 47, z: 218 }, { x: 76, y: 82, z: 218 }, { x: 67, y: 97, z: 218 });
-                scale({ x: 69, y: 98, z: 225 }, { x: 69, y: 102, z: 225 }, { x: 71, y: 98, z: 225 });
-                break;
-            }
-            case location.x === 82 && location.y === 97 && location.z === 225: {
-                yield windowUndo({ x: 75, y: 47, z: 218 }, { x: 107, y: 66, z: 218 }, { x: 75, y: 97, z: 218 });
-                scale({ x: 78, y: 97, z: 225 }, { x: 80, y: 100, z: 225 }, { x: 82, y: 98, z: 225 });
-                break;
-            }
+        world.sendMessage("Scale the window " + location.x + " " + location.y + " " + location.z);
+        const windowIndex = windows.findIndex((window) => window.numerator.x === location.x && window.numerator.y === location.y + 1 && window.numerator.z === location.z);
+        world.sendMessage(`${windowIndex}`);
+        if (windowIndex !== -1) {
+            const window = windows[windowIndex]; //gets the correct window.
+            yield windowUndo(window.cloneTo, window.cloneFrom, window.cloneInto);
+            scale(window.pos1, window.pos2, window.numerator, window.scaledLeftCorner);
         }
     });
 }
@@ -68,26 +76,32 @@ export function giveGlass() {
     overworld.runCommand("replaceitem entity @p slot.hotbar 7 black_stained_glass 10");
     overworld.runCommand("replaceitem entity @p slot.hotbar 8 brown_stained_glass 10");
 }
-export function scale(cubePos1, cubePos2, inputNumber) {
+export function scale(cubePos1, cubePos2, inputNumber, scaledLeftCorner) {
     return __awaiter(this, void 0, void 0, function* () {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e, _f, _g;
         //if it doesn't work make sure pos1 is the bottom left corner and pos2 is the top right corner
         const blocks = yield getCube(cubePos1, cubePos2);
+        world.sendMessage("blocks = " + blocks.length);
         let shape = [];
         let scaleFactor = getInput([inputNumber]);
         for (const block of blocks) {
             let colour = (_a = block.permutation) === null || _a === void 0 ? void 0 : _a.getState(`color`);
             if (colour) {
-                let location = { x: (_b = block.block) === null || _b === void 0 ? void 0 : _b.x, y: (_c = block.block) === null || _c === void 0 ? void 0 : _c.y, z: (_d = block.block) === null || _d === void 0 ? void 0 : _d.z, colour: colour };
+                let location = { x: (_c = (_b = block.block) === null || _b === void 0 ? void 0 : _b.x) !== null && _c !== void 0 ? _c : 0, y: (_e = (_d = block.block) === null || _d === void 0 ? void 0 : _d.y) !== null && _e !== void 0 ? _e : 0, z: (_g = (_f = block.block) === null || _f === void 0 ? void 0 : _f.z) !== null && _g !== void 0 ? _g : 0, colour: colour };
                 shape.push(location);
             }
         }
-        let scaledShape = yield scaleShape(shape, scaleFactor, "yx");
+        let scaledShape = yield scaleShape(shape, scaleFactor, "yz");
         for (const block of scaledShape) {
-            let offset_z = block.z - 7; //shifts the shape to the right
-            let offset_x = block.x;
-            let offset_y = block.y + 1;
-            setBlock({ x: offset_x, y: offset_y, z: offset_z }, block.colour + "_stained_glass");
+            let offset_x = block.x - cubePos1.x; //applies the offset from the z to the x.
+            let offset_y = block.y - cubePos1.y;
+            let offset_z = block.z - cubePos1.z;
+            let finalWindow_x = scaledLeftCorner.x + offset_z; //swapped x and z around
+            let finalWindow_y = scaledLeftCorner.y + offset_y;
+            let finalWindow_z = scaledLeftCorner.z + offset_x;
+            world.sendMessage("offset_x = " + offset_x + " offset_y = " + offset_y + " offset_z = " + offset_z);
+            world.sendMessage("finalWindow_x = " + finalWindow_x + " finalWindow_y = " + finalWindow_y + " finalWindow_z = " + finalWindow_z);
+            setBlock({ x: finalWindow_x, y: finalWindow_y, z: finalWindow_z }, block.colour + "_stained_glass");
         }
     });
 }

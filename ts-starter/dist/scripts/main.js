@@ -79,6 +79,19 @@ async function giveWand() {
 
 // scripts/stainedGlassWindow.ts
 var overworld4 = world4.getDimension("overworld");
+var windows = [
+  {
+    pos1: { x: 68, y: 97, z: 226 },
+    pos2: { x: 68, y: 101, z: 226 },
+    numerator: { x: 71, y: 98, z: 225 },
+    cloneTo: { x: 68, y: 97, z: 226 },
+    cloneFrom: { x: 76, y: 82, z: 218 },
+    cloneInto: { x: 67, y: 97, z: 218 },
+    scaledLeftCorner: { x: 69, y: 99, z: 218 }
+    //Bottom left corner of the scaled window.
+  }
+  //Clone to from etc { x: 75, y: 47, z: 218 }, { x: 107, y: 66, z: 218 }, { x: 75, y: 97, z: 218 }
+];
 async function resetWindowGame() {
   overworld4.runCommandAsync(`fill 69 98 225 69 102 225 air replace`);
   overworld4.runCommandAsync(`fill 78 98 225 80 98 225 air replace`);
@@ -95,17 +108,15 @@ async function startWindowGame() {
   giveGlass();
 }
 async function windowScaleHandler(location) {
-  switch (true) {
-    case (location.x === 71 && location.y === 97 && location.z === 225): {
-      await windowUndo({ x: 67, y: 47, z: 218 }, { x: 76, y: 82, z: 218 }, { x: 67, y: 97, z: 218 });
-      scale({ x: 69, y: 98, z: 225 }, { x: 69, y: 102, z: 225 }, { x: 71, y: 98, z: 225 });
-      break;
-    }
-    case (location.x === 82 && location.y === 97 && location.z === 225): {
-      await windowUndo({ x: 75, y: 47, z: 218 }, { x: 107, y: 66, z: 218 }, { x: 75, y: 97, z: 218 });
-      scale({ x: 78, y: 97, z: 225 }, { x: 80, y: 100, z: 225 }, { x: 82, y: 98, z: 225 });
-      break;
-    }
+  world4.sendMessage("Scale the window " + location.x + " " + location.y + " " + location.z);
+  const windowIndex = windows.findIndex(
+    (window) => window.numerator.x === location.x && window.numerator.y === location.y + 1 && window.numerator.z === location.z
+  );
+  world4.sendMessage(`${windowIndex}`);
+  if (windowIndex !== -1) {
+    const window = windows[windowIndex];
+    await windowUndo(window.cloneTo, window.cloneFrom, window.cloneInto);
+    scale(window.pos1, window.pos2, window.numerator, window.scaledLeftCorner);
   }
 }
 async function windowUndoHandler(location) {
@@ -131,23 +142,31 @@ function giveGlass() {
   overworld4.runCommand("replaceitem entity @p slot.hotbar 7 black_stained_glass 10");
   overworld4.runCommand("replaceitem entity @p slot.hotbar 8 brown_stained_glass 10");
 }
-async function scale(cubePos1, cubePos2, inputNumber) {
+async function scale(cubePos1, cubePos2, inputNumber, scaledLeftCorner) {
   const blocks = await getCube(cubePos1, cubePos2);
+  world4.sendMessage("blocks = " + blocks.length);
   let shape = [];
   let scaleFactor = getInput([inputNumber]);
   for (const block of blocks) {
     let colour = block.permutation?.getState(`color`);
     if (colour) {
-      let location = { x: block.block?.x, y: block.block?.y, z: block.block?.z, colour };
+      let location = { x: block.block?.x ?? 0, y: block.block?.y ?? 0, z: block.block?.z ?? 0, colour };
       shape.push(location);
     }
   }
-  let scaledShape = await scaleShape(shape, scaleFactor, "yx");
+  let scaledShape = await scaleShape(shape, scaleFactor, "yz");
   for (const block of scaledShape) {
-    let offset_z = block.z - 7;
-    let offset_x = block.x;
-    let offset_y = block.y + 1;
-    setBlock({ x: offset_x, y: offset_y, z: offset_z }, block.colour + "_stained_glass");
+    let offset_x = block.x - cubePos1.x;
+    let offset_y = block.y - cubePos1.y;
+    let offset_z = block.z - cubePos1.z;
+    let finalWindow_x = scaledLeftCorner.x + offset_z;
+    let finalWindow_y = scaledLeftCorner.y + offset_y;
+    let finalWindow_z = scaledLeftCorner.z + offset_x;
+    world4.sendMessage("offset_x = " + offset_x + " offset_y = " + offset_y + " offset_z = " + offset_z);
+    world4.sendMessage(
+      "finalWindow_x = " + finalWindow_x + " finalWindow_y = " + finalWindow_y + " finalWindow_z = " + finalWindow_z
+    );
+    setBlock({ x: finalWindow_x, y: finalWindow_y, z: finalWindow_z }, block.colour + "_stained_glass");
   }
 }
 async function windowUndo(from, to, into) {

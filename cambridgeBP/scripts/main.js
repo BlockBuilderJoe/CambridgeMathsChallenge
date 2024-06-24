@@ -2,7 +2,7 @@
 import { world as world11, system as system6, BlockPermutation as BlockPermutation5 } from "@minecraft/server";
 
 // scripts/stainedGlassWindow.ts
-import { world as world3 } from "@minecraft/server";
+import { world as world4 } from "@minecraft/server";
 
 // scripts/input.ts
 import { BlockPermutation, world } from "@minecraft/server";
@@ -45,55 +45,78 @@ function getBlockValue(location) {
   return { block, permutation };
 }
 
-// scripts/wand.ts
-import { world as world2 } from "@minecraft/server";
+// scripts/output.ts
+import { BlockPermutation as BlockPermutation2, world as world2 } from "@minecraft/server";
 var overworld2 = world2.getDimension("overworld");
+function setBlock(location, blockName) {
+  let { block } = getBlockValue(location);
+  let isCopper = block?.permutation?.matches("waxed_weathered_copper");
+  if (!isCopper) {
+    block?.setPermutation(BlockPermutation2.resolve(blockName));
+  }
+}
+function cycleNumberBlock(clickEvent) {
+  for (let i = 0; i < 9; i++) {
+    if (clickEvent.brokenBlockPermutation?.matches("blockbuilders:number_" + i)) {
+      let nextNumber = i + 1;
+      let blockname = "blockbuilders:number_" + nextNumber;
+      clickEvent.block.setPermutation(BlockPermutation2.resolve(blockname));
+    }
+    if (clickEvent.brokenBlockPermutation?.matches("blockbuilders:number_9")) {
+      clickEvent.block.setPermutation(BlockPermutation2.resolve("blockbuilders:number_0"));
+    }
+  }
+}
+
+// scripts/wand.ts
+import { world as world3 } from "@minecraft/server";
+var overworld3 = world3.getDimension("overworld");
 async function giveWand() {
-  overworld2.runCommandAsync(
+  overworld3.runCommandAsync(
     `give @p[hasitem={item=blockbuilders:mathmogicians_wand,quantity=0}] blockbuilders:mathmogicians_wand 1 0 {"item_lock": { "mode": "lock_in_slot" }, "minecraft:can_destroy":{"blocks":["minecraft:hopper", "blockbuilders:number_0","blockbuilders:number_1","blockbuilders:number_2","blockbuilders:number_3","blockbuilders:number_4","blockbuilders:number_5","blockbuilders:number_6","blockbuilders:number_7","blockbuilders:number_8","blockbuilders:number_9","blockbuilders:symbol_subtract"]}}`
   );
 }
 
 // scripts/stainedGlassWindow.ts
-var overworld3 = world3.getDimension("overworld");
+var overworld4 = world4.getDimension("overworld");
 var windows = [
   {
-    pos1: { x: 68, y: 97, z: 2226 },
+    pos1: { x: 68, y: 97, z: 226 },
     pos2: { x: 68, y: 101, z: 226 },
-    numerator: { x: 72, y: 98, z: 224 },
+    numerator: { x: 71, y: 98, z: 225 },
     cloneTo: { x: 68, y: 97, z: 226 },
     cloneFrom: { x: 76, y: 82, z: 218 },
-    cloneInto: { x: 67, y: 97, z: 218 }
+    cloneInto: { x: 67, y: 97, z: 218 },
+    scaledLeftCorner: { x: 69, y: 99, z: 218 }
+    //Bottom left corner of the scaled window.
   }
   //Clone to from etc { x: 75, y: 47, z: 218 }, { x: 107, y: 66, z: 218 }, { x: 75, y: 97, z: 218 }
 ];
 async function resetWindowGame() {
-  overworld3.runCommandAsync(`fill 69 98 225 69 102 225 air replace`);
-  overworld3.runCommandAsync(`fill 78 98 225 80 98 225 air replace`);
-  overworld3.runCommandAsync(`fill 78 99 225 79 99 225 air replace`);
-  overworld3.runCommandAsync(`fill 78 100 225 78 100 225 air replace`);
-  overworld3.runCommandAsync(`setblock 71 98 225 blockbuilders:number_0`);
-  overworld3.runCommandAsync(`setblock 82 98 225 blockbuilders:number_0`);
+  overworld4.runCommandAsync(`fill 69 98 225 69 102 225 air replace`);
+  overworld4.runCommandAsync(`fill 78 98 225 80 98 225 air replace`);
+  overworld4.runCommandAsync(`fill 78 99 225 79 99 225 air replace`);
+  overworld4.runCommandAsync(`fill 78 100 225 78 100 225 air replace`);
+  overworld4.runCommandAsync(`setblock 71 98 225 blockbuilders:number_0`);
+  overworld4.runCommandAsync(`setblock 82 98 225 blockbuilders:number_0`);
   windowUndoHandler({ x: 71, y: 97, z: 225 });
   windowUndoHandler({ x: 82, y: 97, z: 225 });
 }
 async function startWindowGame() {
-  overworld3.runCommandAsync(`clear @p`);
+  overworld4.runCommandAsync(`clear @p`);
   await giveWand();
   giveGlass();
 }
 async function windowScaleHandler(location) {
+  world4.sendMessage("Scale the window " + location.x + " " + location.y + " " + location.z);
   const windowIndex = windows.findIndex(
-    (window) => window.numerator.x === location.x && window.numerator.y === location.y - 1 && window.numerator.z === location.z
+    (window) => window.numerator.x === location.x && window.numerator.y === location.y + 1 && window.numerator.z === location.z
   );
+  world4.sendMessage(`${windowIndex}`);
   if (windowIndex !== -1) {
     const window = windows[windowIndex];
     await windowUndo(window.cloneTo, window.cloneFrom, window.cloneInto);
-    scale(
-      { x: window.pos1.x + 1, y: window.pos1.y + 1, z: window.pos1.z },
-      { x: window.pos1.x + 1, y: window.pos1.y + 5, z: window.pos1.z },
-      window.numerator
-    );
+    scale(window.pos1, window.pos2, window.numerator, window.scaledLeftCorner);
   }
 }
 async function windowUndoHandler(location) {
@@ -110,37 +133,48 @@ async function windowUndoHandler(location) {
   }
 }
 function giveGlass() {
-  overworld3.runCommand("replaceitem entity @p slot.hotbar 1 yellow_stained_glass 10");
-  overworld3.runCommand("replaceitem entity @p slot.hotbar 2 green_stained_glass 10");
-  overworld3.runCommand("replaceitem entity @p slot.hotbar 3 blue_stained_glass 10");
-  overworld3.runCommand("replaceitem entity @p slot.hotbar 4 purple_stained_glass 10");
-  overworld3.runCommand("replaceitem entity @p slot.hotbar 5 red_stained_glass 10");
-  overworld3.runCommand("replaceitem entity @p slot.hotbar 6 lime_stained_glass 10");
-  overworld3.runCommand("replaceitem entity @p slot.hotbar 7 black_stained_glass 10");
-  overworld3.runCommand("replaceitem entity @p slot.hotbar 8 brown_stained_glass 10");
+  overworld4.runCommand("replaceitem entity @p slot.hotbar 1 yellow_stained_glass 10");
+  overworld4.runCommand("replaceitem entity @p slot.hotbar 2 green_stained_glass 10");
+  overworld4.runCommand("replaceitem entity @p slot.hotbar 3 blue_stained_glass 10");
+  overworld4.runCommand("replaceitem entity @p slot.hotbar 4 purple_stained_glass 10");
+  overworld4.runCommand("replaceitem entity @p slot.hotbar 5 red_stained_glass 10");
+  overworld4.runCommand("replaceitem entity @p slot.hotbar 6 lime_stained_glass 10");
+  overworld4.runCommand("replaceitem entity @p slot.hotbar 7 black_stained_glass 10");
+  overworld4.runCommand("replaceitem entity @p slot.hotbar 8 brown_stained_glass 10");
 }
-async function scale(cubePos1, cubePos2, inputNumber) {
+async function scale(cubePos1, cubePos2, inputNumber, scaledLeftCorner) {
   const blocks = await getCube(cubePos1, cubePos2);
+  world4.sendMessage("blocks = " + blocks.length);
   let shape = [];
   let scaleFactor = getInput([inputNumber]);
   for (const block of blocks) {
     let colour = block.permutation?.getState(`color`);
     if (colour) {
-      let location = { x: block.block?.x, y: block.block?.y, z: block.block?.z, colour };
+      let location = { x: block.block?.x ?? 0, y: block.block?.y ?? 0, z: block.block?.z ?? 0, colour };
       shape.push(location);
     }
   }
-  let scaledShape = await scaleShape(shape, scaleFactor, "yx");
+  let scaledShape = await scaleShape(shape, scaleFactor, "yz");
   for (const block of scaledShape) {
-    world3.sendMessage(`${block.colour} ${block.x} ${block.y} ${block.z}`);
+    let offset_x = block.x - cubePos1.x;
+    let offset_y = block.y - cubePos1.y;
+    let offset_z = block.z - cubePos1.z;
+    let finalWindow_x = scaledLeftCorner.x + offset_z;
+    let finalWindow_y = scaledLeftCorner.y + offset_y;
+    let finalWindow_z = scaledLeftCorner.z + offset_x;
+    world4.sendMessage("offset_x = " + offset_x + " offset_y = " + offset_y + " offset_z = " + offset_z);
+    world4.sendMessage(
+      "finalWindow_x = " + finalWindow_x + " finalWindow_y = " + finalWindow_y + " finalWindow_z = " + finalWindow_z
+    );
+    setBlock({ x: finalWindow_x, y: finalWindow_y, z: finalWindow_z }, block.colour + "_stained_glass");
   }
 }
 async function windowUndo(from, to, into) {
-  await overworld3.runCommandAsync(
+  await overworld4.runCommandAsync(
     `clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`
   );
-  await overworld3.runCommandAsync(`fill ${from.x} 116 ${from.z} ${to.x} 120 ${to.z} air replace`);
-  await overworld3.runCommandAsync(`fill ${from.x} 120 ${from.z} ${to.x} 150 ${to.z} air replace`);
+  await overworld4.runCommandAsync(`fill ${from.x} 116 ${from.z} ${to.x} 120 ${to.z} air replace`);
+  await overworld4.runCommandAsync(`fill ${from.x} 120 ${from.z} ${to.x} 150 ${to.z} air replace`);
 }
 async function scaleShape(shape, scaleFactor, axes) {
   const scaledShape = [];
@@ -176,7 +210,7 @@ async function scaleShape(shape, scaleFactor, axes) {
 }
 
 // scripts/cuisenaireRods.ts
-import { BlockPermutation as BlockPermutation2, world as world4, system } from "@minecraft/server";
+import { BlockPermutation as BlockPermutation3, world as world5, system } from "@minecraft/server";
 
 // scripts/perfectRun.ts
 var perfectRun = [
@@ -420,11 +454,11 @@ var npcLocation = [
 ];
 
 // scripts/cuisenaireRods.ts
-var overworld4 = world4.getDimension("overworld");
+var overworld5 = world5.getDimension("overworld");
 var rodsPlaced = [];
 async function resetCuisenaireGame() {
-  await overworld4.runCommandAsync(`scoreboard objectives setdisplay sidebar Students`);
-  await overworld4.runCommandAsync(`scoreboard players set Saved Students 0`);
+  await overworld5.runCommandAsync(`scoreboard objectives setdisplay sidebar Students`);
+  await overworld5.runCommandAsync(`scoreboard players set Saved Students 0`);
   await resetNPC(5);
   await resetGrid({ x: 19, y: 95, z: 81 });
 }
@@ -434,9 +468,9 @@ async function startCuisenaireGame() {
 }
 async function moveNpc(id) {
   let { x, y, z } = getRandomCoordinate();
-  overworld4.runCommandAsync(`tp @e[tag=rodNpc${id}] ${x} ${y} ${z}`);
-  overworld4.runCommandAsync(`scoreboard players add Saved Students 1`);
-  overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${id}] rodNpc${id}Saved
+  overworld5.runCommandAsync(`tp @e[tag=rodNpc${id}] ${x} ${y} ${z}`);
+  overworld5.runCommandAsync(`scoreboard players add Saved Students 1`);
+  overworld5.runCommandAsync(`dialogue change @e[tag=rodNpc${id}] rodNpc${id}Saved
       `);
 }
 function getRandomCoordinate() {
@@ -465,13 +499,13 @@ function isInRange(value, min, max) {
 async function cuisenaire(block, blockName, rodLength, successMessage, direction) {
   if (block.permutation?.matches(blockName)) {
     let runPlaceRods = true;
-    overworld4.runCommand(`title @p actionbar ${successMessage} placed`);
-    block.setPermutation(BlockPermutation2.resolve("tallgrass"));
+    overworld5.runCommand(`title @p actionbar ${successMessage} placed`);
+    block.setPermutation(BlockPermutation3.resolve("tallgrass"));
     for (let i = 0; i < rodLength; i++) {
       let colour = block[direction](i)?.permutation?.getState("color");
       if (colour || block[direction](i)?.permutation?.matches("sandstone")) {
-        overworld4.runCommand("title @p actionbar That rod is too long!");
-        overworld4.runCommandAsync(`give @p ${blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
+        overworld5.runCommand("title @p actionbar That rod is too long!");
+        overworld5.runCommandAsync(`give @p ${blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
         runPlaceRods = false;
         break;
       }
@@ -488,15 +522,15 @@ async function cuisenaire(block, blockName, rodLength, successMessage, direction
       placeRods(block, blockName, rodLength, direction);
       checkFinalBlock();
     } else {
-      block?.setPermutation(BlockPermutation2.resolve("tallgrass"));
+      block?.setPermutation(BlockPermutation3.resolve("tallgrass"));
     }
   }
 }
 async function resetNPC(npcAmount) {
   rodsPlaced = [];
   for (let i = 0; i < npcAmount; i++) {
-    overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Default`);
-    overworld4.runCommandAsync(
+    overworld5.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Default`);
+    overworld5.runCommandAsync(
       //tps the npc back based on the location parameter in npcLocation.
       `tp @e[type=npc,tag=rodNpc${i}] ${npcLocation[i].x} ${npcLocation[i].y} ${npcLocation[i].z}`
     );
@@ -506,7 +540,7 @@ function placeRods(block, blockName, rodLength, direction) {
   const validDirections = ["east", "west", "north", "south"];
   if (validDirections.includes(direction)) {
     for (let i = 0; i < rodLength; i++) {
-      block[direction](i).setPermutation(BlockPermutation2.resolve(blockName));
+      block[direction](i).setPermutation(BlockPermutation3.resolve(blockName));
     }
   } else {
     throw new Error(`Invalid direction: ${direction}`);
@@ -536,28 +570,28 @@ async function replayMessage(beginningMessage, fractions) {
       const perfectRunFractions = fractions.filter((fraction) => fraction !== void 0 && !fraction.startsWith("1"));
       if (perfectRunFractions.length > 0) {
         const perfectRunFractionsSum = perfectRunFractions.join(" + ");
-        overworld4.runCommandAsync(`title @p actionbar ${perfectRunFractionsSum}`);
+        overworld5.runCommandAsync(`title @p actionbar ${perfectRunFractionsSum}`);
       } else if (playerPlacedFractions.length > 0) {
         const fractionsSum = playerPlacedFractions.join(" + ");
-        overworld4.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
+        overworld5.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
       }
     }
   } else {
-    world4.sendMessage(`Error: No fractions found`);
+    world5.sendMessage(`Error: No fractions found`);
   }
 }
 async function replay(index) {
-  overworld4.runCommandAsync(`tp @p 31 96 116`);
+  overworld5.runCommandAsync(`tp @p 31 96 116`);
   let npcIndex = index;
   let fractions = [];
   let combinedRods = [];
   let replayConfig = replaySettings[index];
-  overworld4.runCommandAsync(replayConfig.clearBlock);
-  overworld4.runCommandAsync(replayConfig.replenishGrass);
+  overworld5.runCommandAsync(replayConfig.clearBlock);
+  overworld5.runCommandAsync(replayConfig.replenishGrass);
   if (replayConfig.cartesianDirection === "x") {
     let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
     for (let i = 0; i < rodsPlacedToReplay.length; i++) {
-      overworld4.runCommandAsync(
+      overworld5.runCommandAsync(
         `give @p ${rodsPlacedToReplay[i].blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
       );
     }
@@ -570,7 +604,7 @@ async function replay(index) {
   } else if (replayConfig.cartesianDirection === "z") {
     let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
     for (let i = 0; i < rodsPlacedToReplay.length; i++) {
-      overworld4.runCommandAsync(
+      overworld5.runCommandAsync(
         `give @p ${rodsPlacedToReplay[i].blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
       );
     }
@@ -586,11 +620,11 @@ async function replay(index) {
       ((index2) => {
         system.runTimeout(async () => {
           let x = combinedRods[index2].location.x;
-          world4.getAllPlayers().forEach(async (player) => {
+          world5.getAllPlayers().forEach(async (player) => {
             await setCameraView(player, npcIndex);
             fractions.push(combinedRods[index2].successMessage);
             await replayMessage(replayConfig.beginningMessage, fractions);
-            let block = overworld4.getBlock(combinedRods[index2].location);
+            let block = overworld5.getBlock(combinedRods[index2].location);
             placeRods(
               block,
               combinedRods[index2].blockName,
@@ -625,12 +659,12 @@ function endReplay(player, tpStart, clearCommand, replenishGrass, combinedRods) 
 async function squareReset(pos1, pos2, concreteColours) {
   for (let i = 0; i < concreteColours.length; i++) {
     let command = `fill ${pos1.x} ${pos1.y} ${pos1.z} ${pos2.x} ${pos2.y} ${pos2.z} tallgrass replace ${concreteColours[i]}_concrete`;
-    overworld4.runCommand(command);
+    overworld5.runCommand(command);
   }
-  overworld4.runCommandAsync(
+  overworld5.runCommandAsync(
     `fill ${pos1.x} ${pos1.y - 1} ${pos1.z} ${pos2.x} ${pos2.y - 1} ${pos2.z} grass replace dirt`
   );
-  overworld4.runCommandAsync(`fill ${pos1.x} ${pos1.y} ${pos1.z} ${pos2.x} ${pos2.y} ${pos2.z} tallgrass replace air`);
+  overworld5.runCommandAsync(`fill ${pos1.x} ${pos1.y} ${pos1.z} ${pos2.x} ${pos2.y} ${pos2.z} tallgrass replace air`);
 }
 async function resetGrid(location) {
   let concreteColours = ["red", "green", "purple", "brown", "blue", "lime", "yellow"];
@@ -651,17 +685,17 @@ async function giveRods() {
     { block: "yellow_concrete", amount: 1 },
     { block: "blue_concrete", amount: 2 }
   ];
-  overworld4.runCommandAsync(`clear @p`);
-  overworld4.runCommandAsync(`gamemode adventure`);
+  overworld5.runCommandAsync(`clear @p`);
+  overworld5.runCommandAsync(`gamemode adventure`);
   for (let i = 0; i < rods.length; i++) {
-    overworld4.runCommandAsync(
+    overworld5.runCommandAsync(
       `give @p ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
     );
   }
 }
 async function checkFinalBlock() {
   for (let i = 0; i < finalBlock.length; i++) {
-    let rodEnd = overworld4.getBlock(finalBlock[i].location);
+    let rodEnd = overworld5.getBlock(finalBlock[i].location);
     let hasColour = rodEnd?.permutation?.getState("color");
     if (rodEnd?.permutation?.matches(finalBlock[i].blockName)) {
       changeNPC(i, true);
@@ -672,25 +706,9 @@ async function checkFinalBlock() {
 }
 async function changeNPC(matchingRodIndex, win) {
   if (win) {
-    overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
+    overworld5.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Win`);
   } else {
-    overworld4.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Fail`);
-  }
-}
-
-// scripts/output.ts
-import { BlockPermutation as BlockPermutation3, world as world5 } from "@minecraft/server";
-var overworld5 = world5.getDimension("overworld");
-function cycleNumberBlock(clickEvent) {
-  for (let i = 0; i < 9; i++) {
-    if (clickEvent.brokenBlockPermutation?.matches("blockbuilders:number_" + i)) {
-      let nextNumber = i + 1;
-      let blockname = "blockbuilders:number_" + nextNumber;
-      clickEvent.block.setPermutation(BlockPermutation3.resolve(blockname));
-    }
-    if (clickEvent.brokenBlockPermutation?.matches("blockbuilders:number_9")) {
-      clickEvent.block.setPermutation(BlockPermutation3.resolve("blockbuilders:number_0"));
-    }
+    overworld5.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Fail`);
   }
 }
 
