@@ -14,6 +14,12 @@ const ratioMessage = [
   },
 ];
 
+const fractionMessage = [
+  { message: "You can't jump or step on the grass in the gardens.\nYou'll be told off if you do!", step: 0 },
+  { message: "I'll give you magical rods that you can cross the gardens with.", step: 25 },
+  { message: "The gardens are 24x24 block.\nEach student is a different fraction away.", step: 45 },
+];
+
 export async function npcWalk(type: string) {
   switch (type) {
     case "scale": {
@@ -32,10 +38,10 @@ export async function npcWalk(type: string) {
         { x: 57, y: 96, z: 148 },
         { x: 57, y: 96, z: 116 },
         { x: 29, y: 96, z: 116 },
-        { x: 29, y: 96, z: 111 },
         { x: 29, y: 96, z: 112 },
+        { x: 29, y: 96, z: 113 },
       ]);
-      //moveNpc(path, "fraction", message);
+      moveNpc(path, "fraction", fractionMessage);
       break;
     }
     case "ratio": {
