@@ -1030,7 +1030,15 @@ var ratioMessage = [
 var fractionMessage = [
   { message: "You can't jump or step on the grass in the gardens.\nYou'll be told off if you do!", step: 0 },
   { message: "I'll give you magical rods that you can cross the gardens with.", step: 25 },
-  { message: "The gardens are 24x24 block.\nEach student is a different fraction away.", step: 45 }
+  { message: "The gardens are 24x24 blocks wide.\nEach student is a different fraction away.", step: 45 }
+];
+var scaleMessage = [
+  { message: "You'll need to change the numerator (the top number) \nto scale the windows.", step: 0 },
+  {
+    message: "To make the window larger you'll need to make the \nnumerator larger than the denominator (bottom number).",
+    step: 25
+  },
+  { message: "The windows must fit in the frame!\nSo make sure you don't make the window too big.", step: 50 }
 ];
 async function npcWalk(type) {
   switch (type) {
@@ -1041,7 +1049,7 @@ async function npcWalk(type) {
         { x: 72, y: 96, z: 221 },
         { x: 72, y: 96, z: 226 }
       ]);
-      world8.sendMessage("scale moveNpc");
+      moveNpc2(path, "scale", scaleMessage);
       break;
     }
     case "fraction": {

@@ -174,7 +174,7 @@ The ratios for the ingredients are on the wall.
 To make a potion mix it in the cauldron and tap it with your wand.=
 Thank you=
 Professor of Alchemy=
-How can I help=
+How can I help?=
 More ingredients please=
 I’m stuck=
 Professor of Alchemy=
@@ -196,8 +196,19 @@ Professor of Cartography=
 Oh dear oh dear, please keep up I cannot lose a whole class.=
 Sorry! =
 Professor of Cartography=
-I need you to rescue each student that is trapped. But you CANNOT touch the grass or the groundskeeper will get very angry. Use these magical rods to reach each student. You need to work out the fractions to get to the area correctly. If you make a mistake or touch the grass head back to me to start again. You can use the numbers on the walls to work out how far each student is, and therefore which rod to use! =
+I need you to rescue each student that is trapped.  Use these magical rods to reach each student. 
+
+If you need to start again or get stuck come back to me!=
 Wish me luck=
+Professor of Cartography=
+How can I help?=
+Start Again=
+I’m stuck=
+Professor of Cartography=
+1. The grids are 24x24 blocks wide and you need to use the rods to cross them.
+2. You can place the rods by right clicking in front of the white blocks. 
+3. Talk to each student as you go, they will let you know if you have placed the most optimum rod down. =
+Thank you=
 Grumpy Groundskeeper=
 Grrrrofffff me grass=
 Sorry! =
