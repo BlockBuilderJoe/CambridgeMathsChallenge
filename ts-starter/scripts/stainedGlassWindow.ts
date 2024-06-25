@@ -18,8 +18,8 @@ const windows = [
     scaledLeftCorner: { x: 69, y: 99, z: 218 }, //Bottom left corner of the scaled window.
   },
   {
-    pos1: { x: 77, y: 97, z: 226 },
-    pos2: { x: 77, y: 100, z: 223 },
+    pos1: { x: 77, y: 97, z: 227 },
+    pos2: { x: 77, y: 100, z: 224 },
     numerator: { x: 82, y: 98, z: 225 },
     cloneFrom: { x: 75, y: 47, z: 218 },
     cloneTo: { x: 107, y: 66, z: 218 },

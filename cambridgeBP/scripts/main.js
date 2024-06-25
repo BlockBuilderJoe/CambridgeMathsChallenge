@@ -91,8 +91,8 @@ var windows = [
     //Bottom left corner of the scaled window.
   },
   {
-    pos1: { x: 77, y: 97, z: 226 },
-    pos2: { x: 77, y: 100, z: 223 },
+    pos1: { x: 77, y: 97, z: 227 },
+    pos2: { x: 77, y: 100, z: 224 },
     numerator: { x: 82, y: 98, z: 225 },
     cloneFrom: { x: 75, y: 47, z: 218 },
     cloneTo: { x: 107, y: 66, z: 218 },
@@ -1073,8 +1073,9 @@ async function npcWalk(type) {
       let path = await generatePath([
         { x: 57, y: 96, z: 148 },
         { x: 57, y: 96, z: 221 },
-        { x: 72, y: 96, z: 221 },
-        { x: 72, y: 96, z: 226 }
+        { x: 70, y: 96, z: 221 },
+        { x: 70, y: 96, z: 228 },
+        { x: 70, y: 96, z: 227 }
       ]);
       moveNpc2(path, "scale", scaleMessage);
       break;
@@ -1289,22 +1290,6 @@ var potionStart = 0;
 var potionDrank = false;
 var meters = 0;
 var playerCanSeeInDark = false;
-world11.afterEvents.buttonPush.subscribe(async (event) => {
-  switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
-    case "29,97,106": {
-      await startCuisenaireGame();
-      break;
-    }
-    case "66,97,224": {
-      await startWindowGame();
-      break;
-    }
-    case "1,97,151": {
-      await startPotionGame();
-      break;
-    }
-  }
-});
 world11.afterEvents.entityHitEntity.subscribe(async (event) => {
   let hitEntity = event.hitEntity;
   if (hitEntity.typeId === `blockbuilders:coin`) {

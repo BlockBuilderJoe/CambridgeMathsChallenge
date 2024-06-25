@@ -23,24 +23,6 @@ let potionDrank = false;
 let meters = 0;
 let playerCanSeeInDark = false;
 
-//listens for the button push event.
-world.afterEvents.buttonPush.subscribe(async (event) => {
-  switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
-    case "29,97,106": {
-      await startCuisenaireGame();
-      break;
-    }
-    case "66,97,224": {
-      await startWindowGame();
-      break;
-    }
-    case "1,97,151": {
-      await startPotionGame();
-      break;
-    }
-  }
-});
-
 //coin
 world.afterEvents.entityHitEntity.subscribe(async (event) => {
   let hitEntity = event.hitEntity;

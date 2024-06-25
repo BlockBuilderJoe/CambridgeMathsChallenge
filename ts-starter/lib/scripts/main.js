@@ -1,9 +1,9 @@
 import { world, system, BlockPermutation } from "@minecraft/server";
-import { windowUndoHandler, windowScaleHandler, startWindowGame } from "./stainedGlassWindow";
-import { cuisenaire, getBlockBehind, directionCheck, startCuisenaireGame, } from "./cuisenaireRods";
+import { windowUndoHandler, windowScaleHandler } from "./stainedGlassWindow";
+import { cuisenaire, getBlockBehind, directionCheck, } from "./cuisenaireRods";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
-import { potionMaker, displayTimer, getSlots, startPotionGame } from "./potionGame";
+import { potionMaker, displayTimer, getSlots } from "./potionGame";
 import "./npcscriptEventHandler"; //handles the NPC script events
 let overworld = world.getDimension("overworld");
 let potion = "";
@@ -12,23 +12,6 @@ let potionStart = 0;
 let potionDrank = false;
 let meters = 0;
 let playerCanSeeInDark = false;
-//listens for the button push event.
-world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    switch (`${event.block.location.x},${event.block.location.y},${event.block.location.z}`) {
-        case "29,97,106": {
-            yield startCuisenaireGame();
-            break;
-        }
-        case "66,97,224": {
-            yield startWindowGame();
-            break;
-        }
-        case "1,97,151": {
-            yield startPotionGame();
-            break;
-        }
-    }
-}));
 //coin
 world.afterEvents.entityHitEntity.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
     let hitEntity = event.hitEntity;
