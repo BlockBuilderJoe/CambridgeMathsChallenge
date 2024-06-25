@@ -14,6 +14,7 @@ import { facing } from "./playerFacing";
 import { potionMaker, displayTimer, getSlots, giveIngredients, startPotionGame } from "./potionGame";
 import { giveWand } from "./wand";
 import "./npcscriptEventHandler"; //handles the NPC script events
+import { isCoordinateWithinRange } from "./input";
 
 let overworld = world.getDimension("overworld");
 let potion: string = "";
@@ -149,7 +150,14 @@ function applyPotionEffect(player: any, potion: string, seconds: number) {
 }
 
 function mainTick() {
-  world.getAllPlayers().forEach((player) => {
+  world.getAllPlayers().forEach(async (player) => {
+    if (player.isJumping == true) {
+      if (await isCoordinateWithinRange(player.location, { x: 18, y: 96, z: 105 }, { x: 118, y: 100, z: 80 })) {
+        let location = player.location;
+        player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
+        player.teleport(location);
+      }
+    }
     if (player.isInWater) {
       player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
       meters = 94 - Math.floor(player.location.y);

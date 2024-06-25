@@ -13,6 +13,17 @@ export function getInput(digits: Vector3[]): number {
   return combinedNumber;
 }
 
+export async function isCoordinateWithinRange(toTest: Vector3, pos1: Vector3, pos2: Vector3): Promise<boolean> {
+  const minX = Math.min(pos1.x, pos2.x);
+  const maxX = Math.max(pos1.x, pos2.x);
+  const minY = Math.min(pos1.y, pos2.y);
+  const maxY = Math.max(pos1.y, pos2.y);
+  const minZ = Math.min(pos1.z, pos2.z);
+  const maxZ = Math.max(pos1.z, pos2.z);
+  return (
+    toTest.x >= minX && toTest.x <= maxX && toTest.y >= minY && toTest.y <= maxY && toTest.z >= minZ && toTest.z <= maxZ
+  );
+}
 //gets the block and permutation of a cuboid selection
 //if it doesn't work make sure pos1 is the bottom left corner and pos2 is the top right corner
 export async function getCube(pos1: Vector3, pos2: Vector3) {

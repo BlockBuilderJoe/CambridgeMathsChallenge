@@ -16,6 +16,15 @@ function getInput(digits) {
   let combinedNumber = parseInt(combinedString);
   return combinedNumber;
 }
+async function isCoordinateWithinRange(toTest, pos1, pos2) {
+  const minX = Math.min(pos1.x, pos2.x);
+  const maxX = Math.max(pos1.x, pos2.x);
+  const minY = Math.min(pos1.y, pos2.y);
+  const maxY = Math.max(pos1.y, pos2.y);
+  const minZ = Math.min(pos1.z, pos2.z);
+  const maxZ = Math.max(pos1.z, pos2.z);
+  return toTest.x >= minX && toTest.x <= maxX && toTest.y >= minY && toTest.y <= maxY && toTest.z >= minZ && toTest.z <= maxZ;
+}
 async function getCube(pos1, pos2) {
   const blocks = [];
   for (let x = Math.min(pos1.x, pos2.x); x <= Math.max(pos1.x, pos2.x); x++) {
@@ -1397,7 +1406,12 @@ function applyPotionEffect(player, potion2, seconds2) {
   player.runCommand("clear @p minecraft:glass_bottle");
 }
 function mainTick() {
-  world11.getAllPlayers().forEach((player) => {
+  world11.getAllPlayers().forEach(async (player) => {
+    if (player.isJumping == true) {
+      if (await isCoordinateWithinRange(player.location, { x: 18, y: 96, z: 105 }, { x: 118, y: 100, z: 80 })) {
+        player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
+      }
+    }
     if (player.isInWater) {
       player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
       meters = 94 - Math.floor(player.location.y);

@@ -5,6 +5,7 @@ import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
 import { potionMaker, displayTimer, getSlots } from "./potionGame";
 import "./npcscriptEventHandler"; //handles the NPC script events
+import { isCoordinateWithinRange } from "./input";
 let overworld = world.getDimension("overworld");
 let potion = "";
 let seconds = 0;
@@ -134,7 +135,12 @@ function applyPotionEffect(player, potion, seconds) {
     player.runCommand("clear @p minecraft:glass_bottle");
 }
 function mainTick() {
-    world.getAllPlayers().forEach((player) => {
+    world.getAllPlayers().forEach((player) => __awaiter(this, void 0, void 0, function* () {
+        if (player.isJumping == true) {
+            if (yield isCoordinateWithinRange(player.location, { x: 18, y: 96, z: 105 }, { x: 118, y: 100, z: 80 })) {
+                player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
+            }
+        }
         if (player.isInWater) {
             player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
             meters = 94 - Math.floor(player.location.y);
@@ -169,7 +175,7 @@ function mainTick() {
                 surface(player);
             }
         }
-    });
+    }));
     system.run(mainTick);
 }
 function surface(player) {

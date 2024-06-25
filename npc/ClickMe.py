@@ -3,7 +3,7 @@ import pandas as pd
 import json
 
 
-sceneJson = '/home/joe/.var/app/io.mrarm.mcpelauncher/data/mcpelauncher/games/com.mojang/development_behavior_packs/cambridge/dialogue/scene.json'
+sceneJson = "/home/joe/.local/share/mcpelauncher/games/com.mojang/development_behavior_packs/cambridge/dialogue/scene.json"
 #import openpyxl
 
 #get the location of the scriptss
