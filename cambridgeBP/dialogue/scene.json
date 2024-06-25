@@ -2173,6 +2173,37 @@
                         ]
                     }
                 ]
+            },
+            {
+                "scene_tag": "groundskeeper1",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Grumpy Groundskeeper"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "No jumping in the gardens."
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Sorry! "
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "tp @p 30 96 107 facing 30 96 90"
+                        ]
+                    }
+                ]
             }
         ]
     }

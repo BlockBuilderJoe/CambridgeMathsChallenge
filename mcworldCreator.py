@@ -1,11 +1,12 @@
 import zipfile
 import os
 
+#### Stuff you need to change #########################
 templateMcworld = 'mathmogicianWorld.mcworld'
 resourcePack = 'cambridgeRP'
 behaviourPack = 'cambridgeBP'
 worldFile = 'mathmogicianWorld'
-
+######################################################
 
 def createMcworld(mcworld, mathmogicianWorld, resourcePack, behaviorPack):
     with zipfile.ZipFile(mcworld, 'w') as zipf:
