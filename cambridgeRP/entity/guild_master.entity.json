@@ -14,10 +14,9 @@
       },
       "render_controllers": ["controller.render.default"],
       "scripts": {
-        "animate": [{ "move": "query.modified_move_speed" }, "look_at_target"]
+        "animate": [{ "move": "query.modified_move_speed" }]
       },
       "animations": {
-        "look_at_target": "animation.common.look_at_target",
         "move": "animation.npc.move"
       }
     }
