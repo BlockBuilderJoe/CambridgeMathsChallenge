@@ -1,0 +1,23 @@
+{
+	"format_version": 2,
+	"header": {
+		"name": "alchemist",
+		"description": "alchemist Resource Pack",
+		"uuid": "6e51194f-09bb-3664-cd53-7575a30f221f",
+		"version": [1, 0, 0],
+		"min_engine_version": [1, 16, 0]
+	},
+	"metadata": {
+		"generated_with": {
+			"blockbench_entity_wizard": ["1.5.1"]
+		}
+	},
+	"modules": [
+		{
+			"description": "alchemist",
+			"type": "resources",
+			"uuid": "d196ef48-9ada-1033-d52c-eb0ed2cae9d2",
+			"version": [1, 0, 0]
+		}
+	]
+}

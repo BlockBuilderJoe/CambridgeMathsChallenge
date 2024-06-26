@@ -1,0 +1,23 @@
+{
+	"format_version": 2,
+	"header": {
+		"name": "scale",
+		"description": "scale Resource Pack",
+		"uuid": "6e74875d-70dc-f244-5742-6e535a8b4d05",
+		"version": [1, 0, 0],
+		"min_engine_version": [1, 16, 0]
+	},
+	"metadata": {
+		"generated_with": {
+			"blockbench_entity_wizard": ["1.5.1"]
+		}
+	},
+	"modules": [
+		{
+			"description": "scale",
+			"type": "resources",
+			"uuid": "a0f94a65-6e30-84f7-035e-55b6d7362625",
+			"version": [1, 0, 0]
+		}
+	]
+}

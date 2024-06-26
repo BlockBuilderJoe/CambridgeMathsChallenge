@@ -1,0 +1,29 @@
+{
+	"format_version": 2,
+	"header": {
+		"name": "scale",
+		"description": "scale Behavior Pack",
+		"uuid": "e97bd8ab-8ffe-1e85-3dcb-26339905981f",
+		"version": [1, 0, 0],
+		"min_engine_version": [1, 16, 0]
+	},
+	"metadata": {
+		"generated_with": {
+			"blockbench_entity_wizard": ["1.5.1"]
+		}
+	},
+	"modules": [
+		{
+			"description": "Behavior",
+			"version": [1, 0, 0],
+			"uuid": "89768fbf-7db0-1b80-6868-4bd8e52c3794",
+			"type": "data"
+		}
+	],
+	"dependencies": [
+		{
+			"uuid": "6e74875d-70dc-f244-5742-6e535a8b4d05",
+			"version": [1, 0, 0]
+		}
+	]
+}

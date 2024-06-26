@@ -2,15 +2,15 @@
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
-      "identifier": "blockbuilders:alchemy_professor",
+      "identifier": "blockbuilders:cartography_professor",
       "materials": {
         "default": "entity_alphatest"
       },
       "textures": {
-        "default": "textures/entity/alchemy_professor"
+        "default": "textures/entity/cartography_professor"
       },
       "geometry": {
-        "default": "geometry.alchemy_professor"
+        "default": "geometry.cartography_professor"
       },
       "render_controllers": ["controller.render.default"],
       "scripts": {
