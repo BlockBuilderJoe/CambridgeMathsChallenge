@@ -5,6 +5,8 @@ let overworld = world.getDimension("overworld");
 let rodsPlaced: any[] = [];
 
 export async function resetCuisenaireGame() {
+  await overworld.runCommandAsync(`tp @p 29 96 114 facing 29 96 112`);
+  await overworld.runCommandAsync(`tp @e[tag=fractionNpc] 29 96 112 facing 29 96 114`);
   await overworld.runCommandAsync(`scoreboard objectives setdisplay sidebar Students`);
   await overworld.runCommandAsync(`scoreboard players set Saved Students 0`);
   await resetNPC(5);
@@ -20,8 +22,9 @@ export async function moveNpc(id: number) {
   let { x, y, z } = getRandomCoordinate();
   overworld.runCommandAsync(`tp @e[tag=rodNpc${id}] ${x} ${y} ${z}`);
   overworld.runCommandAsync(`scoreboard players add Saved Students 1`);
-  overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${id}] rodNpc${id}Saved
-      `);
+  overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${id}] rodNpc${id}Saved`);
+  overworld.runCommandAsync(`tp @e[tag=fractionNpc] ${npcLocation[id].x} ${npcLocation[id].y} ${npcLocation[id].z}`);
+  overworld.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc5`);
 }
 
 function getRandomCoordinate(): { x: number; y: number; z: number } {

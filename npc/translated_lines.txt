@@ -216,8 +216,8 @@ If you need to start again or get stuck come back to me!=
 Wish me luck=
 Professor of Cartography=
 How can I help?=
-Start Again=
-I’m stuck. =
+Help!=
+Start Again.=
 Professor of Cartography=
 1. The grids are 24x24 blocks wide and you need to use the rods to cross them.
 2. You can place the rods by right clicking in front of the white blocks. 

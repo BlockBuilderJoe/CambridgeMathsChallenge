@@ -2090,24 +2090,24 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Start Again"
+                                    "translate": "Help!"
                                 }
                             ]
                         },
                         "commands": [
-                            "scriptevent fraction:npc 1"
+                            "dialogue open @e[tag=fractionNpc] @p fractionNpc4"
                         ]
                     },
                     {
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "I’m stuck. "
+                                    "translate": "Start Again."
                                 }
                             ]
                         },
                         "commands": [
-                            "dialogue open @e[tag=fractionNpc] @p fractionNpc4"
+                            "dialogue open @e[tag=fractionNpc] @p fractionNpc6"
                         ]
                     }
                 ]
@@ -2139,6 +2139,92 @@
                         },
                         "commands": [
                             ""
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "fractionNpc5",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Professor of Cartography"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "Well done you saved the student and made it to a checkpoint. Come back to me if you run out of rods."
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Okay"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "More Rods."
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "dialogue open @e[tag=fractionNpc] @p fractionNpc6"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "fractionNpc6",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Professor of Cartography "
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "Getting more rods will reset the game. \n\nAre you sure you want to reset the game?"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "No thanks"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Reset the game. "
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent fraction:npc 1"
                         ]
                     }
                 ]

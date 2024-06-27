@@ -1,2 +1,0 @@
-scriptevent game:reset
-
