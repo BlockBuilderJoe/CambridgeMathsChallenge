@@ -166,7 +166,7 @@ Then right click the fraction bar to scale the window.=
 Will do=
 Guild Master=
 How can I help?=
-More glass please!=
+More glass =
 I’m stuck. =
 Guild Master=
 1. Place the stained glass in the frames. 
@@ -189,7 +189,7 @@ To make a potion mix it in the cauldron and tap it with your wand.=
 Thank you=
 Professor of Alchemy=
 How can I help?=
-More ingredients!=
+More ingredients=
 I’m stuck. =
 Professor of Alchemy=
 Here are the steps for the game. 
