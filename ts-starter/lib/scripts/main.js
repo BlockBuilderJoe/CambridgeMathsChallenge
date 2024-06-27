@@ -138,7 +138,9 @@ function mainTick() {
     world.getAllPlayers().forEach((player) => __awaiter(this, void 0, void 0, function* () {
         if (player.isJumping == true) {
             if (yield isCoordinateWithinRange(player.location, { x: 18, y: 96, z: 105 }, { x: 118, y: 100, z: 80 })) {
+                let location = player.location;
                 player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
+                player.teleport(location);
             }
         }
         if (player.isInWater) {

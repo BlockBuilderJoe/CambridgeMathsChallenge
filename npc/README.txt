@@ -939,7 +939,7 @@
 
  2. Then paste this command: 
 
-/dialogue change @e[tag=fractionNpc] fractionNpc4 
+/dialogue change @e[tag=fractionNpc] fractionNpc5 
  
  ######################################################## 
  
@@ -954,7 +954,7 @@
 
  2. Then paste this command: 
 
-/dialogue change @e[tag=fractionNpc] farctionNpc5 
+/dialogue change @e[tag=fractionNpc] fractionNpc6 
  
  ######################################################## 
  

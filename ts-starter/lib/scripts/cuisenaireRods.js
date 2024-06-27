@@ -4,6 +4,8 @@ let overworld = world.getDimension("overworld");
 let rodsPlaced = [];
 export function resetCuisenaireGame() {
     return __awaiter(this, void 0, void 0, function* () {
+        yield overworld.runCommandAsync(`tp @p 29 96 114 facing 29 96 112`);
+        yield overworld.runCommandAsync(`tp @e[tag=fractionNpc] 29 96 112 facing 29 96 114`);
         yield overworld.runCommandAsync(`scoreboard objectives setdisplay sidebar Students`);
         yield overworld.runCommandAsync(`scoreboard players set Saved Students 0`);
         yield resetNPC(5);
@@ -21,8 +23,9 @@ export function moveNpc(id) {
         let { x, y, z } = getRandomCoordinate();
         overworld.runCommandAsync(`tp @e[tag=rodNpc${id}] ${x} ${y} ${z}`);
         overworld.runCommandAsync(`scoreboard players add Saved Students 1`);
-        overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${id}] rodNpc${id}Saved
-      `);
+        overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${id}] rodNpc${id}Saved`);
+        overworld.runCommandAsync(`tp @e[tag=fractionNpc] ${npcLocation[id].x} ${npcLocation[id].y} ${npcLocation[id].z}`);
+        overworld.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc5`);
     });
 }
 function getRandomCoordinate() {
@@ -92,7 +95,7 @@ export function resetNPC(npcAmount) {
             overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Default`);
             overworld.runCommandAsync(
             //tps the npc back based on the location parameter in npcLocation.
-            `tp @e[type=npc,tag=rodNpc${i}] ${npcLocation[i].x} ${npcLocation[i].y} ${npcLocation[i].z}`);
+            `tp @e[tag=rodNpc${i}] ${npcLocation[i].x} ${npcLocation[i].y} ${npcLocation[i].z}`);
         }
     });
 }

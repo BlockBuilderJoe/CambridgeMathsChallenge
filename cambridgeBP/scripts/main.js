@@ -474,6 +474,8 @@ var npcLocation = [
 var overworld5 = world5.getDimension("overworld");
 var rodsPlaced = [];
 async function resetCuisenaireGame() {
+  await overworld5.runCommandAsync(`tp @p 29 96 114 facing 29 96 112`);
+  await overworld5.runCommandAsync(`tp @e[tag=fractionNpc] 29 96 112 facing 29 96 114`);
   await overworld5.runCommandAsync(`scoreboard objectives setdisplay sidebar Students`);
   await overworld5.runCommandAsync(`scoreboard players set Saved Students 0`);
   await resetNPC(5);
@@ -487,8 +489,9 @@ async function moveNpc(id) {
   let { x, y, z } = getRandomCoordinate();
   overworld5.runCommandAsync(`tp @e[tag=rodNpc${id}] ${x} ${y} ${z}`);
   overworld5.runCommandAsync(`scoreboard players add Saved Students 1`);
-  overworld5.runCommandAsync(`dialogue change @e[tag=rodNpc${id}] rodNpc${id}Saved
-      `);
+  overworld5.runCommandAsync(`dialogue change @e[tag=rodNpc${id}] rodNpc${id}Saved`);
+  overworld5.runCommandAsync(`tp @e[tag=fractionNpc] ${npcLocation[id].x} ${npcLocation[id].y} ${npcLocation[id].z}`);
+  overworld5.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc5`);
 }
 function getRandomCoordinate() {
   const minX = 19;
@@ -549,7 +552,7 @@ async function resetNPC(npcAmount) {
     overworld5.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Default`);
     overworld5.runCommandAsync(
       //tps the npc back based on the location parameter in npcLocation.
-      `tp @e[type=npc,tag=rodNpc${i}] ${npcLocation[i].x} ${npcLocation[i].y} ${npcLocation[i].z}`
+      `tp @e[tag=rodNpc${i}] ${npcLocation[i].x} ${npcLocation[i].y} ${npcLocation[i].z}`
     );
   }
 }
@@ -1409,7 +1412,9 @@ function mainTick() {
   world11.getAllPlayers().forEach(async (player) => {
     if (player.isJumping == true) {
       if (await isCoordinateWithinRange(player.location, { x: 18, y: 96, z: 105 }, { x: 118, y: 100, z: 80 })) {
+        let location = player.location;
         player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
+        player.teleport(location);
       }
     }
     if (player.isInWater) {
