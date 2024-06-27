@@ -23,10 +23,9 @@ export function startPotionGame() {
         yield giveIngredients();
     });
 }
-export function getSlots(event) {
+export function getSlots(hopper) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
-        let hopper = event.block.getComponent("inventory");
         let slots = [];
         for (let i = 0; i <= 4; i++) {
             let item = (_a = hopper === null || hopper === void 0 ? void 0 : hopper.container) === null || _a === void 0 ? void 0 : _a.getItem(i);

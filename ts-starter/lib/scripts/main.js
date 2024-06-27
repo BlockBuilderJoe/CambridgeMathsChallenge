@@ -1,4 +1,4 @@
-import { world, system, BlockPermutation } from "@minecraft/server";
+import { world, system, BlockPermutation, } from "@minecraft/server";
 import { windowUndoHandler, windowScaleHandler } from "./stainedGlassWindow";
 import { cuisenaire, getBlockBehind, directionCheck, } from "./cuisenaireRods";
 import { cycleNumberBlock } from "./output";
@@ -15,6 +15,7 @@ let meters = 0;
 let playerCanSeeInDark = false;
 //coin
 world.afterEvents.entityHitEntity.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     let hitEntity = event.hitEntity;
     if (hitEntity.typeId === `blockbuilders:coin`) {
         let tag = hitEntity.getTags();
@@ -22,13 +23,19 @@ world.afterEvents.entityHitEntity.subscribe((event) => __awaiter(void 0, void 0,
         overworld.runCommandAsync(`scoreboard players add Coins Depth 1`);
         overworld.runCommandAsync(`tp @e[type=blockbuilders:coin,tag=${tag}] -1 ${y_location} 157 facing 1 ${y_location} 157`);
     }
+    if (hitEntity.typeId === `blockbuilders:cauldron`) {
+        let cauldron = hitEntity.getComponent("inventory");
+        let slots = yield getSlots(cauldron);
+        (_a = cauldron.container) === null || _a === void 0 ? void 0 : _a.clearAll(); //empties the cauldron
+        ({ potion, seconds } = yield potionMaker(slots));
+    }
 }));
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _b;
     let block = event.block;
     let player = event.player;
-    let colour = (_a = block.permutation) === null || _a === void 0 ? void 0 : _a.getState("color");
+    let colour = (_b = block.permutation) === null || _b === void 0 ? void 0 : _b.getState("color");
     if (colour) {
         //is it a rod block?
         if (block.location.y === 95) {
@@ -61,16 +68,6 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0
                 cuisenaire(block, rod.block, rod.value, rod.message, direction);
             }
         }
-    }
-}));
-world.beforeEvents.playerBreakBlock.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _b;
-    let block = event.block;
-    if ((_b = block.permutation) === null || _b === void 0 ? void 0 : _b.matches("hopper")) {
-        event.cancel;
-        overworld.runCommandAsync(`kill @e[type=item]`);
-        let slots = yield getSlots(event);
-        ({ potion, seconds } = yield potionMaker(slots));
     }
 }));
 //left click after break

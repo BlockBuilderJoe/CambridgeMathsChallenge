@@ -1,5 +1,9 @@
 // scripts/main.ts
-import { world as world11, system as system6, BlockPermutation as BlockPermutation5 } from "@minecraft/server";
+import {
+  world as world11,
+  system as system6,
+  BlockPermutation as BlockPermutation5
+} from "@minecraft/server";
 
 // scripts/stainedGlassWindow.ts
 import { world as world4 } from "@minecraft/server";
@@ -772,8 +776,7 @@ async function startPotionGame() {
   await giveWand();
   await giveIngredients();
 }
-async function getSlots(event) {
-  let hopper = event.block.getComponent("inventory");
+async function getSlots(hopper) {
   let slots = [];
   for (let i = 0; i <= 4; i++) {
     let item = hopper?.container?.getItem(i);
@@ -1312,6 +1315,12 @@ world11.afterEvents.entityHitEntity.subscribe(async (event) => {
       `tp @e[type=blockbuilders:coin,tag=${tag}] -1 ${y_location} 157 facing 1 ${y_location} 157`
     );
   }
+  if (hitEntity.typeId === `blockbuilders:cauldron`) {
+    let cauldron = hitEntity.getComponent("inventory");
+    let slots = await getSlots(cauldron);
+    cauldron.container?.clearAll();
+    ({ potion, seconds } = await potionMaker(slots));
+  }
 });
 world11.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let block = event.block;
@@ -1347,15 +1356,6 @@ world11.afterEvents.playerPlaceBlock.subscribe(async (event) => {
         cuisenaire(block, rod.block, rod.value, rod.message, direction);
       }
     }
-  }
-});
-world11.beforeEvents.playerBreakBlock.subscribe(async (event) => {
-  let block = event.block;
-  if (block.permutation?.matches("hopper")) {
-    event.cancel;
-    overworld11.runCommandAsync(`kill @e[type=item]`);
-    let slots = await getSlots(event);
-    ({ potion, seconds } = await potionMaker(slots));
   }
 });
 world11.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {

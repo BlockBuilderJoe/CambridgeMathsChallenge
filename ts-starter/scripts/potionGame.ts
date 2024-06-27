@@ -1,4 +1,4 @@
-import { BlockPermutation, BlockInventoryComponent, system, world } from "@minecraft/server";
+import { BlockPermutation, BlockInventoryComponent, system, world, EntityInventoryComponent } from "@minecraft/server";
 import { getBlockValue } from "./input";
 import { giveWand } from "./wand";
 
@@ -22,8 +22,7 @@ export async function startPotionGame() {
   await giveIngredients();
 }
 
-export async function getSlots(event: any) {
-  let hopper: BlockInventoryComponent | undefined = event.block.getComponent("inventory");
+export async function getSlots(hopper: EntityInventoryComponent) {
   let slots = [];
   for (let i = 0; i <= 4; i++) {
     let item = hopper?.container?.getItem(i);

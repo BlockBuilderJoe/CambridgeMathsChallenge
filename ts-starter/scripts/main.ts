@@ -1,4 +1,13 @@
-import { world, system, Player, BlockPermutation, Block, Entity, Scoreboard } from "@minecraft/server";
+import {
+  world,
+  system,
+  Player,
+  BlockPermutation,
+  Block,
+  Entity,
+  Scoreboard,
+  EntityInventoryComponent,
+} from "@minecraft/server";
 import { windowUndoHandler, windowScaleHandler, startWindowGame } from "./stainedGlassWindow";
 import {
   cuisenaire,
@@ -25,6 +34,7 @@ let meters = 0;
 let playerCanSeeInDark = false;
 
 //coin
+
 world.afterEvents.entityHitEntity.subscribe(async (event) => {
   let hitEntity = event.hitEntity;
   if (hitEntity.typeId === `blockbuilders:coin`) {
@@ -34,6 +44,12 @@ world.afterEvents.entityHitEntity.subscribe(async (event) => {
     overworld.runCommandAsync(
       `tp @e[type=blockbuilders:coin,tag=${tag}] -1 ${y_location} 157 facing 1 ${y_location} 157`
     );
+  }
+  if (hitEntity.typeId === `blockbuilders:cauldron`) {
+    let cauldron = hitEntity.getComponent("inventory") as EntityInventoryComponent;
+    let slots = await getSlots(cauldron);
+    cauldron.container?.clearAll(); //empties the cauldron
+    ({ potion, seconds } = await potionMaker(slots));
   }
 });
 
@@ -74,16 +90,6 @@ world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
         cuisenaire(block, rod.block, rod.value, rod.message, direction);
       }
     }
-  }
-});
-
-world.beforeEvents.playerBreakBlock.subscribe(async (event) => {
-  let block = event.block;
-  if (block.permutation?.matches("hopper")) {
-    event.cancel;
-    overworld.runCommandAsync(`kill @e[type=item]`);
-    let slots = await getSlots(event);
-    ({ potion, seconds } = await potionMaker(slots));
   }
 });
 

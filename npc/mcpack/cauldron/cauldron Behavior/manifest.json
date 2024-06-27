@@ -1,0 +1,29 @@
+{
+	"format_version": 2,
+	"header": {
+		"name": "cauldron",
+		"description": "cauldron Behavior Pack",
+		"uuid": "503f47b6-f7c2-69a6-35e0-f099f1ec4787",
+		"version": [1, 0, 0],
+		"min_engine_version": [1, 16, 0]
+	},
+	"metadata": {
+		"generated_with": {
+			"blockbench_entity_wizard": ["1.5.1"]
+		}
+	},
+	"modules": [
+		{
+			"description": "Behavior",
+			"version": [1, 0, 0],
+			"uuid": "872ffdaf-dbd6-f3bd-7adb-1116e9341a0d",
+			"type": "data"
+		}
+	],
+	"dependencies": [
+		{
+			"uuid": "48f3cf22-3436-15ec-7b9a-a0ec140363c7",
+			"version": [1, 0, 0]
+		}
+	]
+}

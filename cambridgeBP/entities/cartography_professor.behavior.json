@@ -26,7 +26,7 @@
         "height": 2.1
       },
       "minecraft:behavior.look_at_player": {
-        "priority": 5,
+        "priority": 0,
         "look_distance": 6,
         "probability": 1.0
       },
