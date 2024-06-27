@@ -223,6 +223,16 @@ Professor of Cartography=
 2. You can place the rods by right clicking in front of the white blocks. 
 3. Talk to each student as you go, they will let you know if you have placed the most optimum rod down. =
 Thank you=
+Professor of Cartography=
+Well done you saved the student and made it to a checkpoint. Come back to me if you run out of rods.=
+Okay=
+More Rods.=
+Professor of Cartography =
+Getting more rods will reset the game. 
+
+Are you sure you want to reset the game?=
+No thanks=
+Reset the game. =
 Grumpy Groundskeeper=
 Grrrrofffff me grass=
 Sorry! =

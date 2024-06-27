@@ -930,6 +930,36 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
+ NAME = Professor of Cartography 
+ TAG = fractionNpc 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add fractionNpc 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=fractionNpc] fractionNpc4 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME = Professor of Cartography  
+ TAG = fractionNpc 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add fractionNpc 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=fractionNpc] farctionNpc5 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
  NAME = Grumpy Groundskeeper 
  TAG = groundskeeper 
  

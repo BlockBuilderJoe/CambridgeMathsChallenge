@@ -96,7 +96,7 @@ export async function resetNPC(npcAmount: number) {
     overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Default`);
     overworld.runCommandAsync(
       //tps the npc back based on the location parameter in npcLocation.
-      `tp @e[type=npc,tag=rodNpc${i}] ${npcLocation[i].x} ${npcLocation[i].y} ${npcLocation[i].z}`
+      `tp @e[tag=rodNpc${i}] ${npcLocation[i].x} ${npcLocation[i].y} ${npcLocation[i].z}`
     );
   }
 }
