@@ -6,6 +6,7 @@ import { npcWalk } from "./npcWalk";
 import { startWindowGame, resetWindowGame, giveGlass } from "./stainedGlassWindow";
 import { startPotionGame, resetPotionGame, giveIngredients } from "./potionGame";
 import { resetGame } from "./resetGame";
+import { giveWand } from "./wand";
 
 let overworld = world.getDimension("overworld");
 //handles the scriptEventReceive from NPCs
@@ -85,6 +86,12 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
         case "2": {
           await giveIngredients();
           break;
+        }
+        case "3": {
+          giveWand();
+          overworld.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc2`);
+          overworld.runCommand("replaceitem entity @p slot.hotbar 1 cocoa_beans 2");
+          overworld.runCommand("replaceitem entity @p slot.hotbar 2 milk_bucket 1");
         }
       }
       break;

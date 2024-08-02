@@ -181,12 +181,12 @@ Professor of Alchemy=
 The challenge awaits, please keep up.=
 On the way!=
 Professor of Alchemy=
-Here take these ingredients, come back if you need any more
+Mmmm delicious, okay lets get some coins.
 
-The ratios for the ingredients are on the wall. 
+The ratios for the potions you’ll need are on the wall. 
 
 To make a potion mix it in the cauldron and tap it with your wand.=
-Thank you=
+Okay let’s go.=
 Professor of Alchemy=
 How can I help?=
 More ingredients=
@@ -203,6 +203,17 @@ Thank you=
 Professor of Alchemy=
 You broke rule number 2, you must let the potions do the work, no swimming or diving.=
 Sorry! =
+Professor of Alchemy=
+Before we start I need you to make me a .... I mean teach you about ratios, by making me chocolate milk. 
+
+Put 2 parts Cocoa beans to 1 part Milk into the cauldron and tap it with your wand.=
+On it!=
+Professor of Alchemy=
+Eurghhhh that is not right, 
+
+You need to put 2 parts cocoa to 1 part milk. 
+=
+On it!=
 Professor of Cartography=
 This is embarrassing, I’ve lost my cartography students in the walled gardens (yes I know). Please help me! Follow me to the gardens.=
 Let's Go!=

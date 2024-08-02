@@ -51,13 +51,13 @@ async function calculateRatio(ingredients: any) {
   let milk: number = ingredients.milk_bucket;
   let cocoaBeans: number = ingredients.cocoa_beans;
   const hasIngredients = carrot + glowDust + kelp + pufferFish + mermaidTears + milk + cocoaBeans > 0;
-  world.sendMessage(`Cocoa beans: ${cocoaBeans} Milk: ${milk}`);
   const isChocolateMilk = cocoaBeans * 1 === milk * 2 && carrot + glowDust + kelp + pufferFish + mermaidTears === 0;
   const isNotChocolateMilk = cocoaBeans * 1 !== milk * 2 && carrot + glowDust + kelp + pufferFish + mermaidTears === 0;
   if (isChocolateMilk) {
-    world.sendMessage("You made chocolate milk!");
+    overworld.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc3`);
+    overworld.runCommandAsync(`dialogue open @e[tag=ratioNpc] @p ratioNpc6`);
   } else if (isNotChocolateMilk) {
-    world.sendMessage("You made disgusting chocolate milk!");
+    overworld.runCommandAsync(`dialogue open @e[tag=ratioNpc] @p ratioNpc7`);
   }
   //calculates the ratio of ingredients. Testing for correct ratio and wrong ratio.
   const isCorrectNightVisionPotion =

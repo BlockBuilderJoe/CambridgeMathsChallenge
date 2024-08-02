@@ -804,7 +804,7 @@
 
  2. Then paste this command: 
 
-/dialogue change @e[tag=ratioNpc] ratioNpc2 
+/dialogue change @e[tag=ratioNpc] ratioNpc6 
  
  ######################################################## 
  
@@ -850,6 +850,36 @@
  2. Then paste this command: 
 
 /dialogue change @e[tag=ratioNpc] ratioNpc5 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME = Professor of Alchemy 
+ TAG = ratioNpc 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add ratioNpc 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=ratioNpc] ratioNpc2 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME = Professor of Alchemy 
+ TAG = ratioNpc 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add ratioNpc 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=ratioNpc] ratioNpc7 
  
  ######################################################## 
  
