@@ -801,8 +801,8 @@ async function calculateRatio(ingredients) {
   let milk = ingredients.milk_bucket;
   let cocoaBeans = ingredients.cocoa_beans;
   const hasIngredients = carrot + glowDust + kelp + pufferFish + mermaidTears + milk + cocoaBeans > 0;
-  const isChocolateMilk = cocoaBeans * 1 === milk * 2 && carrot + glowDust + kelp + pufferFish + mermaidTears === 0;
-  const isNotChocolateMilk = cocoaBeans * 1 !== milk * 2 && carrot + glowDust + kelp + pufferFish + mermaidTears === 0;
+  const isChocolateMilk = cocoaBeans * 1 === milk * 2 && carrot + glowDust + kelp + pufferFish + mermaidTears === 0 && hasIngredients;
+  const isNotChocolateMilk = cocoaBeans * 1 !== milk * 2 && carrot + glowDust + kelp + pufferFish + mermaidTears === 0 && hasIngredients;
   if (isChocolateMilk) {
     overworld6.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc3`);
     overworld6.runCommandAsync(`dialogue open @e[tag=ratioNpc] @p ratioNpc6`);
