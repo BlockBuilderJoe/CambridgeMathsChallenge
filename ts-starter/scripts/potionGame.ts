@@ -41,7 +41,6 @@ async function givePotion() {
 }
 
 async function calculateRatio(ingredients: any) {
-  world.sendMessage(`Ingredients: ${JSON.stringify(ingredients)}`);
   //remaps ingredients from Minecraft name to in game name.
   let carrot: number = ingredients.carrot;
   let glowDust: number = ingredients.apple;
