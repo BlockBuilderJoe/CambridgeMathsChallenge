@@ -64,7 +64,7 @@ async function calculateRatio(ingredients: any) {
     if (isCorrectNightVisionPotion) {
       return { potion: "night_vision", seconds: 5 };
     } else if (isCorrectWaterBreathingPotion) {
-      return { potion: "water_breathing", seconds: mermaidTears };
+      return { potion: "water_breathing", seconds: mermaidTears * 2 };
     } else if (isWrongNightVisionPotion) {
       return { potion: "blindness", seconds: 4 };
     } else if (isWrongWaterBreathingPotion) {
@@ -129,10 +129,13 @@ async function barChart(slots: any) {
 async function setGlass(slot: any, blockName: string) {
   let { block } = getBlockValue({ x: -7, y: 97, z: 138 });
   block?.east(slot.slotNumber)?.setPermutation(BlockPermutation.resolve(blockName));
+  let height = 0;
   if (slot.amount > 20) {
-    slot.amount = 20;
+    height = 20;
+  } else {
+    height = slot.amount;
   }
-  for (let i = 0; i < slot.amount; i++) {
+  for (let i = 0; i < height; i++) {
     block?.above(i)?.east(slot.slotNumber)?.setPermutation(BlockPermutation.resolve(blockName));
   }
 }

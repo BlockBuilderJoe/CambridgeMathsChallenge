@@ -64,7 +64,7 @@ function calculateRatio(ingredients) {
                 return { potion: "night_vision", seconds: 5 };
             }
             else if (isCorrectWaterBreathingPotion) {
-                return { potion: "water_breathing", seconds: mermaidTears };
+                return { potion: "water_breathing", seconds: mermaidTears * 2 };
             }
             else if (isWrongNightVisionPotion) {
                 return { potion: "blindness", seconds: 4 };
@@ -137,10 +137,14 @@ function setGlass(slot, blockName) {
         var _a, _b, _c;
         let { block } = getBlockValue({ x: -7, y: 97, z: 138 });
         (_a = block === null || block === void 0 ? void 0 : block.east(slot.slotNumber)) === null || _a === void 0 ? void 0 : _a.setPermutation(BlockPermutation.resolve(blockName));
+        let height = 0;
         if (slot.amount > 20) {
-            slot.amount = 20;
+            height = 20;
         }
-        for (let i = 0; i < slot.amount; i++) {
+        else {
+            height = slot.amount;
+        }
+        for (let i = 0; i < height; i++) {
             (_c = (_b = block === null || block === void 0 ? void 0 : block.above(i)) === null || _b === void 0 ? void 0 : _b.east(slot.slotNumber)) === null || _c === void 0 ? void 0 : _c.setPermutation(BlockPermutation.resolve(blockName));
         }
     });
