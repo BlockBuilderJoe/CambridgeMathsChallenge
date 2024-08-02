@@ -17,7 +17,7 @@ export async function resetPotionGame() {
 }
 export async function startPotionGame() {
   await overworld.runCommandAsync(`clear @p`);
-  await overworld.runCommandAsync("fill -12 124 145 -12 124 141 minecraft:air");
+  await overworld.runCommandAsync("fill -3 126 138 -7 126 138 minecraft:air");
   await giveWand();
   await giveIngredients();
 }
@@ -134,21 +134,21 @@ async function barChart(slots: any) {
   return ingredients;
 }
 async function setGlass(slot: any, blockName: string) {
-  let { block } = getBlockValue({ x: -12, y: 97, z: 145 });
-  block?.north(slot.slotNumber)?.setPermutation(BlockPermutation.resolve(blockName));
-  if (slot.amount > 10) {
-    slot.amount = 10;
+  let { block } = getBlockValue({ x: -7, y: 97, z: 138 });
+  block?.east(slot.slotNumber)?.setPermutation(BlockPermutation.resolve(blockName));
+  if (slot.amount > 20) {
+    slot.amount = 20;
   }
   for (let i = 0; i < slot.amount; i++) {
-    block?.above(i)?.north(slot.slotNumber)?.setPermutation(BlockPermutation.resolve(blockName));
+    block?.above(i)?.east(slot.slotNumber)?.setPermutation(BlockPermutation.resolve(blockName));
   }
 }
 async function setItemFrame(offset_z: number, slotNumber: number) {
-  let cloneFrom = 145 - offset_z;
-  let cloneTo = 145 - slotNumber;
+  let cloneFrom = -7 + offset_z;
+  let cloneTo = -7 + slotNumber;
   world
     .getDimension("overworld")
-    .runCommandAsync(`clone -11 109 ${cloneFrom} -11 109 ${cloneFrom} -11 97 ${cloneTo} replace`);
+    .runCommandAsync(`clone ${cloneFrom} 121 139 ${cloneFrom} 121 139 ${cloneTo} 97 139 replace`);
 }
 
 export async function potionMaker(slots: any) {
@@ -162,7 +162,7 @@ export async function potionMaker(slots: any) {
 }
 
 async function resetArea() {
-  await world.getDimension("overworld").runCommandAsync("fill -12 106 141 -12 96 145 black_stained_glass replace");
+  await world.getDimension("overworld").runCommandAsync("fill -7 96 138 -3 116 138 black_stained_glass replace");
 }
 
 export async function giveIngredients() {

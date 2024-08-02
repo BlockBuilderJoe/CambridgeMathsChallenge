@@ -18,7 +18,7 @@ export function resetPotionGame() {
 export function startPotionGame() {
     return __awaiter(this, void 0, void 0, function* () {
         yield overworld.runCommandAsync(`clear @p`);
-        yield overworld.runCommandAsync("fill -12 124 145 -12 124 141 minecraft:air");
+        yield overworld.runCommandAsync("fill -3 126 138 -7 126 138 minecraft:air");
         yield giveWand();
         yield giveIngredients();
     });
@@ -145,23 +145,23 @@ function barChart(slots) {
 function setGlass(slot, blockName) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b, _c;
-        let { block } = getBlockValue({ x: -12, y: 97, z: 145 });
-        (_a = block === null || block === void 0 ? void 0 : block.north(slot.slotNumber)) === null || _a === void 0 ? void 0 : _a.setPermutation(BlockPermutation.resolve(blockName));
-        if (slot.amount > 10) {
-            slot.amount = 10;
+        let { block } = getBlockValue({ x: -7, y: 97, z: 138 });
+        (_a = block === null || block === void 0 ? void 0 : block.east(slot.slotNumber)) === null || _a === void 0 ? void 0 : _a.setPermutation(BlockPermutation.resolve(blockName));
+        if (slot.amount > 20) {
+            slot.amount = 20;
         }
         for (let i = 0; i < slot.amount; i++) {
-            (_c = (_b = block === null || block === void 0 ? void 0 : block.above(i)) === null || _b === void 0 ? void 0 : _b.north(slot.slotNumber)) === null || _c === void 0 ? void 0 : _c.setPermutation(BlockPermutation.resolve(blockName));
+            (_c = (_b = block === null || block === void 0 ? void 0 : block.above(i)) === null || _b === void 0 ? void 0 : _b.east(slot.slotNumber)) === null || _c === void 0 ? void 0 : _c.setPermutation(BlockPermutation.resolve(blockName));
         }
     });
 }
 function setItemFrame(offset_z, slotNumber) {
     return __awaiter(this, void 0, void 0, function* () {
-        let cloneFrom = 145 - offset_z;
-        let cloneTo = 145 - slotNumber;
+        let cloneFrom = -7 + offset_z;
+        let cloneTo = -7 + slotNumber;
         world
             .getDimension("overworld")
-            .runCommandAsync(`clone -11 109 ${cloneFrom} -11 109 ${cloneFrom} -11 97 ${cloneTo} replace`);
+            .runCommandAsync(`clone ${cloneFrom} 121 139 ${cloneFrom} 121 139 ${cloneTo} 97 139 replace`);
     });
 }
 export function potionMaker(slots) {
@@ -177,7 +177,7 @@ export function potionMaker(slots) {
 }
 function resetArea() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield world.getDimension("overworld").runCommandAsync("fill -12 106 141 -12 96 145 black_stained_glass replace");
+        yield world.getDimension("overworld").runCommandAsync("fill -7 96 138 -3 116 138 black_stained_glass replace");
     });
 }
 export function giveIngredients() {

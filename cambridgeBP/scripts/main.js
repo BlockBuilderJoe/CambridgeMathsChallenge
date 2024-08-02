@@ -772,7 +772,7 @@ async function resetPotionGame() {
 }
 async function startPotionGame() {
   await overworld6.runCommandAsync(`clear @p`);
-  await overworld6.runCommandAsync("fill -12 124 145 -12 124 141 minecraft:air");
+  await overworld6.runCommandAsync("fill -3 126 138 -7 126 138 minecraft:air");
   await giveWand();
   await giveIngredients();
 }
@@ -879,19 +879,19 @@ async function barChart(slots) {
   return ingredients;
 }
 async function setGlass(slot, blockName) {
-  let { block } = getBlockValue({ x: -12, y: 97, z: 145 });
-  block?.north(slot.slotNumber)?.setPermutation(BlockPermutation4.resolve(blockName));
-  if (slot.amount > 10) {
-    slot.amount = 10;
+  let { block } = getBlockValue({ x: -7, y: 97, z: 138 });
+  block?.east(slot.slotNumber)?.setPermutation(BlockPermutation4.resolve(blockName));
+  if (slot.amount > 20) {
+    slot.amount = 20;
   }
   for (let i = 0; i < slot.amount; i++) {
-    block?.above(i)?.north(slot.slotNumber)?.setPermutation(BlockPermutation4.resolve(blockName));
+    block?.above(i)?.east(slot.slotNumber)?.setPermutation(BlockPermutation4.resolve(blockName));
   }
 }
 async function setItemFrame(offset_z, slotNumber) {
-  let cloneFrom = 145 - offset_z;
-  let cloneTo = 145 - slotNumber;
-  world6.getDimension("overworld").runCommandAsync(`clone -11 109 ${cloneFrom} -11 109 ${cloneFrom} -11 97 ${cloneTo} replace`);
+  let cloneFrom = -7 + offset_z;
+  let cloneTo = -7 + slotNumber;
+  world6.getDimension("overworld").runCommandAsync(`clone ${cloneFrom} 121 139 ${cloneFrom} 121 139 ${cloneTo} 97 139 replace`);
 }
 async function potionMaker(slots) {
   await resetArea();
@@ -903,7 +903,7 @@ async function potionMaker(slots) {
   return { potion: potion2, seconds: seconds2 };
 }
 async function resetArea() {
-  await world6.getDimension("overworld").runCommandAsync("fill -12 106 141 -12 96 145 black_stained_glass replace");
+  await world6.getDimension("overworld").runCommandAsync("fill -7 96 138 -3 116 138 black_stained_glass replace");
 }
 async function giveIngredients() {
   overworld6.runCommand("replaceitem entity @p slot.hotbar 1 apple 10");
