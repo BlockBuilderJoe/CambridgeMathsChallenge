@@ -766,8 +766,8 @@ async function resetPotionGame() {
   await overworld6.runCommandAsync("tp @e[tag=coin4] -5 78 154");
   await overworld6.runCommandAsync("tp @e[tag=coin5] -6 75 155");
   await overworld6.runCommandAsync("tp @e[tag=coin6] -5 75 154");
-  await overworld6.runCommandAsync("fill -11 97 146 -11 97 140 minecraft:air");
-  await overworld6.runCommandAsync("fill -12 124 145 -12 124 141 minecraft:black_concrete");
+  await overworld6.runCommandAsync("fill -7 97 139 -3 97 139 minecraft:air");
+  await overworld6.runCommandAsync("fill -3 126 138 -7 126 138 minecraft:black_concrete");
   await resetArea();
 }
 async function startPotionGame() {
@@ -1109,9 +1109,9 @@ async function npcWalk(type) {
     case "ratio": {
       let path = await generatePath([
         { x: 57, y: 96, z: 148 },
-        { x: -2, y: 96, z: 148 },
-        { x: -2, y: 96, z: 153 },
-        { x: -2, y: 96, z: 152 }
+        { x: -3, y: 96, z: 148 },
+        { x: -3, y: 96, z: 141 },
+        { x: -3, y: 96, z: 142 }
       ]);
       moveNpc2(path, "ratio", ratioMessage);
       break;
@@ -1187,7 +1187,6 @@ async function resetGame() {
   await closeGate("ratio");
   await closeGate("fraction");
   await overworld9.runCommandAsync(`gamemode adventure @p`);
-  await overworld9.runCommandAsync(`gamerule showcoordinates false`);
   await overworld9.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
   await overworld9.runCommandAsync(`scoreboard players set Coins Depth 0`);
   await overworld9.runCommandAsync(`clear @p`);

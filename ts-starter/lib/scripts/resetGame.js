@@ -29,7 +29,7 @@ export function resetGame() {
         yield closeGate("fraction");
         //Clean up the player
         yield overworld.runCommandAsync(`gamemode adventure @p`);
-        yield overworld.runCommandAsync(`gamerule showcoordinates false`);
+        //await overworld.runCommandAsync(`gamerule showcoordinates false`);
         yield overworld.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
         yield overworld.runCommandAsync(`scoreboard players set Coins Depth 0`);
         yield overworld.runCommandAsync(`clear @p`);

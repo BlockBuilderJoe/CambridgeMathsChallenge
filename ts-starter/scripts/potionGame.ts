@@ -11,8 +11,8 @@ export async function resetPotionGame() {
   await overworld.runCommandAsync("tp @e[tag=coin4] -5 78 154");
   await overworld.runCommandAsync("tp @e[tag=coin5] -6 75 155");
   await overworld.runCommandAsync("tp @e[tag=coin6] -5 75 154");
-  await overworld.runCommandAsync("fill -11 97 146 -11 97 140 minecraft:air");
-  await overworld.runCommandAsync("fill -12 124 145 -12 124 141 minecraft:black_concrete");
+  await overworld.runCommandAsync("fill -7 97 139 -3 97 139 minecraft:air");
+  await overworld.runCommandAsync("fill -3 126 138 -7 126 138 minecraft:black_concrete");
   await resetArea();
 }
 export async function startPotionGame() {
@@ -34,10 +34,12 @@ export async function getSlots(hopper: EntityInventoryComponent) {
   }
   return slots;
 }
+
 async function givePotion() {
   world.getDimension("overworld").runCommandAsync(`clear @p minecraft:potion`);
   world.getDimension("overworld").runCommandAsync(`give @p minecraft:potion 1`);
 }
+
 async function calculateRatio(ingredients: any) {
   let wrongIngredientsSight = ingredients.potato + ingredients.beetroot + ingredients.melon;
   let wrongIngredientsDive = ingredients.apple + ingredients.carrot;

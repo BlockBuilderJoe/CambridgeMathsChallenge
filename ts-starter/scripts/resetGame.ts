@@ -30,7 +30,7 @@ export async function resetGame() {
   await closeGate("fraction");
   //Clean up the player
   await overworld.runCommandAsync(`gamemode adventure @p`);
-  await overworld.runCommandAsync(`gamerule showcoordinates false`);
+  //await overworld.runCommandAsync(`gamerule showcoordinates false`);
   await overworld.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
   await overworld.runCommandAsync(`scoreboard players set Coins Depth 0`);
   await overworld.runCommandAsync(`clear @p`);

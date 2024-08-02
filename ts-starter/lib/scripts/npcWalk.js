@@ -52,9 +52,9 @@ export function npcWalk(type) {
             case "ratio": {
                 let path = yield generatePath([
                     { x: 57, y: 96, z: 148 },
-                    { x: -2, y: 96, z: 148 },
-                    { x: -2, y: 96, z: 153 },
-                    { x: -2, y: 96, z: 152 },
+                    { x: -3, y: 96, z: 148 },
+                    { x: -3, y: 96, z: 141 },
+                    { x: -3, y: 96, z: 142 },
                 ]);
                 moveNpc(path, "ratio", ratioMessage);
                 break;

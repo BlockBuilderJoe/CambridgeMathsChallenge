@@ -10,8 +10,8 @@ export function resetPotionGame() {
         yield overworld.runCommandAsync("tp @e[tag=coin4] -5 78 154");
         yield overworld.runCommandAsync("tp @e[tag=coin5] -6 75 155");
         yield overworld.runCommandAsync("tp @e[tag=coin6] -5 75 154");
-        yield overworld.runCommandAsync("fill -11 97 146 -11 97 140 minecraft:air");
-        yield overworld.runCommandAsync("fill -12 124 145 -12 124 141 minecraft:black_concrete");
+        yield overworld.runCommandAsync("fill -7 97 139 -3 97 139 minecraft:air");
+        yield overworld.runCommandAsync("fill -3 126 138 -7 126 138 minecraft:black_concrete");
         yield resetArea();
     });
 }
