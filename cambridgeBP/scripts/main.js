@@ -793,7 +793,6 @@ async function givePotion() {
   world6.getDimension("overworld").runCommandAsync(`give @p minecraft:potion 1`);
 }
 async function calculateRatio(ingredients) {
-  world6.sendMessage(`Ingredients: ${JSON.stringify(ingredients)}`);
   let carrot = ingredients.carrot;
   let glowDust = ingredients.apple;
   let kelp = ingredients.potato;
