@@ -1299,9 +1299,7 @@ world11.afterEvents.entityHitEntity.subscribe(async (event) => {
     let tag = hitEntity.getTags();
     let x_location = 0 - parseInt(tag[0].substring(4));
     overworld11.runCommandAsync(`scoreboard players add Coins Depth 1`);
-    overworld11.runCommandAsync(
-      `tp @e[type=blockbuilders:coin,tag=${tag}] ${x_location} 104 156 facing ${x_location} 104 139`
-    );
+    overworld11.runCommandAsync(`tp @e[type=blockbuilders:coin,tag=${tag}] ${x_location} 104 156 facing -11 104 156`);
   }
   if (hitEntity.typeId === `blockbuilders:cauldron`) {
     let cauldron = hitEntity.getComponent("inventory");

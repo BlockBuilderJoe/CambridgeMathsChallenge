@@ -30,6 +30,11 @@
           "cause": "all",
           "deals_damage": false
         }
+      },
+      "minecraft:behavior.look_at_player": {
+        "priority": 0,
+        "look_distance": 16,
+        "probability": 1
       }
     }
   }
