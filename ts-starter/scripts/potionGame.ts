@@ -5,12 +5,12 @@ import { giveWand } from "./wand";
 let overworld = world.getDimension("overworld");
 
 export async function resetPotionGame() {
-  await overworld.runCommandAsync("tp @e[tag=coin1] -6 90 155");
+  await overworld.runCommandAsync("tp @e[tag=coin0] -6 90 155");
   await overworld.runCommandAsync("tp @e[tag=coin2] -5 86 154");
-  await overworld.runCommandAsync("tp @e[tag=coin3] -6 82 155");
-  await overworld.runCommandAsync("tp @e[tag=coin4] -5 78 154");
-  await overworld.runCommandAsync("tp @e[tag=coin5] -6 75 155");
-  await overworld.runCommandAsync("tp @e[tag=coin6] -5 75 154");
+  await overworld.runCommandAsync("tp @e[tag=coin4] -6 82 155");
+  await overworld.runCommandAsync("tp @e[tag=coin6] -5 78 154");
+  await overworld.runCommandAsync("tp @e[tag=coin8] -6 75 155");
+  await overworld.runCommandAsync("tp @e[tag=coin10] -5 75 154");
   await overworld.runCommandAsync("fill -7 97 139 -3 97 139 minecraft:air");
   await overworld.runCommandAsync("fill -3 126 138 -7 126 138 minecraft:black_concrete");
   await resetArea();

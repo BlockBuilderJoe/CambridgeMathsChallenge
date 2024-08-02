@@ -760,12 +760,12 @@ async function facing(blockLocation) {
 import { BlockPermutation as BlockPermutation4, system as system2, world as world6 } from "@minecraft/server";
 var overworld6 = world6.getDimension("overworld");
 async function resetPotionGame() {
-  await overworld6.runCommandAsync("tp @e[tag=coin1] -6 90 155");
+  await overworld6.runCommandAsync("tp @e[tag=coin0] -6 90 155");
   await overworld6.runCommandAsync("tp @e[tag=coin2] -5 86 154");
-  await overworld6.runCommandAsync("tp @e[tag=coin3] -6 82 155");
-  await overworld6.runCommandAsync("tp @e[tag=coin4] -5 78 154");
-  await overworld6.runCommandAsync("tp @e[tag=coin5] -6 75 155");
-  await overworld6.runCommandAsync("tp @e[tag=coin6] -5 75 154");
+  await overworld6.runCommandAsync("tp @e[tag=coin4] -6 82 155");
+  await overworld6.runCommandAsync("tp @e[tag=coin6] -5 78 154");
+  await overworld6.runCommandAsync("tp @e[tag=coin8] -6 75 155");
+  await overworld6.runCommandAsync("tp @e[tag=coin10] -5 75 154");
   await overworld6.runCommandAsync("fill -7 97 139 -3 97 139 minecraft:air");
   await overworld6.runCommandAsync("fill -3 126 138 -7 126 138 minecraft:black_concrete");
   await resetArea();
@@ -793,41 +793,30 @@ async function givePotion() {
   world6.getDimension("overworld").runCommandAsync(`give @p minecraft:potion 1`);
 }
 async function calculateRatio(ingredients) {
-  let wrongIngredientsSight = ingredients.potato + ingredients.beetroot + ingredients.melon;
-  let wrongIngredientsDive = ingredients.apple + ingredients.carrot;
-  let appleRatio = ingredients.apple + ingredients.potato + ingredients.beetroot + ingredients.melon;
-  let carrotRatio = ingredients.carrot + ingredients.potato + ingredients.beetroot + ingredients.melon;
-  let potatoRatio = ingredients.potato + ingredients.apple + ingredients.carrot;
-  let beetrootRatio = ingredients.beetroot + ingredients.apple + ingredients.carrot;
-  let melonRatio = ingredients.melon + ingredients.apple + ingredients.carrot;
-  let total = ingredients.apple + ingredients.carrot + ingredients.potato + ingredients.beetroot + ingredients.melon;
-  let nightVision = ingredients.carrot / ingredients.apple;
-  let beetrootMelonRatio = beetrootRatio / melonRatio;
-  let melonPotatoRatio = melonRatio / potatoRatio;
-  if (beetrootMelonRatio === 1.5 && melonPotatoRatio === 2) {
-    let potion2 = "water_breathing";
-    let seconds2 = Math.ceil((beetrootRatio + melonRatio + potatoRatio) * 1.7);
-    return { potion: potion2, seconds: seconds2 };
-  } else if (nightVision === 2) {
-    let potion2 = "night_vision";
-    let seconds2 = Math.ceil((ingredients.apple + ingredients.carrot) * 1.7);
-    return { potion: potion2, seconds: seconds2 };
-  } else if (wrongIngredientsSight === 0 && potatoRatio + carrotRatio > 0) {
-    let seconds2 = 4;
-    let potion2 = "blindness";
-    return { potion: potion2, seconds: seconds2 };
-  } else if (wrongIngredientsDive === 0 && beetrootRatio + melonRatio + potatoRatio > 0) {
-    let seconds2 = 4;
-    let potion2 = "levitation";
-    return { potion: potion2, seconds: seconds2 };
-  } else if (total === 0) {
-    let seconds2 = 0;
-    let potion2 = "empty";
-    return { potion: potion2, seconds: seconds2 };
+  let carrot = ingredients.carrot;
+  let glowDust = ingredients.apple;
+  let kelp = ingredients.potato;
+  let pufferFish = ingredients.beetroot;
+  let mermaidTears = ingredients.melon;
+  const hasIngredients = carrot + glowDust + kelp + pufferFish + mermaidTears > 0;
+  const isCorrectNightVisionPotion = carrot * 5 === glowDust * 3 && kelp + pufferFish + mermaidTears === 0 && hasIngredients;
+  const isCorrectWaterBreathingPotion = kelp * 40 === pufferFish * 24 && kelp * 40 === mermaidTears * 15 && carrot + glowDust === 0 && hasIngredients;
+  const isWrongNightVisionPotion = carrot * 5 !== glowDust * 3 && kelp + pufferFish + mermaidTears === 0 && hasIngredients;
+  const isWrongWaterBreathingPotion = (kelp * 40 !== pufferFish * 24 || kelp * 40 !== mermaidTears * 15) && carrot + glowDust === 0 && hasIngredients;
+  if (hasIngredients) {
+    if (isCorrectNightVisionPotion) {
+      return { potion: "night_vision", seconds: 5 };
+    } else if (isCorrectWaterBreathingPotion) {
+      return { potion: "water_breathing", seconds: mermaidTears };
+    } else if (isWrongNightVisionPotion) {
+      return { potion: "blindness", seconds: 4 };
+    } else if (isWrongWaterBreathingPotion) {
+      return { potion: "levitation", seconds: 4 };
+    } else {
+      return { potion: "empty", seconds: 0 };
+    }
   } else {
-    let seconds2 = Math.ceil((appleRatio + carrotRatio) / 10);
-    let potion2 = "poison";
-    return { potion: potion2, seconds: seconds2 };
+    return { potion: "none", seconds: 0 };
   }
 }
 async function barChart(slots) {
@@ -897,7 +886,7 @@ async function potionMaker(slots) {
   await resetArea();
   let ingredients = await barChart(slots);
   let { potion: potion2, seconds: seconds2 } = await calculateRatio(ingredients);
-  if (potion2 !== "empty") {
+  if (potion2 !== "empty" && potion2 !== "none") {
     await givePotion();
   }
   return { potion: potion2, seconds: seconds2 };
@@ -906,11 +895,11 @@ async function resetArea() {
   await world6.getDimension("overworld").runCommandAsync("fill -7 96 138 -3 116 138 black_stained_glass replace");
 }
 async function giveIngredients() {
-  overworld6.runCommand("replaceitem entity @p slot.hotbar 1 apple 10");
-  overworld6.runCommand("replaceitem entity @p slot.hotbar 2 carrot 10");
-  overworld6.runCommand("replaceitem entity @p slot.hotbar 3 beetroot 10");
-  overworld6.runCommand("replaceitem entity @p slot.hotbar 4 potato 10");
-  overworld6.runCommand("replaceitem entity @p slot.hotbar 5 melon_slice 10");
+  overworld6.runCommand("replaceitem entity @p slot.hotbar 1 apple 20");
+  overworld6.runCommand("replaceitem entity @p slot.hotbar 2 carrot 20");
+  overworld6.runCommand("replaceitem entity @p slot.hotbar 3 beetroot 20");
+  overworld6.runCommand("replaceitem entity @p slot.hotbar 4 potato 20");
+  overworld6.runCommand("replaceitem entity @p slot.hotbar 5 melon_slice 20");
 }
 function displayTimer(potionStart2, seconds2, player, potionDescription) {
   let timeLeft = (potionStart2 + seconds2 * 20 - system2.currentTick) / 20;
@@ -1308,10 +1297,10 @@ world11.afterEvents.entityHitEntity.subscribe(async (event) => {
   let hitEntity = event.hitEntity;
   if (hitEntity.typeId === `blockbuilders:coin`) {
     let tag = hitEntity.getTags();
-    let y_location = parseInt(tag[0].substring(4)) + 95;
+    let x_location = 0 - parseInt(tag[0].substring(4));
     overworld11.runCommandAsync(`scoreboard players add Coins Depth 1`);
     overworld11.runCommandAsync(
-      `tp @e[type=blockbuilders:coin,tag=${tag}] -1 ${y_location} 157 facing 1 ${y_location} 157`
+      `tp @e[type=blockbuilders:coin,tag=${tag}] ${x_location} 104 156 facing ${x_location} 104 139`
     );
   }
   if (hitEntity.typeId === `blockbuilders:cauldron`) {
