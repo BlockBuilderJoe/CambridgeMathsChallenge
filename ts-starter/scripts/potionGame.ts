@@ -41,14 +41,24 @@ async function givePotion() {
 }
 
 async function calculateRatio(ingredients: any) {
+  world.sendMessage(`Ingredients: ${JSON.stringify(ingredients)}`);
   //remaps ingredients from Minecraft name to in game name.
   let carrot: number = ingredients.carrot;
   let glowDust: number = ingredients.apple;
   let kelp: number = ingredients.potato;
   let pufferFish: number = ingredients.beetroot;
   let mermaidTears: number = ingredients.melon;
-  const hasIngredients = carrot + glowDust + kelp + pufferFish + mermaidTears > 0;
-
+  let milk: number = ingredients.milk_bucket;
+  let cocoaBeans: number = ingredients.cocoa_beans;
+  const hasIngredients = carrot + glowDust + kelp + pufferFish + mermaidTears + milk + cocoaBeans > 0;
+  world.sendMessage(`Cocoa beans: ${cocoaBeans} Milk: ${milk}`);
+  const isChocolateMilk = cocoaBeans * 1 === milk * 2 && carrot + glowDust + kelp + pufferFish + mermaidTears === 0;
+  const isNotChocolateMilk = cocoaBeans * 1 !== milk * 2 && carrot + glowDust + kelp + pufferFish + mermaidTears === 0;
+  if (isChocolateMilk) {
+    world.sendMessage("You made chocolate milk!");
+  } else if (isNotChocolateMilk) {
+    world.sendMessage("You made disgusting chocolate milk!");
+  }
   //calculates the ratio of ingredients. Testing for correct ratio and wrong ratio.
   const isCorrectNightVisionPotion =
     carrot * 5 === glowDust * 3 && kelp + pufferFish + mermaidTears === 0 && hasIngredients;
@@ -84,9 +94,19 @@ async function barChart(slots: any) {
     potato: 0,
     beetroot: 0,
     melon: 0,
+    milk_bucket: 0,
+    cocoa_beans: 0,
   };
   for (let slot of slots) {
     switch (slot.typeId) {
+      case "minecraft:milk_bucket": {
+        ingredients.milk_bucket = (ingredients.milk_bucket || 0) + slot.amount;
+        break;
+      }
+      case "minecraft:cocoa_beans": {
+        ingredients.cocoa_beans = (ingredients.cocoa_beans || 0) + slot.amount;
+        break;
+      }
       case "minecraft:apple": {
         await setGlass(slot, "red_stained_glass");
         await setItemFrame(0, slot.slotNumber);

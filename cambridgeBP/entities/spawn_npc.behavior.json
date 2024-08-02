@@ -17,7 +17,6 @@
       "minecraft:type_family": {
         "family": ["npc", "mob"]
       },
-      "minecraft:fire_immune": true,
       "minecraft:movement": {
         "value": 0.5
       },

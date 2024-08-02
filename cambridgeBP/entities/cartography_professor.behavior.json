@@ -17,7 +17,6 @@
       "minecraft:type_family": {
         "family": ["npc", "mob"]
       },
-      "minecraft:fire_immune": true,
       "minecraft:movement": {
         "value": 0.5
       },
@@ -28,7 +27,7 @@
       "minecraft:behavior.look_at_player": {
         "priority": 0,
         "look_distance": 30,
-        "probability": 1.0
+        "probability": 0.9
       },
       "minecraft:persistent": {},
       "minecraft:npc": {
