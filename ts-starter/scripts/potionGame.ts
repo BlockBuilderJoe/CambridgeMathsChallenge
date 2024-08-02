@@ -41,46 +41,39 @@ async function givePotion() {
 }
 
 async function calculateRatio(ingredients: any) {
-  let wrongIngredientsSight = ingredients.potato + ingredients.beetroot + ingredients.melon;
-  let wrongIngredientsDive = ingredients.apple + ingredients.carrot;
-  let appleRatio = ingredients.apple + ingredients.potato + ingredients.beetroot + ingredients.melon;
-  let carrotRatio = ingredients.carrot + ingredients.potato + ingredients.beetroot + ingredients.melon;
-  let potatoRatio = ingredients.potato + ingredients.apple + ingredients.carrot;
-  let beetrootRatio = ingredients.beetroot + ingredients.apple + ingredients.carrot;
-  let melonRatio = ingredients.melon + ingredients.apple + ingredients.carrot;
-  let total: number =
-    ingredients.apple + ingredients.carrot + ingredients.potato + ingredients.beetroot + ingredients.melon;
+  //remaps ingredients from Minecraft name to in game name.
+  let carrot: number = ingredients.carrot;
+  let glowDust: number = ingredients.apple;
+  let kelp: number = ingredients.potato;
+  let pufferFish: number = ingredients.beetroot;
+  let mermaidTears: number = ingredients.melon;
+  const hasIngredients = carrot + glowDust + kelp + pufferFish + mermaidTears > 0;
 
-  let nightVision: number = ingredients.carrot / ingredients.apple;
-  let beetrootMelonRatio: number = beetrootRatio / melonRatio;
-  let melonPotatoRatio: number = melonRatio / potatoRatio;
+  //calculates the ratio of ingredients. Testing for correct ratio and wrong ratio.
+  const isCorrectNightVisionPotion =
+    carrot * 5 === glowDust * 3 && kelp + pufferFish + mermaidTears === 0 && hasIngredients;
+  const isCorrectWaterBreathingPotion =
+    kelp * 40 === pufferFish * 24 && kelp * 40 === mermaidTears * 15 && carrot + glowDust === 0 && hasIngredients;
+  const isWrongNightVisionPotion =
+    carrot * 5 !== glowDust * 3 && kelp + pufferFish + mermaidTears === 0 && hasIngredients;
+  const isWrongWaterBreathingPotion =
+    (kelp * 40 !== pufferFish * 24 || kelp * 40 !== mermaidTears * 15) && carrot + glowDust === 0 && hasIngredients;
 
-  if (beetrootMelonRatio === 1.5 && melonPotatoRatio === 2) {
-    let potion = "water_breathing";
-    let seconds = Math.ceil((beetrootRatio + melonRatio + potatoRatio) * 1.7);
-    return { potion, seconds };
-  } else if (nightVision === 2) {
-    let potion = "night_vision";
-    let seconds = Math.ceil((ingredients.apple + ingredients.carrot) * 1.7);
-    return { potion, seconds };
-  } else if (wrongIngredientsSight === 0 && potatoRatio + carrotRatio > 0) {
-    //let seconds = Math.ceil(potatoRatio + carrotRatio);
-    let seconds = 4;
-    let potion = "blindness";
-    return { potion, seconds };
-  } else if (wrongIngredientsDive === 0 && beetrootRatio + melonRatio + potatoRatio > 0) {
-    //let seconds = Math.ceil(beetrootRatio + melonRatio + potatoRatio);
-    let seconds = 4;
-    let potion = "levitation";
-    return { potion, seconds };
-  } else if (total === 0) {
-    let seconds = 0;
-    let potion = "empty";
-    return { potion, seconds };
+  //maps the correct outcomes of the potion game to the correct potion and seconds.
+  if (hasIngredients) {
+    if (isCorrectNightVisionPotion) {
+      return { potion: "night_vision", seconds: 5 };
+    } else if (isCorrectWaterBreathingPotion) {
+      return { potion: "water_breathing", seconds: mermaidTears };
+    } else if (isWrongNightVisionPotion) {
+      return { potion: "blindness", seconds: 4 };
+    } else if (isWrongWaterBreathingPotion) {
+      return { potion: "levitation", seconds: 4 };
+    } else {
+      return { potion: "empty", seconds: 0 };
+    }
   } else {
-    let seconds = Math.ceil((appleRatio + carrotRatio) / 10);
-    let potion = "poison";
-    return { potion, seconds };
+    return { potion: "none", seconds: 0 };
   }
 }
 
@@ -155,7 +148,7 @@ export async function potionMaker(slots: any) {
   await resetArea();
   let ingredients = await barChart(slots);
   let { potion, seconds } = await calculateRatio(ingredients);
-  if (potion !== "empty") {
+  if (potion !== "empty" && potion !== "none") {
     await givePotion();
   }
   return { potion, seconds };
@@ -166,11 +159,11 @@ async function resetArea() {
 }
 
 export async function giveIngredients() {
-  overworld.runCommand("replaceitem entity @p slot.hotbar 1 apple 10");
-  overworld.runCommand("replaceitem entity @p slot.hotbar 2 carrot 10");
-  overworld.runCommand("replaceitem entity @p slot.hotbar 3 beetroot 10");
-  overworld.runCommand("replaceitem entity @p slot.hotbar 4 potato 10");
-  overworld.runCommand("replaceitem entity @p slot.hotbar 5 melon_slice 10");
+  overworld.runCommand("replaceitem entity @p slot.hotbar 1 apple 20");
+  overworld.runCommand("replaceitem entity @p slot.hotbar 2 carrot 20");
+  overworld.runCommand("replaceitem entity @p slot.hotbar 3 beetroot 20");
+  overworld.runCommand("replaceitem entity @p slot.hotbar 4 potato 20");
+  overworld.runCommand("replaceitem entity @p slot.hotbar 5 melon_slice 20");
 }
 
 export function displayTimer(potionStart: number, seconds: number, player: any, potionDescription: string) {

@@ -49,7 +49,7 @@ world.afterEvents.entityHitEntity.subscribe(async (event) => {
     let cauldron = hitEntity.getComponent("inventory") as EntityInventoryComponent;
     let slots = await getSlots(cauldron);
     cauldron.container?.clearAll(); //empties the cauldron
-    ({ potion, seconds } = await potionMaker(slots));
+    ({ potion, seconds } = await potionMaker(slots)); //gets the potion and the seconds for the applyPotionEffect function.
   }
 });
 

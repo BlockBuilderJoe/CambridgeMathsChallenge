@@ -27,7 +27,7 @@ world.afterEvents.entityHitEntity.subscribe((event) => __awaiter(void 0, void 0,
         let cauldron = hitEntity.getComponent("inventory");
         let slots = yield getSlots(cauldron);
         (_a = cauldron.container) === null || _a === void 0 ? void 0 : _a.clearAll(); //empties the cauldron
-        ({ potion, seconds } = yield potionMaker(slots));
+        ({ potion, seconds } = yield potionMaker(slots)); //gets the potion and the seconds for the applyPotionEffect function.
     }
 }));
 //listens for the block place event.
