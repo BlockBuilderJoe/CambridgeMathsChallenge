@@ -60,35 +60,40 @@ function calculateRatio(ingredients) {
         if (isChocolateMilk) {
             overworld.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc3`);
             overworld.runCommandAsync(`dialogue open @e[tag=ratioNpc] @p ratioNpc6`);
+            return { potion: "none", seconds: 0 };
         }
         else if (isNotChocolateMilk) {
             overworld.runCommandAsync(`dialogue open @e[tag=ratioNpc] @p ratioNpc7`);
-        }
-        //calculates the ratio of ingredients. Testing for correct ratio and wrong ratio.
-        const isCorrectNightVisionPotion = carrot * 5 === glowDust * 3 && kelp + pufferFish + mermaidTears === 0 && hasIngredients;
-        const isCorrectWaterBreathingPotion = kelp * 40 === pufferFish * 24 && kelp * 40 === mermaidTears * 15 && carrot + glowDust === 0 && hasIngredients;
-        const isWrongNightVisionPotion = carrot * 5 !== glowDust * 3 && kelp + pufferFish + mermaidTears === 0 && hasIngredients;
-        const isWrongWaterBreathingPotion = (kelp * 40 !== pufferFish * 24 || kelp * 40 !== mermaidTears * 15) && carrot + glowDust === 0 && hasIngredients;
-        //maps the correct outcomes of the potion game to the correct potion and seconds.
-        if (hasIngredients) {
-            if (isCorrectNightVisionPotion) {
-                return { potion: "night_vision", seconds: 5 };
-            }
-            else if (isCorrectWaterBreathingPotion) {
-                return { potion: "water_breathing", seconds: mermaidTears * 2 };
-            }
-            else if (isWrongNightVisionPotion) {
-                return { potion: "blindness", seconds: 4 };
-            }
-            else if (isWrongWaterBreathingPotion) {
-                return { potion: "levitation", seconds: 4 };
-            }
-            else {
-                return { potion: "empty", seconds: 0 };
-            }
+            return { potion: "none", seconds: 0 };
         }
         else {
-            return { potion: "none", seconds: 0 };
+            //rest of the potions.
+            //calculates the ratio of ingredients. Testing for correct ratio and wrong ratio.
+            const isCorrectNightVisionPotion = carrot * 5 === glowDust * 3 && kelp + pufferFish + mermaidTears === 0 && hasIngredients;
+            const isCorrectWaterBreathingPotion = kelp * 40 === pufferFish * 24 && kelp * 40 === mermaidTears * 15 && carrot + glowDust === 0 && hasIngredients;
+            const isWrongNightVisionPotion = carrot * 5 !== glowDust * 3 && kelp + pufferFish + mermaidTears === 0 && hasIngredients;
+            const isWrongWaterBreathingPotion = (kelp * 40 !== pufferFish * 24 || kelp * 40 !== mermaidTears * 15) && carrot + glowDust === 0 && hasIngredients;
+            //maps the correct outcomes of the potion game to the correct potion and seconds.
+            if (hasIngredients) {
+                if (isCorrectNightVisionPotion) {
+                    return { potion: "night_vision", seconds: 5 };
+                }
+                else if (isCorrectWaterBreathingPotion) {
+                    return { potion: "water_breathing", seconds: mermaidTears * 2 };
+                }
+                else if (isWrongNightVisionPotion) {
+                    return { potion: "blindness", seconds: 4 };
+                }
+                else if (isWrongWaterBreathingPotion) {
+                    return { potion: "levitation", seconds: 4 };
+                }
+                else {
+                    return { potion: "empty", seconds: 0 };
+                }
+            }
+            else {
+                return { potion: "none", seconds: 0 };
+            }
         }
     });
 }

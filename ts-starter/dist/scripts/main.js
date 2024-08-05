@@ -806,27 +806,30 @@ async function calculateRatio(ingredients) {
   if (isChocolateMilk) {
     overworld6.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc3`);
     overworld6.runCommandAsync(`dialogue open @e[tag=ratioNpc] @p ratioNpc6`);
+    return { potion: "none", seconds: 0 };
   } else if (isNotChocolateMilk) {
     overworld6.runCommandAsync(`dialogue open @e[tag=ratioNpc] @p ratioNpc7`);
-  }
-  const isCorrectNightVisionPotion = carrot * 5 === glowDust * 3 && kelp + pufferFish + mermaidTears === 0 && hasIngredients;
-  const isCorrectWaterBreathingPotion = kelp * 40 === pufferFish * 24 && kelp * 40 === mermaidTears * 15 && carrot + glowDust === 0 && hasIngredients;
-  const isWrongNightVisionPotion = carrot * 5 !== glowDust * 3 && kelp + pufferFish + mermaidTears === 0 && hasIngredients;
-  const isWrongWaterBreathingPotion = (kelp * 40 !== pufferFish * 24 || kelp * 40 !== mermaidTears * 15) && carrot + glowDust === 0 && hasIngredients;
-  if (hasIngredients) {
-    if (isCorrectNightVisionPotion) {
-      return { potion: "night_vision", seconds: 5 };
-    } else if (isCorrectWaterBreathingPotion) {
-      return { potion: "water_breathing", seconds: mermaidTears * 2 };
-    } else if (isWrongNightVisionPotion) {
-      return { potion: "blindness", seconds: 4 };
-    } else if (isWrongWaterBreathingPotion) {
-      return { potion: "levitation", seconds: 4 };
-    } else {
-      return { potion: "empty", seconds: 0 };
-    }
-  } else {
     return { potion: "none", seconds: 0 };
+  } else {
+    const isCorrectNightVisionPotion = carrot * 5 === glowDust * 3 && kelp + pufferFish + mermaidTears === 0 && hasIngredients;
+    const isCorrectWaterBreathingPotion = kelp * 40 === pufferFish * 24 && kelp * 40 === mermaidTears * 15 && carrot + glowDust === 0 && hasIngredients;
+    const isWrongNightVisionPotion = carrot * 5 !== glowDust * 3 && kelp + pufferFish + mermaidTears === 0 && hasIngredients;
+    const isWrongWaterBreathingPotion = (kelp * 40 !== pufferFish * 24 || kelp * 40 !== mermaidTears * 15) && carrot + glowDust === 0 && hasIngredients;
+    if (hasIngredients) {
+      if (isCorrectNightVisionPotion) {
+        return { potion: "night_vision", seconds: 5 };
+      } else if (isCorrectWaterBreathingPotion) {
+        return { potion: "water_breathing", seconds: mermaidTears * 2 };
+      } else if (isWrongNightVisionPotion) {
+        return { potion: "blindness", seconds: 4 };
+      } else if (isWrongWaterBreathingPotion) {
+        return { potion: "levitation", seconds: 4 };
+      } else {
+        return { potion: "empty", seconds: 0 };
+      }
+    } else {
+      return { potion: "none", seconds: 0 };
+    }
   }
 }
 async function barChart(slots) {
