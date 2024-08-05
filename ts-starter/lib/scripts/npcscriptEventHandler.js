@@ -25,15 +25,15 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
         case "spawn:npc": {
             openGate("spawn");
             if (event.message === "fraction") {
-                overworld.runCommandAsync(`tp @e[tag=fractionNpc] 57 96 148 facing 66 96 148`);
+                overworld.runCommandAsync(`tp @e[tag=fractionNpc] 57 96 148 facing 66 97 148`);
                 overworld.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
             }
             else if (event.message === "ratio") {
-                overworld.runCommandAsync(`tp @e[tag=ratioNpc] 57 96 148 facing 66 96 148`);
+                overworld.runCommandAsync(`tp @e[tag=ratioNpc] 57 96 148 facing 66 97 148`);
                 overworld.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
             }
             else if (event.message === "scale") {
-                overworld.runCommandAsync(`tp @e[tag=scaleNpc] 57 96 148 facing 66 96 148`);
+                overworld.runCommandAsync(`tp @e[tag=scaleNpc] 57 96 148 facing 66 97 148`);
                 overworld.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
             }
             else {
@@ -72,6 +72,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
         }
         case "ratio:npc": {
             switch (event.message) {
+                // guide to the game - walk at the beginning.
                 case "0": {
                     openGate("ratio");
                     closeGate("scale");
@@ -79,15 +80,18 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
                     yield npcWalk("ratio");
                     break;
                 }
+                // start of main game.
                 case "1": {
                     overworld.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc3`);
                     startPotionGame();
                     break;
                 }
+                // player asks for ingredients.
                 case "2": {
                     yield giveIngredients();
                     break;
                 }
+                // start of tutorial mode.
                 case "3": {
                     giveWand();
                     overworld.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc2`);

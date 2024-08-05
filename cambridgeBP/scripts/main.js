@@ -1225,13 +1225,13 @@ system5.afterEvents.scriptEventReceive.subscribe(async (event) => {
     case "spawn:npc": {
       openGate("spawn");
       if (event.message === "fraction") {
-        overworld10.runCommandAsync(`tp @e[tag=fractionNpc] 57 96 148 facing 66 96 148`);
+        overworld10.runCommandAsync(`tp @e[tag=fractionNpc] 57 96 148 facing 66 97 148`);
         overworld10.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
       } else if (event.message === "ratio") {
-        overworld10.runCommandAsync(`tp @e[tag=ratioNpc] 57 96 148 facing 66 96 148`);
+        overworld10.runCommandAsync(`tp @e[tag=ratioNpc] 57 96 148 facing 66 97 148`);
         overworld10.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
       } else if (event.message === "scale") {
-        overworld10.runCommandAsync(`tp @e[tag=scaleNpc] 57 96 148 facing 66 96 148`);
+        overworld10.runCommandAsync(`tp @e[tag=scaleNpc] 57 96 148 facing 66 97 148`);
         overworld10.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
       } else {
         world10.sendMessage(`spawnNpc triggered with invalid message`);
