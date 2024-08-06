@@ -239,31 +239,36 @@ import {
 
 // scripts/perfectRun.ts
 var perfectRun = [
+  //1/2 rod 1
   {
+    rod: 1,
     location: { z: 104, y: 95, x: 30 },
     direction: "north",
     rodLength: 12,
-    blockName: "yellow_concrete",
+    blockName: "orange_concrete",
     successMessage: `Instead use a 1/2 rod as that is half of 24.`
   },
-  //1/2
+  //1/2 rod 2
   {
+    rod: 2,
     location: { z: 92, y: 95, x: 31 },
     direction: "east",
-    rodLength: 6,
-    blockName: "green_concrete",
-    successMessage: `For 1/4 of 24 use a 6 rod.`
+    rodLength: 12,
+    blockName: "orange_concrete",
+    successMessage: `Instead use a 1/2 rod as that is half of 24.`
   },
-  //1/4
+  //1/6 rod 3
   {
+    rod: 3,
     location: { z: 91, y: 95, x: 44 },
     direction: "east",
-    rodLength: 8,
-    blockName: "brown_concrete",
-    successMessage: `Use an 8 rod to make up a 1/3.`
+    rodLength: 4,
+    blockName: "yellow_concrete",
+    successMessage: `Use a 4 rod to make up a 1/6.`
   },
   //1/3
   {
+    rod: 4,
     location: { z: 94, y: 95, x: 53 },
     direction: "south",
     rodLength: 4,
@@ -339,8 +344,11 @@ var perfectRun = [
 ];
 var validRanges = [
   { x: 30, zMin: 93, zMax: 104 },
-  { xMin: 31, xMax: 36, z: 92 },
-  { xMin: 44, xMax: 51, z: 91 },
+  //1/2
+  { xMin: 31, xMax: 42, z: 92 },
+  //1/2
+  { xMin: 44, xMax: 47, z: 91 },
+  //1/6
   { x: 53, zMin: 94, zMax: 97 },
   { xMin: 55, xMax: 62, z: 100 },
   { xMin: 69, xMax: 116, z: 99 },
@@ -352,9 +360,9 @@ var validRanges = [
   { xMin: 80, xMax: 87, z: 89 }
 ];
 var finalBlock = [
-  { location: { z: 93, y: 95, x: 30 }, blockName: "yellow_concrete" },
-  { location: { z: 92, y: 95, x: 36 }, blockName: "green_concrete" },
-  { location: { z: 91, y: 95, x: 51 }, blockName: "brown_concrete" },
+  { location: { z: 93, y: 95, x: 30 }, blockName: "orange_concrete" },
+  { location: { z: 92, y: 95, x: 42 }, blockName: "orange_concrete" },
+  { location: { z: 91, y: 95, x: 47 }, blockName: "yellow_concrete" },
   { location: { z: 97, y: 95, x: 53 }, blockName: "purple_concrete" },
   { location: { z: 100, y: 95, x: 62 }, blockName: "brown_concrete" },
   { location: { z: 99, y: 95, x: 92 }, blockName: "blue_concrete" },
@@ -382,18 +390,18 @@ var replaySettings = [
     cartesionValue: 30
   },
   {
-    beginningMessage: `To make 1/4 you placed: `,
+    beginningMessage: `To make 1/2 you placed: `,
     tpStart: `tp @p 30 96 92 facing 38 96 92`,
-    clearBlock: `fill 31 95 92 36 95 92 tallgrass replace`,
-    replenishGrass: `fill 31 94 92 36 94 92 grass_block replace`,
+    clearBlock: `fill 31 95 92 42 96 92 tallgrass replace`,
+    replenishGrass: `fill 31 94 92 42 96 92 grass_block replace`,
     cartesianDirection: "z",
     cartesionValue: 92
   },
   {
-    beginningMessage: `To make 1/3 you placed: `,
-    tpStart: `tp @p 41 96 91 facing 53 96 91`,
-    clearBlock: `fill 51 95 91 44 95 91 tallgrass replace`,
-    replenishGrass: `fill 51 94 91 44 94 91 grass_block replace`,
+    beginningMessage: `To make 1/6 you placed: `,
+    tpStart: `tp @p 43 96 91 facing 53 96 91`,
+    clearBlock: `fill 47 95 91 44 95 91 tallgrass replace`,
+    replenishGrass: `fill 47 94 91 44 94 91 grass_block replace`,
     cartesianDirection: "z",
     cartesionValue: 91
   },
@@ -471,10 +479,10 @@ var replaySettings = [
   }
 ];
 var npcLocation = [
-  { x: 29, y: 96, z: 90 },
-  { x: 38, y: 96, z: 92 },
-  { x: 53, y: 96, z: 90 },
-  { x: 53, y: 96, z: 100 },
+  { x: 30, y: 96, z: 90 },
+  { x: 43, y: 96, z: 92 },
+  { x: 49, y: 96, z: 92 },
+  { x: 67, y: 96, z: 87 },
   { x: 66, y: 96, z: 100 }
 ];
 
@@ -708,7 +716,7 @@ async function squareReset(pos1, pos2, concreteColours) {
   overworld5.runCommandAsync(`fill ${pos1.x} ${pos1.y} ${pos1.z} ${pos2.x} ${pos2.y} ${pos2.z} tallgrass replace air`);
 }
 async function resetGrid(location) {
-  let concreteColours = ["red", "green", "purple", "brown", "blue", "lime", "yellow"];
+  let concreteColours = ["red", "green", "purple", "brown", "blue", "lime", "yellow", "orange", "pink"];
   for (let i = 0; i < 4; i++) {
     let offset_x = location.x + i * 25;
     let pos1 = { x: offset_x, y: location.y, z: location.z };
@@ -1368,13 +1376,14 @@ world11.afterEvents.playerPlaceBlock.subscribe(async (event) => {
       let correctDirection = await directionCheck(block.location.x, block.location.z, direction);
       let hasColour = await getBlockBehind(event, oppositeDirection);
       const rodPermutations = {
-        red: { block: "red_concrete", value: 2, message: "1/12" },
-        lime: { block: "lime_concrete", value: 3, message: "1/8" },
-        purple: { block: "purple_concrete", value: 4, message: "1/6" },
-        green: { block: "green_concrete", value: 6, message: "1/4" },
-        brown: { block: "brown_concrete", value: 8, message: "1/3" },
-        yellow: { block: "yellow_concrete", value: 12, message: "1/2" },
-        blue: { block: "blue_concrete", value: 24, message: "1/1" }
+        green: { block: "green_concrete", value: 24, message: "1/1" },
+        orange: { block: "orange_concrete", value: 12, message: "1/2" },
+        purple: { block: "purple_concrete", value: 8, message: "1/3" },
+        lime: { block: "lime_concrete", value: 6, message: "1/4" },
+        yellow: { block: "yellow_concrete", value: 4, message: "1/6" },
+        red: { block: "red_concrete", value: 3, message: "1/8" },
+        light_blue: { block: "light_blue_concrete", value: 2, message: "1/12" },
+        pink: { block: "pink_concrete", value: 1, message: "1/24" }
       };
       if (!hasColour) {
         player.runCommandAsync(`title ${player.name} actionbar Place the rod in front of the magical connector.`);

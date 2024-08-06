@@ -266,7 +266,6 @@ export function resetGrid(location) {
             let offset_x = location.x + i * 25; // 25 is the distance between each starting point of the grid.
             let pos1 = { x: offset_x, y: location.y, z: location.z };
             let pos2 = { x: offset_x + 24, y: location.y, z: location.z + 24 };
-            world.sendMessage(JSON.stringify(pos1) + " " + JSON.stringify(pos2));
             yield squareReset(pos1, pos2, concreteColours);
         }
     });
