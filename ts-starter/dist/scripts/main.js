@@ -239,23 +239,27 @@ import {
 
 // scripts/perfectRun.ts
 var perfectRun = [
+  //1/2 rod 1
   {
+    rod: 1,
     location: { z: 104, y: 95, x: 30 },
     direction: "north",
     rodLength: 12,
-    blockName: "yellow_concrete",
+    blockName: "green_concrete",
     successMessage: `Instead use a 1/2 rod as that is half of 24.`
   },
-  //1/2
+  //1/2 rod 2
   {
+    rod: 2,
     location: { z: 92, y: 95, x: 31 },
     direction: "east",
-    rodLength: 6,
+    rodLength: 12,
     blockName: "green_concrete",
-    successMessage: `For 1/4 of 24 use a 6 rod.`
+    successMessage: `Instead use a 1/2 rod as that is half of 24.`
   },
   //1/4
   {
+    rod: 3,
     location: { z: 91, y: 95, x: 44 },
     direction: "east",
     rodLength: 8,
@@ -471,8 +475,8 @@ var replaySettings = [
   }
 ];
 var npcLocation = [
-  { x: 29, y: 96, z: 90 },
-  { x: 38, y: 96, z: 92 },
+  { x: 30, y: 96, z: 90 },
+  { x: 43, y: 96, z: 92 },
   { x: 53, y: 96, z: 90 },
   { x: 53, y: 96, z: 100 },
   { x: 66, y: 96, z: 100 }
@@ -708,11 +712,12 @@ async function squareReset(pos1, pos2, concreteColours) {
   overworld5.runCommandAsync(`fill ${pos1.x} ${pos1.y} ${pos1.z} ${pos2.x} ${pos2.y} ${pos2.z} tallgrass replace air`);
 }
 async function resetGrid(location) {
-  let concreteColours = ["red", "green", "purple", "brown", "blue", "lime", "yellow"];
+  let concreteColours = ["red", "green", "purple", "brown", "blue", "lime", "yellow", "orange", "pink"];
   for (let i = 0; i < 4; i++) {
     let offset_x = location.x + i * 25;
     let pos1 = { x: offset_x, y: location.y, z: location.z };
     let pos2 = { x: offset_x + 24, y: location.y, z: location.z + 24 };
+    world5.sendMessage(JSON.stringify(pos1) + " " + JSON.stringify(pos2));
     await squareReset(pos1, pos2, concreteColours);
   }
 }
@@ -1368,13 +1373,14 @@ world11.afterEvents.playerPlaceBlock.subscribe(async (event) => {
       let correctDirection = await directionCheck(block.location.x, block.location.z, direction);
       let hasColour = await getBlockBehind(event, oppositeDirection);
       const rodPermutations = {
-        red: { block: "red_concrete", value: 2, message: "1/12" },
-        lime: { block: "lime_concrete", value: 3, message: "1/8" },
-        purple: { block: "purple_concrete", value: 4, message: "1/6" },
-        green: { block: "green_concrete", value: 6, message: "1/4" },
-        brown: { block: "brown_concrete", value: 8, message: "1/3" },
-        yellow: { block: "yellow_concrete", value: 12, message: "1/2" },
-        blue: { block: "blue_concrete", value: 24, message: "1/1" }
+        green: { block: "green_concrete", value: 24, message: "1/1" },
+        orange: { block: "orange_concrete", value: 12, message: "1/2" },
+        purple: { block: "purple_concrete", value: 8, message: "1/3" },
+        lime: { block: "lime_concrete", value: 6, message: "1/4" },
+        yellow: { block: "yellow_concrete", value: 4, message: "1/6" },
+        red: { block: "red_concrete", value: 3, message: "1/8" },
+        light_blue: { block: "light_blue_concrete", value: 2, message: "1/12" },
+        pink: { block: "pink_concrete", value: 1, message: "1/24" }
       };
       if (!hasColour) {
         player.runCommandAsync(`title ${player.name} actionbar Place the rod in front of the magical connector.`);

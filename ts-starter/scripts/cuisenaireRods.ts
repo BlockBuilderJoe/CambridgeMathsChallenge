@@ -197,6 +197,7 @@ export async function replay(index: number) {
       );
     }
     rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === replayConfig.cartesionValue));
+
     let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue); //ISSUE appears to be here
     if (perfectRunToReplay.length > 1) {
       perfectRunToReplay = perfectRunToReplay.slice(0, -1); //gets the last one so you don't have a bunch of them appearing.
@@ -274,11 +275,12 @@ async function squareReset(pos1: Vector3, pos2: Vector3, concreteColours: string
 
 //preps the grid coordinates for the squareReset function.
 export async function resetGrid(location: Vector3) {
-  let concreteColours = ["red", "green", "purple", "brown", "blue", "lime", "yellow"]; // What rods will be replaced.
+  let concreteColours = ["red", "green", "purple", "brown", "blue", "lime", "yellow", "orange", "pink"]; // What rods will be replaced.
   for (let i = 0; i < 4; i++) {
     let offset_x = location.x + i * 25; // 25 is the distance between each starting point of the grid.
     let pos1 = { x: offset_x, y: location.y, z: location.z };
     let pos2 = { x: offset_x + 24, y: location.y, z: location.z + 24 };
+    world.sendMessage(JSON.stringify(pos1) + " " + JSON.stringify(pos2));
     await squareReset(pos1, pos2, concreteColours);
   }
 }

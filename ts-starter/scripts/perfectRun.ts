@@ -1,21 +1,26 @@
 //defines variables for the cuisneaire rod game.
 
 export const perfectRun = [
+  //1/2 rod 1
   {
+    rod: 1,
     location: { z: 104, y: 95, x: 30 },
     direction: "north",
     rodLength: 12,
-    blockName: "yellow_concrete",
+    blockName: "green_concrete",
     successMessage: `Instead use a 1/2 rod as that is half of 24.`,
-  }, //1/2
+  }, //1/2 rod 2
   {
+    rod: 2,
     location: { z: 92, y: 95, x: 31 },
     direction: "east",
-    rodLength: 6,
+    rodLength: 12,
     blockName: "green_concrete",
-    successMessage: `For 1/4 of 24 use a 6 rod.`,
-  }, //1/4
+    successMessage: `Instead use a 1/2 rod as that is half of 24.`,
+  },
+  //1/4
   {
+    rod: 3,
     location: { z: 91, y: 95, x: 44 },
     direction: "east",
     rodLength: 8,
@@ -231,8 +236,8 @@ export const replaySettings = [
 ];
 
 export const npcLocation = [
-  { x: 29, y: 96, z: 90 },
-  { x: 38, y: 96, z: 92 },
+  { x: 30, y: 96, z: 90 },
+  { x: 43, y: 96, z: 92 },
   { x: 53, y: 96, z: 90 },
   { x: 53, y: 96, z: 100 },
   { x: 66, y: 96, z: 100 },

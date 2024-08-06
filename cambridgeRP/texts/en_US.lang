@@ -15,13 +15,17 @@ tile.blockbuilders:symbol_subtract.name=Subtract
 tile.blockbuilders:symbol_equals.name=Equals
 tile.blockbuilders:symbol_decimalpoint.name=Decimal Point
 tile.blockbuilders:symbol_colon.name=Colon
-tile.concrete.red.name=§c2
-tile.concrete.purple.name=§d4
-tile.concrete.green.name=§q6
-tile.concrete.brown.name=§n8
-tile.concrete.lime.name=§a3
-tile.concrete.yellow.name=§e12
-tile.concrete.blue.name=§924
+tile.concrete.red.name=§c23 blocks = 1/8 td
+tile.concrete.purple.name=§d8 blocks = 1/3 td
+tile.concrete.green.name=§q24 blocks = 1 td
+tile.concrete.orange.name=§612 blocks = 1/2 td
+tile.concrete.lime.name=§a6 blocks = 1/4 td
+tile.concrete.yellow.name=§e4 blocks = 1/6 td
+tile.concrete.pink.name=§d1 block = 1/24 td
+tile.concrete.light_blue.name=§b2 blocks = 1/12 td
+
+
+
 item.itemLock.popupNotice.cantMove=§eUse to interact with the game.
 potion.emptyPotion.name=Ratio Potion
 potion.empty=Check Ratios before consuming.
