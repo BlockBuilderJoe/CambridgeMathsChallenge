@@ -2,7 +2,7 @@
 export const perfectRun = [
     //1/2 rod 1
     {
-        rod: 1,
+        number: 0,
         location: { z: 104, y: 95, x: 30 },
         direction: "north",
         rodLength: 12,
@@ -11,7 +11,7 @@ export const perfectRun = [
     },
     //1/2 rod 2
     {
-        rod: 2,
+        number: 1,
         location: { z: 92, y: 95, x: 31 },
         direction: "east",
         rodLength: 12,
@@ -20,7 +20,7 @@ export const perfectRun = [
     },
     //1/6 rod 3
     {
-        rod: 3,
+        number: 2,
         location: { z: 91, y: 95, x: 44 },
         direction: "east",
         rodLength: 4,
@@ -28,7 +28,7 @@ export const perfectRun = [
         successMessage: `Use a 4 rod to make up a 1/6.`,
     }, //1/3
     {
-        rod: 4,
+        number: 3,
         location: { z: 94, y: 95, x: 53 },
         direction: "south",
         rodLength: 4,
@@ -140,8 +140,8 @@ export const replaySettings = [
     {
         beginningMessage: `To make 1/2 you placed: `,
         tpStart: `tp @p 30 96 92 facing 38 96 92`,
-        clearBlock: `fill 31 95 92 42 96 92 tallgrass replace`,
-        replenishGrass: `fill 31 94 92 42 96 92 grass_block replace`,
+        clearBlock: `fill 31 95 92 42 95 92 tallgrass replace`,
+        replenishGrass: `fill 31 94 92 42 94 92 grass_block replace`,
         cartesianDirection: "z",
         cartesionValue: 92,
     },

@@ -190,15 +190,19 @@ export async function replay(index: number) {
   overworld.runCommandAsync(replayConfig.replenishGrass);
 
   if (replayConfig.cartesianDirection === "x") {
+    //gets all the rods that were placed.
     let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
+    world.sendMessage(`${JSON.stringify(rodsPlacedToReplay)} rods placed`);
+    //gives back the rods that were used.
     for (let i = 0; i < rodsPlacedToReplay.length; i++) {
       overworld.runCommandAsync(
         `give @p ${rodsPlacedToReplay[i].blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
       );
     }
+    //filters out the rods at that specific point (depending on the direction)
     rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === replayConfig.cartesionValue));
 
-    let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue); //ISSUE appears to be here
+    let perfectRunToReplay = perfectRun.filter((rod) => rod.number === index); //Gets the perfect run based on the index using rod variable.
     if (perfectRunToReplay.length > 1) {
       perfectRunToReplay = perfectRunToReplay.slice(0, -1); //gets the last one so you don't have a bunch of them appearing.
     }
