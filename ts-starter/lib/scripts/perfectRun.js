@@ -1,6 +1,10 @@
 //defines variables for the cuisneaire rod game.
+//Gap 6 = 1 2/3 td or 40 blocks | Optimum rod = 1, 1/3, 1/3 rod
+//Gap 7 = 3/2 td or 36 blocks | Optimum rod = 1, 1/2 rod
+//Gap 8 = 7/12 td or 14 blocks | Optimum rod = 1/4,1/3 rod
+//Gap 9 = 5/24 td or 5 blocks | Optimum rod = 1/6,1/24 rod
 export const perfectRun = [
-    //1/2 rod 1
+    //Gap 1 = 1/2 td | Optimum rod = 1/2 rod
     {
         number: 0,
         location: { z: 104, y: 95, x: 30 },
@@ -9,7 +13,7 @@ export const perfectRun = [
         blockName: "orange_concrete",
         successMessage: `Instead use a 1/2 rod as that is half of 24.`,
     },
-    //1/2 rod 2
+    //Gap 2 = 1/2 td or 12 blocks | Optimum rod = 1/2 rod
     {
         number: 1,
         location: { z: 92, y: 95, x: 31 },
@@ -18,7 +22,7 @@ export const perfectRun = [
         blockName: "orange_concrete",
         successMessage: `Instead use a 1/2 rod as that is half of 24.`,
     },
-    //1/6 rod 3
+    //Gap 3 = 1/6 td or 4 blocks | Optimum rod = 1/6 rod
     {
         number: 2,
         location: { z: 91, y: 95, x: 44 },
@@ -26,23 +30,25 @@ export const perfectRun = [
         rodLength: 4,
         blockName: "yellow_concrete",
         successMessage: `Use a 4 rod to make up a 1/6.`,
-    }, //1/3
+    },
+    //Gap 4 = 3/4 td or 18 blocks | Optimum rod = 1/2,1/4 rod
     {
         number: 3,
-        location: { z: 94, y: 95, x: 53 },
-        direction: "south",
-        rodLength: 4,
-        blockName: "purple_concrete",
-        successMessage: `Four is a sixth of 24.`,
-    }, //1/6
-    {
-        location: { z: 100, y: 95, x: 55 },
+        location: { z: 48, y: 95, x: 86 },
         direction: "east",
-        rodLength: 8,
-        blockName: "brown_concrete",
-        successMessage: `The most efficient way is to simplify 2/6 to 1/3.`,
-    }, //2/6
-    //{ location: { z: 99, y: 95, x: 69 }, direction: "east", rodLength: 24, blockName: "blue_concrete", successMessage: `The largest rod you have is a whole, so place two of them.` }, //1/1
+        rodLength: 12,
+        blockName: "orange_concrete",
+        successMessage: `1/2 = 1/4 + 1/4.`,
+    },
+    {
+        number: 3,
+        location: { z: 86, y: 95, x: 60 },
+        direction: "east",
+        rodLength: 4,
+        blockName: "lime_concrete",
+        successMessage: `+ a 1/4 rod = 3/4.`,
+    },
+    //Gap 5 = 3/8 td or 9 blocks | Optimum rod = 1/4,1/8 rod
     {
         location: { z: 99, y: 95, x: 93 },
         direction: "east",
@@ -97,7 +103,7 @@ export const validRanges = [
     { x: 30, zMin: 93, zMax: 104 }, //1/2
     { xMin: 31, xMax: 42, z: 92 }, //1/2
     { xMin: 44, xMax: 47, z: 91 }, //1/6
-    { x: 53, zMin: 94, zMax: 97 },
+    { z: 86, xMin: 48, xMax: 65 }, //3/4
     { xMin: 55, xMax: 62, z: 100 },
     { xMin: 69, xMax: 116, z: 99 },
     { xMin: 113, xMax: 115, z: 95 },
@@ -108,19 +114,11 @@ export const validRanges = [
     { xMin: 80, xMax: 87, z: 89 },
 ];
 export const finalBlock = [
-    { location: { z: 93, y: 95, x: 30 }, blockName: "orange_concrete" },
-    { location: { z: 92, y: 95, x: 42 }, blockName: "orange_concrete" },
-    { location: { z: 91, y: 95, x: 47 }, blockName: "yellow_concrete" },
-    { location: { z: 97, y: 95, x: 53 }, blockName: "purple_concrete" },
-    { location: { z: 100, y: 95, x: 62 }, blockName: "brown_concrete" },
-    { location: { z: 99, y: 95, x: 92 }, blockName: "blue_concrete" },
-    { location: { z: 99, y: 95, x: 116 }, blockName: "blue_concrete" },
-    { location: { z: 95, y: 95, x: 113 }, blockName: "lime_concrete" },
-    { location: { z: 94, y: 95, x: 104 }, blockName: "green_concrete" },
-    { location: { z: 91, y: 95, x: 99 }, blockName: "red_concrete" },
-    { location: { z: 89, y: 95, x: 94 }, blockName: "purple_concrete" },
-    { location: { z: 89, y: 95, x: 91 }, blockName: "red_concrete" },
-    { location: { z: 89, y: 95, x: 80 }, blockName: "brown_concrete" },
+    { location: { z: 93, y: 95, x: 30 }, blockName: "orange_concrete", number: 0 },
+    { location: { z: 92, y: 95, x: 42 }, blockName: "orange_concrete", number: 1 },
+    { location: { z: 91, y: 95, x: 47 }, blockName: "yellow_concrete", number: 2 },
+    { location: { z: 86, y: 95, x: 65 }, blockName: "orange_concrete", number: 3 }, //3/4
+    { location: { z: 86, y: 95, x: 65 }, blockName: "lime_concrete", number: 3 }, //3/4
 ];
 export const replaySettings = [
     {
@@ -148,18 +146,18 @@ export const replaySettings = [
     {
         beginningMessage: `To make 1/6 you placed: `,
         tpStart: `tp @p 43 96 91 facing 53 96 91`,
-        clearBlock: `fill 47 95 91 44 95 91 tallgrass replace`,
-        replenishGrass: `fill 47 94 91 44 94 91 grass_block replace`,
+        clearBlock: `fill 48 95 86 65 95 86 tallgrass replace`,
+        replenishGrass: `fill 48 94 86 65 94 86 grass_block replace`,
         cartesianDirection: "z",
         cartesionValue: 91,
     },
     {
-        beginningMessage: `To make 1/6 you placed: `,
-        tpStart: `tp @p 53 96 92 facing 53 96 98`,
+        beginningMessage: `To make 3/4 you placed: `,
+        tpStart: `tp @p 47 96 86 facing 67 96 86`,
         clearBlock: `fill 53 95 94 53 95 97 tallgrass replace`,
         replenishGrass: `fill 53 94 94 53 94 97 grass_block replace`,
-        cartesianDirection: "x",
-        cartesionValue: 53,
+        cartesianDirection: "z",
+        cartesionValue: 86,
     },
     {
         beginningMessage: `To make 2/6 you placed: `,

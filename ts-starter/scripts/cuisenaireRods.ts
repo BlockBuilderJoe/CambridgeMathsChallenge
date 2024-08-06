@@ -105,10 +105,12 @@ export async function cuisenaire(
         successMessage: successMessage,
       };
       rodsPlaced.push(rodToPlace);
+      world.sendMessage(`${rodToPlace}`);
       placeRods(block, blockName, rodLength, direction);
       checkFinalBlock();
     } else {
       block?.setPermutation(BlockPermutation.resolve("tallgrass"));
+      overworld.runCommandAsync(`give @p ${blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
     }
   }
 }
@@ -182,45 +184,35 @@ async function replayMessage(beginningMessage: string, fractions: any[]) {
 
 export async function replay(index: number) {
   overworld.runCommandAsync(`tp @p 31 96 116`); //moves the player out of frame.
+  //sets up the arrays.
   let npcIndex = index;
   let fractions: any[] = [];
   let combinedRods: any[] = [];
   let replayConfig = replaySettings[index]; //stores all the replay settings for the different rods.
+  //cleans the area up
   overworld.runCommandAsync(replayConfig.clearBlock);
   overworld.runCommandAsync(replayConfig.replenishGrass);
 
-  if (replayConfig.cartesianDirection === "x") {
-    //gets all the rods that were placed.
-    let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
-    world.sendMessage(`${JSON.stringify(rodsPlacedToReplay)} rods placed`);
-    //gives back the rods that were used.
-    for (let i = 0; i < rodsPlacedToReplay.length; i++) {
-      overworld.runCommandAsync(
-        `give @p ${rodsPlacedToReplay[i].blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
-      );
-    }
-    //filters out the rods at that specific point (depending on the direction)
-    rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === replayConfig.cartesionValue));
+  //filters the rods placed for this gap.
+  const direction = replayConfig.cartesianDirection;
+  const value = replayConfig.cartesionValue;
+  let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location[direction] === value);
+  rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location[direction] === value));
 
-    let perfectRunToReplay = perfectRun.filter((rod) => rod.number === index); //Gets the perfect run based on the index using rod variable.
-    if (perfectRunToReplay.length > 1) {
-      perfectRunToReplay = perfectRunToReplay.slice(0, -1); //gets the last one so you don't have a bunch of them appearing.
-    }
-    combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
-  } else if (replayConfig.cartesianDirection === "z") {
-    let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
-    for (let i = 0; i < rodsPlacedToReplay.length; i++) {
-      overworld.runCommandAsync(
-        `give @p ${rodsPlacedToReplay[i].blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
-      );
-    }
-    rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.z === replayConfig.cartesionValue));
-    let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
-    if (perfectRunToReplay.length > 1) {
-      perfectRunToReplay = perfectRunToReplay.slice(0, -1); //gets the last one so you don't have a bunch of them appearing.
-    }
-    combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
+  //gives the player the rods they placed back before replay.
+  for (let i = 0; i < rodsPlacedToReplay.length; i++) {
+    overworld.runCommandAsync(
+      `give @p ${rodsPlacedToReplay[i].blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
+    );
   }
+
+  //filters the perfectRun list based on the index.
+  let perfectRunToReplay = perfectRun.filter((rod) => rod.number === index); //gets the perfect rods from the number component.
+
+  //concantentates the rods placed and the perfect rods together.
+  combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
+
+  //Runs the replay using the combinedRods array.
   if (combinedRods.length > 0) {
     for (let i = 0; i < combinedRods.length; i++) {
       ((index) => {
@@ -311,12 +303,15 @@ export async function giveRods() {
 
 async function checkFinalBlock() {
   for (let i = 0; i < finalBlock.length; i++) {
+    //gets the end of the rod using the end.
     let rodEnd = overworld.getBlock(finalBlock[i].location);
     let hasColour = rodEnd?.permutation?.getState("color");
     if (rodEnd?.permutation?.matches(finalBlock[i].blockName)) {
-      changeNPC(i, true);
+      world.sendMessage(`Changing Npc` + finalBlock[i].number + ` to win state`);
+      changeNPC(finalBlock[i].number, true);
     } else if (hasColour) {
-      changeNPC(i, false);
+      world.sendMessage(`Changing Npc` + finalBlock[i].number + ` to fail state`);
+      changeNPC(finalBlock[i].number, false);
     }
   }
 }

@@ -239,52 +239,51 @@ import {
 
 // scripts/perfectRun.ts
 var perfectRun = [
-  //1/2 rod 1
+  //Gap 1 = 1/2 td | Optimum rod = 1/2 rod
   {
-    rod: 1,
+    number: 0,
     location: { z: 104, y: 95, x: 30 },
     direction: "north",
     rodLength: 12,
     blockName: "orange_concrete",
     successMessage: `Instead use a 1/2 rod as that is half of 24.`
   },
-  //1/2 rod 2
+  //Gap 2 = 1/2 td or 12 blocks | Optimum rod = 1/2 rod
   {
-    rod: 2,
+    number: 1,
     location: { z: 92, y: 95, x: 31 },
     direction: "east",
     rodLength: 12,
     blockName: "orange_concrete",
     successMessage: `Instead use a 1/2 rod as that is half of 24.`
   },
-  //1/6 rod 3
+  //Gap 3 = 1/6 td or 4 blocks | Optimum rod = 1/6 rod
   {
-    rod: 3,
+    number: 2,
     location: { z: 91, y: 95, x: 44 },
     direction: "east",
     rodLength: 4,
     blockName: "yellow_concrete",
     successMessage: `Use a 4 rod to make up a 1/6.`
   },
-  //1/3
+  //Gap 4 = 3/4 td or 18 blocks | Optimum rod = 1/2,1/4 rod
   {
-    rod: 4,
-    location: { z: 94, y: 95, x: 53 },
-    direction: "south",
-    rodLength: 4,
-    blockName: "purple_concrete",
-    successMessage: `Four is a sixth of 24.`
-  },
-  //1/6
-  {
-    location: { z: 100, y: 95, x: 55 },
+    number: 3,
+    location: { z: 48, y: 95, x: 86 },
     direction: "east",
-    rodLength: 8,
-    blockName: "brown_concrete",
-    successMessage: `The most efficient way is to simplify 2/6 to 1/3.`
+    rodLength: 12,
+    blockName: "orange_concrete",
+    successMessage: `1/2 = 1/4 + 1/4.`
   },
-  //2/6
-  //{ location: { z: 99, y: 95, x: 69 }, direction: "east", rodLength: 24, blockName: "blue_concrete", successMessage: `The largest rod you have is a whole, so place two of them.` }, //1/1
+  {
+    number: 3,
+    location: { z: 86, y: 95, x: 60 },
+    direction: "east",
+    rodLength: 4,
+    blockName: "lime_concrete",
+    successMessage: `+ a 1/4 rod = 3/4.`
+  },
+  //Gap 5 = 3/8 td or 9 blocks | Optimum rod = 1/4,1/8 rod
   {
     location: { z: 99, y: 95, x: 93 },
     direction: "east",
@@ -349,7 +348,8 @@ var validRanges = [
   //1/2
   { xMin: 44, xMax: 47, z: 91 },
   //1/6
-  { x: 53, zMin: 94, zMax: 97 },
+  { z: 86, xMin: 48, xMax: 65 },
+  //3/4
   { xMin: 55, xMax: 62, z: 100 },
   { xMin: 69, xMax: 116, z: 99 },
   { xMin: 113, xMax: 115, z: 95 },
@@ -360,19 +360,13 @@ var validRanges = [
   { xMin: 80, xMax: 87, z: 89 }
 ];
 var finalBlock = [
-  { location: { z: 93, y: 95, x: 30 }, blockName: "orange_concrete" },
-  { location: { z: 92, y: 95, x: 42 }, blockName: "orange_concrete" },
-  { location: { z: 91, y: 95, x: 47 }, blockName: "yellow_concrete" },
-  { location: { z: 97, y: 95, x: 53 }, blockName: "purple_concrete" },
-  { location: { z: 100, y: 95, x: 62 }, blockName: "brown_concrete" },
-  { location: { z: 99, y: 95, x: 92 }, blockName: "blue_concrete" },
-  { location: { z: 99, y: 95, x: 116 }, blockName: "blue_concrete" },
-  { location: { z: 95, y: 95, x: 113 }, blockName: "lime_concrete" },
-  { location: { z: 94, y: 95, x: 104 }, blockName: "green_concrete" },
-  { location: { z: 91, y: 95, x: 99 }, blockName: "red_concrete" },
-  { location: { z: 89, y: 95, x: 94 }, blockName: "purple_concrete" },
-  { location: { z: 89, y: 95, x: 91 }, blockName: "red_concrete" },
-  { location: { z: 89, y: 95, x: 80 }, blockName: "brown_concrete" }
+  { location: { z: 93, y: 95, x: 30 }, blockName: "orange_concrete", number: 0 },
+  { location: { z: 92, y: 95, x: 42 }, blockName: "orange_concrete", number: 1 },
+  { location: { z: 91, y: 95, x: 47 }, blockName: "yellow_concrete", number: 2 },
+  { location: { z: 86, y: 95, x: 65 }, blockName: "orange_concrete", number: 3 },
+  //3/4
+  { location: { z: 86, y: 95, x: 65 }, blockName: "lime_concrete", number: 3 }
+  //3/4
 ];
 var replaySettings = [
   {
@@ -392,26 +386,26 @@ var replaySettings = [
   {
     beginningMessage: `To make 1/2 you placed: `,
     tpStart: `tp @p 30 96 92 facing 38 96 92`,
-    clearBlock: `fill 31 95 92 42 96 92 tallgrass replace`,
-    replenishGrass: `fill 31 94 92 42 96 92 grass_block replace`,
+    clearBlock: `fill 31 95 92 42 95 92 tallgrass replace`,
+    replenishGrass: `fill 31 94 92 42 94 92 grass_block replace`,
     cartesianDirection: "z",
     cartesionValue: 92
   },
   {
     beginningMessage: `To make 1/6 you placed: `,
     tpStart: `tp @p 43 96 91 facing 53 96 91`,
-    clearBlock: `fill 47 95 91 44 95 91 tallgrass replace`,
-    replenishGrass: `fill 47 94 91 44 94 91 grass_block replace`,
+    clearBlock: `fill 48 95 86 65 95 86 tallgrass replace`,
+    replenishGrass: `fill 48 94 86 65 94 86 grass_block replace`,
     cartesianDirection: "z",
     cartesionValue: 91
   },
   {
-    beginningMessage: `To make 1/6 you placed: `,
-    tpStart: `tp @p 53 96 92 facing 53 96 98`,
+    beginningMessage: `To make 3/4 you placed: `,
+    tpStart: `tp @p 47 96 86 facing 67 96 86`,
     clearBlock: `fill 53 95 94 53 95 97 tallgrass replace`,
     replenishGrass: `fill 53 94 94 53 94 97 grass_block replace`,
-    cartesianDirection: "x",
-    cartesionValue: 53
+    cartesianDirection: "z",
+    cartesionValue: 86
   },
   {
     beginningMessage: `To make 2/6 you placed: `,
@@ -568,10 +562,12 @@ async function cuisenaire(block, blockName, rodLength, successMessage, direction
         successMessage
       };
       rodsPlaced.push(rodToPlace);
+      world5.sendMessage(`${rodToPlace}`);
       placeRods(block, blockName, rodLength, direction);
       checkFinalBlock();
     } else {
       block?.setPermutation(BlockPermutation3.resolve("tallgrass"));
+      overworld5.runCommandAsync(`give @p ${blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
     }
   }
 }
@@ -637,33 +633,17 @@ async function replay(index) {
   let replayConfig = replaySettings[index];
   overworld5.runCommandAsync(replayConfig.clearBlock);
   overworld5.runCommandAsync(replayConfig.replenishGrass);
-  if (replayConfig.cartesianDirection === "x") {
-    let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
-    for (let i = 0; i < rodsPlacedToReplay.length; i++) {
-      overworld5.runCommandAsync(
-        `give @p ${rodsPlacedToReplay[i].blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
-      );
-    }
-    rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.x === replayConfig.cartesionValue));
-    let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.x === replayConfig.cartesionValue);
-    if (perfectRunToReplay.length > 1) {
-      perfectRunToReplay = perfectRunToReplay.slice(0, -1);
-    }
-    combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
-  } else if (replayConfig.cartesianDirection === "z") {
-    let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
-    for (let i = 0; i < rodsPlacedToReplay.length; i++) {
-      overworld5.runCommandAsync(
-        `give @p ${rodsPlacedToReplay[i].blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
-      );
-    }
-    rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location.z === replayConfig.cartesionValue));
-    let perfectRunToReplay = perfectRun.filter((rod) => rod.location && rod.location.z === replayConfig.cartesionValue);
-    if (perfectRunToReplay.length > 1) {
-      perfectRunToReplay = perfectRunToReplay.slice(0, -1);
-    }
-    combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
+  const direction = replayConfig.cartesianDirection;
+  const value = replayConfig.cartesionValue;
+  let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location[direction] === value);
+  rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location[direction] === value));
+  for (let i = 0; i < rodsPlacedToReplay.length; i++) {
+    overworld5.runCommandAsync(
+      `give @p ${rodsPlacedToReplay[i].blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
+    );
   }
+  let perfectRunToReplay = perfectRun.filter((rod) => rod.number === index);
+  combinedRods = rodsPlacedToReplay.concat(perfectRunToReplay);
   if (combinedRods.length > 0) {
     for (let i = 0; i < combinedRods.length; i++) {
       ((index2) => {
@@ -747,9 +727,11 @@ async function checkFinalBlock() {
     let rodEnd = overworld5.getBlock(finalBlock[i].location);
     let hasColour = rodEnd?.permutation?.getState("color");
     if (rodEnd?.permutation?.matches(finalBlock[i].blockName)) {
-      changeNPC(i, true);
+      world5.sendMessage(`Changing Npc` + finalBlock[i].number + ` to win state`);
+      changeNPC(finalBlock[i].number, true);
     } else if (hasColour) {
-      changeNPC(i, false);
+      world5.sendMessage(`Changing Npc` + finalBlock[i].number + ` to fail state`);
+      changeNPC(finalBlock[i].number, false);
     }
   }
 }
