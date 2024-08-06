@@ -1,5 +1,5 @@
 import { system, world } from "@minecraft/server";
-import { moveNpc, replay, startCuisenaireGame, resetCuisenaireGame } from "./cuisenaireRods";
+import { moveNpc, replay, startCuisenaireGame, resetCuisenaireGame, giveMap, giveRods } from "./cuisenaireRods";
 import { perfectRun } from "./perfectRun";
 import { openGate, closeGate } from "./gate";
 import { npcWalk } from "./npcWalk";
@@ -111,7 +111,7 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
         }
         case "1": {
           overworld.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc3`);
-          startCuisenaireGame();
+          await startCuisenaireGame();
           break;
         }
       }

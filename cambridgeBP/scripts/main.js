@@ -231,7 +231,11 @@ async function scaleShape(shape, scaleFactor, axes) {
 }
 
 // scripts/cuisenaireRods.ts
-import { BlockPermutation as BlockPermutation3, world as world5, system } from "@minecraft/server";
+import {
+  BlockPermutation as BlockPermutation3,
+  world as world5,
+  system
+} from "@minecraft/server";
 
 // scripts/perfectRun.ts
 var perfectRun = [
@@ -486,8 +490,21 @@ async function resetCuisenaireGame() {
   await resetGrid({ x: 19, y: 95, z: 81 });
 }
 async function startCuisenaireGame() {
-  resetCuisenaireGame();
   await giveRods();
+  await giveMap();
+  await resetCuisenaireGame();
+}
+async function giveMap() {
+  let chest = overworld5.getBlock({ x: 30, y: 91, z: 107 })?.getComponent("inventory");
+  let map = chest.container?.getItem(0);
+  overworld5.getPlayers().forEach((player) => {
+    const getPlayerInventoryComponent = player.getComponent("inventory");
+    if (map) {
+      getPlayerInventoryComponent.container?.addItem(map);
+    } else {
+      world5.sendMessage(`Error: Map not found it needs to be placed in the chest at 30 90 107`);
+    }
+  });
 }
 async function moveNpc(id) {
   let { x, y, z } = getRandomCoordinate();
@@ -701,19 +718,19 @@ async function resetGrid(location) {
 }
 async function giveRods() {
   let rods = [
-    { block: "red_concrete", amount: 2 },
-    { block: "lime_concrete", amount: 1 },
-    { block: "purple_concrete", amount: 2 },
     { block: "green_concrete", amount: 2 },
-    { block: "brown_concrete", amount: 3 },
-    { block: "yellow_concrete", amount: 1 },
-    { block: "blue_concrete", amount: 2 }
+    { block: "orange_concrete", amount: 4 },
+    { block: "purple_concrete", amount: 3 },
+    { block: "lime_concrete", amount: 3 },
+    { block: "yellow_concrete", amount: 2 },
+    { block: "red_concrete", amount: 1 },
+    { block: "pink_concrete", amount: 1 }
   ];
   overworld5.runCommandAsync(`clear @p`);
   overworld5.runCommandAsync(`gamemode adventure`);
   for (let i = 0; i < rods.length; i++) {
     overworld5.runCommandAsync(
-      `give @p ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
+      `replaceitem entity @p slot.hotbar ${i + 1} ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
     );
   }
 }
@@ -1308,7 +1325,7 @@ system5.afterEvents.scriptEventReceive.subscribe(async (event) => {
         }
         case "1": {
           overworld10.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc3`);
-          startCuisenaireGame();
+          await startCuisenaireGame();
           break;
         }
       }

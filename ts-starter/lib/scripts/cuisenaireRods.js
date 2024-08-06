@@ -1,4 +1,4 @@
-import { BlockPermutation, world, system } from "@minecraft/server";
+import { BlockPermutation, world, system, } from "@minecraft/server";
 import { perfectRun, validRanges, finalBlock, replaySettings, npcLocation } from "./perfectRun";
 let overworld = world.getDimension("overworld");
 let rodsPlaced = [];
@@ -14,8 +14,26 @@ export function resetCuisenaireGame() {
 }
 export function startCuisenaireGame() {
     return __awaiter(this, void 0, void 0, function* () {
-        resetCuisenaireGame();
         yield giveRods();
+        yield giveMap();
+        yield resetCuisenaireGame();
+    });
+}
+export function giveMap() {
+    return __awaiter(this, void 0, void 0, function* () {
+        var _a, _b;
+        let chest = (_a = overworld.getBlock({ x: 30, y: 91, z: 107 })) === null || _a === void 0 ? void 0 : _a.getComponent("inventory");
+        let map = (_b = chest.container) === null || _b === void 0 ? void 0 : _b.getItem(0);
+        overworld.getPlayers().forEach((player) => {
+            var _a;
+            const getPlayerInventoryComponent = player.getComponent("inventory");
+            if (map) {
+                (_a = getPlayerInventoryComponent.container) === null || _a === void 0 ? void 0 : _a.addItem(map);
+            }
+            else {
+                world.sendMessage(`Error: Map not found it needs to be placed in the chest at 30 90 107`);
+            }
+        });
     });
 }
 export function moveNpc(id) {
@@ -255,18 +273,18 @@ export function resetGrid(location) {
 export function giveRods() {
     return __awaiter(this, void 0, void 0, function* () {
         let rods = [
-            { block: "red_concrete", amount: 2 },
-            { block: "lime_concrete", amount: 1 },
-            { block: "purple_concrete", amount: 2 },
             { block: "green_concrete", amount: 2 },
-            { block: "brown_concrete", amount: 3 },
-            { block: "yellow_concrete", amount: 1 },
-            { block: "blue_concrete", amount: 2 },
+            { block: "orange_concrete", amount: 4 },
+            { block: "purple_concrete", amount: 3 },
+            { block: "lime_concrete", amount: 3 },
+            { block: "yellow_concrete", amount: 2 },
+            { block: "red_concrete", amount: 1 },
+            { block: "pink_concrete", amount: 1 },
         ];
         overworld.runCommandAsync(`clear @p`);
         overworld.runCommandAsync(`gamemode adventure`);
         for (let i = 0; i < rods.length; i++) {
-            overworld.runCommandAsync(`give @p ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
+            overworld.runCommandAsync(`replaceitem entity @p slot.hotbar ${i + 1} ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
         }
     });
 }

@@ -1,4 +1,11 @@
-import { BlockPermutation, world, system, Vector3 } from "@minecraft/server";
+import {
+  BlockPermutation,
+  world,
+  system,
+  Vector3,
+  BlockInventoryComponent,
+  EntityInventoryComponent,
+} from "@minecraft/server";
 import { perfectRun, validRanges, finalBlock, replaySettings, npcLocation } from "./perfectRun";
 
 let overworld = world.getDimension("overworld");
@@ -14,10 +21,23 @@ export async function resetCuisenaireGame() {
 }
 
 export async function startCuisenaireGame() {
-  resetCuisenaireGame();
   await giveRods();
+  await giveMap();
+  await resetCuisenaireGame();
 }
 
+export async function giveMap() {
+  let chest = overworld.getBlock({ x: 30, y: 91, z: 107 })?.getComponent("inventory") as BlockInventoryComponent;
+  let map = chest.container?.getItem(0);
+  overworld.getPlayers().forEach((player) => {
+    const getPlayerInventoryComponent = player.getComponent("inventory") as EntityInventoryComponent;
+    if (map) {
+      getPlayerInventoryComponent.container?.addItem(map);
+    } else {
+      world.sendMessage(`Error: Map not found it needs to be placed in the chest at 30 90 107`);
+    }
+  });
+}
 export async function moveNpc(id: number) {
   let { x, y, z } = getRandomCoordinate();
   overworld.runCommandAsync(`tp @e[tag=rodNpc${id}] ${x} ${y} ${z}`);
@@ -265,19 +285,21 @@ export async function resetGrid(location: Vector3) {
 
 export async function giveRods() {
   let rods = [
-    { block: "red_concrete", amount: 2 },
-    { block: "lime_concrete", amount: 1 },
-    { block: "purple_concrete", amount: 2 },
     { block: "green_concrete", amount: 2 },
-    { block: "brown_concrete", amount: 3 },
-    { block: "yellow_concrete", amount: 1 },
-    { block: "blue_concrete", amount: 2 },
+    { block: "orange_concrete", amount: 4 },
+    { block: "purple_concrete", amount: 3 },
+    { block: "lime_concrete", amount: 3 },
+    { block: "yellow_concrete", amount: 2 },
+    { block: "red_concrete", amount: 1 },
+    { block: "pink_concrete", amount: 1 },
   ];
   overworld.runCommandAsync(`clear @p`);
   overworld.runCommandAsync(`gamemode adventure`);
   for (let i = 0; i < rods.length; i++) {
     overworld.runCommandAsync(
-      `give @p ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
+      `replaceitem entity @p slot.hotbar ${i + 1} ${rods[i].block} ${
+        rods[i].amount
+      } 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
     );
   }
 }
