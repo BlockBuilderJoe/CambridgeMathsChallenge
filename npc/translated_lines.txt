@@ -119,6 +119,7 @@ Dean of Students=
 Welcome! We need your help with three different maths challenges. Pick one below, then a Professor from that school will guide you from the courtyard ahead.=
 Fractions=
 Ratios=
+Scale Factors=
 Guild Master=
 This old building desperately needs some new windows. The architecture team needs the help of a Mathmogician to scale it correctly. Follow me!=
 Okay=
@@ -148,7 +149,6 @@ Let's Go=
 Professor of Alchemy=
 The challenge awaits, please keep up.=
 On the way!=
-Scale Factors=
 Professor of Alchemy=
 Mmmm delicious, okay lets get some coins.
 

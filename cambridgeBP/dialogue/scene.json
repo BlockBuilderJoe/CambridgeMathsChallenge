@@ -1264,7 +1264,19 @@
                             ]
                         },
                         "commands": [
-                            ""
+                            "scriptevent spawn:npc ratio"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Scale Factors"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent spawn:npc scale"
                         ]
                     }
                 ]
@@ -1400,7 +1412,7 @@
                             ]
                         },
                         "commands": [
-                            ""
+                            "dialogue open @e[tag=scaleNpc] @p scaleNpc4"
                         ]
                     }
                 ]
@@ -1495,18 +1507,6 @@
                         "commands": [
                             ""
                         ]
-                    },
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "Scale Factors"
-                                }
-                            ]
-                        },
-                        "commands": [
-                            "scriptevent spawn:npc scale"
-                        ]
                     }
                 ]
             },
@@ -1579,7 +1579,7 @@
                             ]
                         },
                         "commands": [
-                            ""
+                            "dialogue open @e[tag=ratioNpc] @p ratioNpc4"
                         ]
                     }
                 ]
@@ -1839,7 +1839,7 @@
                             ]
                         },
                         "commands": [
-                            ""
+                            "dialogue open @e[tag=fractionNpc] @p fractionNpc6"
                         ]
                     }
                 ]
@@ -1913,7 +1913,7 @@
                             ]
                         },
                         "commands": [
-                            ""
+                            "dialogue open @e[tag=fractionNpc] @p fractionNpc6"
                         ]
                     }
                 ]
@@ -1956,7 +1956,7 @@
                             ]
                         },
                         "commands": [
-                            ""
+                            "scriptevent fraction:npc 1"
                         ]
                     }
                 ]
@@ -2022,21 +2022,6 @@
                         ]
                     }
                 ]
-            },
-            {
-                "buttons": []
-            },
-            {
-                "buttons": []
-            },
-            {
-                "buttons": []
-            },
-            {
-                "buttons": []
-            },
-            {
-                "buttons": []
             }
         ]
     }
