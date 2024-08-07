@@ -68,7 +68,7 @@ export const perfectRun = [
         location: { z: 100, y: 95, x: 69 },
         direction: "east",
         rodLength: 24,
-        blockName: "blue_concrete",
+        blockName: "green_concrete",
         successMessage: `1/1`,
     },
     {
@@ -93,7 +93,7 @@ export const perfectRun = [
         location: { z: 93, y: 95, x: 108 },
         direction: "west",
         rodLength: 24,
-        blockName: "blue_concrete",
+        blockName: "green_concrete",
         successMessage: `1/1 = 1/2 + 1/2`,
     },
     {
@@ -161,9 +161,9 @@ export const finalBlock = [
     { location: { z: 97, y: 95, x: 66 }, blockName: "lime_concrete", number: 4 }, //3/8 gap 5
     { location: { z: 97, y: 95, x: 66 }, blockName: "red_concrete", number: 4 }, //3/8 gap 5
     { location: { z: 100, y: 95, x: 108 }, blockName: "purple_concrete", number: 5 }, //1 2/3 gap 6
-    { location: { z: 100, y: 95, x: 108 }, blockName: "blue_concrete", number: 5 }, //1 2/3 gap 6
+    { location: { z: 100, y: 95, x: 108 }, blockName: "green_concrete", number: 5 }, //1 2/3 gap 6
     { location: { z: 93, y: 95, x: 73 }, blockName: "orange_concrete", number: 6 }, //3/2 gap 7
-    { location: { z: 93, y: 95, x: 73 }, blockName: "blue_concrete", number: 6 }, //3/2 gap 7
+    { location: { z: 93, y: 95, x: 73 }, blockName: "green_concrete", number: 6 }, //3/2 gap 7
     { location: { z: 85, y: 95, x: 86 }, blockName: "purple_concrete", number: 7 }, //7/12 gap 8
     { location: { z: 85, y: 95, x: 86 }, blockName: "lime_concrete", number: 7 }, //7/12 gap 8
     { location: { z: 85, y: 95, x: 95 }, blockName: "pink_concrete", number: 8 }, //5/24 gap 9
@@ -269,6 +269,6 @@ export const npcLocation = [
     { x: 110, y: 96, z: 101 }, // 1 2/3 gap 6
     { x: 71, y: 96, z: 93 }, // 3/2 gap 7
     { x: 88, Y: 96, z: 86 }, // 7/12 gap 8
-    { x: 98, Y: 96, z: 85 }, // 5/24 gap 9
+    { x: 98, Y: 96, z: 85 }, // 5/24 gap 9f
 ];
 //# sourceMappingURL=perfectRun.js.map

@@ -306,7 +306,7 @@ var perfectRun = [
     location: { z: 100, y: 95, x: 69 },
     direction: "east",
     rodLength: 24,
-    blockName: "blue_concrete",
+    blockName: "green_concrete",
     successMessage: `1/1`
   },
   {
@@ -331,7 +331,7 @@ var perfectRun = [
     location: { z: 93, y: 95, x: 108 },
     direction: "west",
     rodLength: 24,
-    blockName: "blue_concrete",
+    blockName: "green_concrete",
     successMessage: `1/1 = 1/2 + 1/2`
   },
   {
@@ -414,11 +414,11 @@ var finalBlock = [
   //3/8 gap 5
   { location: { z: 100, y: 95, x: 108 }, blockName: "purple_concrete", number: 5 },
   //1 2/3 gap 6
-  { location: { z: 100, y: 95, x: 108 }, blockName: "blue_concrete", number: 5 },
+  { location: { z: 100, y: 95, x: 108 }, blockName: "green_concrete", number: 5 },
   //1 2/3 gap 6
   { location: { z: 93, y: 95, x: 73 }, blockName: "orange_concrete", number: 6 },
   //3/2 gap 7
-  { location: { z: 93, y: 95, x: 73 }, blockName: "blue_concrete", number: 6 },
+  { location: { z: 93, y: 95, x: 73 }, blockName: "green_concrete", number: 6 },
   //3/2 gap 7
   { location: { z: 85, y: 95, x: 86 }, blockName: "purple_concrete", number: 7 },
   //7/12 gap 8
@@ -537,7 +537,7 @@ var npcLocation = [
   { x: 88, Y: 96, z: 86 },
   // 7/12 gap 8
   { x: 98, Y: 96, z: 85 }
-  // 5/24 gap 9
+  // 5/24 gap 9f
 ];
 
 // scripts/cuisenaireRods.ts
