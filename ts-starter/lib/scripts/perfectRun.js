@@ -185,8 +185,8 @@ export const replaySettings = [
         // 1/6 gap 3
         beginningMessage: `To make 1/6 you placed: `,
         tpStart: `tp @p 43 96 91 facing 53 96 91`,
-        clearBlock: `fill 48 95 86 65 95 86 tallgrass replace`,
-        replenishGrass: `fill 48 94 86 65 94 86 grass_block replace`,
+        clearBlock: `fill 44 95 91 47 95 91 tallgrass replace`,
+        replenishGrass: `fill 44 94 91 47 94 91 grass_block replace`,
         cartesianDirection: "z",
         cartesionValue: 91,
     },
@@ -194,8 +194,8 @@ export const replaySettings = [
         // 3/4 gap 4
         beginningMessage: `To make 3/4 you placed: `,
         tpStart: `tp @p 47 96 86 facing 67 96 86`,
-        clearBlock: `fill 53 95 94 53 95 97 tallgrass replace`,
-        replenishGrass: `fill 53 94 94 53 94 97 grass_block replace`,
+        clearBlock: `fill 48 95 86 65 95 86 tallgrass replace`,
+        replenishGrass: `fill 48 94 86 65 94 86 grass_block replace`,
         cartesianDirection: "z",
         cartesionValue: 86,
     },
