@@ -1,0 +1,29 @@
+{
+	"format_version": 2,
+	"header": {
+		"name": "groundskeeper",
+		"description": "groundskeeper Behavior Pack",
+		"uuid": "d330d572-ea2c-7e69-2058-183989127da1",
+		"version": [1, 0, 0],
+		"min_engine_version": [1, 16, 0]
+	},
+	"metadata": {
+		"generated_with": {
+			"blockbench_entity_wizard": ["1.5.1"]
+		}
+	},
+	"modules": [
+		{
+			"description": "Behavior",
+			"version": [1, 0, 0],
+			"uuid": "f30cb8c4-7851-0e07-792d-8f5406c97160",
+			"type": "data"
+		}
+	],
+	"dependencies": [
+		{
+			"uuid": "6c2d1c7c-6db8-d1a0-c512-017db570dcdd",
+			"version": [1, 0, 0]
+		}
+	]
+}

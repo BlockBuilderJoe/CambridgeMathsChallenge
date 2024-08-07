@@ -1479,6 +1479,12 @@ function applyPotionEffect(player, potion2, seconds2) {
 }
 function mainTick() {
   world11.getAllPlayers().forEach(async (player) => {
+    if (player.isOnGround) {
+      let isOnGrass = overworld11.getBlock(player.location)?.permutation?.matches("minecraft:short_grass");
+      if (isOnGrass) {
+        overworld11.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
+      }
+    }
     if (player.isJumping == true) {
       if (await isCoordinateWithinRange(player.location, { x: 18, y: 96, z: 105 }, { x: 118, y: 100, z: 80 })) {
         let location = player.location;

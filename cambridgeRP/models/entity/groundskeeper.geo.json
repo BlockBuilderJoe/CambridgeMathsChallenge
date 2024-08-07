@@ -3,7 +3,7 @@
 	"minecraft:geometry": [
 		{
 			"description": {
-				"identifier": "geometry.grounds_keeper",
+				"identifier": "geometry.groundskeeper",
 				"texture_width": 64,
 				"texture_height": 64,
 				"visible_bounds_width": 3,
@@ -21,9 +21,9 @@
 							"uv": [0, 26]
 						},
 						{
-							"origin": [-5, 4, -3],
-							"size": [10, 20, 6],
-							"inflate": 0.5,
+							"origin": [-5, 11, -3],
+							"size": [10, 13, 6],
+							"inflate": 0.25,
 							"uv": [0, 0]
 						}
 					]
@@ -43,7 +43,15 @@
 				{
 					"name": "hat",
 					"parent": "head",
-					"pivot": [0, 25, 0]
+					"pivot": [0, 25, 0],
+					"cubes": [
+						{
+							"origin": [-4, 24, -4],
+							"size": [8, 3, 8],
+							"inflate": 0.5,
+							"uv": [32, 22]
+						}
+					]
 				},
 				{
 					"name": "nose",
@@ -58,36 +66,9 @@
 					]
 				},
 				{
-					"name": "beard",
-					"parent": "head",
-					"pivot": [0, 25, 0],
-					"cubes": [
-						{
-							"origin": [-3, 21, -5],
-							"size": [2, 7, 2],
-							"uv": [35, 19]
-						},
-						{
-							"origin": [3, 22, -5],
-							"size": [-2, 6, 2],
-							"uv": [57, 25]
-						},
-						{
-							"origin": [-1, 19, -5],
-							"size": [2, 5, 1],
-							"uv": [55, 39]
-						},
-						{
-							"origin": [1, 20, -5],
-							"size": [1, 2, 1],
-							"uv": [58, 40]
-						}
-					]
-				},
-				{
 					"name": "arms",
 					"parent": "body",
-					"pivot": [0, 22, -1],
+					"pivot": [0, 22, -20],
 					"rotation": [-0.47, 0, 0],
 					"cubes": [
 						{

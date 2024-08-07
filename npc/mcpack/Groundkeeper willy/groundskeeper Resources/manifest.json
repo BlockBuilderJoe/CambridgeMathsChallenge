@@ -1,0 +1,23 @@
+{
+	"format_version": 2,
+	"header": {
+		"name": "groundskeeper",
+		"description": "groundskeeper Resource Pack",
+		"uuid": "6c2d1c7c-6db8-d1a0-c512-017db570dcdd",
+		"version": [1, 0, 0],
+		"min_engine_version": [1, 16, 0]
+	},
+	"metadata": {
+		"generated_with": {
+			"blockbench_entity_wizard": ["1.5.1"]
+		}
+	},
+	"modules": [
+		{
+			"description": "groundskeeper",
+			"type": "resources",
+			"uuid": "f1944cab-f9ba-fccb-3c1a-b595eadd182b",
+			"version": [1, 0, 0]
+		}
+	]
+}

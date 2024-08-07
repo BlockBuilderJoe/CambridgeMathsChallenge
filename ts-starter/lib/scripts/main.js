@@ -136,7 +136,15 @@ function applyPotionEffect(player, potion, seconds) {
     player.runCommand("clear @p minecraft:glass_bottle");
 }
 function mainTick() {
+    //checks different things about the player each tick.
     world.getAllPlayers().forEach((player) => __awaiter(this, void 0, void 0, function* () {
+        var _a, _b;
+        if (player.isOnGround) {
+            let isOnGrass = (_b = (_a = overworld.getBlock(player.location)) === null || _a === void 0 ? void 0 : _a.permutation) === null || _b === void 0 ? void 0 : _b.matches("minecraft:short_grass");
+            if (isOnGrass) {
+                overworld.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
+            }
+        }
         if (player.isJumping == true) {
             if (yield isCoordinateWithinRange(player.location, { x: 18, y: 96, z: 105 }, { x: 118, y: 100, z: 80 })) {
                 let location = player.location;
