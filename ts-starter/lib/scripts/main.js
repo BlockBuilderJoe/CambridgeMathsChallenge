@@ -5,7 +5,6 @@ import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
 import { potionMaker, displayTimer, getSlots } from "./potionGame";
 import "./npcscriptEventHandler"; //handles the NPC script events
-import { isCoordinateWithinRange } from "./input";
 let overworld = world.getDimension("overworld");
 let potion = "";
 let seconds = 0;
@@ -141,16 +140,12 @@ function mainTick() {
         var _a, _b;
         if (player.isOnGround) {
             let isOnGrass = (_b = (_a = overworld.getBlock(player.location)) === null || _a === void 0 ? void 0 : _a.permutation) === null || _b === void 0 ? void 0 : _b.matches("minecraft:short_grass");
-            if (isOnGrass && player.location.z >= 104) {
+            if (isOnGrass && player.location.z <= 104) {
                 overworld.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
             }
         }
-        if (player.isJumping == true) {
-            if (yield isCoordinateWithinRange(player.location, { x: 18, y: 96, z: 105 }, { x: 118, y: 100, z: 80 })) {
-                let location = player.location;
-                player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
-                player.teleport(location);
-            }
+        if (player.isJumping == true && player.location.z <= 104) {
+            player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
         }
         if (player.isInWater) {
             player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);

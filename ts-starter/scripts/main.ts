@@ -164,16 +164,12 @@ function mainTick() {
   world.getAllPlayers().forEach(async (player) => {
     if (player.isOnGround) {
       let isOnGrass = overworld.getBlock(player.location)?.permutation?.matches("minecraft:short_grass");
-      if (isOnGrass && player.location.z >= 104) {
+      if (isOnGrass && player.location.z <= 104) {
         overworld.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
       }
     }
-    if (player.isJumping == true) {
-      if (await isCoordinateWithinRange(player.location, { x: 18, y: 96, z: 105 }, { x: 118, y: 100, z: 80 })) {
-        let location = player.location;
-        player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
-        player.teleport(location);
-      }
+    if (player.isJumping == true && player.location.z <= 104) {
+      player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
     }
     if (player.isInWater) {
       player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
