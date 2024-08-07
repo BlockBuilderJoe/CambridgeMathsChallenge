@@ -300,7 +300,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc5 
+ NAME = Isaac 
  TAG = rodNpc5 
  
  1. Stand in front of the NPC and copy this command: 
@@ -315,7 +315,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc5 
+ NAME = Isaac 
  TAG = rodNpc5 
  
  1. Stand in front of the NPC and copy this command: 
@@ -330,7 +330,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc5 
+ NAME = Isaac 
  TAG = rodNpc5 
  
  1. Stand in front of the NPC and copy this command: 
@@ -345,7 +345,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc5 
+ NAME = Isaac 
  TAG = rodNpc5 
  
  1. Stand in front of the NPC and copy this command: 
@@ -360,7 +360,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc6 
+ NAME = Tamsin 
  TAG = rodNpc6 
  
  1. Stand in front of the NPC and copy this command: 
@@ -375,7 +375,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc6 
+ NAME = Tamsin 
  TAG = rodNpc6 
  
  1. Stand in front of the NPC and copy this command: 
@@ -390,7 +390,22 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = npc6 
+ NAME = Tamsin 
+ TAG = rodNpc6 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add rodNpc6 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=rodNpc6] rodNpc6Saved 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME = Tamsin 
  TAG = rodNpc6 
  
  1. Stand in front of the NPC and copy this command: 
@@ -444,13 +459,28 @@
 
  2. Then paste this command: 
 
-/dialogue change @e[tag=rodNpc7] rodNpc7Default 
+/dialogue change @e[tag=rodNpc7] rodNpc7Saved 
  
  ######################################################## 
  
 ######################################################## 
  INSTRUCTIONS FOR: 
  NAME = Fleur 
+ TAG = rodNpc7 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add rodNpc7 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=rodNpc7] rodNpc7Default 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME = Groundskeeper 
  TAG = rodNpc8 
  
  1. Stand in front of the NPC and copy this command: 
@@ -465,7 +495,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = Guy 
+ NAME = Groundskeeper 
  TAG = rodNpc8 
  
  1. Stand in front of the NPC and copy this command: 
@@ -480,7 +510,22 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = Guy 
+ NAME = Groundskeeper 
+ TAG = rodNpc8 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add rodNpc8 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=rodNpc8] rodNpc8Saved 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME = Groundskeeper 
  TAG = rodNpc8 
  
  1. Stand in front of the NPC and copy this command: 
@@ -490,186 +535,6 @@
  2. Then paste this command: 
 
 /dialogue change @e[tag=rodNpc8] rodNpc8Default 
- 
- ######################################################## 
- 
-######################################################## 
- INSTRUCTIONS FOR: 
- NAME = Guy 
- TAG = rodNpc9 
- 
- 1. Stand in front of the NPC and copy this command: 
- 
-/tag @e[type=npc, r=2] add rodNpc9 
-
- 2. Then paste this command: 
-
-/dialogue change @e[tag=rodNpc9] rodNpc9Win 
- 
- ######################################################## 
- 
-######################################################## 
- INSTRUCTIONS FOR: 
- NAME = Han 
- TAG = rodNpc9 
- 
- 1. Stand in front of the NPC and copy this command: 
- 
-/tag @e[type=npc, r=2] add rodNpc9 
-
- 2. Then paste this command: 
-
-/dialogue change @e[tag=rodNpc9] rodNpc9Fail 
- 
- ######################################################## 
- 
-######################################################## 
- INSTRUCTIONS FOR: 
- NAME = Han 
- TAG = rodNpc9 
- 
- 1. Stand in front of the NPC and copy this command: 
- 
-/tag @e[type=npc, r=2] add rodNpc9 
-
- 2. Then paste this command: 
-
-/dialogue change @e[tag=rodNpc9] rodNpc9Default 
- 
- ######################################################## 
- 
-######################################################## 
- INSTRUCTIONS FOR: 
- NAME = Isaac 
- TAG = rodNpc10 
- 
- 1. Stand in front of the NPC and copy this command: 
- 
-/tag @e[type=npc, r=2] add rodNpc10 
-
- 2. Then paste this command: 
-
-/dialogue change @e[tag=rodNpc10] rodNpc10Win 
- 
- ######################################################## 
- 
-######################################################## 
- INSTRUCTIONS FOR: 
- NAME = Isaac 
- TAG = rodNpc10 
- 
- 1. Stand in front of the NPC and copy this command: 
- 
-/tag @e[type=npc, r=2] add rodNpc10 
-
- 2. Then paste this command: 
-
-/dialogue change @e[tag=rodNpc10] rodNpc10Fail 
- 
- ######################################################## 
- 
-######################################################## 
- INSTRUCTIONS FOR: 
- NAME = Isaac 
- TAG = rodNpc10 
- 
- 1. Stand in front of the NPC and copy this command: 
- 
-/tag @e[type=npc, r=2] add rodNpc10 
-
- 2. Then paste this command: 
-
-/dialogue change @e[tag=rodNpc10] rodNpc10Default 
- 
- ######################################################## 
- 
-######################################################## 
- INSTRUCTIONS FOR: 
- NAME = Jane 
- TAG = rodNpc11 
- 
- 1. Stand in front of the NPC and copy this command: 
- 
-/tag @e[type=npc, r=2] add rodNpc11 
-
- 2. Then paste this command: 
-
-/dialogue change @e[tag=rodNpc11] rodNpc11Win 
- 
- ######################################################## 
- 
-######################################################## 
- INSTRUCTIONS FOR: 
- NAME = Jane 
- TAG = rodNpc11 
- 
- 1. Stand in front of the NPC and copy this command: 
- 
-/tag @e[type=npc, r=2] add rodNpc11 
-
- 2. Then paste this command: 
-
-/dialogue change @e[tag=rodNpc11] rodNpc11Fail 
- 
- ######################################################## 
- 
-######################################################## 
- INSTRUCTIONS FOR: 
- NAME = Jane 
- TAG = rodNpc11 
- 
- 1. Stand in front of the NPC and copy this command: 
- 
-/tag @e[type=npc, r=2] add rodNpc11 
-
- 2. Then paste this command: 
-
-/dialogue change @e[tag=rodNpc11] rodNpc11Default 
- 
- ######################################################## 
- 
-######################################################## 
- INSTRUCTIONS FOR: 
- NAME = Kal 
- TAG = rodNpc12 
- 
- 1. Stand in front of the NPC and copy this command: 
- 
-/tag @e[type=npc, r=2] add rodNpc12 
-
- 2. Then paste this command: 
-
-/dialogue change @e[tag=rodNpc12] rodNpc12Win 
- 
- ######################################################## 
- 
-######################################################## 
- INSTRUCTIONS FOR: 
- NAME = Kal 
- TAG = rodNpc12 
- 
- 1. Stand in front of the NPC and copy this command: 
- 
-/tag @e[type=npc, r=2] add rodNpc12 
-
- 2. Then paste this command: 
-
-/dialogue change @e[tag=rodNpc12] rodNpc12Fail 
- 
- ######################################################## 
- 
-######################################################## 
- INSTRUCTIONS FOR: 
- NAME = Kal 
- TAG = rodNpc12 
- 
- 1. Stand in front of the NPC and copy this command: 
- 
-/tag @e[type=npc, r=2] add rodNpc12 
-
- 2. Then paste this command: 
-
-/dialogue change @e[tag=rodNpc12] rodNpc12Default 
  
  ######################################################## 
  
@@ -1015,6 +880,81 @@
  2. Then paste this command: 
 
 /dialogue change @e[tag=groundskeeper] groundskeeper1 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME =  
+ TAG =  
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add  
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=]  
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME =  
+ TAG =  
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add  
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=]  
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME =  
+ TAG =  
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add  
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=]  
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME =  
+ TAG =  
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add  
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=]  
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME =  
+ TAG =  
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add  
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=]  
  
  ######################################################## 
  

@@ -150,7 +150,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! 6 is a quarter of 24 and you used the right rod to get here."
+                            "translate": "You saved me! 12 is half of 24 and you used the right rod to get here."
                         }
                     ]
                 },
@@ -286,7 +286,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! 8 is a third of 24 and you used the right rod to get here."
+                            "translate": "You saved me! 4 is a sixth of 24 and you used the right rod to get here."
                         }
                     ]
                 },
@@ -422,7 +422,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! 4 is a is a sixth of 24 and you used the right rod to get here."
+                            "translate": "Great work you made ¾ in the most optimum way by combining  ½ and ¼ ."
                         }
                     ]
                 },
@@ -558,7 +558,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Well done! You simplified 2/6 to 1/3 and used the best rod."
+                            "translate": "Well done! You combined ¼ with 1/8 to make 3/8."
                         }
                     ]
                 },
@@ -687,14 +687,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc5"
+                            "translate": "Isaac"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Skipped"
+                            "translate": "Wow, great working going over 1 tweed."
                         }
                     ]
                 },
@@ -718,14 +718,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc5"
+                            "translate": "Isaac"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Skipped"
+                            "translate": "Well done, you made it! But there is a more optimum route to get here, can I show you?"
                         }
                     ]
                 },
@@ -761,7 +761,7 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc5"
+                            "translate": "Isaac"
                         }
                     ]
                 },
@@ -792,7 +792,7 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc5"
+                            "translate": "Isaac"
                         }
                     ]
                 },
@@ -823,14 +823,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc6"
+                            "translate": "Tamsin"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Well done, 2/1 is 48, great work."
+                            "translate": "Well done, 3/1 is 36, great work."
                         }
                     ]
                 },
@@ -854,7 +854,7 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc6"
+                            "translate": "Tamsin"
                         }
                     ]
                 },
@@ -881,11 +881,42 @@
                 ]
             },
             {
+                "scene_tag": "rodNpc6Saved",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Tamsin"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "Thanks for rescuing me!"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "You’re Welcome"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
                 "scene_tag": "rodNpc6Default",
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "npc6"
+                            "translate": "Tamsin"
                         }
                     ]
                 },
@@ -986,6 +1017,37 @@
                 ]
             },
             {
+                "scene_tag": "rodNpc7Saved",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Fleur"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "Thanks for rescuing me!"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "You’re Welcome"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
                 "scene_tag": "rodNpc7Default",
                 "npc_name": {
                     "rawtext": [
@@ -1033,14 +1095,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Fleur"
+                            "translate": "Groundskeeper"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Great work you simplified 2/8 to 1/4."
+                            "translate": "You’ve completed the game and saved all the students. Great work."
                         }
                     ]
                 },
@@ -1064,7 +1126,7 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Guy"
+                            "translate": "Groundskeeper"
                         }
                     ]
                 },
@@ -1091,11 +1153,42 @@
                 ]
             },
             {
+                "scene_tag": "rodNpc8Saved",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Groundskeeper"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "Thanks for rescuing me, wait I didn’t need rescuing!!!"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Okay .."
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
                 "scene_tag": "rodNpc8Default",
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Guy"
+                            "translate": "Groundskeeper"
                         }
                     ]
                 },
@@ -1117,429 +1210,6 @@
                         },
                         "commands": [
                             "scriptevent rod:npcReplay 8"
-                        ]
-                    },
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "Not Interested!"
-                                }
-                            ]
-                        },
-                        "commands": [
-                            ""
-                        ]
-                    }
-                ]
-            },
-            {
-                "scene_tag": "rodNpc9Win",
-                "npc_name": {
-                    "rawtext": [
-                        {
-                            "translate": "Guy"
-                        }
-                    ]
-                },
-                "text": {
-                    "rawtext": [
-                        {
-                            "translate": "Great work, 2 is 1/12 of 24!"
-                        }
-                    ]
-                },
-                "buttons": [
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "You’re Welcome"
-                                }
-                            ]
-                        },
-                        "commands": [
-                            ""
-                        ]
-                    }
-                ]
-            },
-            {
-                "scene_tag": "rodNpc9Fail",
-                "npc_name": {
-                    "rawtext": [
-                        {
-                            "translate": "Han"
-                        }
-                    ]
-                },
-                "text": {
-                    "rawtext": [
-                        {
-                            "translate": "Well done, you made it! But there is a more optimum route to get here, can I show you?"
-                        }
-                    ]
-                },
-                "buttons": [
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "Show me "
-                                }
-                            ]
-                        },
-                        "commands": [
-                            "scriptevent rod:npcComplete 9"
-                        ]
-                    }
-                ]
-            },
-            {
-                "scene_tag": "rodNpc9Default",
-                "npc_name": {
-                    "rawtext": [
-                        {
-                            "translate": "Han"
-                        }
-                    ]
-                },
-                "text": {
-                    "rawtext": [
-                        {
-                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
-                        }
-                    ]
-                },
-                "buttons": [
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "Okay"
-                                }
-                            ]
-                        },
-                        "commands": [
-                            "scriptevent rod:npcReplay 9"
-                        ]
-                    },
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "Not Interested!"
-                                }
-                            ]
-                        },
-                        "commands": [
-                            ""
-                        ]
-                    }
-                ]
-            },
-            {
-                "scene_tag": "rodNpc10Win",
-                "npc_name": {
-                    "rawtext": [
-                        {
-                            "translate": "Isaac"
-                        }
-                    ]
-                },
-                "text": {
-                    "rawtext": [
-                        {
-                            "translate": "Great work simplifying the fraction from 2/12 to 1/6!"
-                        }
-                    ]
-                },
-                "buttons": [
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "Thanks"
-                                }
-                            ]
-                        },
-                        "commands": [
-                            ""
-                        ]
-                    }
-                ]
-            },
-            {
-                "scene_tag": "rodNpc10Fail",
-                "npc_name": {
-                    "rawtext": [
-                        {
-                            "translate": "Isaac"
-                        }
-                    ]
-                },
-                "text": {
-                    "rawtext": [
-                        {
-                            "translate": "Well done, you made it! But there is a more optimum route to get here, can I show you?"
-                        }
-                    ]
-                },
-                "buttons": [
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "Show me "
-                                }
-                            ]
-                        },
-                        "commands": [
-                            "scriptevent rod:npcComplete 10"
-                        ]
-                    }
-                ]
-            },
-            {
-                "scene_tag": "rodNpc10Default",
-                "npc_name": {
-                    "rawtext": [
-                        {
-                            "translate": "Isaac"
-                        }
-                    ]
-                },
-                "text": {
-                    "rawtext": [
-                        {
-                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
-                        }
-                    ]
-                },
-                "buttons": [
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "Okay"
-                                }
-                            ]
-                        },
-                        "commands": [
-                            "scriptevent rod:npcReplay 10"
-                        ]
-                    },
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "Not Interested!"
-                                }
-                            ]
-                        },
-                        "commands": [
-                            ""
-                        ]
-                    }
-                ]
-            },
-            {
-                "scene_tag": "rodNpc11Win",
-                "npc_name": {
-                    "rawtext": [
-                        {
-                            "translate": "Jane"
-                        }
-                    ]
-                },
-                "text": {
-                    "rawtext": [
-                        {
-                            "translate": "You’ve done very well to get to me! I thought I was never going to be saved."
-                        }
-                    ]
-                },
-                "buttons": [
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "You’re Welcome"
-                                }
-                            ]
-                        },
-                        "commands": [
-                            ""
-                        ]
-                    }
-                ]
-            },
-            {
-                "scene_tag": "rodNpc11Fail",
-                "npc_name": {
-                    "rawtext": [
-                        {
-                            "translate": "Jane"
-                        }
-                    ]
-                },
-                "text": {
-                    "rawtext": [
-                        {
-                            "translate": "I won’t ever say this, if you see this something has gone wrong!"
-                        }
-                    ]
-                },
-                "buttons": [
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "Show me "
-                                }
-                            ]
-                        },
-                        "commands": [
-                            "scriptevent rod:npcComplete 11"
-                        ]
-                    }
-                ]
-            },
-            {
-                "scene_tag": "rodNpc11Default",
-                "npc_name": {
-                    "rawtext": [
-                        {
-                            "translate": "Jane"
-                        }
-                    ]
-                },
-                "text": {
-                    "rawtext": [
-                        {
-                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
-                        }
-                    ]
-                },
-                "buttons": [
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "Okay"
-                                }
-                            ]
-                        },
-                        "commands": [
-                            "scriptevent rod:npcReplay 11"
-                        ]
-                    },
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "Not Interested!"
-                                }
-                            ]
-                        },
-                        "commands": [
-                            ""
-                        ]
-                    }
-                ]
-            },
-            {
-                "scene_tag": "rodNpc12Win",
-                "npc_name": {
-                    "rawtext": [
-                        {
-                            "translate": "Kal"
-                        }
-                    ]
-                },
-                "text": {
-                    "rawtext": [
-                        {
-                            "translate": "Well done you saved us all! Press the button to head to a special ceremony!"
-                        }
-                    ]
-                },
-                "buttons": [
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "Thanks"
-                                }
-                            ]
-                        },
-                        "commands": [
-                            ""
-                        ]
-                    }
-                ]
-            },
-            {
-                "scene_tag": "rodNpc12Fail",
-                "npc_name": {
-                    "rawtext": [
-                        {
-                            "translate": "Kal"
-                        }
-                    ]
-                },
-                "text": {
-                    "rawtext": [
-                        {
-                            "translate": "I won’t ever say this, if you see this something has gone wrong!"
-                        }
-                    ]
-                },
-                "buttons": [
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "Show me "
-                                }
-                            ]
-                        },
-                        "commands": [
-                            "scriptevent rod:npcComplete 12"
-                        ]
-                    }
-                ]
-            },
-            {
-                "scene_tag": "rodNpc12Default",
-                "npc_name": {
-                    "rawtext": [
-                        {
-                            "translate": "Kal"
-                        }
-                    ]
-                },
-                "text": {
-                    "rawtext": [
-                        {
-                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
-                        }
-                    ]
-                },
-                "on_open_commands": [
-                    "w"
-                ],
-                "buttons": [
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "Okay"
-                                }
-                            ]
-                        },
-                        "commands": [
-                            "scriptevent rod:npcReplay 12"
                         ]
                     },
                     {
@@ -1594,19 +1264,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent spawn:npc ratio"
-                        ]
-                    },
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "Scale Factors"
-                                }
-                            ]
-                        },
-                        "commands": [
-                            "scriptevent spawn:npc scale"
+                            ""
                         ]
                     }
                 ]
@@ -1742,7 +1400,7 @@
                             ]
                         },
                         "commands": [
-                            "dialogue open @e[tag=scaleNpc] @p scaleNpc4"
+                            ""
                         ]
                     }
                 ]
@@ -1837,6 +1495,18 @@
                         "commands": [
                             ""
                         ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Scale Factors"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent spawn:npc scale"
+                        ]
                     }
                 ]
             },
@@ -1909,7 +1579,7 @@
                             ]
                         },
                         "commands": [
-                            "dialogue open @e[tag=ratioNpc] @p ratioNpc4"
+                            ""
                         ]
                     }
                 ]
@@ -2169,7 +1839,7 @@
                             ]
                         },
                         "commands": [
-                            "dialogue open @e[tag=fractionNpc] @p fractionNpc6"
+                            ""
                         ]
                     }
                 ]
@@ -2243,7 +1913,7 @@
                             ]
                         },
                         "commands": [
-                            "dialogue open @e[tag=fractionNpc] @p fractionNpc6"
+                            ""
                         ]
                     }
                 ]
@@ -2286,7 +1956,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent fraction:npc 1"
+                            ""
                         ]
                     }
                 ]
@@ -2352,6 +2022,21 @@
                         ]
                     }
                 ]
+            },
+            {
+                "buttons": []
+            },
+            {
+                "buttons": []
+            },
+            {
+                "buttons": []
+            },
+            {
+                "buttons": []
+            },
+            {
+                "buttons": []
             }
         ]
     }
