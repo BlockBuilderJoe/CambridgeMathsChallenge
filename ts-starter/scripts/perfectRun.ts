@@ -50,15 +50,15 @@ export const perfectRun = [
   {
     number: 4,
     location: { z: 89, y: 95, x: 66 },
-    direction: "north",
+    direction: "south",
     rodLength: 6,
     blockName: "lime_concrete",
     successMessage: `1/4 = 1/8 + 1/8.`,
   },
   {
     number: 4,
-    location: { z: 96, y: 95, x: 66 },
-    direction: "north",
+    location: { z: 95, y: 95, x: 66 },
+    direction: "south",
     rodLength: 3,
     blockName: "red_concrete",
     successMessage: `plus one more 1/8 rod = 3/8`,
