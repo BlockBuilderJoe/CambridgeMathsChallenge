@@ -181,8 +181,8 @@ export const replaySettings = [
     // Command to replenish the grass under the rods they just placed, same coordinates as above with y axis 94.
     replenishGrass: `fill 30 94 104 30 94 93 grass_block replace`,
 
-    // Direction along which the rods are placed ('x' or 'z'). This will be the value that is always the same.
-    cartesianDirection: "z",
+    //Direction along which the rods are placed ('x' or 'z'). (The one that stays the same.)
+    cartesianDirection: "x",
 
     // Specific value of the x or z that is the same on all the coordinates.
     cartesionValue: 30,
@@ -193,7 +193,7 @@ export const replaySettings = [
     tpStart: `tp @p 30 96 92 facing 38 96 92`,
     clearBlock: `fill 31 95 92 42 95 92 tallgrass replace`,
     replenishGrass: `fill 31 94 92 42 94 92 grass_block replace`,
-    cartesianDirection: "x",
+    cartesianDirection: "z",
     cartesionValue: 92,
   },
   {
@@ -202,7 +202,7 @@ export const replaySettings = [
     tpStart: `tp @p 43 96 91 facing 53 96 91`,
     clearBlock: `fill 48 95 86 65 95 86 tallgrass replace`,
     replenishGrass: `fill 48 94 86 65 94 86 grass_block replace`,
-    cartesianDirection: "x",
+    cartesianDirection: "z",
     cartesionValue: 91,
   },
   {
@@ -211,7 +211,7 @@ export const replaySettings = [
     tpStart: `tp @p 47 96 86 facing 67 96 86`,
     clearBlock: `fill 53 95 94 53 95 97 tallgrass replace`,
     replenishGrass: `fill 53 94 94 53 94 97 grass_block replace`,
-    cartesianDirection: "x",
+    cartesianDirection: "z",
     cartesionValue: 86,
   },
   {

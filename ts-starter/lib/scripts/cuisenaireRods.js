@@ -102,7 +102,6 @@ export function cuisenaire(block, blockName, rodLength, successMessage, directio
             }
             else {
                 block === null || block === void 0 ? void 0 : block.setPermutation(BlockPermutation.resolve("tallgrass"));
-                overworld.runCommandAsync(`give @p ${blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
             }
         }
     });
@@ -185,6 +184,7 @@ function replayMessage(beginningMessage, fractions) {
 }
 export function replay(index) {
     return __awaiter(this, void 0, void 0, function* () {
+        overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${index}] rodNpc${index}Default`);
         overworld.runCommandAsync(`tp @p 31 96 116`); //moves the player out of frame.
         //sets up the arrays.
         let npcIndex = index;

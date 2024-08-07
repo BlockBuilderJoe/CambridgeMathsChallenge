@@ -56,6 +56,9 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0
             };
             if (!hasColour) {
                 player.runCommandAsync(`title ${player.name} actionbar Place the rod in front of the magical connector.`);
+                //gives the rod back to the player if they place it on the grass.
+                const rod = rodPermutations[colour];
+                player.runCommandAsync(`give @p ${rod.block} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
                 event.block.setPermutation(BlockPermutation.resolve("tallgrass"));
                 return;
             }
