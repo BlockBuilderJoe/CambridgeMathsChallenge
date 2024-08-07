@@ -548,7 +548,7 @@ async function resetCuisenaireGame() {
   await overworld5.runCommandAsync(`tp @e[tag=fractionNpc] 29 96 112 facing 29 96 114`);
   await overworld5.runCommandAsync(`scoreboard objectives setdisplay sidebar Students`);
   await overworld5.runCommandAsync(`scoreboard players set Saved Students 0`);
-  await resetNPC(5);
+  await resetNPC(9);
   await resetGrid({ x: 19, y: 95, z: 81 });
 }
 async function startCuisenaireGame() {
