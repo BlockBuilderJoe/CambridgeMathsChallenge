@@ -97,9 +97,8 @@ export function cuisenaire(block, blockName, rodLength, successMessage, directio
                     successMessage: successMessage,
                 };
                 rodsPlaced.push(rodToPlace);
-                world.sendMessage(`${rodToPlace}`);
                 placeRods(block, blockName, rodLength, direction);
-                checkFinalBlock();
+                checkFinalBlock(block, direction, rodLength);
             }
             else {
                 block === null || block === void 0 ? void 0 : block.setPermutation(BlockPermutation.resolve("tallgrass"));
@@ -282,22 +281,35 @@ export function giveRods() {
         }
     });
 }
-function checkFinalBlock() {
+function checkFinalBlock(block, direction, rodLength) {
     return __awaiter(this, void 0, void 0, function* () {
-        var _a, _b;
-        for (let i = 0; i < finalBlock.length; i++) {
-            //gets the end of the rod using the end.
-            let rodEnd = overworld.getBlock(finalBlock[i].location);
-            let hasColour = (_a = rodEnd === null || rodEnd === void 0 ? void 0 : rodEnd.permutation) === null || _a === void 0 ? void 0 : _a.getState("color");
-            if ((_b = rodEnd === null || rodEnd === void 0 ? void 0 : rodEnd.permutation) === null || _b === void 0 ? void 0 : _b.matches(finalBlock[i].blockName)) {
-                world.sendMessage(`Changing Npc` + finalBlock[i].number + ` to win state`);
-                changeNPC(finalBlock[i].number, true);
-            }
-            else if (hasColour) {
-                world.sendMessage(`Changing Npc` + finalBlock[i].number + ` to fail state`);
-                changeNPC(finalBlock[i].number, false);
-            }
+        var _a;
+        let rodEnd = block[direction](rodLength - 1);
+        let hasColour = (_a = rodEnd.permutation) === null || _a === void 0 ? void 0 : _a.getState("color");
+        let rodEndLocation = rodEnd.location;
+        //Does it match the expected final block?
+        const isCorrectFinalBlock = finalBlock.find((block) => {
+            var _a;
+            return ((_a = rodEnd === null || rodEnd === void 0 ? void 0 : rodEnd.permutation) === null || _a === void 0 ? void 0 : _a.matches(block.blockName)) &&
+                rodEndLocation.x === block.location.x &&
+                rodEndLocation.z === block.location.z;
+        });
+        //Is it the wrong block in the right place?
+        const isIncorrectFinalBlock = finalBlock.find((block) => {
+            var _a;
+            return !((_a = rodEnd === null || rodEnd === void 0 ? void 0 : rodEnd.permutation) === null || _a === void 0 ? void 0 : _a.matches(block.blockName)) &&
+                rodEndLocation.x === block.location.x &&
+                rodEndLocation.z === block.location.z;
+        });
+        if (isCorrectFinalBlock) {
+            world.sendMessage(`Changing Npc` + isCorrectFinalBlock.number + ` to win state`);
+            changeNPC(isCorrectFinalBlock.number, true);
         }
+        else if (isIncorrectFinalBlock) {
+            world.sendMessage(`Changing Npc` + isIncorrectFinalBlock.number + ` to fail state`);
+            changeNPC(isIncorrectFinalBlock.number, false);
+        }
+        // Checks if the rodEnd has a colour, if it does, it will change the NPC to the fail state.
     });
 }
 function changeNPC(matchingRodIndex, win) {

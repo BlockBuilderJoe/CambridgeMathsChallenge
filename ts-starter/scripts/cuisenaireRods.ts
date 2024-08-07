@@ -5,6 +5,7 @@ import {
   Vector3,
   BlockInventoryComponent,
   EntityInventoryComponent,
+  Block,
 } from "@minecraft/server";
 import { perfectRun, validRanges, finalBlock, replaySettings, npcLocation } from "./perfectRun";
 
@@ -105,9 +106,9 @@ export async function cuisenaire(
         successMessage: successMessage,
       };
       rodsPlaced.push(rodToPlace);
-      world.sendMessage(`${rodToPlace}`);
       placeRods(block, blockName, rodLength, direction);
-      checkFinalBlock();
+
+      checkFinalBlock(block, direction, rodLength);
     } else {
       block?.setPermutation(BlockPermutation.resolve("tallgrass"));
       overworld.runCommandAsync(`give @p ${blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
@@ -301,19 +302,37 @@ export async function giveRods() {
   }
 }
 
-async function checkFinalBlock() {
-  for (let i = 0; i < finalBlock.length; i++) {
-    //gets the end of the rod using the end.
-    let rodEnd = overworld.getBlock(finalBlock[i].location);
-    let hasColour = rodEnd?.permutation?.getState("color");
-    if (rodEnd?.permutation?.matches(finalBlock[i].blockName)) {
-      world.sendMessage(`Changing Npc` + finalBlock[i].number + ` to win state`);
-      changeNPC(finalBlock[i].number, true);
-    } else if (hasColour) {
-      world.sendMessage(`Changing Npc` + finalBlock[i].number + ` to fail state`);
-      changeNPC(finalBlock[i].number, false);
-    }
+async function checkFinalBlock(block: any, direction: string, rodLength: number) {
+  let rodEnd = block[direction](rodLength - 1);
+
+  let hasColour = rodEnd.permutation?.getState("color");
+  let rodEndLocation = rodEnd.location;
+
+  //Does it match the expected final block?
+  const isCorrectFinalBlock = finalBlock.find(
+    (block) =>
+      rodEnd?.permutation?.matches(block.blockName) &&
+      rodEndLocation.x === block.location.x &&
+      rodEndLocation.z === block.location.z
+  );
+
+  //Is it the wrong block in the right place?
+  const isIncorrectFinalBlock = finalBlock.find(
+    (block) =>
+      !rodEnd?.permutation?.matches(block.blockName) &&
+      rodEndLocation.x === block.location.x &&
+      rodEndLocation.z === block.location.z
+  );
+
+  if (isCorrectFinalBlock) {
+    world.sendMessage(`Changing Npc` + isCorrectFinalBlock.number + ` to win state`);
+    changeNPC(isCorrectFinalBlock.number, true);
+  } else if (isIncorrectFinalBlock) {
+    world.sendMessage(`Changing Npc` + isIncorrectFinalBlock.number + ` to fail state`);
+    changeNPC(isIncorrectFinalBlock.number, false);
   }
+
+  // Checks if the rodEnd has a colour, if it does, it will change the NPC to the fail state.
 }
 
 async function changeNPC(matchingRodIndex: number, win: boolean) {

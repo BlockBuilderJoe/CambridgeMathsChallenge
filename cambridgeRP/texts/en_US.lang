@@ -15,7 +15,7 @@ tile.blockbuilders:symbol_subtract.name=Subtract
 tile.blockbuilders:symbol_equals.name=Equals
 tile.blockbuilders:symbol_decimalpoint.name=Decimal Point
 tile.blockbuilders:symbol_colon.name=Colon
-tile.concrete.red.name=§c23 blocks = 1/8 td
+tile.concrete.red.name=§c3 blocks = 1/8 td
 tile.concrete.purple.name=§d8 blocks = 1/3 td
 tile.concrete.green.name=§q24 blocks = 1 td
 tile.concrete.orange.name=§612 blocks = 1/2 td
