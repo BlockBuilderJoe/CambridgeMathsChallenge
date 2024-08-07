@@ -844,7 +844,7 @@
                             ]
                         },
                         "commands": [
-                            ""
+                            "scriptevent rod:npcComplete 6"
                         ]
                     }
                 ]
@@ -875,7 +875,19 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcComplete 6"
+                            "scriptevent rod:npcReplay 6"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Not Interested!"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
                         ]
                     }
                 ]
@@ -937,18 +949,6 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcReplay 6"
-                        ]
-                    },
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "Not Interested!"
-                                }
-                            ]
-                        },
-                        "commands": [
                             ""
                         ]
                     }
@@ -980,7 +980,7 @@
                             ]
                         },
                         "commands": [
-                            ""
+                            "scriptevent rod:npcComplete 7"
                         ]
                     }
                 ]
@@ -1011,7 +1011,19 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcComplete 7"
+                            "scriptevent rod:npcReplay 7"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Not Interested!"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
                         ]
                     }
                 ]
@@ -1073,18 +1085,6 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcReplay 7"
-                        ]
-                    },
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "Not Interested!"
-                                }
-                            ]
-                        },
-                        "commands": [
                             ""
                         ]
                     }
@@ -1116,7 +1116,7 @@
                             ]
                         },
                         "commands": [
-                            ""
+                            "scriptevent rod:npcComplete 8"
                         ]
                     }
                 ]
@@ -1147,7 +1147,19 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent rod:npcComplete 8"
+                            "scriptevent rod:npcReplay 8"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Not Interested!"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
                         ]
                     }
                 ]
@@ -1205,18 +1217,6 @@
                             "rawtext": [
                                 {
                                     "translate": "Okay"
-                                }
-                            ]
-                        },
-                        "commands": [
-                            "scriptevent rod:npcReplay 8"
-                        ]
-                    },
-                    {
-                        "name": {
-                            "rawtext": [
-                                {
-                                    "translate": "Not Interested!"
                                 }
                             ]
                         },

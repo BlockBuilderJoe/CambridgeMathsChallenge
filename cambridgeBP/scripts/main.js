@@ -20,15 +20,6 @@ function getInput(digits) {
   let combinedNumber = parseInt(combinedString);
   return combinedNumber;
 }
-async function isCoordinateWithinRange(toTest, pos1, pos2) {
-  const minX = Math.min(pos1.x, pos2.x);
-  const maxX = Math.max(pos1.x, pos2.x);
-  const minY = Math.min(pos1.y, pos2.y);
-  const maxY = Math.max(pos1.y, pos2.y);
-  const minZ = Math.min(pos1.z, pos2.z);
-  const maxZ = Math.max(pos1.z, pos2.z);
-  return toTest.x >= minX && toTest.x <= maxX && toTest.y >= minY && toTest.y <= maxY && toTest.z >= minZ && toTest.z <= maxZ;
-}
 async function getCube(pos1, pos2) {
   const blocks = [];
   for (let x = Math.min(pos1.x, pos2.x); x <= Math.max(pos1.x, pos2.x); x++) {
@@ -1504,16 +1495,12 @@ function mainTick() {
   world11.getAllPlayers().forEach(async (player) => {
     if (player.isOnGround) {
       let isOnGrass = overworld11.getBlock(player.location)?.permutation?.matches("minecraft:short_grass");
-      if (isOnGrass && player.location.z >= 104) {
+      if (isOnGrass && player.location.z <= 104) {
         overworld11.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
       }
     }
-    if (player.isJumping == true) {
-      if (await isCoordinateWithinRange(player.location, { x: 18, y: 96, z: 105 }, { x: 118, y: 100, z: 80 })) {
-        let location = player.location;
-        player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
-        player.teleport(location);
-      }
+    if (player.isJumping == true && player.location.z <= 104) {
+      player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
     }
     if (player.isInWater) {
       player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
