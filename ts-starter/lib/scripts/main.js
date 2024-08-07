@@ -141,7 +141,7 @@ function mainTick() {
         var _a, _b;
         if (player.isOnGround) {
             let isOnGrass = (_b = (_a = overworld.getBlock(player.location)) === null || _a === void 0 ? void 0 : _a.permutation) === null || _b === void 0 ? void 0 : _b.matches("minecraft:short_grass");
-            if (isOnGrass) {
+            if (isOnGrass && player.location.z >= 104) {
                 overworld.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
             }
         }

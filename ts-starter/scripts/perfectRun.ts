@@ -90,7 +90,7 @@ export const perfectRun = [
   },
   //Gap 7 = 3/2 td or 36 blocks | Optimum rod = 1, 1/2 rod
   {
-    number: 6, 
+    number: 6,
     location: { z: 93, y: 95, x: 108 },
     direction: "west",
     rodLength: 24,
@@ -150,7 +150,7 @@ export const validRanges = [
   { zMin: 89, zMax: 97, x: 66 }, //3/8 gap 5
   { xMin: 69, xMax: 108, z: 100 }, //1 2/3 gap 6
   { xMin: 73, xMax: 108, z: 93 }, //3/2 gap 7
-  { xMin: 73, xMax: 86, z: 85}, //7/12 gap 8
+  { xMin: 73, xMax: 86, z: 85 }, //7/12 gap 8
   { xMin: 91, xMax: 95, z: 85 }, //5/24 gap 9
 ];
 

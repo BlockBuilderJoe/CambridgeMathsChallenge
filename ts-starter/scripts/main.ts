@@ -164,7 +164,7 @@ function mainTick() {
   world.getAllPlayers().forEach(async (player) => {
     if (player.isOnGround) {
       let isOnGrass = overworld.getBlock(player.location)?.permutation?.matches("minecraft:short_grass");
-      if (isOnGrass) {
+      if (isOnGrass && player.location.z >= 104) {
         overworld.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
       }
     }
