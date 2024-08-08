@@ -117,6 +117,7 @@ export async function cuisenaire(
 
 export async function resetNPC(npcAmount: number) {
   rodsPlaced = []; //resets the rods placed array.
+
   for (let i = 0; i < npcAmount; i++) {
     overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${i}] rodNpc${i}Default`);
     overworld.runCommandAsync(
@@ -138,15 +139,35 @@ function placeRods(block: any, blockName: string, rodLength: number, direction: 
 }
 
 async function setCameraView(player: any, index: number) {
-  if (index == 0 || index == 1) {
-    //room1
-    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 30 120 92 facing 30 90 92`);
-  } else if (index == 2 || index == 3 || index == 4 || index == 5) {
-    //room2
-    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 55 120 92 facing 55 90 92`);
-  } else if (index == 6 || index == 7 || index == 8 || index == 9) {
-    //room3
-    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 93 122 93 facing 93 90 93`);
+  world.sendMessage(`Camera view set to ${index}`);
+  switch (index) {
+    case 0: //gap1
+      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 30 120 99 facing 30 90 99`);
+      break;
+    case 1: //gap2
+      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 37 120 92 facing 37 90 92`);
+      break;
+    case 2: //gap3
+      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 45 107 91 facing 45 90 91`);
+      break;
+    case 3: //gap4
+      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 57 110 86 facing 57 90 86`);
+      break;
+    case 4: //gap5
+      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 66 109 93 facing 66 90 93`);
+      break;
+    case 5: //gap6
+      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 89 116 100 facing 89 90 100`);
+      break;
+    case 6: //gap7
+      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 90 113 93 facing 90 90 93`);
+      break;
+    case 7: //gap8
+      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 80 106 85 facing 80 90 85`);
+      break;
+    case 8: //gap9
+      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 93 106 85 facing 93 90 85`);
+      break;
   }
 }
 
@@ -319,14 +340,25 @@ async function checkFinalBlock(block: any, direction: string, rodLength: number)
   );
 
   if (isCorrectFinalBlock) {
+    moveGroundsKeeper(isCorrectFinalBlock.number);
     world.sendMessage(`Changing Npc` + isCorrectFinalBlock.number + ` to win state`);
     changeNPC(isCorrectFinalBlock.number, true);
   } else if (isIncorrectFinalBlock) {
+    moveGroundsKeeper(isIncorrectFinalBlock.number);
     world.sendMessage(`Changing Npc` + isIncorrectFinalBlock.number + ` to fail state`);
     changeNPC(isIncorrectFinalBlock.number, false);
   }
-
   // Checks if the rodEnd has a colour, if it does, it will change the NPC to the fail state.
+}
+
+function moveGroundsKeeper(rodNumber: number) {
+  if (rodNumber <= 1) {
+    overworld.runCommandAsync(`tp @e[tag=groundskeeper] 32 101 79`);
+  } else if (rodNumber <= 3) {
+    overworld.runCommandAsync(`tp @e[tag=groundskeeper] 56 101 79`);
+  } else if (rodNumber <= 5) {
+    overworld.runCommandAsync(`tp @e[tag=groundskeeper] 94 101 79`);
+  }
 }
 
 async function changeNPC(matchingRodIndex: number, win: boolean) {

@@ -1095,7 +1095,7 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Groundskeeper"
+                            "translate": "Isabella"
                         }
                     ]
                 },
@@ -1126,14 +1126,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Groundskeeper"
+                            "translate": "Isabella"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Well done, you made it! But there is a more optimum route to get here, can I show you?"
+                            "translate": "ERROR  It means the rods quantities are wrong. "
                         }
                     ]
                 },
@@ -1169,14 +1169,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Groundskeeper"
+                            "translate": "Isabella"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Thanks for rescuing me, wait I didn’t need rescuing!!!"
+                            "translate": "Thanks for rescuing me, I’m the last one. "
                         }
                     ]
                 },
@@ -1200,7 +1200,7 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Groundskeeper"
+                            "translate": "Isabella"
                         }
                     ]
                 },

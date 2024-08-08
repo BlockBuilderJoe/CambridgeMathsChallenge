@@ -162,15 +162,15 @@ function applyPotionEffect(player: any, potion: string, seconds: number) {
 function mainTick() {
   //checks different things about the player each tick.
   world.getAllPlayers().forEach(async (player) => {
-    //if (player.isOnGround) {
-    //let isOnGrass = overworld.getBlock(player.location)?.permutation?.matches("minecraft:short_grass");
-    //if (isOnGrass) {
-    // overworld.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
-    //}
-    //}
-    //if (player.isJumping) {
-    //player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
-    //}
+    if (player.isOnGround) {
+      let isOnGrass = overworld.getBlock(player.location)?.permutation?.matches("minecraft:short_grass");
+      if (isOnGrass && player.location.z <= 104) {
+        overworld.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
+      }
+    }
+    if (player.isJumping && player.location.z <= 104) {
+      player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
+    }
     if (player.isInWater) {
       player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
       meters = 94 - Math.floor(player.location.y);

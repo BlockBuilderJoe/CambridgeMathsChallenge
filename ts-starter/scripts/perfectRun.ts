@@ -32,19 +32,19 @@ export const perfectRun = [
   //Gap 4 = 3/4 td or 18 blocks | Optimum rod = 1/2,1/4 rod
   {
     number: 3,
-    location: { z: 48, y: 95, x: 86 },
+    location: { z: 86, y: 95, x: 48 },
     direction: "east",
     rodLength: 12,
     blockName: "orange_concrete",
-    successMessage: `Instead use a 1/2 rod which is = 2/4,`,
+    successMessage: `Instead use a 1/2 rod which = 2/4`,
   },
   {
     number: 3,
     location: { z: 86, y: 95, x: 60 },
     direction: "east",
-    rodLength: 4,
+    rodLength: 6,
     blockName: "lime_concrete",
-    successMessage: `then a 1/4 rod which makes 3/4.`,
+    successMessage: `a 1/4 rod which = 3/4.`,
   },
   //Gap 5 = 3/8 td or 9 blocks | Optimum rod = 1/4,1/8 rod
   {
@@ -53,7 +53,7 @@ export const perfectRun = [
     direction: "south",
     rodLength: 6,
     blockName: "lime_concrete",
-    successMessage: `1/4 = 1/8 + 1/8.`,
+    successMessage: `Instead use a 1/4 rod which = 2/8.`,
   },
   {
     number: 4,
@@ -61,7 +61,7 @@ export const perfectRun = [
     direction: "south",
     rodLength: 3,
     blockName: "red_concrete",
-    successMessage: `plus one more 1/8 rod = 3/8`,
+    successMessage: `a 1/8 rod which = 3/8`,
   },
   //Gap 6 = 1 2/3 td or 40 blocks | Optimum rod = 1, 1/3, 1/3 rod
   {
@@ -70,15 +70,7 @@ export const perfectRun = [
     direction: "east",
     rodLength: 24,
     blockName: "green_concrete",
-    successMessage: `1/1`,
-  },
-  {
-    number: 5,
-    location: { z: 100, y: 95, x: 101 },
-    direction: "east",
-    rodLength: 8,
-    blockName: "purple_concrete",
-    successMessage: `1/3`,
+    successMessage: `Instead use 1 tweed`,
   },
   {
     number: 5,
@@ -86,7 +78,15 @@ export const perfectRun = [
     direction: "east",
     rodLength: 8,
     blockName: "purple_concrete",
-    successMessage: `1/3`,
+    successMessage: `a 1/3 rod`,
+  },
+  {
+    number: 5,
+    location: { z: 100, y: 95, x: 101 },
+    direction: "east",
+    rodLength: 8,
+    blockName: "purple_concrete",
+    successMessage: `a 1/3 rod to make 1 2/3`,
   },
   //Gap 7 = 3/2 td or 36 blocks | Optimum rod = 1, 1/2 rod
   {
@@ -95,15 +95,15 @@ export const perfectRun = [
     direction: "west",
     rodLength: 24,
     blockName: "green_concrete",
-    successMessage: `1/1 = 1/2 + 1/2`,
+    successMessage: `Instead use 1 tweed`,
   },
   {
     number: 6,
-    location: { z: 93, y: 95, x: 92 },
+    location: { z: 93, y: 95, x: 84 },
     direction: "west",
     rodLength: 12,
     blockName: "orange_concrete",
-    successMessage: `1/2`,
+    successMessage: `a 1/2 rod to make 3/2`,
   },
   //Gap 8 = 7/12 td or 14 blocks | Optimum rod = 1/3,1/4 rod
   {
@@ -116,7 +116,7 @@ export const perfectRun = [
   },
   {
     number: 7,
-    location: { z: 85, y: 95, x: 73 },
+    location: { z: 85, y: 95, x: 81 },
     direction: "east",
     rodLength: 6,
     blockName: "lime_concrete",
@@ -133,7 +133,7 @@ export const perfectRun = [
   },
   {
     number: 8,
-    location: { z: 85, y: 95, x: 91 },
+    location: { z: 85, y: 95, x: 95 },
     direction: "east",
     rodLength: 1,
     blockName: "pink_concrete",
@@ -190,8 +190,8 @@ export const replaySettings = [
     // Command to teleport the player to the starting position of the last platform they were on and set their facing direction
     tpStart: `tp @p 31 96 107 facing 31 96 100`,
 
-    // Command to clear the rods they just placed by replacing blocks with tallgrass
-    clearBlock: `fill 30 95 104 30 95 93 tallgrass replace`,
+    // Command to clear the rods they just placed by replacing blocks with short_grass
+    clearBlock: `fill 30 95 104 30 95 93 short_grass replace`,
 
     // Command to replenish the grass under the rods they just placed, same coordinates as above with y axis 94.
     replenishGrass: `fill 30 94 104 30 94 93 grass_block replace`,
@@ -206,7 +206,7 @@ export const replaySettings = [
     // 1/2 gap 2
     beginningMessage: `To make 1/2 you placed: `,
     tpStart: `tp @p 30 96 92 facing 38 96 92`,
-    clearBlock: `fill 31 95 92 42 95 92 tallgrass replace`,
+    clearBlock: `fill 31 95 92 42 95 92 short_grass replace`,
     replenishGrass: `fill 31 94 92 42 94 92 grass_block replace`,
     cartesianDirection: "z",
     cartesionValue: 92,
@@ -215,7 +215,7 @@ export const replaySettings = [
     // 1/6 gap 3
     beginningMessage: `To make 1/6 you placed: `,
     tpStart: `tp @p 43 96 91 facing 53 96 91`,
-    clearBlock: `fill 44 95 91 47 95 91 tallgrass replace`,
+    clearBlock: `fill 44 95 91 47 95 91 short_grass replace`,
     replenishGrass: `fill 44 94 91 47 94 91 grass_block replace`,
     cartesianDirection: "z",
     cartesionValue: 91,
@@ -224,7 +224,7 @@ export const replaySettings = [
     // 3/4 gap 4
     beginningMessage: `To make 3/4 you placed: `,
     tpStart: `tp @p 47 96 86 facing 67 96 86`,
-    clearBlock: `fill 48 95 86 65 95 86 tallgrass replace`,
+    clearBlock: `fill 48 95 86 65 95 86 short_grass replace`,
     replenishGrass: `fill 48 94 86 65 94 86 grass_block replace`,
     cartesianDirection: "z",
     cartesionValue: 86,
@@ -233,7 +233,7 @@ export const replaySettings = [
     // 3/8 gap 5
     beginningMessage: `To make 3/8 you placed: `,
     tpStart: `tp @p 66 96 87 facing 66 96 87`,
-    clearBlock: `fill 66 95 89 66 95 97 tallgrass replace`,
+    clearBlock: `fill 66 95 89 66 95 97 short_grass replace`,
     replenishGrass: `fill 66 94 89 66 94 97 grass_block replace`,
     cartesianDirection: "x",
     cartesionValue: 66,
@@ -243,7 +243,7 @@ export const replaySettings = [
     // 1 2/3 gap 6
     beginningMessage: `To make 1 2/3 you placed: `,
     tpStart: `tp @p 67 96 100 facing 108 96 100`,
-    clearBlock: `fill 69 95 100 108 95 100 tallgrass replace`,
+    clearBlock: `fill 69 95 100 108 95 100 short_grass replace`,
     replenishGrass: `fill 69 94 100 108 94 100 grass_block replace`,
     cartesianDirection: "z",
     cartesionValue: 100,
@@ -252,8 +252,8 @@ export const replaySettings = [
     // 3/2 gap 7
     beginningMessage: `To make 3/2 you placed: `,
     tpStart: `tp @p 110 96 93 facing 72 96 93`,
-    clearBlock: `fill 110 95 93 73 95 93 tallgrass replace`,
-    replenishGrass: `fill 110 94 93 73 94 93 grass_block replace`,
+    clearBlock: `fill 108 95 93 73 95 93 short_grass replace`,
+    replenishGrass: `fill 108 94 93 73 94 93 grass_block replace`,
     cartesianDirection: "z",
     cartesionValue: 93,
   },
@@ -261,7 +261,7 @@ export const replaySettings = [
     // 7/12 gap 8
     beginningMessage: `To make 7/12 you placed: `,
     tpStart: `tp @p 71 96 85 facing 86 96 85`,
-    clearBlock: `fill 73 95 85 86 95 85 tallgrass replace`,
+    clearBlock: `fill 73 95 85 86 95 85 short_grass replace`,
     replenishGrass: `fill 73 94 85 86 94 85 grass_block replace`,
     cartesianDirection: "z",
     cartesionValue: 85,
@@ -272,7 +272,7 @@ export const replaySettings = [
     // 5/24 gap 9
     beginningMessage: `To make 5/24 you placed: `,
     tpStart: `tp @p 89 96 85 facing 95 96 85`,
-    clearBlock: `fill 91 95 85 95 95 85 tallgrass replace`,
+    clearBlock: `fill 91 95 85 95 95 85 short_grass replace`,
     replenishGrass: `fill 91 94 85 95 94 85 grass_block replace`,
     cartesianDirection: "z",
     cartesionValue: 85,
@@ -288,6 +288,6 @@ export const npcLocation = [
   { x: 66, y: 96, z: 100 }, // 3/8 gap 5
   { x: 110, y: 96, z: 101 }, // 1 2/3 gap 6
   { x: 71, y: 96, z: 93 }, // 3/2 gap 7
-  { x: 88, Y: 96, z: 86 }, // 7/12 gap 8
-  { x: 98, Y: 96, z: 85 }, // 5/24 gap 9f
+  { x: 88, y: 96, z: 86 }, // 7/12 gap 8
+  { x: 98, y: 96, z: 85 }, // 5/24 gap 9f
 ];
