@@ -134,21 +134,13 @@ function setCameraView(player, index) {
             //room1
             player.runCommandAsync(`camera ${player.name} set minecraft:free pos 30 120 92 facing 30 90 92`);
         }
-        else if (index == 2 || index == 3 || index == 4) {
+        else if (index == 2 || index == 3 || index == 4 || index == 5) {
             //room2
             player.runCommandAsync(`camera ${player.name} set minecraft:free pos 55 120 92 facing 55 90 92`);
         }
-        else if (index == 5) {
-            //room3
-            player.runCommandAsync(`camera ${player.name} set minecraft:free pos 93 120 92 facing 93 90 92`);
-        }
         else if (index == 6 || index == 7 || index == 8 || index == 9) {
-            //room4
-            player.runCommandAsync(`camera ${player.name} set minecraft:free pos 105 120 92 facing 105 90 92`);
-        }
-        else if (index == 10 || index == 11 || index == 12) {
-            //room4
-            player.runCommandAsync(`camera ${player.name} set minecraft:free pos -39 120 44 facing -39 94 44`);
+            //room3
+            player.runCommandAsync(`camera ${player.name} set minecraft:free pos 93 122 93 facing 93 90 93`);
         }
     });
 }

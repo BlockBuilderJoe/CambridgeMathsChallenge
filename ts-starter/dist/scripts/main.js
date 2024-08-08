@@ -255,7 +255,7 @@ var perfectRun = [
     direction: "east",
     rodLength: 4,
     blockName: "yellow_concrete",
-    successMessage: `Use a 4 rod to make up a 1/6.`
+    successMessage: `Instead use a 1/6 rod which equals 4 blocks.`
   },
   //Gap 4 = 3/4 td or 18 blocks | Optimum rod = 1/2,1/4 rod
   {
@@ -264,7 +264,7 @@ var perfectRun = [
     direction: "east",
     rodLength: 12,
     blockName: "orange_concrete",
-    successMessage: `1/2 = 1/4 + 1/4.`
+    successMessage: `Instead use a 1/2 rod which is = 2/4,`
   },
   {
     number: 3,
@@ -272,7 +272,7 @@ var perfectRun = [
     direction: "east",
     rodLength: 4,
     blockName: "lime_concrete",
-    successMessage: `+ a 1/4 rod = 3/4.`
+    successMessage: `then a 1/4 rod which makes 3/4.`
   },
   //Gap 5 = 3/8 td or 9 blocks | Optimum rod = 1/4,1/8 rod
   {
@@ -643,14 +643,10 @@ function placeRods(block, blockName, rodLength, direction) {
 async function setCameraView(player, index) {
   if (index == 0 || index == 1) {
     player.runCommandAsync(`camera ${player.name} set minecraft:free pos 30 120 92 facing 30 90 92`);
-  } else if (index == 2 || index == 3 || index == 4) {
+  } else if (index == 2 || index == 3 || index == 4 || index == 5) {
     player.runCommandAsync(`camera ${player.name} set minecraft:free pos 55 120 92 facing 55 90 92`);
-  } else if (index == 5) {
-    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 93 120 92 facing 93 90 92`);
   } else if (index == 6 || index == 7 || index == 8 || index == 9) {
-    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 105 120 92 facing 105 90 92`);
-  } else if (index == 10 || index == 11 || index == 12) {
-    player.runCommandAsync(`camera ${player.name} set minecraft:free pos -39 120 44 facing -39 94 44`);
+    player.runCommandAsync(`camera ${player.name} set minecraft:free pos 93 122 93 facing 93 90 93`);
   }
 }
 async function getBlockBehind(event, oppositeDirection) {
@@ -1493,15 +1489,6 @@ function applyPotionEffect(player, potion2, seconds2) {
 }
 function mainTick() {
   world11.getAllPlayers().forEach(async (player) => {
-    if (player.isOnGround) {
-      let isOnGrass = overworld11.getBlock(player.location)?.permutation?.matches("minecraft:short_grass");
-      if (isOnGrass && player.location.z <= 104) {
-        overworld11.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
-      }
-    }
-    if (player.isJumping == true && player.location.z <= 104) {
-      player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
-    }
     if (player.isInWater) {
       player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
       meters = 94 - Math.floor(player.location.y);

@@ -26,7 +26,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 4,
         blockName: "yellow_concrete",
-        successMessage: `Use a 4 rod to make up a 1/6.`,
+        successMessage: `Instead use a 1/6 rod which equals 4 blocks.`,
     },
     //Gap 4 = 3/4 td or 18 blocks | Optimum rod = 1/2,1/4 rod
     {
@@ -35,7 +35,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 12,
         blockName: "orange_concrete",
-        successMessage: `1/2 = 1/4 + 1/4.`,
+        successMessage: `Instead use a 1/2 rod which is = 2/4,`,
     },
     {
         number: 3,
@@ -43,7 +43,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 4,
         blockName: "lime_concrete",
-        successMessage: `+ a 1/4 rod = 3/4.`,
+        successMessage: `then a 1/4 rod which makes 3/4.`,
     },
     //Gap 5 = 3/8 td or 9 blocks | Optimum rod = 1/4,1/8 rod
     {
