@@ -462,6 +462,14 @@ var finalBlock = [
   },
   //1 2/3 gap 6
   {
+    location: { z: 100, y: 95, x: 108 },
+    blockName: "purple_concrete",
+    startLocation: { z: 100, y: 95, x: 69 },
+    startBlockName: "purple_concrete",
+    number: 5
+  },
+  //1 2/3 gap 6
+  {
     location: { z: 93, y: 95, x: 73 },
     blockName: "orange_concrete",
     startLocation: { z: 93, y: 95, x: 108 },
