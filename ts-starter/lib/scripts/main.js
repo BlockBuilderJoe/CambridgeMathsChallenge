@@ -137,15 +137,16 @@ function applyPotionEffect(player, potion, seconds) {
 function mainTick() {
     //checks different things about the player each tick.
     world.getAllPlayers().forEach((player) => __awaiter(this, void 0, void 0, function* () {
-        var _a, _b;
+        var _a, _b, _c;
         if (player.isOnGround) {
             let isOnGrass = (_b = (_a = overworld.getBlock(player.location)) === null || _a === void 0 ? void 0 : _a.permutation) === null || _b === void 0 ? void 0 : _b.matches("minecraft:short_grass");
-            if (isOnGrass && player.location.z <= 104) {
+            if (isOnGrass && player.location.z <= 104.99) {
+                (_c = overworld.getBlock(player.location)) === null || _c === void 0 ? void 0 : _c.setPermutation(BlockPermutation.resolve("minecraft:light_block"));
                 yield moveGroundsKeeper(player.location);
                 overworld.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
             }
         }
-        if (player.isJumping && player.location.z <= 104) {
+        if (player.isJumping && player.location.z <= 104.99) {
             yield moveGroundsKeeper(player.location);
             player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
         }

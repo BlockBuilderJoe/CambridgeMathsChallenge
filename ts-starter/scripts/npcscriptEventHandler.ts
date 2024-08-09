@@ -1,5 +1,13 @@
 import { system, world } from "@minecraft/server";
-import { moveNpc, replay, startCuisenaireGame, resetCuisenaireGame, giveMap, giveRods } from "./cuisenaireRods";
+import {
+  moveNpc,
+  replay,
+  startCuisenaireGame,
+  resetCuisenaireGame,
+  giveMap,
+  giveRods,
+  movePlayerToCheckpoint,
+} from "./cuisenaireRods";
 import { perfectRun } from "./perfectRun";
 import { openGate, closeGate } from "./gate";
 import { npcWalk } from "./npcWalk";
@@ -100,6 +108,7 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
       }
       break;
     }
+
     case "fraction:npc": {
       switch (event.message) {
         case "0": {
@@ -117,5 +126,8 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
       }
       break;
     }
+  }
+  if (event.id === "fraction:groundskeeper") {
+    await movePlayerToCheckpoint();
   }
 });

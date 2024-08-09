@@ -6,11 +6,14 @@ import {
   BlockInventoryComponent,
   EntityInventoryComponent,
   Block,
+  Player,
 } from "@minecraft/server";
 import { perfectRun, validRanges, finalBlock, replaySettings, npcLocation } from "./perfectRun";
 
 let overworld = world.getDimension("overworld");
 let rodsPlaced: any[] = [];
+
+let checkPoint: string = "tp @p 29 96 114 facing 29 96 112";
 
 export async function resetCuisenaireGame() {
   await overworld.runCommandAsync(`tp @p 29 96 114 facing 29 96 112`);
@@ -45,7 +48,23 @@ export async function moveNpc(id: number) {
   overworld.runCommandAsync(`scoreboard players add Saved Students 1`);
   overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${id}] rodNpc${id}Saved`);
   overworld.runCommandAsync(`tp @e[tag=fractionNpc] ${npcLocation[id].x} ${npcLocation[id].y} ${npcLocation[id].z}`);
+  checkPoint = replaySettings[id + 1].tpStart; //sets the checkpoint to the start location of the next rod from replaySettings
   overworld.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc5`);
+}
+
+export async function movePlayerToCheckpoint() {
+  let player = world.getPlayers()[0];
+  let locationBeforeTp = player.location;
+  await overworld.runCommandAsync(checkPoint);
+
+  //gets rid of lightblock and replaces it with grass. Light block reqired to stop dialogue triggering twice.
+  await overworld.runCommandAsync(
+    `fill ${locationBeforeTp.x - 5} 95 ${locationBeforeTp.z - 5} ${locationBeforeTp.x + 5} 95 ${
+      locationBeforeTp.z + 5
+    } short_grass replace light_block`
+  );
+
+  //moves player to checkpoint
 }
 
 function getRandomCoordinate(): { x: number; y: number; z: number } {

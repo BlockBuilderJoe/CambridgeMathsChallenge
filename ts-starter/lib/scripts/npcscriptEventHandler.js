@@ -1,5 +1,5 @@
 import { system, world } from "@minecraft/server";
-import { moveNpc, replay, startCuisenaireGame } from "./cuisenaireRods";
+import { moveNpc, replay, startCuisenaireGame, movePlayerToCheckpoint, } from "./cuisenaireRods";
 import { openGate, closeGate } from "./gate";
 import { npcWalk } from "./npcWalk";
 import { startWindowGame, giveGlass } from "./stainedGlassWindow";
@@ -118,6 +118,9 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
             }
             break;
         }
+    }
+    if (event.id === "fraction:groundskeeper") {
+        yield movePlayerToCheckpoint();
     }
 }));
 //# sourceMappingURL=npcscriptEventHandler.js.map

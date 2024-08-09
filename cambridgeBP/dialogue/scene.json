@@ -45,7 +45,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! However, you made up a half out of multiple fractions. I can show you a more optimum way. "
+                            "translate": "You saved me! If you want to get more students I can show you how to use the rods more efficiently."
                         }
                     ]
                 },
@@ -54,7 +54,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Show me "
+                                    "translate": "Show me."
                                 }
                             ]
                         },
@@ -66,12 +66,12 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Not Interested!"
+                                    "translate": "I’ll carry on."
                                 }
                             ]
                         },
                         "commands": [
-                            ""
+                            "scriptevent rod:npcComplete 0"
                         ]
                     }
                 ]
@@ -97,7 +97,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay"
+                                    "translate": "Okay."
                                 }
                             ]
                         },
@@ -159,7 +159,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "You’re Welcome"
+                                    "translate": "You’re Welcome."
                                 }
                             ]
                         },
@@ -181,7 +181,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Well done, you made it! But there is a more optimum route to get here, can I show you?"
+                            "translate": "You saved me! If you want to get more students I can show you how to use the rods more efficiently."
                         }
                     ]
                 },
@@ -190,7 +190,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Show me "
+                                    "translate": "Show me ."
                                 }
                             ]
                         },
@@ -202,12 +202,12 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Not Interested!"
+                                    "translate": "I’ll carry on."
                                 }
                             ]
                         },
                         "commands": [
-                            ""
+                            "scriptevent rod:npcComplete 1"
                         ]
                     }
                 ]
@@ -233,7 +233,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay"
+                                    "translate": "Okay."
                                 }
                             ]
                         },
@@ -295,7 +295,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "You’re Welcome"
+                                    "translate": "You’re Welcome."
                                 }
                             ]
                         },
@@ -317,7 +317,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Well done, you made it! But there is a more optimum route to get here, can I show you?"
+                            "translate": "You saved me! If you want to get more students I can show you how to use the rods more efficiently."
                         }
                     ]
                 },
@@ -326,7 +326,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Show me "
+                                    "translate": "Show me ."
                                 }
                             ]
                         },
@@ -338,12 +338,12 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Not Interested!"
+                                    "translate": "I’ll carry on."
                                 }
                             ]
                         },
                         "commands": [
-                            ""
+                            "scriptevent rod:npcComplete 2"
                         ]
                     }
                 ]
@@ -369,7 +369,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay"
+                                    "translate": "Okay."
                                 }
                             ]
                         },
@@ -431,7 +431,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "You’re Welcome"
+                                    "translate": "You’re Welcome."
                                 }
                             ]
                         },
@@ -453,7 +453,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Well done, you made it! But there is a more optimum route to get here, can I show you?"
+                            "translate": "You saved me! If you want to get more students I can show you how to use the rods more efficiently."
                         }
                     ]
                 },
@@ -462,7 +462,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Show me "
+                                    "translate": "Show me ."
                                 }
                             ]
                         },
@@ -474,12 +474,12 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Not Interested!"
+                                    "translate": "I’ll carry on."
                                 }
                             ]
                         },
                         "commands": [
-                            ""
+                            "scriptevent rod:npcComplete 3"
                         ]
                     }
                 ]
@@ -505,7 +505,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay"
+                                    "translate": "Okay."
                                 }
                             ]
                         },
@@ -567,7 +567,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Great"
+                                    "translate": "Great."
                                 }
                             ]
                         },
@@ -589,7 +589,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Well done, you made it! But there is a more optimum route to get here, can I show you?"
+                            "translate": "You saved me! If you want to get more students I can show you how to use the rods more efficiently."
                         }
                     ]
                 },
@@ -598,7 +598,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Show me "
+                                    "translate": "Show me ."
                                 }
                             ]
                         },
@@ -610,12 +610,12 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Not Interested!"
+                                    "translate": "I’ll carry on."
                                 }
                             ]
                         },
                         "commands": [
-                            ""
+                            "scriptevent rod:npcComplete 4"
                         ]
                     }
                 ]
@@ -641,7 +641,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay"
+                                    "translate": "Okay."
                                 }
                             ]
                         },
@@ -703,7 +703,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "You’re Welcome"
+                                    "translate": "You’re Welcome."
                                 }
                             ]
                         },
@@ -725,7 +725,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Well done, you made it! But there is a more optimum route to get here, can I show you?"
+                            "translate": "You saved me! If you want to get more students I can show you how to use the rods more efficiently."
                         }
                     ]
                 },
@@ -734,7 +734,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Show me "
+                                    "translate": "Show me ."
                                 }
                             ]
                         },
@@ -746,12 +746,12 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Not Interested!"
+                                    "translate": "I’ll carry on."
                                 }
                             ]
                         },
                         "commands": [
-                            ""
+                            "scriptevent rod:npcComplete 5"
                         ]
                     }
                 ]
@@ -777,7 +777,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay"
+                                    "translate": "Okay."
                                 }
                             ]
                         },
@@ -839,7 +839,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Thanks"
+                                    "translate": "Thanks."
                                 }
                             ]
                         },
@@ -861,7 +861,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Well done, you made it! But there is a more optimum route to get here, can I show you?"
+                            "translate": "You saved me! If you want to get more students I can show you how to use the rods more efficiently."
                         }
                     ]
                 },
@@ -870,7 +870,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Show me "
+                                    "translate": "Show me ."
                                 }
                             ]
                         },
@@ -882,12 +882,12 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Not Interested!"
+                                    "translate": "I’ll carry on."
                                 }
                             ]
                         },
                         "commands": [
-                            ""
+                            "scriptevent rod:npcComplete 6"
                         ]
                     }
                 ]
@@ -913,7 +913,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "You’re Welcome"
+                                    "translate": "You’re Welcome."
                                 }
                             ]
                         },
@@ -944,7 +944,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay"
+                                    "translate": "Okay."
                                 }
                             ]
                         },
@@ -975,7 +975,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "You’re Welcome"
+                                    "translate": "You’re Welcome."
                                 }
                             ]
                         },
@@ -997,7 +997,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Well done, you made it! But there is a more optimum route to get here, can I show you?"
+                            "translate": "You saved me! If you want to get more students I can show you how to use the rods more efficiently."
                         }
                     ]
                 },
@@ -1006,7 +1006,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Show me "
+                                    "translate": "Show me ."
                                 }
                             ]
                         },
@@ -1018,12 +1018,12 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Not Interested!"
+                                    "translate": "I’ll carry on."
                                 }
                             ]
                         },
                         "commands": [
-                            ""
+                            "scriptevent rod:npcComplete 7"
                         ]
                     }
                 ]
@@ -1049,7 +1049,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "You’re Welcome"
+                                    "translate": "You’re Welcome."
                                 }
                             ]
                         },
@@ -1080,7 +1080,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay"
+                                    "translate": "Okay."
                                 }
                             ]
                         },
@@ -1111,7 +1111,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "You’re Welcome"
+                                    "translate": "You’re Welcome."
                                 }
                             ]
                         },
@@ -1133,7 +1133,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "ERROR  It means the rods quantities are wrong. "
+                            "translate": "ERROR This shouldn’t appear in the game.  It means the rods quantities are wrong. "
                         }
                     ]
                 },
@@ -1142,7 +1142,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Show me "
+                                    "translate": "Show me ."
                                 }
                             ]
                         },
@@ -1154,12 +1154,12 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Not Interested!"
+                                    "translate": "I’ll carry on."
                                 }
                             ]
                         },
                         "commands": [
-                            ""
+                            "scriptevent rod:npcComplete 8"
                         ]
                     }
                 ]
@@ -1185,7 +1185,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay .."
+                                    "translate": "Okay ."
                                 }
                             ]
                         },
@@ -1216,7 +1216,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay"
+                                    "translate": "Okay."
                                 }
                             ]
                         },
@@ -1856,7 +1856,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "1. The grids are 24x24 blocks wide and you need to use the rods to cross them.\n2. You can place the rods by right clicking in front of the white blocks. \n3. Talk to each student as you go, they will let you know if you have placed the most optimum rod down. "
+                            "translate": "1. There are three grids two are  24x24 blocks wide and one is 48 x24 you need to use the rods to cross them.\n2. You can place the rods by right clicking in front of the white blocks. \n3. Talk to each student as you go, they will let you know if you have placed the most optimum rod down. "
                         }
                     ]
                 },
@@ -1987,7 +1987,7 @@
                             ]
                         },
                         "commands": [
-                            "tp @p 30 96 107 facing 30 96 90"
+                            "scriptevent fraction:groundskeeper 0"
                         ]
                     }
                 ]
@@ -2018,7 +2018,7 @@
                             ]
                         },
                         "commands": [
-                            "tp @p 30 96 107 facing 30 96 90"
+                            "scriptevent fraction:groundskeeper 0"
                         ]
                     }
                 ]

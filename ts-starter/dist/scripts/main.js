@@ -624,6 +624,7 @@ var npcLocation = [
 // scripts/cuisenaireRods.ts
 var overworld5 = world5.getDimension("overworld");
 var rodsPlaced = [];
+var checkPoint = "tp @p 29 96 114 facing 29 96 112";
 async function resetCuisenaireGame() {
   await overworld5.runCommandAsync(`tp @p 29 96 114 facing 29 96 112`);
   await overworld5.runCommandAsync(`tp @e[tag=fractionNpc] 29 96 112 facing 29 96 114`);
@@ -655,7 +656,16 @@ async function moveNpc(id) {
   overworld5.runCommandAsync(`scoreboard players add Saved Students 1`);
   overworld5.runCommandAsync(`dialogue change @e[tag=rodNpc${id}] rodNpc${id}Saved`);
   overworld5.runCommandAsync(`tp @e[tag=fractionNpc] ${npcLocation[id].x} ${npcLocation[id].y} ${npcLocation[id].z}`);
+  checkPoint = replaySettings[id + 1].tpStart;
   overworld5.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc5`);
+}
+async function movePlayerToCheckpoint() {
+  let player = world5.getPlayers()[0];
+  let locationBeforeTp = player.location;
+  await overworld5.runCommandAsync(checkPoint);
+  await overworld5.runCommandAsync(
+    `fill ${locationBeforeTp.x - 5} 95 ${locationBeforeTp.z - 5} ${locationBeforeTp.x + 5} 95 ${locationBeforeTp.z + 5} short_grass replace light_block`
+  );
 }
 function getRandomCoordinate() {
   const minX = 19;
@@ -1504,6 +1514,9 @@ system5.afterEvents.scriptEventReceive.subscribe(async (event) => {
       break;
     }
   }
+  if (event.id === "fraction:groundskeeper") {
+    await movePlayerToCheckpoint();
+  }
 });
 
 // scripts/main.ts
@@ -1622,12 +1635,13 @@ function mainTick() {
   world11.getAllPlayers().forEach(async (player) => {
     if (player.isOnGround) {
       let isOnGrass = overworld11.getBlock(player.location)?.permutation?.matches("minecraft:short_grass");
-      if (isOnGrass && player.location.z <= 104) {
+      if (isOnGrass && player.location.z <= 104.99) {
+        overworld11.getBlock(player.location)?.setPermutation(BlockPermutation5.resolve("minecraft:light_block"));
         await moveGroundsKeeper(player.location);
         overworld11.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
       }
     }
-    if (player.isJumping && player.location.z <= 104) {
+    if (player.isJumping && player.location.z <= 104.99) {
       await moveGroundsKeeper(player.location);
       player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
     }
