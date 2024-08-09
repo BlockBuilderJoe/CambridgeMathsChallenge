@@ -633,6 +633,27 @@ var npcLocation = [
 var overworld5 = world5.getDimension("overworld");
 var rodsPlaced = [];
 var checkPoint = "tp @p 29 96 114 facing 29 96 112";
+async function startCuisenaireTutorial() {
+  await overworld5.runCommandAsync(`tp @p -390 97 126`);
+  await overworld5.runCommandAsync(`camera @p set minecraft:free pos -381 230 146 facing -381 101 146`);
+  await overworld5.runCommandAsync(`replaceitem entity @p slot.weapon.offhand 0 filled_map`);
+  await overworld5.runCommandAsync(`title @p actionbar Around here, we measure distance in Tweeds (td).`);
+  system.runTimeout(async () => {
+    overworld5.runCommandAsync(`title @p actionbar 1 td = 24 blocks`);
+  }, 40);
+  system.runTimeout(async () => {
+    overworld5.runCommandAsync(`title @p actionbar We have rods that are different fractions of 1 td`);
+  }, 80);
+  system.runTimeout(async () => {
+    overworld5.runCommandAsync(
+      `title @p actionbar We don\u2019t have too many, so use them carefully! You have just enough to rescue everyone.\u201D`
+    );
+  }, 120);
+  system.runTimeout(async () => {
+    await startCuisenaireGame();
+    overworld5.runCommandAsync(`camera @p clear`);
+  }, 160);
+}
 async function resetCuisenaireGame() {
   await overworld5.runCommandAsync(`tp @p 29 96 114 facing 29 96 112`);
   await overworld5.runCommandAsync(`tp @e[tag=fractionNpc] 29 96 112 facing 29 96 114`);
@@ -652,7 +673,7 @@ async function giveMap() {
   overworld5.getPlayers().forEach((player) => {
     const getPlayerInventoryComponent = player.getComponent("inventory");
     if (map) {
-      getPlayerInventoryComponent.container?.addItem(map);
+      getPlayerInventoryComponent.container?.setItem(22, map);
     } else {
       world5.sendMessage(`Error: Map not found it needs to be placed in the chest at 30 90 107`);
     }
@@ -890,7 +911,6 @@ async function giveRods() {
     { block: "red_concrete", amount: 1 },
     { block: "pink_concrete", amount: 1 }
   ];
-  overworld5.runCommandAsync(`clear @p`);
   overworld5.runCommandAsync(`gamemode adventure`);
   for (let i = 0; i < rods.length; i++) {
     overworld5.runCommandAsync(
@@ -1514,6 +1534,11 @@ system5.afterEvents.scriptEventReceive.subscribe(async (event) => {
           break;
         }
         case "1": {
+          await startCuisenaireTutorial();
+          overworld10.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc3`);
+          break;
+        }
+        case "2": {
           overworld10.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc3`);
           await startCuisenaireGame();
           break;

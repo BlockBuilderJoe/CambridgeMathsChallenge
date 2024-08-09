@@ -3,6 +3,27 @@ import { perfectRun, validRanges, finalBlock, replaySettings, npcLocation } from
 let overworld = world.getDimension("overworld");
 let rodsPlaced = [];
 let checkPoint = "tp @p 29 96 114 facing 29 96 112";
+export function startCuisenaireTutorial() {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield overworld.runCommandAsync(`tp @p -390 97 126`);
+        yield overworld.runCommandAsync(`camera @p set minecraft:free pos -381 230 146 facing -381 101 146`);
+        yield overworld.runCommandAsync(`replaceitem entity @p slot.weapon.offhand 0 filled_map`);
+        yield overworld.runCommandAsync(`title @p actionbar Around here, we measure distance in Tweeds (td).`);
+        system.runTimeout(() => __awaiter(this, void 0, void 0, function* () {
+            overworld.runCommandAsync(`title @p actionbar 1 td = 24 blocks`);
+        }), 40);
+        system.runTimeout(() => __awaiter(this, void 0, void 0, function* () {
+            overworld.runCommandAsync(`title @p actionbar We have rods that are different fractions of 1 td`);
+        }), 80);
+        system.runTimeout(() => __awaiter(this, void 0, void 0, function* () {
+            overworld.runCommandAsync(`title @p actionbar We don’t have too many, so use them carefully! You have just enough to rescue everyone.”`);
+        }), 120);
+        system.runTimeout(() => __awaiter(this, void 0, void 0, function* () {
+            yield startCuisenaireGame();
+            overworld.runCommandAsync(`camera @p clear`);
+        }), 160);
+    });
+}
 export function resetCuisenaireGame() {
     return __awaiter(this, void 0, void 0, function* () {
         yield overworld.runCommandAsync(`tp @p 29 96 114 facing 29 96 112`);
@@ -29,7 +50,7 @@ export function giveMap() {
             var _a;
             const getPlayerInventoryComponent = player.getComponent("inventory");
             if (map) {
-                (_a = getPlayerInventoryComponent.container) === null || _a === void 0 ? void 0 : _a.addItem(map);
+                (_a = getPlayerInventoryComponent.container) === null || _a === void 0 ? void 0 : _a.setItem(22, map);
             }
             else {
                 world.sendMessage(`Error: Map not found it needs to be placed in the chest at 30 90 107`);
@@ -295,7 +316,7 @@ export function giveRods() {
             { block: "red_concrete", amount: 1 },
             { block: "pink_concrete", amount: 1 },
         ];
-        overworld.runCommandAsync(`clear @p`);
+        //overworld.runCommandAsync(`clear @p`);
         overworld.runCommandAsync(`gamemode adventure`);
         for (let i = 0; i < rods.length; i++) {
             overworld.runCommandAsync(`replaceitem entity @p slot.hotbar ${i + 1} ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);

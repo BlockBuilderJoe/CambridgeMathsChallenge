@@ -7,6 +7,7 @@ import {
   giveMap,
   giveRods,
   movePlayerToCheckpoint,
+  startCuisenaireTutorial,
 } from "./cuisenaireRods";
 import { perfectRun } from "./perfectRun";
 import { openGate, closeGate } from "./gate";
@@ -119,6 +120,12 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
           break;
         }
         case "1": {
+          await startCuisenaireTutorial();
+          overworld.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc3`);
+          //await startCuisenaireGame();
+          break;
+        }
+        case "2": {
           overworld.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc3`);
           await startCuisenaireGame();
           break;

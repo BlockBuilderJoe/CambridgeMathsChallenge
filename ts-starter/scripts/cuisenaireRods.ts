@@ -15,6 +15,29 @@ let rodsPlaced: any[] = [];
 
 let checkPoint: string = "tp @p 29 96 114 facing 29 96 112";
 
+export async function startCuisenaireTutorial() {
+  await overworld.runCommandAsync(`tp @p -390 97 126`);
+  await overworld.runCommandAsync(`camera @p set minecraft:free pos -381 230 146 facing -381 101 146`);
+  await overworld.runCommandAsync(`replaceitem entity @p slot.weapon.offhand 0 filled_map`);
+  await overworld.runCommandAsync(`title @p actionbar Around here, we measure distance in Tweeds (td).`);
+
+  system.runTimeout(async () => {
+    overworld.runCommandAsync(`title @p actionbar 1 td = 24 blocks`);
+  }, 40);
+  system.runTimeout(async () => {
+    overworld.runCommandAsync(`title @p actionbar We have rods that are different fractions of 1 td`);
+  }, 80);
+  system.runTimeout(async () => {
+    overworld.runCommandAsync(
+      `title @p actionbar We don’t have too many, so use them carefully! You have just enough to rescue everyone.”`
+    );
+  }, 120);
+  system.runTimeout(async () => {
+    await startCuisenaireGame();
+    overworld.runCommandAsync(`camera @p clear`);
+  }, 160);
+}
+
 export async function resetCuisenaireGame() {
   await overworld.runCommandAsync(`tp @p 29 96 114 facing 29 96 112`);
   await overworld.runCommandAsync(`tp @e[tag=fractionNpc] 29 96 112 facing 29 96 114`);
@@ -36,7 +59,7 @@ export async function giveMap() {
   overworld.getPlayers().forEach((player) => {
     const getPlayerInventoryComponent = player.getComponent("inventory") as EntityInventoryComponent;
     if (map) {
-      getPlayerInventoryComponent.container?.addItem(map);
+      getPlayerInventoryComponent.container?.setItem(22, map);
     } else {
       world.sendMessage(`Error: Map not found it needs to be placed in the chest at 30 90 107`);
     }
@@ -324,7 +347,7 @@ export async function giveRods() {
     { block: "red_concrete", amount: 1 },
     { block: "pink_concrete", amount: 1 },
   ];
-  overworld.runCommandAsync(`clear @p`);
+  //overworld.runCommandAsync(`clear @p`);
   overworld.runCommandAsync(`gamemode adventure`);
   for (let i = 0; i < rods.length; i++) {
     overworld.runCommandAsync(
