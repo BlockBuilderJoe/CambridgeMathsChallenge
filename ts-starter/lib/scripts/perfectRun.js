@@ -151,23 +151,113 @@ export const validRanges = [
     { xMin: 73, xMax: 86, z: 85 }, //7/12 gap 8
     { xMin: 91, xMax: 95, z: 85 }, //5/24 gap 9
 ];
-//The final block that is placed. If two rods are required write 2 with the same number.
+//The first block that is placed. If two rods are required write 2 with the same number.
 export const finalBlock = [
-    { location: { z: 93, y: 95, x: 30 }, blockName: "orange_concrete", number: 0 }, //1/2 gap 1
-    { location: { z: 92, y: 95, x: 42 }, blockName: "orange_concrete", number: 1 }, //1/2 gap 2
-    { location: { z: 91, y: 95, x: 47 }, blockName: "yellow_concrete", number: 2 }, //1/6 gap 3
-    { location: { z: 86, y: 95, x: 65 }, blockName: "orange_concrete", number: 3 }, //3/4 gap 4
-    { location: { z: 86, y: 95, x: 65 }, blockName: "lime_concrete", number: 3 }, //3/4 gap 4
-    { location: { z: 97, y: 95, x: 66 }, blockName: "lime_concrete", number: 4 }, //3/8 gap 5
-    { location: { z: 97, y: 95, x: 66 }, blockName: "red_concrete", number: 4 }, //3/8 gap 5
-    { location: { z: 100, y: 95, x: 108 }, blockName: "purple_concrete", number: 5 }, //1 2/3 gap 6
-    { location: { z: 100, y: 95, x: 108 }, blockName: "green_concrete", number: 5 }, //1 2/3 gap 6
-    { location: { z: 93, y: 95, x: 73 }, blockName: "orange_concrete", number: 6 }, //3/2 gap 7
-    { location: { z: 93, y: 95, x: 73 }, blockName: "green_concrete", number: 6 }, //3/2 gap 7
-    { location: { z: 85, y: 95, x: 86 }, blockName: "purple_concrete", number: 7 }, //7/12 gap 8
-    { location: { z: 85, y: 95, x: 86 }, blockName: "lime_concrete", number: 7 }, //7/12 gap 8
-    { location: { z: 85, y: 95, x: 95 }, blockName: "pink_concrete", number: 8 }, //5/24 gap 9
-    { location: { z: 85, y: 95, x: 95 }, blockName: "yellow_concrete", number: 8 }, //5/24 gap 9
+    {
+        location: { z: 93, y: 95, x: 30 },
+        blockName: "orange_concrete",
+        startLocation: { z: 104, y: 95, x: 30 },
+        startBlockName: "orange_concrete",
+        number: 0,
+    }, //1/2 gap 1
+    {
+        location: { z: 92, y: 95, x: 42 },
+        blockName: "orange_concrete",
+        startLocation: { z: 92, y: 95, x: 31 },
+        startBlockName: "orange_concrete",
+        number: 1,
+    }, //1/2 gap 2
+    {
+        location: { z: 91, y: 95, x: 47 },
+        blockName: "yellow_concrete",
+        startLocation: { z: 91, y: 95, x: 44 },
+        startBlockName: "yellow_concrete",
+        number: 2,
+    }, //1/6 gap 3
+    {
+        location: { z: 86, y: 95, x: 65 },
+        blockName: "orange_concrete",
+        startLocation: { z: 86, y: 95, x: 48 },
+        startBlockName: "lime_concrete",
+        number: 3,
+    }, //3/4 gap 4
+    {
+        location: { z: 86, y: 95, x: 65 },
+        blockName: "lime_concrete",
+        startLocation: { z: 86, y: 95, x: 48 },
+        startBlockName: "orange_concrete",
+        number: 3,
+    }, //3/4 gap 4
+    {
+        location: { z: 97, y: 95, x: 66 },
+        blockName: "lime_concrete",
+        startLocation: { z: 97, y: 95, x: 66 },
+        startBlockName: "red_concrete",
+        number: 4,
+    }, //3/8 gap 5
+    {
+        location: { z: 97, y: 95, x: 66 },
+        blockName: "red_concrete",
+        startLocation: { z: 97, y: 95, x: 66 },
+        startBlockName: "lime_concrete",
+        number: 4,
+    }, //3/8 gap 5
+    {
+        location: { z: 100, y: 95, x: 108 },
+        blockName: "purple_concrete",
+        startLocation: { z: 100, y: 95, x: 69 },
+        startBlockName: "green_concrete",
+        number: 5,
+    }, //1 2/3 gap 6
+    {
+        location: { z: 100, y: 95, x: 108 },
+        blockName: "green_concrete",
+        startLocation: { z: 100, y: 95, x: 69 },
+        startBlockName: "purple_concrete",
+        number: 5,
+    }, //1 2/3 gap 6
+    {
+        location: { z: 93, y: 95, x: 73 },
+        blockName: "orange_concrete",
+        startLocation: { z: 93, y: 95, x: 108 },
+        startBlockName: "green_concrete",
+        number: 6,
+    }, //3/2 gap 7
+    {
+        location: { z: 93, y: 95, x: 73 },
+        blockName: "green_concrete",
+        startLocation: { z: 93, y: 95, x: 108 },
+        startBlockName: "orange_concrete",
+        number: 6,
+    }, //3/2 gap 7
+    {
+        location: { z: 85, y: 95, x: 86 },
+        blockName: "purple_concrete",
+        startLocation: { z: 85, y: 95, x: 73 },
+        startBlockName: "lime_concrete",
+        number: 7,
+    }, //7/12 gap 8
+    {
+        location: { z: 85, y: 95, x: 86 },
+        blockName: "lime_concrete",
+        startLocation: { z: 85, y: 95, x: 73 },
+        startBlockName: "purple_concrete",
+        number: 7,
+    }, //7/12 gap 8
+    {
+        location: { z: 85, y: 95, x: 95 },
+        blockName: "pink_concrete",
+        startLocation: { z: 85, y: 95, x: 91 },
+        startBlockName: "yellow_concrete",
+        number: 8,
+    }, //5/24 gap 9
+    {
+        location: { z: 85, y: 95, x: 95 },
+        blockName: "yellow_concrete",
+        startLocation: { z: 85, y: 95, x: 91 },
+        startBlockName: "pink_concrete",
+        number: 8,
+    }, //5/24 gap 9
 ];
 export const replaySettings = [
     {

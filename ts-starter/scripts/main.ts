@@ -17,6 +17,7 @@ import {
   resetNPC,
   directionCheck,
   startCuisenaireGame,
+  moveGroundsKeeper,
 } from "./cuisenaireRods";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
@@ -165,10 +166,12 @@ function mainTick() {
     if (player.isOnGround) {
       let isOnGrass = overworld.getBlock(player.location)?.permutation?.matches("minecraft:short_grass");
       if (isOnGrass && player.location.z <= 104) {
+        await moveGroundsKeeper(player.location);
         overworld.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
       }
     }
     if (player.isJumping && player.location.z <= 104) {
+      await moveGroundsKeeper(player.location);
       player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
     }
     if (player.isInWater) {

@@ -130,7 +130,6 @@ function placeRods(block, blockName, rodLength, direction) {
 }
 function setCameraView(player, index) {
     return __awaiter(this, void 0, void 0, function* () {
-        world.sendMessage(`Camera view set to ${index}`);
         switch (index) {
             case 0: //gap1
                 player.runCommandAsync(`camera ${player.name} set minecraft:free pos 30 120 99 facing 30 90 99`);
@@ -297,12 +296,14 @@ function checkFinalBlock(block, direction, rodLength) {
         let rodEnd = block[direction](rodLength - 1);
         let hasColour = (_a = rodEnd.permutation) === null || _a === void 0 ? void 0 : _a.getState("color");
         let rodEndLocation = rodEnd.location;
-        //Does it match the expected final block?
+        //Does it match the expected final block and start block?
         const isCorrectFinalBlock = finalBlock.find((block) => {
-            var _a;
-            return ((_a = rodEnd === null || rodEnd === void 0 ? void 0 : rodEnd.permutation) === null || _a === void 0 ? void 0 : _a.matches(block.blockName)) &&
+            var _a, _b;
+            const rodStart = overworld.getBlock(block.startLocation);
+            return (((_a = rodEnd === null || rodEnd === void 0 ? void 0 : rodEnd.permutation) === null || _a === void 0 ? void 0 : _a.matches(block.blockName)) &&
                 rodEndLocation.x === block.location.x &&
-                rodEndLocation.z === block.location.z;
+                rodEndLocation.z === block.location.z &&
+                ((_b = rodStart === null || rodStart === void 0 ? void 0 : rodStart.permutation) === null || _b === void 0 ? void 0 : _b.matches(block.startBlockName)));
         });
         //Is it the wrong block in the right place?
         const isIncorrectFinalBlock = finalBlock.find((block) => {
@@ -312,28 +313,14 @@ function checkFinalBlock(block, direction, rodLength) {
                 rodEndLocation.z === block.location.z;
         });
         if (isCorrectFinalBlock) {
-            moveGroundsKeeper(isCorrectFinalBlock.number);
-            world.sendMessage(`Changing Npc` + isCorrectFinalBlock.number + ` to win state`);
+            //Correct rod in the right place
             changeNPC(isCorrectFinalBlock.number, true);
         }
         else if (isIncorrectFinalBlock) {
-            moveGroundsKeeper(isIncorrectFinalBlock.number);
-            world.sendMessage(`Changing Npc` + isIncorrectFinalBlock.number + ` to fail state`);
             changeNPC(isIncorrectFinalBlock.number, false);
         }
         // Checks if the rodEnd has a colour, if it does, it will change the NPC to the fail state.
     });
-}
-function moveGroundsKeeper(rodNumber) {
-    if (rodNumber <= 1) {
-        overworld.runCommandAsync(`tp @e[tag=groundskeeper] 32 101 79`);
-    }
-    else if (rodNumber <= 3) {
-        overworld.runCommandAsync(`tp @e[tag=groundskeeper] 56 101 79`);
-    }
-    else if (rodNumber <= 5) {
-        overworld.runCommandAsync(`tp @e[tag=groundskeeper] 94 101 79`);
-    }
 }
 function changeNPC(matchingRodIndex, win) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -346,5 +333,27 @@ function changeNPC(matchingRodIndex, win) {
             overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Fail`);
         }
     });
+}
+export function moveGroundsKeeper(location) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const locations = [
+            { x: 32, y: 101, z: 79 },
+            { x: 56, y: 101, z: 79 },
+            { x: 94, y: 101, z: 79 },
+        ];
+        let closestLocation = locations[0];
+        let minDistance = calculateDistance(location, closestLocation);
+        for (let i = 1; i < locations.length; i++) {
+            const distance = calculateDistance(location, locations[i]);
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestLocation = locations[i];
+            }
+        }
+        overworld.runCommandAsync(`tp @e[tag=groundskeeper] ${closestLocation.x} ${closestLocation.y} ${closestLocation.z}`);
+    });
+}
+function calculateDistance(a, b) {
+    return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2) + Math.pow(a.z - b.z, 2));
 }
 //# sourceMappingURL=cuisenaireRods.js.map

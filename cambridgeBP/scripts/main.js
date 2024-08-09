@@ -389,35 +389,125 @@ var validRanges = [
   //5/24 gap 9
 ];
 var finalBlock = [
-  { location: { z: 93, y: 95, x: 30 }, blockName: "orange_concrete", number: 0 },
+  {
+    location: { z: 93, y: 95, x: 30 },
+    blockName: "orange_concrete",
+    startLocation: { z: 104, y: 95, x: 30 },
+    startBlockName: "orange_concrete",
+    number: 0
+  },
   //1/2 gap 1
-  { location: { z: 92, y: 95, x: 42 }, blockName: "orange_concrete", number: 1 },
+  {
+    location: { z: 92, y: 95, x: 42 },
+    blockName: "orange_concrete",
+    startLocation: { z: 92, y: 95, x: 31 },
+    startBlockName: "orange_concrete",
+    number: 1
+  },
   //1/2 gap 2
-  { location: { z: 91, y: 95, x: 47 }, blockName: "yellow_concrete", number: 2 },
+  {
+    location: { z: 91, y: 95, x: 47 },
+    blockName: "yellow_concrete",
+    startLocation: { z: 91, y: 95, x: 44 },
+    startBlockName: "yellow_concrete",
+    number: 2
+  },
   //1/6 gap 3
-  { location: { z: 86, y: 95, x: 65 }, blockName: "orange_concrete", number: 3 },
+  {
+    location: { z: 86, y: 95, x: 65 },
+    blockName: "orange_concrete",
+    startLocation: { z: 86, y: 95, x: 48 },
+    startBlockName: "lime_concrete",
+    number: 3
+  },
   //3/4 gap 4
-  { location: { z: 86, y: 95, x: 65 }, blockName: "lime_concrete", number: 3 },
+  {
+    location: { z: 86, y: 95, x: 65 },
+    blockName: "lime_concrete",
+    startLocation: { z: 86, y: 95, x: 48 },
+    startBlockName: "orange_concrete",
+    number: 3
+  },
   //3/4 gap 4
-  { location: { z: 97, y: 95, x: 66 }, blockName: "lime_concrete", number: 4 },
+  {
+    location: { z: 97, y: 95, x: 66 },
+    blockName: "lime_concrete",
+    startLocation: { z: 97, y: 95, x: 66 },
+    startBlockName: "red_concrete",
+    number: 4
+  },
   //3/8 gap 5
-  { location: { z: 97, y: 95, x: 66 }, blockName: "red_concrete", number: 4 },
+  {
+    location: { z: 97, y: 95, x: 66 },
+    blockName: "red_concrete",
+    startLocation: { z: 97, y: 95, x: 66 },
+    startBlockName: "lime_concrete",
+    number: 4
+  },
   //3/8 gap 5
-  { location: { z: 100, y: 95, x: 108 }, blockName: "purple_concrete", number: 5 },
+  {
+    location: { z: 100, y: 95, x: 108 },
+    blockName: "purple_concrete",
+    startLocation: { z: 100, y: 95, x: 69 },
+    startBlockName: "green_concrete",
+    number: 5
+  },
   //1 2/3 gap 6
-  { location: { z: 100, y: 95, x: 108 }, blockName: "green_concrete", number: 5 },
+  {
+    location: { z: 100, y: 95, x: 108 },
+    blockName: "green_concrete",
+    startLocation: { z: 100, y: 95, x: 69 },
+    startBlockName: "purple_concrete",
+    number: 5
+  },
   //1 2/3 gap 6
-  { location: { z: 93, y: 95, x: 73 }, blockName: "orange_concrete", number: 6 },
+  {
+    location: { z: 93, y: 95, x: 73 },
+    blockName: "orange_concrete",
+    startLocation: { z: 93, y: 95, x: 108 },
+    startBlockName: "green_concrete",
+    number: 6
+  },
   //3/2 gap 7
-  { location: { z: 93, y: 95, x: 73 }, blockName: "green_concrete", number: 6 },
+  {
+    location: { z: 93, y: 95, x: 73 },
+    blockName: "green_concrete",
+    startLocation: { z: 93, y: 95, x: 108 },
+    startBlockName: "orange_concrete",
+    number: 6
+  },
   //3/2 gap 7
-  { location: { z: 85, y: 95, x: 86 }, blockName: "purple_concrete", number: 7 },
+  {
+    location: { z: 85, y: 95, x: 86 },
+    blockName: "purple_concrete",
+    startLocation: { z: 85, y: 95, x: 73 },
+    startBlockName: "lime_concrete",
+    number: 7
+  },
   //7/12 gap 8
-  { location: { z: 85, y: 95, x: 86 }, blockName: "lime_concrete", number: 7 },
+  {
+    location: { z: 85, y: 95, x: 86 },
+    blockName: "lime_concrete",
+    startLocation: { z: 85, y: 95, x: 73 },
+    startBlockName: "purple_concrete",
+    number: 7
+  },
   //7/12 gap 8
-  { location: { z: 85, y: 95, x: 95 }, blockName: "pink_concrete", number: 8 },
+  {
+    location: { z: 85, y: 95, x: 95 },
+    blockName: "pink_concrete",
+    startLocation: { z: 85, y: 95, x: 91 },
+    startBlockName: "yellow_concrete",
+    number: 8
+  },
   //5/24 gap 9
-  { location: { z: 85, y: 95, x: 95 }, blockName: "yellow_concrete", number: 8 }
+  {
+    location: { z: 85, y: 95, x: 95 },
+    blockName: "yellow_concrete",
+    startLocation: { z: 85, y: 95, x: 91 },
+    startBlockName: "pink_concrete",
+    number: 8
+  }
   //5/24 gap 9
 ];
 var replaySettings = [
@@ -641,7 +731,6 @@ function placeRods(block, blockName, rodLength, direction) {
   }
 }
 async function setCameraView(player, index) {
-  world5.sendMessage(`Camera view set to ${index}`);
   switch (index) {
     case 0:
       player.runCommandAsync(`camera ${player.name} set minecraft:free pos 30 120 99 facing 30 90 99`);
@@ -795,29 +884,17 @@ async function checkFinalBlock(block, direction, rodLength) {
   let rodEnd = block[direction](rodLength - 1);
   let hasColour = rodEnd.permutation?.getState("color");
   let rodEndLocation = rodEnd.location;
-  const isCorrectFinalBlock = finalBlock.find(
-    (block2) => rodEnd?.permutation?.matches(block2.blockName) && rodEndLocation.x === block2.location.x && rodEndLocation.z === block2.location.z
-  );
+  const isCorrectFinalBlock = finalBlock.find((block2) => {
+    const rodStart = overworld5.getBlock(block2.startLocation);
+    return rodEnd?.permutation?.matches(block2.blockName) && rodEndLocation.x === block2.location.x && rodEndLocation.z === block2.location.z && rodStart?.permutation?.matches(block2.startBlockName);
+  });
   const isIncorrectFinalBlock = finalBlock.find(
     (block2) => !rodEnd?.permutation?.matches(block2.blockName) && rodEndLocation.x === block2.location.x && rodEndLocation.z === block2.location.z
   );
   if (isCorrectFinalBlock) {
-    moveGroundsKeeper(isCorrectFinalBlock.number);
-    world5.sendMessage(`Changing Npc` + isCorrectFinalBlock.number + ` to win state`);
     changeNPC(isCorrectFinalBlock.number, true);
   } else if (isIncorrectFinalBlock) {
-    moveGroundsKeeper(isIncorrectFinalBlock.number);
-    world5.sendMessage(`Changing Npc` + isIncorrectFinalBlock.number + ` to fail state`);
     changeNPC(isIncorrectFinalBlock.number, false);
-  }
-}
-function moveGroundsKeeper(rodNumber) {
-  if (rodNumber <= 1) {
-    overworld5.runCommandAsync(`tp @e[tag=groundskeeper] 32 101 79`);
-  } else if (rodNumber <= 3) {
-    overworld5.runCommandAsync(`tp @e[tag=groundskeeper] 56 101 79`);
-  } else if (rodNumber <= 5) {
-    overworld5.runCommandAsync(`tp @e[tag=groundskeeper] 94 101 79`);
   }
 }
 async function changeNPC(matchingRodIndex, win) {
@@ -826,6 +903,26 @@ async function changeNPC(matchingRodIndex, win) {
   } else {
     overworld5.runCommandAsync(`dialogue change @e[tag=rodNpc${matchingRodIndex}] rodNpc${matchingRodIndex}Fail`);
   }
+}
+async function moveGroundsKeeper(location) {
+  const locations = [
+    { x: 32, y: 101, z: 79 },
+    { x: 56, y: 101, z: 79 },
+    { x: 94, y: 101, z: 79 }
+  ];
+  let closestLocation = locations[0];
+  let minDistance = calculateDistance(location, closestLocation);
+  for (let i = 1; i < locations.length; i++) {
+    const distance = calculateDistance(location, locations[i]);
+    if (distance < minDistance) {
+      minDistance = distance;
+      closestLocation = locations[i];
+    }
+  }
+  overworld5.runCommandAsync(`tp @e[tag=groundskeeper] ${closestLocation.x} ${closestLocation.y} ${closestLocation.z}`);
+}
+function calculateDistance(a, b) {
+  return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2) + Math.pow(a.z - b.z, 2));
 }
 
 // scripts/playerFacing.ts
@@ -1526,10 +1623,12 @@ function mainTick() {
     if (player.isOnGround) {
       let isOnGrass = overworld11.getBlock(player.location)?.permutation?.matches("minecraft:short_grass");
       if (isOnGrass && player.location.z <= 104) {
+        await moveGroundsKeeper(player.location);
         overworld11.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
       }
     }
     if (player.isJumping && player.location.z <= 104) {
+      await moveGroundsKeeper(player.location);
       player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
     }
     if (player.isInWater) {

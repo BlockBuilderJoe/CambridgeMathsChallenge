@@ -1,6 +1,6 @@
 import { world, system, BlockPermutation, } from "@minecraft/server";
 import { windowUndoHandler, windowScaleHandler } from "./stainedGlassWindow";
-import { cuisenaire, getBlockBehind, directionCheck, } from "./cuisenaireRods";
+import { cuisenaire, getBlockBehind, directionCheck, moveGroundsKeeper, } from "./cuisenaireRods";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
 import { potionMaker, displayTimer, getSlots } from "./potionGame";
@@ -141,10 +141,12 @@ function mainTick() {
         if (player.isOnGround) {
             let isOnGrass = (_b = (_a = overworld.getBlock(player.location)) === null || _a === void 0 ? void 0 : _a.permutation) === null || _b === void 0 ? void 0 : _b.matches("minecraft:short_grass");
             if (isOnGrass && player.location.z <= 104) {
+                yield moveGroundsKeeper(player.location);
                 overworld.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
             }
         }
         if (player.isJumping && player.location.z <= 104) {
+            yield moveGroundsKeeper(player.location);
             player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
         }
         if (player.isInWater) {
