@@ -635,7 +635,7 @@ var rodsPlaced = [];
 var checkPoint = "tp @p 29 96 114 facing 29 96 112";
 async function startCuisenaireTutorial() {
   await overworld5.runCommandAsync(`tp @p -390 97 126`);
-  await overworld5.runCommandAsync(`camera @p set minecraft:free pos -381 230 146 facing -381 101 146`);
+  await overworld5.runCommandAsync(`camera @p set minecraft:free pos -385 300 160 facing -385 101 158`);
   await overworld5.runCommandAsync(`replaceitem entity @p slot.weapon.offhand 0 filled_map`);
   await overworld5.runCommandAsync(`title @p actionbar Around here, we measure distance in Tweeds (td).`);
   system.runTimeout(async () => {

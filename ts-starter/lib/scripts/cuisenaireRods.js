@@ -3,10 +3,11 @@ import { perfectRun, validRanges, finalBlock, replaySettings, npcLocation } from
 let overworld = world.getDimension("overworld");
 let rodsPlaced = [];
 let checkPoint = "tp @p 29 96 114 facing 29 96 112";
+//clone -447 100 72 -320 100 185 -447 -50 185
 export function startCuisenaireTutorial() {
     return __awaiter(this, void 0, void 0, function* () {
         yield overworld.runCommandAsync(`tp @p -390 97 126`);
-        yield overworld.runCommandAsync(`camera @p set minecraft:free pos -381 230 146 facing -381 101 146`);
+        yield overworld.runCommandAsync(`camera @p set minecraft:free pos -385 300 160 facing -385 101 158`);
         yield overworld.runCommandAsync(`replaceitem entity @p slot.weapon.offhand 0 filled_map`);
         yield overworld.runCommandAsync(`title @p actionbar Around here, we measure distance in Tweeds (td).`);
         system.runTimeout(() => __awaiter(this, void 0, void 0, function* () {

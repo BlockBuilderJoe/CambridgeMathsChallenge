@@ -15,9 +15,10 @@ let rodsPlaced: any[] = [];
 
 let checkPoint: string = "tp @p 29 96 114 facing 29 96 112";
 
+//clone -447 100 72 -320 100 185 -447 90 185 replace move
 export async function startCuisenaireTutorial() {
   await overworld.runCommandAsync(`tp @p -390 97 126`);
-  await overworld.runCommandAsync(`camera @p set minecraft:free pos -381 230 146 facing -381 101 146`);
+  await overworld.runCommandAsync(`camera @p set minecraft:free pos -385 125 160 facing -385 -50 158`);
   await overworld.runCommandAsync(`replaceitem entity @p slot.weapon.offhand 0 filled_map`);
   await overworld.runCommandAsync(`title @p actionbar Around here, we measure distance in Tweeds (td).`);
 
