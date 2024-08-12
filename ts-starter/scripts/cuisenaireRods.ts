@@ -15,28 +15,28 @@ let rodsPlaced: any[] = [];
 
 let checkPoint: string = "tp @p 29 96 114 facing 29 96 112";
 
-//clone -447 100 72 -320 100 185 -447 90 185 replace move
+//tickingarea add -447.91 -27.00 73.83 -326.23 -27.00 78.08 mapArea true
+
 export async function startCuisenaireTutorial() {
-  await overworld.runCommandAsync(`tp @p -390 97 126`);
+  await overworld.runCommandAsync(`tp @p -390 -31 126`);
   await overworld.runCommandAsync(`camera @p set minecraft:free pos -385 125 160 facing -385 -50 158`);
   await overworld.runCommandAsync(`replaceitem entity @p slot.weapon.offhand 0 filled_map`);
   await overworld.runCommandAsync(`title @p actionbar Around here, we measure distance in Tweeds (td).`);
-
   system.runTimeout(async () => {
     overworld.runCommandAsync(`title @p actionbar 1 td = 24 blocks`);
-  }, 40);
+  }, 60);
   system.runTimeout(async () => {
     overworld.runCommandAsync(`title @p actionbar We have rods that are different fractions of 1 td`);
-  }, 80);
+  }, 120);
   system.runTimeout(async () => {
     overworld.runCommandAsync(
-      `title @p actionbar We don’t have too many, so use them carefully! You have just enough to rescue everyone.”`
+      `title @p actionbar We do not have too many, so use them carefully!\nYou have just enough to rescue everyone.`
     );
-  }, 120);
+  }, 180);
   system.runTimeout(async () => {
     await startCuisenaireGame();
     overworld.runCommandAsync(`camera @p clear`);
-  }, 160);
+  }, 240);
 }
 
 export async function resetCuisenaireGame() {
@@ -170,10 +170,19 @@ export async function resetNPC(npcAmount: number) {
   }
 }
 
+async function queueSound(index: number) {
+  system.runTimeout(() => {
+    overworld.runCommandAsync(`playsound note.xylophone @p`);
+  }, index * 10);
+}
+
 function placeRods(block: any, blockName: string, rodLength: number, direction: string) {
   const validDirections = ["east", "west", "north", "south"];
   if (validDirections.includes(direction)) {
     for (let i = 0; i < rodLength; i++) {
+      //queues a sound for each block of the rod placed.
+      queueSound(i);
+
       block[direction](i).setPermutation(BlockPermutation.resolve(blockName));
     }
   } else {
@@ -352,9 +361,7 @@ export async function giveRods() {
   overworld.runCommandAsync(`gamemode adventure`);
   for (let i = 0; i < rods.length; i++) {
     overworld.runCommandAsync(
-      `replaceitem entity @p slot.hotbar ${i + 1} ${rods[i].block} ${
-        rods[i].amount
-      } 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
+      `replaceitem entity @p slot.hotbar ${i} ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
     );
   }
 }

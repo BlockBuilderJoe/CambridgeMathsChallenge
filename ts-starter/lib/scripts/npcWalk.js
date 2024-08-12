@@ -13,8 +13,11 @@ const ratioMessage = [
 ];
 const fractionMessage = [
     { message: "You §acan't jump or step on the grass §fin the gardens.\nYou'll be told off if you do!", step: 0 },
-    { message: "I'll give you magical rods that you can cross the gardens with.", step: 25 },
-    { message: "The gardens are §a24x24§f blocks wide.\nEach student is a different fraction of 24 away.", step: 45 },
+    { message: "I'll give you §adifferent sized magical rods§f\nto cross the gaps to save the students.", step: 25 },
+    {
+        message: "Two gardens are §a24x24§f blocks wide and one is §a24x48§f.\nEach gap will be a fraction of 24. ",
+        step: 45,
+    },
 ];
 const scaleMessage = [
     { message: "You'll need to change the §anumerator§f (the top number) \nto scale the windows.", step: 0 },

@@ -634,25 +634,26 @@ var overworld5 = world5.getDimension("overworld");
 var rodsPlaced = [];
 var checkPoint = "tp @p 29 96 114 facing 29 96 112";
 async function startCuisenaireTutorial() {
-  await overworld5.runCommandAsync(`tp @p -390 97 126`);
-  await overworld5.runCommandAsync(`camera @p set minecraft:free pos -385 300 160 facing -385 101 158`);
+  await overworld5.runCommandAsync(`tp @p -390 -31 126`);
+  await overworld5.runCommandAsync(`camera @p set minecraft:free pos -385 125 160 facing -385 -50 158`);
   await overworld5.runCommandAsync(`replaceitem entity @p slot.weapon.offhand 0 filled_map`);
   await overworld5.runCommandAsync(`title @p actionbar Around here, we measure distance in Tweeds (td).`);
   system.runTimeout(async () => {
     overworld5.runCommandAsync(`title @p actionbar 1 td = 24 blocks`);
-  }, 40);
+  }, 60);
   system.runTimeout(async () => {
     overworld5.runCommandAsync(`title @p actionbar We have rods that are different fractions of 1 td`);
-  }, 80);
+  }, 120);
   system.runTimeout(async () => {
     overworld5.runCommandAsync(
-      `title @p actionbar We don\u2019t have too many, so use them carefully! You have just enough to rescue everyone.\u201D`
+      `title @p actionbar We do not have too many, so use them carefully!
+You have just enough to rescue everyone.`
     );
-  }, 120);
+  }, 180);
   system.runTimeout(async () => {
     await startCuisenaireGame();
     overworld5.runCommandAsync(`camera @p clear`);
-  }, 160);
+  }, 240);
 }
 async function resetCuisenaireGame() {
   await overworld5.runCommandAsync(`tp @p 29 96 114 facing 29 96 112`);
@@ -759,10 +760,16 @@ async function resetNPC(npcAmount) {
     );
   }
 }
+async function queueSound(index) {
+  system.runTimeout(() => {
+    overworld5.runCommandAsync(`playsound note.xylophone @p`);
+  }, index * 10);
+}
 function placeRods(block, blockName, rodLength, direction) {
   const validDirections = ["east", "west", "north", "south"];
   if (validDirections.includes(direction)) {
     for (let i = 0; i < rodLength; i++) {
+      queueSound(i);
       block[direction](i).setPermutation(BlockPermutation3.resolve(blockName));
     }
   } else {
@@ -914,7 +921,7 @@ async function giveRods() {
   overworld5.runCommandAsync(`gamemode adventure`);
   for (let i = 0; i < rods.length; i++) {
     overworld5.runCommandAsync(
-      `replaceitem entity @p slot.hotbar ${i + 1} ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
+      `replaceitem entity @p slot.hotbar ${i} ${rods[i].block} ${rods[i].amount} 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
     );
   }
 }
@@ -1313,8 +1320,11 @@ var ratioMessage = [
 ];
 var fractionMessage = [
   { message: "You \xA7acan't jump or step on the grass \xA7fin the gardens.\nYou'll be told off if you do!", step: 0 },
-  { message: "I'll give you magical rods that you can cross the gardens with.", step: 25 },
-  { message: "The gardens are \xA7a24x24\xA7f blocks wide.\nEach student is a different fraction of 24 away.", step: 45 }
+  { message: "I'll give you \xA7adifferent sized magical rods\xA7f\nto cross the gaps to save the students.", step: 25 },
+  {
+    message: "Two gardens are \xA7a24x24\xA7f blocks wide and one is \xA7a24x48\xA7f.\nEach gap will be a fraction of 24. ",
+    step: 45
+  }
 ];
 var scaleMessage = [
   { message: "You'll need to change the \xA7anumerator\xA7f (the top number) \nto scale the windows.", step: 0 },
@@ -1429,11 +1439,13 @@ async function resetGame() {
   await closeGate("ratio");
   await closeGate("fraction");
   await overworld9.runCommandAsync(`gamemode adventure @p`);
+  await overworld9.runCommandAsync(`gamerule showcoordinates false`);
   await overworld9.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
   await overworld9.runCommandAsync(`scoreboard players set Coins Depth 0`);
   await overworld9.runCommandAsync(`clear @p`);
   await overworld9.runCommandAsync(`effect @p clear`);
   await overworld9.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
+  await overworld9.runCommandAsync(`camera @p clear`);
 }
 
 // scripts/npcscriptEventHandler.ts
@@ -1672,11 +1684,13 @@ function mainTick() {
         overworld11.getBlock(player.location)?.setPermutation(BlockPermutation5.resolve("minecraft:light_block"));
         await moveGroundsKeeper(player.location);
         overworld11.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
+        overworld11.runCommand(`playsound mob.villager.no @p`);
       }
     }
     if (player.isJumping && player.location.z <= 104.99) {
       await moveGroundsKeeper(player.location);
       player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
+      overworld11.runCommand(`playsound mob.villager.no @p`);
     }
     if (player.isInWater) {
       player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);

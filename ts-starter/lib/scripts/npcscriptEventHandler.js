@@ -113,7 +113,6 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
                 case "1": {
                     yield startCuisenaireTutorial();
                     overworld.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc3`);
-                    //await startCuisenaireGame();
                     break;
                 }
                 case "2": {

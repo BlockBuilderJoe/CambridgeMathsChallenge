@@ -122,7 +122,6 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
         case "1": {
           await startCuisenaireTutorial();
           overworld.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc3`);
-          //await startCuisenaireGame();
           break;
         }
         case "2": {

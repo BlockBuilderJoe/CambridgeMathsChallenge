@@ -144,11 +144,13 @@ function mainTick() {
                 (_c = overworld.getBlock(player.location)) === null || _c === void 0 ? void 0 : _c.setPermutation(BlockPermutation.resolve("minecraft:light_block"));
                 yield moveGroundsKeeper(player.location);
                 overworld.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
+                overworld.runCommand(`playsound mob.villager.no @p`);
             }
         }
         if (player.isJumping && player.location.z <= 104.99) {
             yield moveGroundsKeeper(player.location);
             player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
+            overworld.runCommand(`playsound mob.villager.no @p`);
         }
         if (player.isInWater) {
             player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);

@@ -29,12 +29,13 @@ export function resetGame() {
         yield closeGate("fraction");
         //Clean up the player
         yield overworld.runCommandAsync(`gamemode adventure @p`);
-        //await overworld.runCommandAsync(`gamerule showcoordinates false`);
+        yield overworld.runCommandAsync(`gamerule showcoordinates false`);
         yield overworld.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
         yield overworld.runCommandAsync(`scoreboard players set Coins Depth 0`);
         yield overworld.runCommandAsync(`clear @p`);
         yield overworld.runCommandAsync(`effect @p clear`);
         yield overworld.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
+        yield overworld.runCommandAsync(`camera @p clear`);
     });
 }
 //# sourceMappingURL=resetGame.js.map
