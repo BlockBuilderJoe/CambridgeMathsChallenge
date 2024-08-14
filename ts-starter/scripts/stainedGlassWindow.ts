@@ -9,13 +9,13 @@ let overworld = world.getDimension("overworld");
 
 const windows = [
   {
-    pos1: { x: 68, y: 97, z: 226 },
-    pos2: { x: 68, y: 101, z: 226 },
-    numerator: { x: 71, y: 98, z: 225 },
-    cloneFrom: { x: 67, y: 47, z: 218 },
-    cloneTo: { x: 76, y: 82, z: 218 },
-    cloneInto: { x: 67, y: 97, z: 218 },
-    scaledLeftCorner: { x: 69, y: 99, z: 218 }, //Bottom left corner of the scaled window.
+    pos1: { x: 46, y: 98, z: 192 },
+    pos2: { x: 41, y: 107, z: 192 },
+    numerator: { x: 40, y: 100, z: 197 },
+    cloneFrom: { x: 47, y: 10, z: 219 },
+    cloneTo: { x: 40, y: 22, z: 219 },
+    cloneInto: { x: 40, y: 96, z: 219 },
+    scaledLeftCorner: { x: 46, y: 98, z: 219 }, //Bottom left corner of the scaled window.
   },
   {
     pos1: { x: 77, y: 97, z: 227 },
@@ -28,6 +28,7 @@ const windows = [
   },
 ];
 export async function resetWindowGame() {
+  overworld.runCommandAsync(`tp @e[tag=orb] 44 98 197`);
   for (const window of windows) {
     overworld.runCommandAsync(
       `setblock ${window.numerator.x} ${window.numerator.y} ${window.numerator.z} blockbuilders:number_0`
@@ -40,6 +41,10 @@ export async function resetWindowGame() {
     }
     windowUndo(window.cloneTo, window.cloneFrom, window.cloneInto);
   }
+}
+export async function startTutorial() {
+  overworld.runCommandAsync(`clear @p`);
+  await giveWand();
 }
 
 export async function startWindowGame() {
@@ -96,16 +101,15 @@ export async function scale(cubePos1: Vector3, cubePos2: Vector3, inputNumber: V
         let offset_x = block.block.x - cubePos1.x; //x axis shouldn't change
         let offset_y = block.block.y - cubePos1.y; // cube pos will always be larger than block pos
         let offset_z = cubePos1.z - block.block.z; // cube pos will always be smaller than block pos
-        let finalWindow_x = scaledLeftCorner.x + offset_z; //swapped x and z around
+        let finalWindow_x = scaledLeftCorner.x + offset_x; //swapped x and z if you want to change axis it places.
         let finalWindow_y = scaledLeftCorner.y + offset_y;
-        let finalWindow_z = scaledLeftCorner.z + offset_x;
+        let finalWindow_z = scaledLeftCorner.z + offset_z;
         let location = { x: finalWindow_x, y: finalWindow_y, z: finalWindow_z, colour: colour };
         shape.push(location);
       }
     }
   }
-  let scaledShape = await scaleShape(shape, scaleFactor, "yx");
-
+  let scaledShape = await scaleShape(shape, scaleFactor, "xy");
   for (const block of scaledShape) {
     setBlock({ x: block.x, y: block.y, z: block.z }, block.colour + "_stained_glass");
   }

@@ -33,10 +33,16 @@ export function npcWalk(type) {
             case "scale": {
                 let path = yield generatePath([
                     { x: 57, y: 96, z: 148 },
-                    { x: 57, y: 96, z: 221 },
-                    { x: 70, y: 96, z: 221 },
-                    { x: 70, y: 96, z: 228 },
-                    { x: 70, y: 96, z: 227 },
+                    { x: 57, y: 96, z: 182 },
+                    { x: 40, y: 96, z: 182 },
+                    { x: 40, y: 96, z: 186 },
+                    { x: 40, y: 97, z: 188 },
+                    { x: 40, y: 98, z: 189 },
+                    { x: 40, y: 98, z: 191 },
+                    { x: 40, y: 98, z: 195 },
+                    { x: 42, y: 98, z: 195 },
+                    { x: 42, y: 98, z: 197 },
+                    { x: 42, y: 98, z: 196 },
                 ]);
                 moveNpc(path, "scale", scaleMessage);
                 break;

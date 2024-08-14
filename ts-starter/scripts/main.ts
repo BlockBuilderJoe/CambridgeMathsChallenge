@@ -109,7 +109,7 @@ world.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
       await windowUndoHandler(block.location);
       block.setPermutation(BlockPermutation.resolve("blockbuilders:symbol_subtract"));
     } else if (
-      (block.location.x === 71 && block.location.y === 98 && block.location.z === 225) ||
+      (block.location.x === 40 && block.location.y === 100 && block.location.z === 197) ||
       (block.location.x === 82 && block.location.y === 98 && block.location.z === 225)
     ) {
       // if it is the window numerator cycle the number.
@@ -178,9 +178,11 @@ function mainTick() {
       overworld.runCommand(`playsound mob.villager.no @p`);
     }
     if (player.isInWater) {
-      player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
-      meters = 94 - Math.floor(player.location.y);
-      player.runCommand(`scoreboard players set Meters Depth ${meters}`);
+      if (player.location.x < 0) {
+        player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
+        meters = 94 - Math.floor(player.location.y);
+        player.runCommand(`scoreboard players set Meters Depth ${meters}`);
+      }
 
       if (potionDrank) {
         //applies the potion effect once
