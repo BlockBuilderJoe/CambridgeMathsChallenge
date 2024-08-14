@@ -9,9 +9,9 @@ const windows = [
         pos1: { x: 46, y: 98, z: 192 },
         pos2: { x: 41, y: 107, z: 192 },
         numerator: { x: 40, y: 100, z: 197 },
-        cloneFrom: { x: 47, y: 10, z: 219 },
-        cloneTo: { x: 40, y: 22, z: 219 },
-        cloneInto: { x: 40, y: 96, z: 219 },
+        cloneFrom: { x: 50, y: 10, z: 219 },
+        cloneTo: { x: -6, y: 36, z: 219 },
+        cloneInto: { x: -6, y: 96, z: 219 },
         scaledLeftCorner: { x: 46, y: 98, z: 219 }, //Bottom left corner of the scaled window.
     },
     {
@@ -34,8 +34,8 @@ export function resetWindowGame() {
             for (const colour in colours) {
                 overworld.runCommandAsync(`fill ${window.pos1.x} ${window.pos1.y} ${window.pos1.z} ${window.pos2.x} ${window.pos2.y} ${window.pos2.z} air replace ${colours[colour]}_stained_glass`);
             }
-            windowUndo(window.cloneTo, window.cloneFrom, window.cloneInto);
         }
+        windowUndo(windows[0].cloneTo, windows[0].cloneFrom, windows[0].cloneInto);
     });
 }
 export function startTutorial() {
@@ -100,7 +100,7 @@ export function scale(cubePos1, cubePos2, inputNumber, scaledLeftCorner) {
                     let offset_x = block.block.x - cubePos1.x; //x axis shouldn't change
                     let offset_y = block.block.y - cubePos1.y; // cube pos will always be larger than block pos
                     let offset_z = cubePos1.z - block.block.z; // cube pos will always be smaller than block pos
-                    let finalWindow_x = scaledLeftCorner.x + offset_x; //swapped x and z if you want to change axis it places.
+                    let finalWindow_x = scaledLeftCorner.x - offset_x; //swapped x and z if you want to change axis it places.
                     let finalWindow_y = scaledLeftCorner.y + offset_y;
                     let finalWindow_z = scaledLeftCorner.z + offset_z;
                     let location = { x: finalWindow_x, y: finalWindow_y, z: finalWindow_z, colour: colour };
@@ -116,9 +116,12 @@ export function scale(cubePos1, cubePos2, inputNumber, scaledLeftCorner) {
 }
 export function windowUndo(from, to, into) {
     return __awaiter(this, void 0, void 0, function* () {
+        world.sendMessage(`clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`);
         yield overworld.runCommandAsync(`clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`); //clones from below.
         yield overworld.runCommandAsync(`fill ${from.x} 116 ${from.z} ${to.x} 120 ${to.z} air replace`);
-        yield overworld.runCommandAsync(`fill ${from.x} 120 ${from.z} ${to.x} 150 ${to.z} air replace`); //cleans any extra above
+        yield overworld.runCommandAsync(`fill ${from.x} 120 ${from.z} ${to.x} 150 ${to.z} air replace`);
+        yield overworld.runCommandAsync(`fill ${from.x} 150 ${from.z} ${to.x} 172 ${to.z} air replace`); //cleans any extra above
+        //cleans any extra above
         //cleans any extra above
     });
 }
@@ -144,7 +147,7 @@ export function scaleShape(shape, scaleFactor, axes) {
                     for (let k = axes.includes("z") ? 0 : scaleFactor - 1; k < scaleFactor; k++) {
                         // Add the scaled relative position to the base point
                         const scaledBlock = {
-                            x: basePoint.x + (axes.includes("x") ? relativePos.x * scaleFactor + i : relativePos.x),
+                            x: basePoint.x - (axes.includes("x") ? relativePos.x * scaleFactor + i : relativePos.x),
                             y: basePoint.y + (axes.includes("y") ? relativePos.y * scaleFactor + j : relativePos.y),
                             z: basePoint.z + (axes.includes("z") ? relativePos.z * scaleFactor + k : relativePos.z),
                             colour: block.colour,
