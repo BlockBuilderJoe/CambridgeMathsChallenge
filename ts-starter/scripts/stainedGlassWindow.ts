@@ -29,7 +29,8 @@ const windows = [
 ];
 export async function resetWindowGame() {
   overworld.runCommandAsync(`tp @e[tag=orb] 44 98 197`);
-  for (const window of windows) {
+  for (let i = 1; i < windows.length; i++) {
+    const window = windows[i];
     overworld.runCommandAsync(
       `setblock ${window.numerator.x} ${window.numerator.y} ${window.numerator.z} blockbuilders:number_0`
     );
@@ -109,7 +110,7 @@ export async function scale(cubePos1: Vector3, cubePos2: Vector3, inputNumber: V
       }
     }
   }
-  let scaledShape = await scaleShape(shape, scaleFactor, "xy");
+  let scaledShape = await scaleShape(shape, scaleFactor, "yx");
   for (const block of scaledShape) {
     setBlock({ x: block.x, y: block.y, z: block.z }, block.colour + "_stained_glass");
   }

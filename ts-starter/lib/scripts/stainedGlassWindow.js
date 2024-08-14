@@ -27,7 +27,8 @@ const windows = [
 export function resetWindowGame() {
     return __awaiter(this, void 0, void 0, function* () {
         overworld.runCommandAsync(`tp @e[tag=orb] 44 98 197`);
-        for (const window of windows) {
+        for (let i = 1; i < windows.length; i++) {
+            const window = windows[i];
             overworld.runCommandAsync(`setblock ${window.numerator.x} ${window.numerator.y} ${window.numerator.z} blockbuilders:number_0`);
             let colours = ["yellow", "green", "blue", "purple", "red", "lime", "black", "brown"];
             for (const colour in colours) {
@@ -107,7 +108,7 @@ export function scale(cubePos1, cubePos2, inputNumber, scaledLeftCorner) {
                 }
             }
         }
-        let scaledShape = yield scaleShape(shape, scaleFactor, "xy");
+        let scaledShape = yield scaleShape(shape, scaleFactor, "yx");
         for (const block of scaledShape) {
             setBlock({ x: block.x, y: block.y, z: block.z }, block.colour + "_stained_glass");
         }
