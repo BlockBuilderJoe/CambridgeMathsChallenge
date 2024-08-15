@@ -630,7 +630,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = GuildMaster 
+ NAME = Guild Master 
  TAG = scaleNpc 
  
  1. Stand in front of the NPC and copy this command: 
@@ -645,7 +645,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = GuildMaster 
+ NAME = Guild Master 
  TAG = scaleNpc 
  
  1. Stand in front of the NPC and copy this command: 
@@ -660,7 +660,7 @@
  
 ######################################################## 
  INSTRUCTIONS FOR: 
- NAME = GuildMaster 
+ NAME = Guild Master 
  TAG = scaleNpc 
  
  1. Stand in front of the NPC and copy this command: 
@@ -669,7 +669,52 @@
 
  2. Then paste this command: 
 
-/dialogue change @e[tag=scaleNpc] ScaleNpc 7 
+/dialogue change @e[tag=scaleNpc] scaleNpc7 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME = Guild Master 
+ TAG = scaleNpc 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add scaleNpc 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=scaleNpc] scaleNpc8 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME = Guild Master 
+ TAG = scaleNpc 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add scaleNpc 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=scaleNpc] scaleNpc9 
+ 
+ ######################################################## 
+ 
+######################################################## 
+ INSTRUCTIONS FOR: 
+ NAME = Guild Master 
+ TAG = scaleNpc 
+ 
+ 1. Stand in front of the NPC and copy this command: 
+ 
+/tag @e[type=npc, r=2] add scaleNpc 
+
+ 2. Then paste this command: 
+
+/dialogue change @e[tag=scaleNpc] scaleNpc10 
  
  ######################################################## 
  

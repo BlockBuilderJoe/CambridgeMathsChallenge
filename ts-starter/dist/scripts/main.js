@@ -96,16 +96,49 @@ var windows = [
     correctNumerator: 1
   },
   {
-    pos1: { x: 77, y: 97, z: 227 },
-    pos2: { x: 77, y: 100, z: 224 },
-    numerator: { x: 82, y: 98, z: 225 },
-    cloneFrom: { x: 75, y: 47, z: 218 },
-    cloneTo: { x: 107, y: 66, z: 218 },
-    cloneInto: { x: 75, y: 97, z: 218 },
-    scaledLeftCorner: { x: 78, y: 99, z: 218 }
+    pos1: { x: 36, y: 98, z: 192 },
+    pos2: { x: 34, y: 104, z: 192 },
+    numerator: { x: 32, y: 100, z: 197 },
+    cloneFrom: { x: 39, y: 10, z: 219 },
+    cloneTo: { x: -6, y: 36, z: 219 },
+    cloneInto: { x: -6, y: 96, z: 219 },
+    scaledLeftCorner: { x: 36, y: 98, z: 219 },
     //Bottom left corner of the scaled window.
+    correctNumerator: 2
+  },
+  {
+    pos1: { x: 24, y: 98, z: 192 },
+    pos2: { x: 21, y: 103, z: 192 },
+    numerator: { x: 20, y: 100, z: 197 },
+    cloneFrom: { x: 27, y: 10, z: 219 },
+    cloneTo: { x: -6, y: 36, z: 219 },
+    cloneInto: { x: -6, y: 96, z: 219 },
+    scaledLeftCorner: { x: 24, y: 98, z: 219 },
+    //Bottom left corner of the scaled window.
+    correctNumerator: 4
   }
 ];
+async function nextWindow() {
+  let windowIndex = await getWindowIndex();
+  if (typeof windowIndex === "number") {
+    if (windowIndex === 2) {
+      overworld4.runCommandAsync(`dialogue open @e[tag=scaleNpc] @p scaleNpc8`);
+    } else if (windowIndex === 5) {
+    } else {
+      overworld4.runCommandAsync(`tag @e[tag=orb] remove window${windowIndex}`);
+      let newWindowIndex = windowIndex + 1;
+      overworld4.runCommandAsync(`tag @e[tag=orb] add window${newWindowIndex}`);
+      overworld4.runCommandAsync(
+        `tp @e[type=blockbuilders:scale] ${windows[newWindowIndex].numerator.x + 2} 98 197 facing ${windows[newWindowIndex].numerator.x + 2} 98 94`
+      );
+      overworld4.runCommandAsync(
+        `tp @e[type=blockbuilders:orb] ${windows[newWindowIndex].numerator.x + 4} 98 197 facing ${windows[newWindowIndex].numerator.x + 4} 98 94`
+      );
+      giveWand();
+      giveGlass();
+    }
+  }
+}
 async function getWindowIndex() {
   let orb = overworld4.getEntities({
     tags: ["orb"]
@@ -118,7 +151,6 @@ async function getWindowIndex() {
 }
 async function redoWindowGame() {
   let windowIndex = await getWindowIndex();
-  world4.sendMessage(`${windowIndex}`);
   if (typeof windowIndex === "number") {
     let player = overworld4.getPlayers()[0];
     player.runCommandAsync(`tp @p ~ ~ 190`);
@@ -156,14 +188,10 @@ async function startWindowTutorial() {
   overworld4.runCommandAsync(`clear @p`);
   await giveWand();
 }
-async function startWindowGame() {
-  overworld4.runCommandAsync(`clear @p`);
-  await giveWand();
-  giveGlass();
-}
 async function guildMasterCheck(windowIndex) {
   const window = windows[windowIndex];
   let numerator = getInput([{ x: window.numerator.x, y: window.numerator.y, z: window.numerator.z }]);
+  world4.sendMessage(`${numerator}`);
   if (numerator === window.correctNumerator) {
     system.runTimeout(() => {
       overworld4.runCommand(`dialogue open @e[tag=scaleNpc] @p scaleNpc5`);
@@ -171,11 +199,15 @@ async function guildMasterCheck(windowIndex) {
   } else if (numerator === 0) {
     system.runTimeout(() => {
       overworld4.runCommand(`title @p actionbar The window has been scaled by 0.`);
-    }, 30);
-  } else {
+    }, 20);
+  } else if (numerator > window.correctNumerator) {
     system.runTimeout(() => {
       overworld4.runCommand(`dialogue open @e[tag=scaleNpc] @p scaleNpc6`);
-    }, 30);
+    }, 20);
+  } else if (numerator < window.correctNumerator) {
+    system.runTimeout(() => {
+      overworld4.runCommand(`dialogue open @e[tag=scaleNpc] @p scaleNpc7`);
+    }, 20);
   }
 }
 async function windowScaleHandler(windowIndex) {
@@ -1551,12 +1583,19 @@ system6.afterEvents.scriptEventReceive.subscribe(async (event) => {
         }
         case `3`: {
           overworld10.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc3`);
-          startWindowGame();
+          nextWindow();
           break;
         }
         case `4`: {
           overworld10.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc3`);
           redoWindowGame();
+          break;
+        }
+        case `5`: {
+          overworld10.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc9`);
+          overworld10.runCommandAsync(`tp @p 6 96 230 facing 44 96 230`);
+          overworld10.runCommandAsync(`tp @e[tag=scaleNpc] 44 96 230 facing 6 96 230`);
+          overworld10.runCommandAsync(`clear @p`);
           break;
         }
       }
@@ -1698,8 +1737,10 @@ world11.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
   let brokenBlock = clickEvent.brokenBlockPermutation;
   if (hand_item === "blockbuilders:mathmogicians_wand") {
     if (
-      //cycles the numerators for the window game.
-      block.location.x === 40 && block.location.y === 100 && block.location.z === 197 || block.location.x === 82 && block.location.y === 98 && block.location.z === 225
+      //cycles the numerators for the window game as they are the only ones that need to change.
+      windows.some(
+        (window) => block.location.x === window.numerator.x && block.location.y === window.numerator.y && block.location.z === window.numerator.z
+      )
     ) {
       cycleNumberBlock(clickEvent);
     } else {

@@ -12,7 +12,14 @@ import {
 import { perfectRun } from "./perfectRun";
 import { openGate, closeGate } from "./gate";
 import { npcWalk } from "./npcWalk";
-import { startWindowGame, resetWindowGame, giveGlass, startWindowTutorial, redoWindowGame } from "./stainedGlassWindow";
+import {
+  startWindowGame,
+  resetWindowGame,
+  nextWindow,
+  giveGlass,
+  startWindowTutorial,
+  redoWindowGame,
+} from "./stainedGlassWindow";
 import { startPotionGame, resetPotionGame, giveIngredients } from "./potionGame";
 import { resetGame } from "./resetGame";
 import { giveWand } from "./wand";
@@ -76,12 +83,19 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
         }
         case `3`: {
           overworld.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc3`);
-          startWindowGame();
+          nextWindow();
           break;
         }
         case `4`: {
           overworld.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc3`);
           redoWindowGame();
+          break;
+        }
+        case `5`: {
+          overworld.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc9`);
+          overworld.runCommandAsync(`tp @p 6 96 230 facing 44 96 230`);
+          overworld.runCommandAsync(`tp @e[tag=scaleNpc] 44 96 230 facing 6 96 230`);
+          overworld.runCommandAsync(`clear @p`);
           break;
         }
       }

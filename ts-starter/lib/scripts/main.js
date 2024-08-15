@@ -1,5 +1,5 @@
 import { world, system, BlockPermutation, } from "@minecraft/server";
-import { windowScaleHandler } from "./stainedGlassWindow";
+import { windows, windowScaleHandler } from "./stainedGlassWindow";
 import { cuisenaire, getBlockBehind, directionCheck, moveGroundsKeeper, } from "./cuisenaireRods";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
@@ -90,9 +90,10 @@ world.afterEvents.playerBreakBlock.subscribe((clickEvent) => __awaiter(void 0, v
     let brokenBlock = clickEvent.brokenBlockPermutation;
     if (hand_item === "blockbuilders:mathmogicians_wand") {
         if (
-        //cycles the numerators for the window game.
-        (block.location.x === 40 && block.location.y === 100 && block.location.z === 197) ||
-            (block.location.x === 82 && block.location.y === 98 && block.location.z === 225)) {
+        //cycles the numerators for the window game as they are the only ones that need to change.
+        windows.some((window) => block.location.x === window.numerator.x &&
+            block.location.y === window.numerator.y &&
+            block.location.z === window.numerator.z)) {
             // if it is the window numerator cycle the number.
             cycleNumberBlock(clickEvent);
         }

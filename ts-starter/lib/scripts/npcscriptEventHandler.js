@@ -2,7 +2,7 @@ import { system, world } from "@minecraft/server";
 import { moveNpc, replay, startCuisenaireGame, movePlayerToCheckpoint, startCuisenaireTutorial, } from "./cuisenaireRods";
 import { openGate, closeGate } from "./gate";
 import { npcWalk } from "./npcWalk";
-import { startWindowGame, giveGlass, startWindowTutorial, redoWindowGame } from "./stainedGlassWindow";
+import { nextWindow, giveGlass, startWindowTutorial, redoWindowGame, } from "./stainedGlassWindow";
 import { startPotionGame, giveIngredients } from "./potionGame";
 import { resetGame } from "./resetGame";
 import { giveWand } from "./wand";
@@ -68,12 +68,19 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
                 }
                 case `3`: {
                     overworld.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc3`);
-                    startWindowGame();
+                    nextWindow();
                     break;
                 }
                 case `4`: {
                     overworld.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc3`);
                     redoWindowGame();
+                    break;
+                }
+                case `5`: {
+                    overworld.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc9`);
+                    overworld.runCommandAsync(`tp @p 6 96 230 facing 44 96 230`);
+                    overworld.runCommandAsync(`tp @e[tag=scaleNpc] 44 96 230 facing 6 96 230`);
+                    overworld.runCommandAsync(`clear @p`);
                     break;
                 }
             }

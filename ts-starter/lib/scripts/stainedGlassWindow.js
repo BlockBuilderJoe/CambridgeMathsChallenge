@@ -4,7 +4,7 @@ import { setBlock } from "./output";
 import { getInput } from "./input";
 import { giveWand } from "./wand";
 let overworld = world.getDimension("overworld");
-const windows = [
+export const windows = [
     {
         pos1: { x: 46, y: 98, z: 192 },
         pos2: { x: 41, y: 107, z: 192 },
@@ -16,15 +16,47 @@ const windows = [
         correctNumerator: 1,
     },
     {
-        pos1: { x: 77, y: 97, z: 227 },
-        pos2: { x: 77, y: 100, z: 224 },
-        numerator: { x: 82, y: 98, z: 225 },
-        cloneFrom: { x: 75, y: 47, z: 218 },
-        cloneTo: { x: 107, y: 66, z: 218 },
-        cloneInto: { x: 75, y: 97, z: 218 },
-        scaledLeftCorner: { x: 78, y: 99, z: 218 }, //Bottom left corner of the scaled window.
+        pos1: { x: 36, y: 98, z: 192 },
+        pos2: { x: 34, y: 104, z: 192 },
+        numerator: { x: 32, y: 100, z: 197 },
+        cloneFrom: { x: 39, y: 10, z: 219 },
+        cloneTo: { x: -6, y: 36, z: 219 },
+        cloneInto: { x: -6, y: 96, z: 219 },
+        scaledLeftCorner: { x: 36, y: 98, z: 219 }, //Bottom left corner of the scaled window.
+        correctNumerator: 2,
+    },
+    {
+        pos1: { x: 24, y: 98, z: 192 },
+        pos2: { x: 21, y: 103, z: 192 },
+        numerator: { x: 20, y: 100, z: 197 },
+        cloneFrom: { x: 27, y: 10, z: 219 },
+        cloneTo: { x: -6, y: 36, z: 219 },
+        cloneInto: { x: -6, y: 96, z: 219 },
+        scaledLeftCorner: { x: 24, y: 98, z: 219 }, //Bottom left corner of the scaled window.
+        correctNumerator: 4,
     },
 ];
+export function nextWindow() {
+    return __awaiter(this, void 0, void 0, function* () {
+        let windowIndex = yield getWindowIndex();
+        if (typeof windowIndex === "number") {
+            if (windowIndex === 2) {
+                overworld.runCommandAsync(`dialogue open @e[tag=scaleNpc] @p scaleNpc8`);
+            }
+            else if (windowIndex === 5) {
+            }
+            else {
+                overworld.runCommandAsync(`tag @e[tag=orb] remove window${windowIndex}`);
+                let newWindowIndex = windowIndex + 1;
+                overworld.runCommandAsync(`tag @e[tag=orb] add window${newWindowIndex}`);
+                overworld.runCommandAsync(`tp @e[type=blockbuilders:scale] ${windows[newWindowIndex].numerator.x + 2} 98 197 facing ${windows[newWindowIndex].numerator.x + 2} 98 94`);
+                overworld.runCommandAsync(`tp @e[type=blockbuilders:orb] ${windows[newWindowIndex].numerator.x + 4} 98 197 facing ${windows[newWindowIndex].numerator.x + 4} 98 94`);
+                giveWand();
+                giveGlass();
+            }
+        }
+    });
+}
 export function getWindowIndex() {
     return __awaiter(this, void 0, void 0, function* () {
         let orb = overworld.getEntities({
@@ -40,7 +72,6 @@ export function getWindowIndex() {
 export function redoWindowGame() {
     return __awaiter(this, void 0, void 0, function* () {
         let windowIndex = yield getWindowIndex();
-        world.sendMessage(`${windowIndex}`);
         if (typeof windowIndex === "number") {
             let player = overworld.getPlayers()[0];
             player.runCommandAsync(`tp @p ~ ~ 190`); //moves the player in front of the window design.
@@ -89,6 +120,7 @@ export function guildMasterCheck(windowIndex) {
     return __awaiter(this, void 0, void 0, function* () {
         const window = windows[windowIndex]; //gets the correct window.
         let numerator = getInput([{ x: window.numerator.x, y: window.numerator.y, z: window.numerator.z }]);
+        world.sendMessage(`${numerator}`);
         if (numerator === window.correctNumerator) {
             system.runTimeout(() => {
                 overworld.runCommand(`dialogue open @e[tag=scaleNpc] @p scaleNpc5`);
@@ -97,12 +129,17 @@ export function guildMasterCheck(windowIndex) {
         else if (numerator === 0) {
             system.runTimeout(() => {
                 overworld.runCommand(`title @p actionbar The window has been scaled by 0.`);
-            }, 30);
+            }, 20);
         }
-        else {
+        else if (numerator > window.correctNumerator) {
             system.runTimeout(() => {
                 overworld.runCommand(`dialogue open @e[tag=scaleNpc] @p scaleNpc6`);
-            }, 30);
+            }, 20);
+        }
+        else if (numerator < window.correctNumerator) {
+            system.runTimeout(() => {
+                overworld.runCommand(`dialogue open @e[tag=scaleNpc] @p scaleNpc7`);
+            }, 20);
         }
     });
 }

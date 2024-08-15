@@ -1453,7 +1453,7 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "GuildMaster"
+                            "translate": "Guild Master"
                         }
                     ]
                 },
@@ -1496,7 +1496,7 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "GuildMaster"
+                            "translate": "Guild Master"
                         }
                     ]
                 },
@@ -1523,15 +1523,140 @@
                 ]
             },
             {
-                "scene_tag": "ScaleNpc 7",
+                "scene_tag": "scaleNpc7",
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "GuildMaster"
+                            "translate": "Guild Master"
                         }
                     ]
                 },
-                "buttons": []
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "I need it to fill the frame. Make it bigger."
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Okay."
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "scaleNpc8",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Guild Master"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "Impressive work, if you are finished let’s take a tour of what you have created. "
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Let’s Go."
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent scale:npc 5"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "scaleNpc9",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Guild Master"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "You’ve done really well to reach this point. The next challenges are much harder so you can graduate now if you want. "
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Carry on."
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent scale:npc6"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Graduate."
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent scale:npc7"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "scaleNpc10",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Guild Master"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "You are true artisan, it’s time to graduate with full honours."
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Graduate"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent scale:npc8"
+                        ]
+                    }
+                ]
             },
             {
                 "scene_tag": "ratioNpc0",
