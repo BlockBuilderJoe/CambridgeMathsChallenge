@@ -38,6 +38,16 @@ let playerCanSeeInDark = false;
 
 world.afterEvents.entityHitEntity.subscribe(async (event) => {
   let hitEntity = event.hitEntity;
+  if (hitEntity.typeId === `blockbuilders:orb`) {
+    let tag = hitEntity.getTags();
+    overworld.runCommandAsync(
+      `particle blockbuilders:spell ${hitEntity.location.x} ${hitEntity.location.y} ${hitEntity.location.z}`
+    );
+    let windowNumber = parseInt(tag[1].substring(6));
+    if (windowNumber >= 0) {
+      windowScaleHandler(windowNumber);
+    }
+  }
   if (hitEntity.typeId === `blockbuilders:coin`) {
     let tag = hitEntity.getTags();
     let x_location = 0 - parseInt(tag[0].substring(4));
@@ -46,6 +56,9 @@ world.afterEvents.entityHitEntity.subscribe(async (event) => {
   }
   if (hitEntity.typeId === `blockbuilders:cauldron`) {
     let cauldron = hitEntity.getComponent("inventory") as EntityInventoryComponent;
+    overworld.runCommand(
+      `particle minecraft:cauldron_explosion_emitter ${hitEntity.location.x} ${hitEntity.location.y} ${hitEntity.location.z}`
+    );
     let slots = await getSlots(cauldron);
     cauldron.container?.clearAll(); //empties the cauldron
     ({ potion, seconds } = await potionMaker(slots)); //gets the potion and the seconds for the applyPotionEffect function.
@@ -104,11 +117,8 @@ world.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
   let block = clickEvent.block;
   let brokenBlock = clickEvent.brokenBlockPermutation;
   if (hand_item === "blockbuilders:mathmogicians_wand") {
-    if (brokenBlock.matches("blockbuilders:symbol_subtract") && block.location.z === 225) {
-      // if it is the window vinculum run the undo function.
-      await windowUndoHandler(block.location);
-      block.setPermutation(BlockPermutation.resolve("blockbuilders:symbol_subtract"));
-    } else if (
+    if (
+      //cycles the numerators for the window game.
       (block.location.x === 40 && block.location.y === 100 && block.location.z === 197) ||
       (block.location.x === 82 && block.location.y === 98 && block.location.z === 225)
     ) {
@@ -118,14 +128,6 @@ world.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
       //if it is anything else replace the block.
       block.setPermutation(brokenBlock);
     }
-  }
-});
-
-//right click
-world.beforeEvents.itemUseOn.subscribe(async (event) => {
-  let block = event.block;
-  if (block.permutation?.matches("blockbuilders:symbol_subtract")) {
-    await windowScaleHandler(block.location);
   }
 });
 

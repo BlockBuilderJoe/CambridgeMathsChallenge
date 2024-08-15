@@ -1,5 +1,5 @@
 import { world, system, BlockPermutation, } from "@minecraft/server";
-import { windowUndoHandler, windowScaleHandler } from "./stainedGlassWindow";
+import { windowScaleHandler } from "./stainedGlassWindow";
 import { cuisenaire, getBlockBehind, directionCheck, moveGroundsKeeper, } from "./cuisenaireRods";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
@@ -16,6 +16,14 @@ let playerCanSeeInDark = false;
 world.afterEvents.entityHitEntity.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     let hitEntity = event.hitEntity;
+    if (hitEntity.typeId === `blockbuilders:orb`) {
+        let tag = hitEntity.getTags();
+        overworld.runCommandAsync(`particle blockbuilders:spell ${hitEntity.location.x} ${hitEntity.location.y} ${hitEntity.location.z}`);
+        let windowNumber = parseInt(tag[1].substring(6));
+        if (windowNumber >= 0) {
+            windowScaleHandler(windowNumber);
+        }
+    }
     if (hitEntity.typeId === `blockbuilders:coin`) {
         let tag = hitEntity.getTags();
         let x_location = 0 - parseInt(tag[0].substring(4));
@@ -24,6 +32,7 @@ world.afterEvents.entityHitEntity.subscribe((event) => __awaiter(void 0, void 0,
     }
     if (hitEntity.typeId === `blockbuilders:cauldron`) {
         let cauldron = hitEntity.getComponent("inventory");
+        overworld.runCommand(`particle minecraft:cauldron_explosion_emitter ${hitEntity.location.x} ${hitEntity.location.y} ${hitEntity.location.z}`);
         let slots = yield getSlots(cauldron);
         (_a = cauldron.container) === null || _a === void 0 ? void 0 : _a.clearAll(); //empties the cauldron
         ({ potion, seconds } = yield potionMaker(slots)); //gets the potion and the seconds for the applyPotionEffect function.
@@ -80,12 +89,9 @@ world.afterEvents.playerBreakBlock.subscribe((clickEvent) => __awaiter(void 0, v
     let block = clickEvent.block;
     let brokenBlock = clickEvent.brokenBlockPermutation;
     if (hand_item === "blockbuilders:mathmogicians_wand") {
-        if (brokenBlock.matches("blockbuilders:symbol_subtract") && block.location.z === 225) {
-            // if it is the window vinculum run the undo function.
-            yield windowUndoHandler(block.location);
-            block.setPermutation(BlockPermutation.resolve("blockbuilders:symbol_subtract"));
-        }
-        else if ((block.location.x === 40 && block.location.y === 100 && block.location.z === 197) ||
+        if (
+        //cycles the numerators for the window game.
+        (block.location.x === 40 && block.location.y === 100 && block.location.z === 197) ||
             (block.location.x === 82 && block.location.y === 98 && block.location.z === 225)) {
             // if it is the window numerator cycle the number.
             cycleNumberBlock(clickEvent);
@@ -94,14 +100,6 @@ world.afterEvents.playerBreakBlock.subscribe((clickEvent) => __awaiter(void 0, v
             //if it is anything else replace the block.
             block.setPermutation(brokenBlock);
         }
-    }
-}));
-//right click
-world.beforeEvents.itemUseOn.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _d;
-    let block = event.block;
-    if ((_d = block.permutation) === null || _d === void 0 ? void 0 : _d.matches("blockbuilders:symbol_subtract")) {
-        yield windowScaleHandler(block.location);
     }
 }));
 //well
@@ -205,9 +203,9 @@ function surface(player) {
 }
 //listens for the potion to be fully drunk.
 world.afterEvents.itemCompleteUse.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _e;
+    var _d;
     let player = event.source;
-    if (((_e = event.itemStack) === null || _e === void 0 ? void 0 : _e.typeId) === "minecraft:potion") {
+    if (((_d = event.itemStack) === null || _d === void 0 ? void 0 : _d.typeId) === "minecraft:potion") {
         if (potion === "poison") {
             player.runCommandAsync("title @p actionbar §fYou mixed the potion with the §2wrong ingredients. \n§fIt has had no effect.\nMake sure you're using the correct ingredients.");
         }

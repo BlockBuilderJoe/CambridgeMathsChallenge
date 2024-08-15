@@ -1,4 +1,4 @@
-import { world } from "@minecraft/server";
+import { world, system } from "@minecraft/server";
 import { getCube } from "./input";
 import { setBlock } from "./output";
 import { getInput } from "./input";
@@ -16,6 +16,7 @@ const windows = [
     cloneTo: { x: -6, y: 36, z: 219 },
     cloneInto: { x: -6, y: 96, z: 219 },
     scaledLeftCorner: { x: 46, y: 98, z: 219 }, //Bottom left corner of the scaled window.
+    correctNumerator: 1,
   },
   {
     pos1: { x: 77, y: 97, z: 227 },
@@ -27,8 +28,37 @@ const windows = [
     scaledLeftCorner: { x: 78, y: 99, z: 218 }, //Bottom left corner of the scaled window.
   },
 ];
+
+export async function getWindowIndex() {
+  let orb = overworld.getEntities({
+    tags: ["orb"],
+  });
+  let windowTag = orb[0].getTags()[1];
+  let windowNumber = parseInt(windowTag[1].substring(6));
+  if (windowNumber >= 0) {
+    return windowNumber;
+  }
+}
+
+export async function redoWindowGame() {
+  let windowIndex = await getWindowIndex();
+  if (windowIndex) {
+    await windowUndo(windows[windowIndex].cloneFrom, windows[windowIndex].cloneTo, windows[windowIndex].cloneInto);
+    await startWindowGame();
+  }
+}
 export async function resetWindowGame() {
+  //resets the orb.
   overworld.runCommandAsync(`tp @e[tag=orb] 44 98 197`);
+  overworld.runCommandAsync(`tag @e[tag=orb] add window0`);
+  overworld.runCommandAsync(`tag @e[tag=orb] remove window1`);
+  overworld.runCommandAsync(`tag @e[tag=orb] remove window2`);
+  overworld.runCommandAsync(`tag @e[tag=orb] remove window3`);
+  overworld.runCommandAsync(`tag @e[tag=orb] remove window4`);
+  overworld.runCommandAsync(`tag @e[tag=orb] remove window5`);
+  overworld.runCommandAsync(
+    `setblock ${windows[0].numerator.x} ${windows[0].numerator.y} ${windows[0].numerator.z} blockbuilders:number_0`
+  );
   for (let i = 1; i < windows.length; i++) {
     const window = windows[i];
     overworld.runCommandAsync(
@@ -43,7 +73,7 @@ export async function resetWindowGame() {
   }
   windowUndo(windows[0].cloneTo, windows[0].cloneFrom, windows[0].cloneInto);
 }
-export async function startTutorial() {
+export async function startWindowTutorial() {
   overworld.runCommandAsync(`clear @p`);
   await giveWand();
 }
@@ -53,16 +83,31 @@ export async function startWindowGame() {
   await giveWand();
   giveGlass();
 }
-export async function windowScaleHandler(location: Vector3) {
-  const windowIndex = windows.findIndex(
-    (window) =>
-      window.numerator.x === location.x && window.numerator.y === location.y + 1 && window.numerator.z === location.z
-  );
-  if (windowIndex !== -1) {
-    const window = windows[windowIndex]; //gets the correct window.
-    await windowUndo(window.cloneTo, window.cloneFrom, window.cloneInto);
-    scale(window.pos1, window.pos2, window.numerator, window.scaledLeftCorner);
+
+export async function guildMasterCheck(windowIndex: number) {
+  const window = windows[windowIndex]; //gets the correct window.
+  let numerator = getInput([{ x: window.numerator.x, y: window.numerator.y, z: window.numerator.z }]);
+  if (numerator === window.correctNumerator) {
+    system.runTimeout(() => {
+      overworld.runCommand(`dialogue open @e[tag=scaleNpc] @p scaleNpc5`);
+    }, 30);
+  } else if (numerator === 0) {
+    system.runTimeout(() => {
+      overworld.runCommand(`title @p actionbar The window has been scaled by 0.`);
+    }, 30);
+  } else {
+    system.runTimeout(() => {
+      overworld.runCommand(`dialogue open @e[tag=scaleNpc] @p scaleNpc6`);
+    }, 30);
   }
+}
+
+export async function windowScaleHandler(windowIndex: number) {
+  const window = windows[windowIndex]; //gets the correct window.
+  await windowUndo(window.cloneTo, window.cloneFrom, window.cloneInto);
+  scale(window.pos1, window.pos2, window.numerator, window.scaledLeftCorner);
+
+  guildMasterCheck(windowIndex);
 }
 
 export async function windowUndoHandler(location: Vector3) {
@@ -117,9 +162,6 @@ export async function scale(cubePos1: Vector3, cubePos2: Vector3, inputNumber: V
 }
 
 export async function windowUndo(from: Vector3, to: Vector3, into: Vector3) {
-  world.sendMessage(
-    `clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`
-  );
   await overworld.runCommandAsync(
     `clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`
   ); //clones from below.

@@ -1,12 +1,12 @@
 // scripts/main.ts
 import {
   world as world11,
-  system as system6,
+  system as system7,
   BlockPermutation as BlockPermutation5
 } from "@minecraft/server";
 
 // scripts/stainedGlassWindow.ts
-import { world as world4 } from "@minecraft/server";
+import { world as world4, system } from "@minecraft/server";
 
 // scripts/input.ts
 import { BlockPermutation, world } from "@minecraft/server";
@@ -77,7 +77,7 @@ import { world as world3 } from "@minecraft/server";
 var overworld3 = world3.getDimension("overworld");
 async function giveWand() {
   overworld3.runCommandAsync(
-    `give @p[hasitem={item=blockbuilders:mathmogicians_wand,quantity=0}] blockbuilders:mathmogicians_wand 1 0 {"item_lock": { "mode": "lock_in_slot" }, "minecraft:can_destroy":{"blocks":["minecraft:hopper", "blockbuilders:number_0","blockbuilders:number_1","blockbuilders:number_2","blockbuilders:number_3","blockbuilders:number_4","blockbuilders:number_5","blockbuilders:number_6","blockbuilders:number_7","blockbuilders:number_8","blockbuilders:number_9","blockbuilders:symbol_subtract"]}}`
+    `give @p[hasitem={item=blockbuilders:mathmogicians_wand,quantity=0}] blockbuilders:mathmogicians_wand 1 0 {"item_lock": { "mode": "lock_in_slot" }, "minecraft:can_destroy":{"blocks":["minecraft:hopper", "blockbuilders:number_0","blockbuilders:number_1","blockbuilders:number_2","blockbuilders:number_3","blockbuilders:number_4","blockbuilders:number_5","blockbuilders:number_6","blockbuilders:number_7","blockbuilders:number_8","blockbuilders:number_9"]}}`
   );
 }
 
@@ -91,8 +91,9 @@ var windows = [
     cloneFrom: { x: 50, y: 10, z: 219 },
     cloneTo: { x: -6, y: 36, z: 219 },
     cloneInto: { x: -6, y: 96, z: 219 },
-    scaledLeftCorner: { x: 46, y: 98, z: 219 }
+    scaledLeftCorner: { x: 46, y: 98, z: 219 },
     //Bottom left corner of the scaled window.
+    correctNumerator: 1
   },
   {
     pos1: { x: 77, y: 97, z: 227 },
@@ -105,8 +106,34 @@ var windows = [
     //Bottom left corner of the scaled window.
   }
 ];
+async function getWindowIndex() {
+  let orb = overworld4.getEntities({
+    tags: ["orb"]
+  });
+  let windowTag = orb[0].getTags()[1];
+  let windowNumber = parseInt(windowTag[1].substring(6));
+  if (windowNumber >= 0) {
+    return windowNumber;
+  }
+}
+async function redoWindowGame() {
+  let windowIndex = await getWindowIndex();
+  if (windowIndex) {
+    await windowUndo(windows[windowIndex].cloneFrom, windows[windowIndex].cloneTo, windows[windowIndex].cloneInto);
+    await startWindowGame();
+  }
+}
 async function resetWindowGame() {
   overworld4.runCommandAsync(`tp @e[tag=orb] 44 98 197`);
+  overworld4.runCommandAsync(`tag @e[tag=orb] add window0`);
+  overworld4.runCommandAsync(`tag @e[tag=orb] remove window1`);
+  overworld4.runCommandAsync(`tag @e[tag=orb] remove window2`);
+  overworld4.runCommandAsync(`tag @e[tag=orb] remove window3`);
+  overworld4.runCommandAsync(`tag @e[tag=orb] remove window4`);
+  overworld4.runCommandAsync(`tag @e[tag=orb] remove window5`);
+  overworld4.runCommandAsync(
+    `setblock ${windows[0].numerator.x} ${windows[0].numerator.y} ${windows[0].numerator.z} blockbuilders:number_0`
+  );
   for (let i = 1; i < windows.length; i++) {
     const window = windows[i];
     overworld4.runCommandAsync(
@@ -121,33 +148,37 @@ async function resetWindowGame() {
   }
   windowUndo(windows[0].cloneTo, windows[0].cloneFrom, windows[0].cloneInto);
 }
+async function startWindowTutorial() {
+  overworld4.runCommandAsync(`clear @p`);
+  await giveWand();
+}
 async function startWindowGame() {
   overworld4.runCommandAsync(`clear @p`);
   await giveWand();
   giveGlass();
 }
-async function windowScaleHandler(location) {
-  const windowIndex = windows.findIndex(
-    (window) => window.numerator.x === location.x && window.numerator.y === location.y + 1 && window.numerator.z === location.z
-  );
-  if (windowIndex !== -1) {
-    const window = windows[windowIndex];
-    await windowUndo(window.cloneTo, window.cloneFrom, window.cloneInto);
-    scale(window.pos1, window.pos2, window.numerator, window.scaledLeftCorner);
+async function guildMasterCheck(windowIndex) {
+  const window = windows[windowIndex];
+  let numerator = getInput([{ x: window.numerator.x, y: window.numerator.y, z: window.numerator.z }]);
+  if (numerator === window.correctNumerator) {
+    system.runTimeout(() => {
+      overworld4.runCommand(`dialogue open @e[tag=scaleNpc] @p scaleNpc5`);
+    }, 30);
+  } else if (numerator === 0) {
+    system.runTimeout(() => {
+      overworld4.runCommand(`title @p actionbar The window has been scaled by 0.`);
+    }, 30);
+  } else {
+    system.runTimeout(() => {
+      overworld4.runCommand(`dialogue open @e[tag=scaleNpc] @p scaleNpc6`);
+    }, 30);
   }
 }
-async function windowUndoHandler(location) {
-  giveGlass();
-  switch (true) {
-    case (location.x === 71 && location.y === 97 && location.z === 225): {
-      await windowUndo({ x: 67, y: 47, z: 218 }, { x: 76, y: 82, z: 218 }, { x: 67, y: 97, z: 218 });
-      break;
-    }
-    case (location.x === 82 && location.y === 97 && location.z === 225): {
-      await windowUndo({ x: 75, y: 47, z: 218 }, { x: 107, y: 66, z: 218 }, { x: 75, y: 97, z: 218 });
-      break;
-    }
-  }
+async function windowScaleHandler(windowIndex) {
+  const window = windows[windowIndex];
+  await windowUndo(window.cloneTo, window.cloneFrom, window.cloneInto);
+  scale(window.pos1, window.pos2, window.numerator, window.scaledLeftCorner);
+  guildMasterCheck(windowIndex);
 }
 function giveGlass() {
   overworld4.runCommand("replaceitem entity @p slot.hotbar 1 yellow_stained_glass 10");
@@ -184,9 +215,6 @@ async function scale(cubePos1, cubePos2, inputNumber, scaledLeftCorner) {
   }
 }
 async function windowUndo(from, to, into) {
-  world4.sendMessage(
-    `clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`
-  );
   await overworld4.runCommandAsync(
     `clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`
   );
@@ -231,7 +259,7 @@ async function scaleShape(shape, scaleFactor, axes) {
 import {
   BlockPermutation as BlockPermutation3,
   world as world5,
-  system
+  system as system2
 } from "@minecraft/server";
 
 // scripts/perfectRun.ts
@@ -644,19 +672,19 @@ async function startCuisenaireTutorial() {
   await overworld5.runCommandAsync(`camera @p set minecraft:free pos -385 125 160 facing -385 -50 158`);
   await overworld5.runCommandAsync(`replaceitem entity @p slot.weapon.offhand 0 filled_map`);
   await overworld5.runCommandAsync(`title @p actionbar Around here, we measure distance in Tweeds (td).`);
-  system.runTimeout(async () => {
+  system2.runTimeout(async () => {
     overworld5.runCommandAsync(`title @p actionbar 1 td = 24 blocks`);
   }, 60);
-  system.runTimeout(async () => {
+  system2.runTimeout(async () => {
     overworld5.runCommandAsync(`title @p actionbar We have rods that are different fractions of 1 td`);
   }, 120);
-  system.runTimeout(async () => {
+  system2.runTimeout(async () => {
     overworld5.runCommandAsync(
       `title @p actionbar We do not have too many, so use them carefully!
 You have just enough to rescue everyone.`
     );
   }, 180);
-  system.runTimeout(async () => {
+  system2.runTimeout(async () => {
     await startCuisenaireGame();
     overworld5.runCommandAsync(`camera @p clear`);
   }, 240);
@@ -767,7 +795,7 @@ async function resetNPC(npcAmount) {
   }
 }
 async function queueSound(index) {
-  system.runTimeout(() => {
+  system2.runTimeout(() => {
     overworld5.runCommandAsync(`playsound note.xylophone @p`);
   }, index * 10);
 }
@@ -857,7 +885,7 @@ async function replay(index) {
   if (combinedRods.length > 0) {
     for (let i = 0; i < combinedRods.length; i++) {
       ((index2) => {
-        system.runTimeout(async () => {
+        system2.runTimeout(async () => {
           let x = combinedRods[index2].location.x;
           world5.getAllPlayers().forEach(async (player) => {
             await setCameraView(player, npcIndex);
@@ -887,7 +915,7 @@ async function replay(index) {
   }
 }
 function endReplay(player, tpStart, clearCommand, replenishGrass, combinedRods) {
-  system.runTimeout(() => {
+  system2.runTimeout(() => {
     player.runCommandAsync(tpStart);
     player.runCommandAsync(clearCommand);
     player.runCommandAsync(replenishGrass);
@@ -997,7 +1025,7 @@ async function facing(blockLocation) {
 }
 
 // scripts/potionGame.ts
-import { BlockPermutation as BlockPermutation4, system as system2, world as world6 } from "@minecraft/server";
+import { BlockPermutation as BlockPermutation4, system as system3, world as world6 } from "@minecraft/server";
 var overworld6 = world6.getDimension("overworld");
 async function resetPotionGame() {
   await overworld6.runCommandAsync("tp @e[tag=coin0] -6 90 155");
@@ -1168,7 +1196,7 @@ async function giveIngredients() {
   overworld6.runCommand("replaceitem entity @p slot.hotbar 5 melon_slice 20");
 }
 function displayTimer(potionStart2, seconds2, player, potionDescription) {
-  let timeLeft = (potionStart2 + seconds2 * 20 - system2.currentTick) / 20;
+  let timeLeft = (potionStart2 + seconds2 * 20 - system3.currentTick) / 20;
   if (timeLeft % 1 === 0) {
     player.onScreenDisplay.setActionBar(`Time left:
  ${potionDescription} ${timeLeft} seconds`);
@@ -1176,7 +1204,7 @@ function displayTimer(potionStart2, seconds2, player, potionDescription) {
 }
 
 // scripts/npcscriptEventHandler.ts
-import { system as system5, world as world10 } from "@minecraft/server";
+import { system as system6, world as world10 } from "@minecraft/server";
 
 // scripts/gate.ts
 import { world as world7 } from "@minecraft/server";
@@ -1311,7 +1339,7 @@ async function closeGate(location) {
 }
 
 // scripts/npcWalk.ts
-import { world as world8, system as system3 } from "@minecraft/server";
+import { world as world8, system as system4 } from "@minecraft/server";
 var overworld8 = world8.getDimension("overworld");
 var ratioMessage = [
   { message: "You should know, no one has \nwon my well game in 50 years.", step: 0 },
@@ -1391,7 +1419,7 @@ async function moveNpc2(path, type, messages) {
     const facingX = nextPoint.x;
     const facingY = nextPoint.y;
     const facingZ = nextPoint.z;
-    system3.runTimeout(async () => {
+    system4.runTimeout(async () => {
       await overworld8.runCommandAsync(`tp @e[tag=${type}Npc] ${x} ${y} ${z} facing ${facingX} ${facingY} ${facingZ}`);
       const messageMatch = messages.find((msg) => msg.step === i);
       if (messageMatch) {
@@ -1462,7 +1490,7 @@ async function resetGame() {
 
 // scripts/npcscriptEventHandler.ts
 var overworld10 = world10.getDimension("overworld");
-system5.afterEvents.scriptEventReceive.subscribe(async (event) => {
+system6.afterEvents.scriptEventReceive.subscribe(async (event) => {
   switch (event.id) {
     case "game:reset": {
       await resetGame();
@@ -1510,12 +1538,20 @@ system5.afterEvents.scriptEventReceive.subscribe(async (event) => {
           break;
         }
         case "1": {
-          overworld10.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc3`);
-          startWindowGame();
+          startWindowTutorial();
           break;
         }
         case "2": {
           giveGlass();
+          break;
+        }
+        case `3`: {
+          overworld10.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc3`);
+          startWindowGame();
+          break;
+        }
+        case `4`: {
+          redoWindowGame();
           break;
         }
       }
@@ -1586,6 +1622,16 @@ var meters = 0;
 var playerCanSeeInDark = false;
 world11.afterEvents.entityHitEntity.subscribe(async (event) => {
   let hitEntity = event.hitEntity;
+  if (hitEntity.typeId === `blockbuilders:orb`) {
+    let tag = hitEntity.getTags();
+    overworld11.runCommandAsync(
+      `particle blockbuilders:spell ${hitEntity.location.x} ${hitEntity.location.y} ${hitEntity.location.z}`
+    );
+    let windowNumber = parseInt(tag[1].substring(6));
+    if (windowNumber >= 0) {
+      windowScaleHandler(windowNumber);
+    }
+  }
   if (hitEntity.typeId === `blockbuilders:coin`) {
     let tag = hitEntity.getTags();
     let x_location = 0 - parseInt(tag[0].substring(4));
@@ -1594,6 +1640,9 @@ world11.afterEvents.entityHitEntity.subscribe(async (event) => {
   }
   if (hitEntity.typeId === `blockbuilders:cauldron`) {
     let cauldron = hitEntity.getComponent("inventory");
+    overworld11.runCommand(
+      `particle minecraft:cauldron_explosion_emitter ${hitEntity.location.x} ${hitEntity.location.y} ${hitEntity.location.z}`
+    );
     let slots = await getSlots(cauldron);
     cauldron.container?.clearAll();
     ({ potion, seconds } = await potionMaker(slots));
@@ -1643,26 +1692,20 @@ world11.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
   let block = clickEvent.block;
   let brokenBlock = clickEvent.brokenBlockPermutation;
   if (hand_item === "blockbuilders:mathmogicians_wand") {
-    if (brokenBlock.matches("blockbuilders:symbol_subtract") && block.location.z === 225) {
-      await windowUndoHandler(block.location);
-      block.setPermutation(BlockPermutation5.resolve("blockbuilders:symbol_subtract"));
-    } else if (block.location.x === 40 && block.location.y === 100 && block.location.z === 197 || block.location.x === 82 && block.location.y === 98 && block.location.z === 225) {
+    if (
+      //cycles the numerators for the window game.
+      block.location.x === 40 && block.location.y === 100 && block.location.z === 197 || block.location.x === 82 && block.location.y === 98 && block.location.z === 225
+    ) {
       cycleNumberBlock(clickEvent);
     } else {
       block.setPermutation(brokenBlock);
     }
   }
 });
-world11.beforeEvents.itemUseOn.subscribe(async (event) => {
-  let block = event.block;
-  if (block.permutation?.matches("blockbuilders:symbol_subtract")) {
-    await windowScaleHandler(block.location);
-  }
-});
 function applyPotionEffect(player, potion2, seconds2) {
   player.runCommand("scoreboard objectives setdisplay sidebar Depth");
   let tick = seconds2 * 20;
-  potionStart = system6.currentTick;
+  potionStart = system7.currentTick;
   switch (potion2) {
     case "water_breathing": {
       player.addEffect("water_breathing", tick);
@@ -1736,7 +1779,7 @@ function mainTick() {
       }
     }
   });
-  system6.run(mainTick);
+  system7.run(mainTick);
 }
 async function surface(player) {
   player.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
@@ -1777,6 +1820,6 @@ world11.afterEvents.entityHealthChanged.subscribe(async (event) => {
     }
   }
 });
-system6.run(mainTick);
+system7.run(mainTick);
 
 //# sourceMappingURL=../debug/main.js.map

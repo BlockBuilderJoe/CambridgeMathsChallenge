@@ -1,4 +1,4 @@
-import { world } from "@minecraft/server";
+import { world, system } from "@minecraft/server";
 import { getCube } from "./input";
 import { setBlock } from "./output";
 import { getInput } from "./input";
@@ -13,6 +13,7 @@ const windows = [
         cloneTo: { x: -6, y: 36, z: 219 },
         cloneInto: { x: -6, y: 96, z: 219 },
         scaledLeftCorner: { x: 46, y: 98, z: 219 }, //Bottom left corner of the scaled window.
+        correctNumerator: 1,
     },
     {
         pos1: { x: 77, y: 97, z: 227 },
@@ -24,9 +25,38 @@ const windows = [
         scaledLeftCorner: { x: 78, y: 99, z: 218 }, //Bottom left corner of the scaled window.
     },
 ];
+export function getWindowIndex() {
+    return __awaiter(this, void 0, void 0, function* () {
+        let orb = overworld.getEntities({
+            tags: ["orb"],
+        });
+        let windowTag = orb[0].getTags()[1];
+        let windowNumber = parseInt(windowTag[1].substring(6));
+        if (windowNumber >= 0) {
+            return windowNumber;
+        }
+    });
+}
+export function redoWindowGame() {
+    return __awaiter(this, void 0, void 0, function* () {
+        let windowIndex = yield getWindowIndex();
+        if (windowIndex) {
+            yield windowUndo(windows[windowIndex].cloneFrom, windows[windowIndex].cloneTo, windows[windowIndex].cloneInto);
+            yield startWindowGame();
+        }
+    });
+}
 export function resetWindowGame() {
     return __awaiter(this, void 0, void 0, function* () {
+        //resets the orb.
         overworld.runCommandAsync(`tp @e[tag=orb] 44 98 197`);
+        overworld.runCommandAsync(`tag @e[tag=orb] add window0`);
+        overworld.runCommandAsync(`tag @e[tag=orb] remove window1`);
+        overworld.runCommandAsync(`tag @e[tag=orb] remove window2`);
+        overworld.runCommandAsync(`tag @e[tag=orb] remove window3`);
+        overworld.runCommandAsync(`tag @e[tag=orb] remove window4`);
+        overworld.runCommandAsync(`tag @e[tag=orb] remove window5`);
+        overworld.runCommandAsync(`setblock ${windows[0].numerator.x} ${windows[0].numerator.y} ${windows[0].numerator.z} blockbuilders:number_0`);
         for (let i = 1; i < windows.length; i++) {
             const window = windows[i];
             overworld.runCommandAsync(`setblock ${window.numerator.x} ${window.numerator.y} ${window.numerator.z} blockbuilders:number_0`);
@@ -38,7 +68,7 @@ export function resetWindowGame() {
         windowUndo(windows[0].cloneTo, windows[0].cloneFrom, windows[0].cloneInto);
     });
 }
-export function startTutorial() {
+export function startWindowTutorial() {
     return __awaiter(this, void 0, void 0, function* () {
         overworld.runCommandAsync(`clear @p`);
         yield giveWand();
@@ -51,14 +81,33 @@ export function startWindowGame() {
         giveGlass();
     });
 }
-export function windowScaleHandler(location) {
+export function guildMasterCheck(windowIndex) {
     return __awaiter(this, void 0, void 0, function* () {
-        const windowIndex = windows.findIndex((window) => window.numerator.x === location.x && window.numerator.y === location.y + 1 && window.numerator.z === location.z);
-        if (windowIndex !== -1) {
-            const window = windows[windowIndex]; //gets the correct window.
-            yield windowUndo(window.cloneTo, window.cloneFrom, window.cloneInto);
-            scale(window.pos1, window.pos2, window.numerator, window.scaledLeftCorner);
+        const window = windows[windowIndex]; //gets the correct window.
+        let numerator = getInput([{ x: window.numerator.x, y: window.numerator.y, z: window.numerator.z }]);
+        if (numerator === window.correctNumerator) {
+            system.runTimeout(() => {
+                overworld.runCommand(`dialogue open @e[tag=scaleNpc] @p scaleNpc5`);
+            }, 30);
         }
+        else if (numerator === 0) {
+            system.runTimeout(() => {
+                overworld.runCommand(`title @p actionbar The window has been scaled by 0.`);
+            }, 30);
+        }
+        else {
+            system.runTimeout(() => {
+                overworld.runCommand(`dialogue open @e[tag=scaleNpc] @p scaleNpc6`);
+            }, 30);
+        }
+    });
+}
+export function windowScaleHandler(windowIndex) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const window = windows[windowIndex]; //gets the correct window.
+        yield windowUndo(window.cloneTo, window.cloneFrom, window.cloneInto);
+        scale(window.pos1, window.pos2, window.numerator, window.scaledLeftCorner);
+        guildMasterCheck(windowIndex);
     });
 }
 export function windowUndoHandler(location) {
@@ -116,7 +165,6 @@ export function scale(cubePos1, cubePos2, inputNumber, scaledLeftCorner) {
 }
 export function windowUndo(from, to, into) {
     return __awaiter(this, void 0, void 0, function* () {
-        world.sendMessage(`clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`);
         yield overworld.runCommandAsync(`clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`); //clones from below.
         yield overworld.runCommandAsync(`fill ${from.x} 116 ${from.z} ${to.x} 120 ${to.z} air replace`);
         yield overworld.runCommandAsync(`fill ${from.x} 120 ${from.z} ${to.x} 150 ${to.z} air replace`);

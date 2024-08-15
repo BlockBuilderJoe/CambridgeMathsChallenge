@@ -127,11 +127,11 @@ Guild Master=
 Keep up, keep up.=
 Sorry! =
 Guild Master=
-Take this stained glass and make a design using the smaller frames here. 
+The design has already been done, but I need your help to scale it. 
 
-Once your design is ready, click the numerator to increase the amount the window needs to be scaled. 
+Click on the numerator (top number) to change the scale size. You can count the number of blocks in the frame to work it out. 
 
-Then right click the fraction bar to scale the window.=
+Then click on the orb of scaling to my right, to scale the window.=
 Will do=
 Guild Master=
 How can I help?=
@@ -143,6 +143,14 @@ Guild Master=
 3. Right click the fraction bar to make the window appear. 
 4. If you’ve made a mistake left click the fraction bar to make it disappear.=
 Thank you=
+GuildMaster=
+That window fits beautifully! Do you want to keep it and move on or redesign it?=
+Carry on.=
+Redesign it.=
+GuildMaster=
+Oh my goodness, that’s too big! Try again. =
+Okay=
+GuildMaster=
 Professor of Alchemy=
 I hear you want to take on the Well diving championship, very well, follow me. =
 Let's Go=

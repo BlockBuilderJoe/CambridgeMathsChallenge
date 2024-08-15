@@ -1355,7 +1355,7 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Take this stained glass and make a design using the smaller frames here. \n\nOnce your design is ready, click the numerator to increase the amount the window needs to be scaled. \n\nThen right click the fraction bar to scale the window."
+                            "translate": "The design has already been done, but I need your help to scale it. \n\nClick on the numerator (top number) to change the scale size. You can count the number of blocks in the frame to work it out. \n\nThen click on the orb of scaling to my right, to scale the window."
                         }
                     ]
                 },
@@ -1447,6 +1447,91 @@
                         ]
                     }
                 ]
+            },
+            {
+                "scene_tag": "scaleNpc5",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "GuildMaster"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "That window fits beautifully! Do you want to keep it and move on or redesign it?"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Carry on."
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent scale:npc 3"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Redesign it."
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent scale:npc 4"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "scaleNpc6",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "GuildMaster"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "Oh my goodness, that’s too big! Try again. "
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Okay"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "ScaleNpc 7",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "GuildMaster"
+                        }
+                    ]
+                },
+                "buttons": []
             },
             {
                 "scene_tag": "ratioNpc0",
@@ -1956,7 +2041,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent fraction:npc 1"
+                            "scriptevent fraction:npc 2"
                         ]
                     }
                 ]
