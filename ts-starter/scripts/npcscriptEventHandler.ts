@@ -80,6 +80,7 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
           break;
         }
         case `4`: {
+          overworld.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc3`);
           redoWindowGame();
           break;
         }

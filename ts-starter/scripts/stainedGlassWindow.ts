@@ -34,7 +34,7 @@ export async function getWindowIndex() {
     tags: ["orb"],
   });
   let windowTag = orb[0].getTags()[1];
-  let windowNumber = parseInt(windowTag[1].substring(6));
+  let windowNumber = parseInt(windowTag.substring(6));
   if (windowNumber >= 0) {
     return windowNumber;
   }
@@ -42,9 +42,13 @@ export async function getWindowIndex() {
 
 export async function redoWindowGame() {
   let windowIndex = await getWindowIndex();
-  if (windowIndex) {
+  world.sendMessage(`${windowIndex}`);
+  if (typeof windowIndex === "number") {
+    let player = overworld.getPlayers()[0];
+    player.runCommandAsync(`tp @p ~ ~ 190`); //moves the player in front of the window design.
     await windowUndo(windows[windowIndex].cloneFrom, windows[windowIndex].cloneTo, windows[windowIndex].cloneInto);
-    await startWindowGame();
+    await giveWand();
+    giveGlass();
   }
 }
 export async function resetWindowGame() {

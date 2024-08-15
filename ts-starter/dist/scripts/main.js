@@ -111,16 +111,20 @@ async function getWindowIndex() {
     tags: ["orb"]
   });
   let windowTag = orb[0].getTags()[1];
-  let windowNumber = parseInt(windowTag[1].substring(6));
+  let windowNumber = parseInt(windowTag.substring(6));
   if (windowNumber >= 0) {
     return windowNumber;
   }
 }
 async function redoWindowGame() {
   let windowIndex = await getWindowIndex();
-  if (windowIndex) {
+  world4.sendMessage(`${windowIndex}`);
+  if (typeof windowIndex === "number") {
+    let player = overworld4.getPlayers()[0];
+    player.runCommandAsync(`tp @p ~ ~ 190`);
     await windowUndo(windows[windowIndex].cloneFrom, windows[windowIndex].cloneTo, windows[windowIndex].cloneInto);
-    await startWindowGame();
+    await giveWand();
+    giveGlass();
   }
 }
 async function resetWindowGame() {
@@ -1551,6 +1555,7 @@ system6.afterEvents.scriptEventReceive.subscribe(async (event) => {
           break;
         }
         case `4`: {
+          overworld10.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc3`);
           redoWindowGame();
           break;
         }
