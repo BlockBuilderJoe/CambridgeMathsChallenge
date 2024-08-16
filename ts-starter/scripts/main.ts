@@ -7,6 +7,8 @@ import {
   Entity,
   Scoreboard,
   EntityInventoryComponent,
+  PlayerInteractWithBlockBeforeEvent,
+  PlayerInteractWithBlockBeforeEventSignal,
 } from "@minecraft/server";
 import { windows, windowUndoHandler, windowScaleHandler, startWindowGame } from "./stainedGlassWindow";
 import {
@@ -64,6 +66,12 @@ world.afterEvents.entityHitEntity.subscribe(async (event) => {
   }
 });
 
+let player = world.getAllPlayers()[0];
+
+world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
+  let block = event.block;
+  world.sendMessage("You can't do that here!");
+});
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let block = event.block;

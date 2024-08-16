@@ -212,8 +212,8 @@ async function getWindowIndex() {
 async function redoWindowGame() {
   let windowIndex = await getWindowIndex();
   if (typeof windowIndex === "number") {
-    let player = overworld4.getPlayers()[0];
-    player.runCommandAsync(`tp @p ~ ~ 190`);
+    let player2 = overworld4.getPlayers()[0];
+    player2.runCommandAsync(`tp @p ~ ~ 190`);
     await windowUndo(windows[windowIndex].cloneFrom, windows[windowIndex].cloneTo, windows[windowIndex].cloneInto);
     await giveWand();
     giveGlass();
@@ -836,8 +836,8 @@ async function startCuisenaireGame() {
 async function giveMap() {
   let chest = overworld5.getBlock({ x: 30, y: 91, z: 107 })?.getComponent("inventory");
   let map = chest.container?.getItem(0);
-  overworld5.getPlayers().forEach((player) => {
-    const getPlayerInventoryComponent = player.getComponent("inventory");
+  overworld5.getPlayers().forEach((player2) => {
+    const getPlayerInventoryComponent = player2.getComponent("inventory");
     if (map) {
       getPlayerInventoryComponent.container?.setItem(22, map);
     } else {
@@ -855,8 +855,8 @@ async function moveNpc(id) {
   overworld5.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc5`);
 }
 async function movePlayerToCheckpoint() {
-  let player = world5.getPlayers()[0];
-  let locationBeforeTp = player.location;
+  let player2 = world5.getPlayers()[0];
+  let locationBeforeTp = player2.location;
   await overworld5.runCommandAsync(checkPoint);
   await overworld5.runCommandAsync(
     `fill ${locationBeforeTp.x - 5} 95 ${locationBeforeTp.z - 5} ${locationBeforeTp.x + 5} 95 ${locationBeforeTp.z + 5} short_grass replace light_block`
@@ -941,34 +941,34 @@ function placeRods(block, blockName, rodLength, direction) {
     throw new Error(`Invalid direction: ${direction}`);
   }
 }
-async function setCameraView(player, index) {
+async function setCameraView(player2, index) {
   switch (index) {
     case 0:
-      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 30 120 99 facing 30 90 99`);
+      player2.runCommandAsync(`camera ${player2.name} set minecraft:free pos 30 120 99 facing 30 90 99`);
       break;
     case 1:
-      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 37 120 92 facing 37 90 92`);
+      player2.runCommandAsync(`camera ${player2.name} set minecraft:free pos 37 120 92 facing 37 90 92`);
       break;
     case 2:
-      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 45 107 91 facing 45 90 91`);
+      player2.runCommandAsync(`camera ${player2.name} set minecraft:free pos 45 107 91 facing 45 90 91`);
       break;
     case 3:
-      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 57 110 86 facing 57 90 86`);
+      player2.runCommandAsync(`camera ${player2.name} set minecraft:free pos 57 110 86 facing 57 90 86`);
       break;
     case 4:
-      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 66 109 93 facing 66 90 93`);
+      player2.runCommandAsync(`camera ${player2.name} set minecraft:free pos 66 109 93 facing 66 90 93`);
       break;
     case 5:
-      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 89 116 100 facing 89 90 100`);
+      player2.runCommandAsync(`camera ${player2.name} set minecraft:free pos 89 116 100 facing 89 90 100`);
       break;
     case 6:
-      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 90 113 93 facing 90 90 93`);
+      player2.runCommandAsync(`camera ${player2.name} set minecraft:free pos 90 113 93 facing 90 90 93`);
       break;
     case 7:
-      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 80 106 85 facing 80 90 85`);
+      player2.runCommandAsync(`camera ${player2.name} set minecraft:free pos 80 106 85 facing 80 90 85`);
       break;
     case 8:
-      player.runCommandAsync(`camera ${player.name} set minecraft:free pos 93 106 85 facing 93 90 85`);
+      player2.runCommandAsync(`camera ${player2.name} set minecraft:free pos 93 106 85 facing 93 90 85`);
       break;
   }
 }
@@ -1018,8 +1018,8 @@ async function replay(index) {
       ((index2) => {
         system2.runTimeout(async () => {
           let x = combinedRods[index2].location.x;
-          world5.getAllPlayers().forEach(async (player) => {
-            await setCameraView(player, npcIndex);
+          world5.getAllPlayers().forEach(async (player2) => {
+            await setCameraView(player2, npcIndex);
             fractions.push(combinedRods[index2].successMessage);
             await replayMessage(replayConfig.beginningMessage, fractions);
             let block = overworld5.getBlock(combinedRods[index2].location);
@@ -1031,7 +1031,7 @@ async function replay(index) {
             );
             if (i === combinedRods.length - 1) {
               endReplay(
-                player,
+                player2,
                 replayConfig.tpStart,
                 replayConfig.clearBlock,
                 replayConfig.replenishGrass,
@@ -1045,12 +1045,12 @@ async function replay(index) {
     }
   }
 }
-function endReplay(player, tpStart, clearCommand, replenishGrass, combinedRods) {
+function endReplay(player2, tpStart, clearCommand, replenishGrass, combinedRods) {
   system2.runTimeout(() => {
-    player.runCommandAsync(tpStart);
-    player.runCommandAsync(clearCommand);
-    player.runCommandAsync(replenishGrass);
-    player.runCommandAsync(`camera ${player.name} clear`);
+    player2.runCommandAsync(tpStart);
+    player2.runCommandAsync(clearCommand);
+    player2.runCommandAsync(replenishGrass);
+    player2.runCommandAsync(`camera ${player2.name} clear`);
     combinedRods = [];
   }, 50);
 }
@@ -1326,10 +1326,10 @@ async function giveIngredients() {
   overworld6.runCommand("replaceitem entity @p slot.hotbar 4 potato 20");
   overworld6.runCommand("replaceitem entity @p slot.hotbar 5 melon_slice 20");
 }
-function displayTimer(potionStart2, seconds2, player, potionDescription) {
+function displayTimer(potionStart2, seconds2, player2, potionDescription) {
   let timeLeft = (potionStart2 + seconds2 * 20 - system3.currentTick) / 20;
   if (timeLeft % 1 === 0) {
-    player.onScreenDisplay.setActionBar(`Time left:
+    player2.onScreenDisplay.setActionBar(`Time left:
  ${potionDescription} ${timeLeft} seconds`);
   }
 }
@@ -1790,9 +1790,14 @@ world11.afterEvents.entityHitEntity.subscribe(async (event) => {
     ({ potion, seconds } = await potionMaker(slots));
   }
 });
+var player = world11.getAllPlayers()[0];
 world11.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let block = event.block;
-  let player = event.player;
+  world11.sendMessage("You can't do that here!");
+});
+world11.afterEvents.playerPlaceBlock.subscribe(async (event) => {
+  let block = event.block;
+  let player2 = event.player;
   let colour = block.permutation?.getState("color");
   if (colour) {
     if (block.location.y === 95) {
@@ -1811,14 +1816,14 @@ world11.afterEvents.playerPlaceBlock.subscribe(async (event) => {
         pink: { block: "pink_concrete", value: 1, message: "1/24" }
       };
       if (!hasColour) {
-        player.runCommandAsync(`title ${player.name} actionbar Place the rod in front of the magical connector.`);
+        player2.runCommandAsync(`title ${player2.name} actionbar Place the rod in front of the magical connector.`);
         const rod2 = rodPermutations[colour];
-        player.runCommandAsync(`give @p ${rod2.block} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
+        player2.runCommandAsync(`give @p ${rod2.block} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
         event.block.setPermutation(BlockPermutation5.resolve("tallgrass"));
         return;
       }
       if (!correctDirection) {
-        player.runCommandAsync(`title ${player.name} actionbar You're facing the wrong way.`);
+        player2.runCommandAsync(`title ${player2.name} actionbar You're facing the wrong way.`);
         event.block.setPermutation(BlockPermutation5.resolve("tallgrass"));
         return;
       }
@@ -1846,118 +1851,118 @@ world11.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
     }
   }
 });
-function applyPotionEffect(player, potion2, seconds2) {
-  player.runCommand("scoreboard objectives setdisplay sidebar Depth");
+function applyPotionEffect(player2, potion2, seconds2) {
+  player2.runCommand("scoreboard objectives setdisplay sidebar Depth");
   let tick = seconds2 * 20;
   potionStart = system7.currentTick;
   switch (potion2) {
     case "water_breathing": {
-      player.addEffect("water_breathing", tick);
+      player2.addEffect("water_breathing", tick);
       break;
     }
     case "night_vision": {
       playerCanSeeInDark = true;
-      player.addEffect("night_vision", tick);
+      player2.addEffect("night_vision", tick);
       break;
     }
     case "blindness": {
-      player.addEffect("blindness", tick);
+      player2.addEffect("blindness", tick);
       break;
     }
     case "poison": {
-      player.addEffect("poison", tick);
+      player2.addEffect("poison", tick);
       break;
     }
     case "levitation": {
-      player.addEffect("levitation", tick);
+      player2.addEffect("levitation", tick);
       break;
     }
   }
-  player.runCommand("clear @p minecraft:glass_bottle");
+  player2.runCommand("clear @p minecraft:glass_bottle");
 }
 function mainTick() {
-  world11.getAllPlayers().forEach(async (player) => {
-    if (player.isOnGround) {
-      let isOnGrass = overworld11.getBlock(player.location)?.permutation?.matches("minecraft:short_grass");
-      if (isOnGrass && player.location.z <= 104.99) {
-        overworld11.getBlock(player.location)?.setPermutation(BlockPermutation5.resolve("minecraft:light_block"));
-        await moveGroundsKeeper(player.location);
-        overworld11.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
+  world11.getAllPlayers().forEach(async (player2) => {
+    if (player2.isOnGround) {
+      let isOnGrass = overworld11.getBlock(player2.location)?.permutation?.matches("minecraft:short_grass");
+      if (isOnGrass && player2.location.z <= 104.99) {
+        overworld11.getBlock(player2.location)?.setPermutation(BlockPermutation5.resolve("minecraft:light_block"));
+        await moveGroundsKeeper(player2.location);
+        overworld11.runCommand(`dialogue open @e[tag=groundskeeper] ${player2.name} groundskeeper`);
         overworld11.runCommand(`playsound mob.villager.no @p`);
       }
     }
-    if (player.isJumping && player.location.z <= 104.99) {
-      await moveGroundsKeeper(player.location);
-      player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
+    if (player2.isJumping && player2.location.z <= 104.99) {
+      await moveGroundsKeeper(player2.location);
+      player2.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player2.name} groundskeeper1`);
       overworld11.runCommand(`playsound mob.villager.no @p`);
     }
-    if (player.isInWater) {
-      if (player.location.x < 0) {
-        player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
-        meters = 94 - Math.floor(player.location.y);
-        player.runCommand(`scoreboard players set Meters Depth ${meters}`);
+    if (player2.isInWater) {
+      if (player2.location.x < 0) {
+        player2.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
+        meters = 94 - Math.floor(player2.location.y);
+        player2.runCommand(`scoreboard players set Meters Depth ${meters}`);
       }
       if (potionDrank) {
-        applyPotionEffect(player, potion, seconds);
+        applyPotionEffect(player2, potion, seconds);
         potionDrank = false;
       }
-      if (player.getEffect("water_breathing")) {
+      if (player2.getEffect("water_breathing")) {
         if (playerCanSeeInDark) {
           overworld11.runCommandAsync(`effect @p night_vision ${seconds} 1 true`);
         }
-        displayTimer(potionStart, seconds, player, "Breathing underwater");
-      } else if (player.getEffect("night_vision")) {
+        displayTimer(potionStart, seconds, player2, "Breathing underwater");
+      } else if (player2.getEffect("night_vision")) {
         overworld11.runCommandAsync(`title @p actionbar You can now permanently see in the dark!`);
-      } else if (player.getEffect("blindness")) {
-        displayTimer(potionStart, seconds, player, "Oh no! The ratios were wrong, you can't see anything for");
-      } else if (player.getEffect("levitation")) {
-        displayTimer(potionStart, seconds, player, "Oh no! You're floating for");
+      } else if (player2.getEffect("blindness")) {
+        displayTimer(potionStart, seconds, player2, "Oh no! The ratios were wrong, you can't see anything for");
+      } else if (player2.getEffect("levitation")) {
+        displayTimer(potionStart, seconds, player2, "Oh no! You're floating for");
       }
-      if (player.isSneaking == true) {
-        player.runCommandAsync(`dialogue open @e[tag=ratioNpc] @p ratioNpc5`);
-        surface(player);
+      if (player2.isSneaking == true) {
+        player2.runCommandAsync(`dialogue open @e[tag=ratioNpc] @p ratioNpc5`);
+        surface(player2);
       }
-      if (player.isSwimming == true) {
-        player.runCommandAsync(`dialogue open @e[tag=ratioNpc] @p ratioNpc5`);
-        surface(player);
+      if (player2.isSwimming == true) {
+        player2.runCommandAsync(`dialogue open @e[tag=ratioNpc] @p ratioNpc5`);
+        surface(player2);
       }
     }
   });
   system7.run(mainTick);
 }
-async function surface(player) {
-  player.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
-  player.teleport({ x: -3, y: 96, z: 144 });
-  player.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
-  player.addEffect("instant_health", 5);
-  player.removeEffect("blindness");
-  player.removeEffect("night_vision");
-  player.removeEffect("water_breathing");
-  player.removeEffect("levitation");
+async function surface(player2) {
+  player2.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
+  player2.teleport({ x: -3, y: 96, z: 144 });
+  player2.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
+  player2.addEffect("instant_health", 5);
+  player2.removeEffect("blindness");
+  player2.removeEffect("night_vision");
+  player2.removeEffect("water_breathing");
+  player2.removeEffect("levitation");
 }
 world11.afterEvents.itemCompleteUse.subscribe(async (event) => {
-  let player = event.source;
+  let player2 = event.source;
   if (event.itemStack?.typeId === "minecraft:potion") {
     if (potion === "poison") {
-      player.runCommandAsync(
+      player2.runCommandAsync(
         "title @p actionbar \xA7fYou mixed the potion with the \xA72wrong ingredients. \n\xA7fIt has had no effect.\nMake sure you're using the correct ingredients."
       );
     } else {
       potionDrank = true;
-      player.runCommandAsync("title @p actionbar You drank the potion! \xA72Jump in the well \xA7fto see the effect.");
+      player2.runCommandAsync("title @p actionbar You drank the potion! \xA72Jump in the well \xA7fto see the effect.");
     }
     event.source.runCommand("clear @p minecraft:glass_bottle");
   }
 });
 world11.afterEvents.entityHealthChanged.subscribe(async (event) => {
   if (event.entity.typeId === "minecraft:player") {
-    let player = event.entity;
-    if (player.isInWater == true) {
+    let player2 = event.entity;
+    if (player2.isInWater == true) {
       if (event.newValue === 18) {
-        await surface(player);
-        player.runCommandAsync("scoreboard objectives setdisplay sidebar");
+        await surface(player2);
+        player2.runCommandAsync("scoreboard objectives setdisplay sidebar");
         if (meters > 0) {
-          player.sendMessage(`\xA7fYou made it to a depth of: \xA72${meters}m 
+          player2.sendMessage(`\xA7fYou made it to a depth of: \xA72${meters}m 
 \xA7fOnly ${20 - meters}m to the bottom. `);
         }
       }
