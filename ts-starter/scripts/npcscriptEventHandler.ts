@@ -98,6 +98,9 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
           overworld.runCommandAsync(`clear @p`);
           break;
         }
+        case `6`: {
+          overworld.runCommandAsync(`Graduation ceremony coming soon!`);
+        }
       }
       break;
     }

@@ -1610,7 +1610,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent scale:npc6"
+                            "scriptevent scale:npc 3"
                         ]
                     },
                     {
@@ -1622,7 +1622,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent scale:npc7"
+                            "scriptevent scale:npc 6"
                         ]
                     }
                 ]
@@ -1653,7 +1653,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent scale:npc8"
+                            "scriptevent scale:npc 6"
                         ]
                     }
                 ]

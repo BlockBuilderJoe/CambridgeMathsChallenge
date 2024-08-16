@@ -85,6 +85,7 @@ async function giveWand() {
 var overworld4 = world4.getDimension("overworld");
 var windows = [
   {
+    //window 1
     pos1: { x: 46, y: 98, z: 192 },
     pos2: { x: 41, y: 107, z: 192 },
     numerator: { x: 40, y: 100, z: 197 },
@@ -96,6 +97,7 @@ var windows = [
     correctNumerator: 1
   },
   {
+    //window 2
     pos1: { x: 36, y: 98, z: 192 },
     pos2: { x: 34, y: 104, z: 192 },
     numerator: { x: 32, y: 100, z: 197 },
@@ -107,6 +109,7 @@ var windows = [
     correctNumerator: 2
   },
   {
+    //window 3
     pos1: { x: 24, y: 98, z: 192 },
     pos2: { x: 21, y: 103, z: 192 },
     numerator: { x: 20, y: 100, z: 197 },
@@ -116,18 +119,59 @@ var windows = [
     scaledLeftCorner: { x: 24, y: 98, z: 219 },
     //Bottom left corner of the scaled window.
     correctNumerator: 4
+  },
+  {
+    //window 4
+    pos1: { x: 113, y: 98, z: 193 },
+    pos2: { x: 108, y: 105, z: 193 },
+    numerator: { x: 107, y: 100, z: 197 },
+    cloneFrom: { x: 117, y: 10, z: 219 },
+    cloneTo: { x: 49, y: 71, z: 219 },
+    cloneInto: { x: 49, y: 96, z: 219 },
+    scaledLeftCorner: { x: 115, y: 98, z: 219 },
+    //Bottom left corner of the scaled window.
+    correctNumerator: 8
+  },
+  {
+    //window 5
+    pos1: { x: 0, y: 98, z: 192 },
+    pos2: { x: -2, y: 101, z: 192 },
+    numerator: { x: 0, y: 100, z: 197 },
+    cloneFrom: { x: 7, y: 10, z: 219 },
+    cloneTo: { x: -6, y: 36, z: 219 },
+    cloneInto: { x: -6, y: 96, z: 219 },
+    scaledLeftCorner: { x: 0, y: 98, z: 219 },
+    //Bottom left corner of the scaled window.
+    correctNumerator: 16
+  },
+  {
+    //window 6
+    pos1: { x: -12, y: 98, z: 192 },
+    pos2: { x: -14, y: 101, z: 192 },
+    numerator: { x: -16, y: 100, z: 197 },
+    cloneFrom: { x: -9, y: 10, z: 219 },
+    cloneTo: { x: -6, y: 36, z: 219 },
+    cloneInto: { x: -6, y: 96, z: 219 },
+    scaledLeftCorner: { x: -12, y: 98, z: 219 },
+    //Bottom left corner of the scaled window.
+    correctNumerator: 32
   }
 ];
+function nextOrbTag(windowIndex) {
+  overworld4.runCommandAsync(`tag @e[tag=orb] remove window${windowIndex}`);
+  overworld4.runCommandAsync(`tag @e[tag=orb] add window${windowIndex + 1}`);
+  return windowIndex + 1;
+}
 async function nextWindow() {
   let windowIndex = await getWindowIndex();
   if (typeof windowIndex === "number") {
     if (windowIndex === 2) {
       overworld4.runCommandAsync(`dialogue open @e[tag=scaleNpc] @p scaleNpc8`);
+      nextOrbTag(windowIndex);
     } else if (windowIndex === 5) {
+      overworld4.runCommandAsync(`dialogue open @e[tag=scaleNpc] @p scaleNpc10`);
     } else {
-      overworld4.runCommandAsync(`tag @e[tag=orb] remove window${windowIndex}`);
-      let newWindowIndex = windowIndex + 1;
-      overworld4.runCommandAsync(`tag @e[tag=orb] add window${newWindowIndex}`);
+      let newWindowIndex = nextOrbTag(windowIndex);
       overworld4.runCommandAsync(
         `tp @e[type=blockbuilders:scale] ${windows[newWindowIndex].numerator.x + 2} 98 197 facing ${windows[newWindowIndex].numerator.x + 2} 98 94`
       );
@@ -182,7 +226,8 @@ async function resetWindowGame() {
       );
     }
   }
-  windowUndo(windows[0].cloneTo, windows[0].cloneFrom, windows[0].cloneInto);
+  await windowUndo(windows[0].cloneTo, windows[0].cloneFrom, windows[0].cloneInto);
+  await windowUndo(windows[3].cloneTo, windows[3].cloneFrom, windows[3].cloneInto);
 }
 async function startWindowTutorial() {
   overworld4.runCommandAsync(`clear @p`);
@@ -254,9 +299,9 @@ async function windowUndo(from, to, into) {
   await overworld4.runCommandAsync(
     `clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`
   );
-  await overworld4.runCommandAsync(`fill ${from.x} 116 ${from.z} ${to.x} 120 ${to.z} air replace`);
-  await overworld4.runCommandAsync(`fill ${from.x} 120 ${from.z} ${to.x} 150 ${to.z} air replace`);
-  await overworld4.runCommandAsync(`fill ${from.x} 150 ${from.z} ${to.x} 172 ${to.z} air replace`);
+  await overworld4.runCommandAsync(`fill 50 116 219 -6 120 219 air replace`);
+  await overworld4.runCommandAsync(`fill 50 120 219 -6 150 219 air replace`);
+  await overworld4.runCommandAsync(`fill 50 150 219 -6 172 219 air replace`);
 }
 async function scaleShape(shape, scaleFactor, axes) {
   const scaledShape = [];
@@ -1597,6 +1642,9 @@ system6.afterEvents.scriptEventReceive.subscribe(async (event) => {
           overworld10.runCommandAsync(`tp @e[tag=scaleNpc] 44 96 230 facing 6 96 230`);
           overworld10.runCommandAsync(`clear @p`);
           break;
+        }
+        case `6`: {
+          overworld10.runCommandAsync(`Graduation ceremony coming soon!`);
         }
       }
       break;
