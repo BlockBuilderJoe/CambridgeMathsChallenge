@@ -1690,6 +1690,37 @@
                 ]
             },
             {
+                "scene_tag": "scaleNpc12",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Guild Master"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "We’re working in blocks here, that scale factor isn’t a whole number. \n\nTry again but make it a whole number."
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "On it!"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
                 "scene_tag": "ratioNpc0",
                 "npc_name": {
                     "rawtext": [

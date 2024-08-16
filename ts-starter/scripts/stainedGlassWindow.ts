@@ -6,6 +6,7 @@ import { Vector3 } from "@minecraft/server";
 import { giveWand } from "./wand";
 
 let overworld = world.getDimension("overworld");
+let seniorMode = false;
 
 export const windows = [
   {
@@ -58,26 +59,26 @@ export const windows = [
   },
   {
     //window 5
-    pos1: { x: 0, y: 98, z: 192 },
-    pos2: { x: -2, y: 101, z: 192 },
-    numerator: { x: 0, y: 100, z: 197 },
-    cloneFrom: { x: 7, y: 10, z: 219 },
-    cloneTo: { x: -6, y: 36, z: 219 },
-    cloneInto: { x: -6, y: 96, z: 219 },
-    scaledLeftCorner: { x: 0, y: 98, z: 219 }, //Bottom left corner of the scaled window.
+    pos1: { x: 99, y: 98, z: 193 },
+    pos2: { x: 95, y: 104, z: 193 },
+    numerator: { x: 94, y: 100, z: 197 },
+    cloneFrom: { x: 100, y: 10, z: 219 },
+    cloneTo: { x: 49, y: 71, z: 219 },
+    cloneInto: { x: 49, y: 96, z: 219 },
+    scaledLeftCorner: { x: 97, y: 98, z: 219 }, //Bottom left corner of the scaled window.
     correctNumerator: 6,
     numberOfBlocks: 6,
   },
   {
     //window 6
-    pos1: { x: -12, y: 98, z: 192 },
-    pos2: { x: -14, y: 101, z: 192 },
-    numerator: { x: -16, y: 100, z: 197 },
-    cloneFrom: { x: -9, y: 10, z: 219 },
-    cloneTo: { x: -6, y: 36, z: 219 },
-    cloneInto: { x: -6, y: 96, z: 219 },
-    scaledLeftCorner: { x: -12, y: 98, z: 219 }, //Bottom left corner of the scaled window.
-    correctNumerator: 32,
+    pos1: { x: 84, y: 98, z: 193 },
+    pos2: { x: 81, y: 103, z: 193 },
+    numerator: { x: 80, y: 100, z: 197 },
+    cloneFrom: { x: 85, y: 10, z: 219 },
+    cloneTo: { x: 49, y: 71, z: 219 },
+    cloneInto: { x: 49, y: 96, z: 219 },
+    scaledLeftCorner: { x: 82, y: 98, z: 219 }, //Bottom left corner of the scaled window.
+    correctNumerator: 12,
     numberOfBlocks: 6,
   },
 ];
@@ -115,13 +116,15 @@ function moveWindowEntities(newWindowIndex: number) {
 
 export async function nextWindow() {
   let windowIndex = await getWindowIndex();
+  world.sendMessage("windowIndex = " + windowIndex + "Senior mode = " + seniorMode);
   if (typeof windowIndex === "number") {
     if (windowIndex === 2) {
       overworld.runCommandAsync(`dialogue open @e[tag=scaleNpc] @p scaleNpc8`);
       nextOrbTag(windowIndex);
     } else if (windowIndex === 5) {
       overworld.runCommandAsync(`dialogue open @e[tag=scaleNpc] @p scaleNpc10`);
-    } else if (windowIndex === 3) {
+    } else if (windowIndex === 3 && seniorMode === false) {
+      seniorMode = true;
       overworld.runCommandAsync(`tp @p 111 96 183 facing 110 102 193`);
       moveWindowCharaters(windowIndex);
       giveWand();
@@ -230,9 +233,15 @@ export async function windowScaleHandler(windowIndex: number) {
     window.pos2,
     window.numerator,
     window.scaledLeftCorner,
-    window.numberOfBlocks
+    window.numberOfBlocks,
+    windowIndex
   );
-  guildMasterCheck(windowIndex, enoughGlass);
+  //has enoughGlass been returned?
+  if (enoughGlass === true || enoughGlass === false) {
+    guildMasterCheck(windowIndex, enoughGlass);
+  } else {
+    overworld.runCommand(`dialogue open @e[tag=scaleNpc] @p scaleNpc12`);
+  }
 }
 
 export async function windowUndoHandler(location: Vector3) {
@@ -265,7 +274,8 @@ export async function scale(
   cubePos2: Vector3,
   inputNumber: Vector3,
   scaledLeftCorner: Vector3,
-  numberOfBlocks: number
+  numberOfBlocks: number,
+  windowIndex: number
 ) {
   //if it doesn't work make sure pos1 is the bottom left corner and pos2 is the top right corner
   const blocks = await getCube(cubePos1, cubePos2);
@@ -284,6 +294,26 @@ export async function scale(
         let location = { x: finalWindow_x, y: finalWindow_y, z: finalWindow_z, colour: colour };
         shape.push(location);
       }
+    }
+  }
+
+  ////// special operation for the last three windows
+  const divisors: { [key: number]: number } = {
+    3: 4,
+    4: 3,
+    5: 3,
+  };
+
+  if (windowIndex in divisors) {
+    //divides scaleFactor by the divisor
+    let tempScaleFactor = scaleFactor / divisors[windowIndex as keyof typeof divisors];
+    //checks if the tempScaleFactor is a whole number
+    if (tempScaleFactor % 1 === 0) {
+      //allows the function to continue
+      scaleFactor = tempScaleFactor;
+    } else {
+      //stops the function and runs the dialogue ( see else statement line 237)
+      return;
     }
   }
   let scaledShape = await scaleShape(shape, scaleFactor, "yx");

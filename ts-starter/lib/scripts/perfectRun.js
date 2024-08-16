@@ -191,14 +191,14 @@ export const finalBlock = [
     {
         location: { z: 97, y: 95, x: 66 },
         blockName: "lime_concrete",
-        startLocation: { z: 97, y: 95, x: 66 },
+        startLocation: { z: 89, y: 95, x: 66 },
         startBlockName: "red_concrete",
         number: 4,
     }, //3/8 gap 5
     {
         location: { z: 97, y: 95, x: 66 },
         blockName: "red_concrete",
-        startLocation: { z: 97, y: 95, x: 66 },
+        startLocation: { z: 89, y: 95, x: 66 },
         startBlockName: "lime_concrete",
         number: 4,
     }, //3/8 gap 5

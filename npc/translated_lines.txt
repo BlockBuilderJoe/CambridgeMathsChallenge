@@ -166,6 +166,11 @@ Graduate=
 Guild Master=
 Brrrrr I can feel the breeze already, make sure the window is full of glass.=
 Okay=
+Guild Master=
+We’re working in blocks here, that scale factor isn’t a whole number. 
+
+Try again but make it a whole number.=
+On it!=
 Professor of Alchemy=
 I hear you want to take on the Well diving championship, very well, follow me. =
 Let's Go=

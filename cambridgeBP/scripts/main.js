@@ -83,6 +83,7 @@ async function giveWand() {
 
 // scripts/stainedGlassWindow.ts
 var overworld4 = world4.getDimension("overworld");
+var seniorMode = false;
 var windows = [
   {
     //window 1
@@ -138,28 +139,28 @@ var windows = [
   },
   {
     //window 5
-    pos1: { x: 0, y: 98, z: 192 },
-    pos2: { x: -2, y: 101, z: 192 },
-    numerator: { x: 0, y: 100, z: 197 },
-    cloneFrom: { x: 7, y: 10, z: 219 },
-    cloneTo: { x: -6, y: 36, z: 219 },
-    cloneInto: { x: -6, y: 96, z: 219 },
-    scaledLeftCorner: { x: 0, y: 98, z: 219 },
+    pos1: { x: 99, y: 98, z: 193 },
+    pos2: { x: 95, y: 104, z: 193 },
+    numerator: { x: 94, y: 100, z: 197 },
+    cloneFrom: { x: 100, y: 10, z: 219 },
+    cloneTo: { x: 49, y: 71, z: 219 },
+    cloneInto: { x: 49, y: 96, z: 219 },
+    scaledLeftCorner: { x: 97, y: 98, z: 219 },
     //Bottom left corner of the scaled window.
     correctNumerator: 6,
     numberOfBlocks: 6
   },
   {
     //window 6
-    pos1: { x: -12, y: 98, z: 192 },
-    pos2: { x: -14, y: 101, z: 192 },
-    numerator: { x: -16, y: 100, z: 197 },
-    cloneFrom: { x: -9, y: 10, z: 219 },
-    cloneTo: { x: -6, y: 36, z: 219 },
-    cloneInto: { x: -6, y: 96, z: 219 },
-    scaledLeftCorner: { x: -12, y: 98, z: 219 },
+    pos1: { x: 84, y: 98, z: 193 },
+    pos2: { x: 81, y: 103, z: 193 },
+    numerator: { x: 80, y: 100, z: 197 },
+    cloneFrom: { x: 85, y: 10, z: 219 },
+    cloneTo: { x: 49, y: 71, z: 219 },
+    cloneInto: { x: 49, y: 96, z: 219 },
+    scaledLeftCorner: { x: 82, y: 98, z: 219 },
     //Bottom left corner of the scaled window.
-    correctNumerator: 32,
+    correctNumerator: 12,
     numberOfBlocks: 6
   }
 ];
@@ -178,13 +179,15 @@ function moveWindowCharaters(newWindowIndex) {
 }
 async function nextWindow() {
   let windowIndex = await getWindowIndex();
+  world4.sendMessage("windowIndex = " + windowIndex + "Senior mode = " + seniorMode);
   if (typeof windowIndex === "number") {
     if (windowIndex === 2) {
       overworld4.runCommandAsync(`dialogue open @e[tag=scaleNpc] @p scaleNpc8`);
       nextOrbTag(windowIndex);
     } else if (windowIndex === 5) {
       overworld4.runCommandAsync(`dialogue open @e[tag=scaleNpc] @p scaleNpc10`);
-    } else if (windowIndex === 3) {
+    } else if (windowIndex === 3 && seniorMode === false) {
+      seniorMode = true;
       overworld4.runCommandAsync(`tp @p 111 96 183 facing 110 102 193`);
       moveWindowCharaters(windowIndex);
       giveWand();
@@ -281,9 +284,14 @@ async function windowScaleHandler(windowIndex) {
     window.pos2,
     window.numerator,
     window.scaledLeftCorner,
-    window.numberOfBlocks
+    window.numberOfBlocks,
+    windowIndex
   );
-  guildMasterCheck(windowIndex, enoughGlass);
+  if (enoughGlass === true || enoughGlass === false) {
+    guildMasterCheck(windowIndex, enoughGlass);
+  } else {
+    overworld4.runCommand(`dialogue open @e[tag=scaleNpc] @p scaleNpc12`);
+  }
 }
 function giveGlass() {
   overworld4.runCommand("replaceitem entity @p slot.hotbar 1 yellow_stained_glass 10");
@@ -295,7 +303,7 @@ function giveGlass() {
   overworld4.runCommand("replaceitem entity @p slot.hotbar 7 black_stained_glass 10");
   overworld4.runCommand("replaceitem entity @p slot.hotbar 8 brown_stained_glass 10");
 }
-async function scale(cubePos1, cubePos2, inputNumber, scaledLeftCorner, numberOfBlocks) {
+async function scale(cubePos1, cubePos2, inputNumber, scaledLeftCorner, numberOfBlocks, windowIndex) {
   const blocks = await getCube(cubePos1, cubePos2);
   let shape = [];
   let scaleFactor = getInput([inputNumber]);
@@ -312,6 +320,19 @@ async function scale(cubePos1, cubePos2, inputNumber, scaledLeftCorner, numberOf
         let location = { x: finalWindow_x, y: finalWindow_y, z: finalWindow_z, colour };
         shape.push(location);
       }
+    }
+  }
+  const divisors = {
+    3: 4,
+    4: 3,
+    5: 3
+  };
+  if (windowIndex in divisors) {
+    let tempScaleFactor = scaleFactor / divisors[windowIndex];
+    if (tempScaleFactor % 1 === 0) {
+      scaleFactor = tempScaleFactor;
+    } else {
+      return;
     }
   }
   let scaledShape = await scaleShape(shape, scaleFactor, "yx");
@@ -577,7 +598,7 @@ var finalBlock = [
   {
     location: { z: 97, y: 95, x: 66 },
     blockName: "lime_concrete",
-    startLocation: { z: 97, y: 95, x: 66 },
+    startLocation: { z: 89, y: 95, x: 66 },
     startBlockName: "red_concrete",
     number: 4
   },
@@ -585,7 +606,7 @@ var finalBlock = [
   {
     location: { z: 97, y: 95, x: 66 },
     blockName: "red_concrete",
-    startLocation: { z: 97, y: 95, x: 66 },
+    startLocation: { z: 89, y: 95, x: 66 },
     startBlockName: "lime_concrete",
     number: 4
   },
