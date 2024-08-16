@@ -303,9 +303,10 @@ export async function windowUndo(from: Vector3, to: Vector3, into: Vector3) {
   ); //clones from below.
 
   //cleans up the left side.
-  await overworld.runCommandAsync(`fill 50 116 219 -6 120 219 air replace`);
-  await overworld.runCommandAsync(`fill 50 120 219 -6 150 219 air replace`);
-  await overworld.runCommandAsync(`fill 50 150 219 -6 172 219 air replace`); //cleans any extra above
+  await overworld.runCommandAsync(`fill 50 116 219 -13 120 219 air replace`);
+  await overworld.runCommandAsync(`fill 50 120 219 -13 150 219 air replace`);
+  await overworld.runCommandAsync(`fill 50 150 219 -13 172 219 air replace`); //cleans any extra above
+  await overworld.runCommandAsync(`fill 50 172 219 -13 200 219 air replace`);
 }
 
 export async function scaleShape(shape: any, scaleFactor: any, axes: string) {

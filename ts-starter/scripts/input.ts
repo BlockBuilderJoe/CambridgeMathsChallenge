@@ -44,7 +44,7 @@ export async function getCube(pos1: Vector3, pos2: Vector3) {
 //converts a block to a number value
 function getNumberValue(location: Vector3) {
   let { block, permutation } = getBlockValue(location);
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 13; i++) {
     //check for element_0 to element_9
     if (permutation?.matches("blockbuilders:number_" + i)) {
       return i;

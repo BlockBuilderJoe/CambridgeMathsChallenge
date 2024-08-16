@@ -41,7 +41,7 @@ export function getCube(pos1, pos2) {
 //converts a block to a number value
 function getNumberValue(location) {
     let { block, permutation } = getBlockValue(location);
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 13; i++) {
         //check for element_0 to element_9
         if (permutation === null || permutation === void 0 ? void 0 : permutation.matches("blockbuilders:number_" + i)) {
             return i;

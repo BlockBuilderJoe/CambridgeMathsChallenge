@@ -35,7 +35,7 @@ async function getCube(pos1, pos2) {
 }
 function getNumberValue(location) {
   let { block, permutation } = getBlockValue(location);
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 13; i++) {
     if (permutation?.matches("blockbuilders:number_" + i)) {
       return i;
     }
@@ -60,13 +60,13 @@ function setBlock(location, blockName) {
   }
 }
 function cycleNumberBlock(clickEvent) {
-  for (let i = 0; i < 9; i++) {
+  for (let i = 0; i < 12; i++) {
     if (clickEvent.brokenBlockPermutation?.matches("blockbuilders:number_" + i)) {
       let nextNumber = i + 1;
       let blockname = "blockbuilders:number_" + nextNumber;
       clickEvent.block.setPermutation(BlockPermutation2.resolve(blockname));
     }
-    if (clickEvent.brokenBlockPermutation?.matches("blockbuilders:number_9")) {
+    if (clickEvent.brokenBlockPermutation?.matches("blockbuilders:number_12")) {
       clickEvent.block.setPermutation(BlockPermutation2.resolve("blockbuilders:number_0"));
     }
   }
@@ -77,7 +77,7 @@ import { world as world3 } from "@minecraft/server";
 var overworld3 = world3.getDimension("overworld");
 async function giveWand() {
   overworld3.runCommandAsync(
-    `give @p[hasitem={item=blockbuilders:mathmogicians_wand,quantity=0}] blockbuilders:mathmogicians_wand 1 0 {"item_lock": { "mode": "lock_in_slot" }, "minecraft:can_destroy":{"blocks":["minecraft:hopper", "blockbuilders:number_0","blockbuilders:number_1","blockbuilders:number_2","blockbuilders:number_3","blockbuilders:number_4","blockbuilders:number_5","blockbuilders:number_6","blockbuilders:number_7","blockbuilders:number_8","blockbuilders:number_9"]}}`
+    `give @p[hasitem={item=blockbuilders:mathmogicians_wand,quantity=0}] blockbuilders:mathmogicians_wand 1 0 {"item_lock": { "mode": "lock_in_slot" }, "minecraft:can_destroy":{"blocks":["minecraft:hopper", "blockbuilders:number_0","blockbuilders:number_1","blockbuilders:number_2","blockbuilders:number_3","blockbuilders:number_4","blockbuilders:number_5","blockbuilders:number_6","blockbuilders:number_7","blockbuilders:number_8","blockbuilders:number_9","blockbuilders:number_10","blockbuilders:number_11","blockbuilders:number_12"]}}`
   );
 }
 
@@ -328,9 +328,10 @@ async function windowUndo(from, to, into) {
   await overworld4.runCommandAsync(
     `clone ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${into.x} ${into.y} ${into.z} replace`
   );
-  await overworld4.runCommandAsync(`fill 50 116 219 -6 120 219 air replace`);
-  await overworld4.runCommandAsync(`fill 50 120 219 -6 150 219 air replace`);
-  await overworld4.runCommandAsync(`fill 50 150 219 -6 172 219 air replace`);
+  await overworld4.runCommandAsync(`fill 50 116 219 -13 120 219 air replace`);
+  await overworld4.runCommandAsync(`fill 50 120 219 -13 150 219 air replace`);
+  await overworld4.runCommandAsync(`fill 50 150 219 -13 172 219 air replace`);
+  await overworld4.runCommandAsync(`fill 50 172 219 -13 200 219 air replace`);
 }
 async function scaleShape(shape, scaleFactor, axes) {
   const scaledShape = [];

@@ -35,7 +35,6 @@ let meters = 0;
 let playerCanSeeInDark = false;
 
 //coin
-
 world.afterEvents.entityHitEntity.subscribe(async (event) => {
   let hitEntity = event.hitEntity;
   if (hitEntity.typeId === `blockbuilders:orb`) {

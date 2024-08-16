@@ -1,1 +1,1 @@
-{"version":3,"file":"wand.js","sourceRoot":"","sources":["../../scripts/wand.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,KAAK,EAAE,MAAM,mBAAmB,CAAC;AAE1C,IAAI,SAAS,GAAG,KAAK,CAAC,YAAY,CAAC,WAAW,CAAC,CAAC;AAEhD,MAAM,UAAgB,QAAQ;;QAC5B,SAAS,CAAC,eAAe,CACvB,wcAAwc,CACzc,CAAC;IACJ,CAAC;CAAA"}
+{"version":3,"file":"wand.js","sourceRoot":"","sources":["../../scripts/wand.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,KAAK,EAAE,MAAM,mBAAmB,CAAC;AAE1C,IAAI,SAAS,GAAG,KAAK,CAAC,YAAY,CAAC,WAAW,CAAC,CAAC;AAEhD,MAAM,UAAgB,QAAQ;;QAC5B,SAAS,CAAC,eAAe,CACvB,shBAAshB,CACvhB,CAAC;IACJ,CAAC;CAAA"}
