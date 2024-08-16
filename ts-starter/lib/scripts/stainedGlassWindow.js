@@ -15,6 +15,7 @@ export const windows = [
         cloneInto: { x: -6, y: 96, z: 219 },
         scaledLeftCorner: { x: 46, y: 98, z: 219 }, //Bottom left corner of the scaled window.
         correctNumerator: 1,
+        numberOfBlocks: 34,
     },
     {
         //window 2
@@ -26,6 +27,7 @@ export const windows = [
         cloneInto: { x: -6, y: 96, z: 219 },
         scaledLeftCorner: { x: 36, y: 98, z: 219 }, //Bottom left corner of the scaled window.
         correctNumerator: 2,
+        numberOfBlocks: 9,
     },
     {
         //window 3
@@ -37,6 +39,7 @@ export const windows = [
         cloneInto: { x: -6, y: 96, z: 219 },
         scaledLeftCorner: { x: 24, y: 98, z: 219 }, //Bottom left corner of the scaled window.
         correctNumerator: 4,
+        numberOfBlocks: 6,
     },
     {
         //window 4
@@ -48,6 +51,7 @@ export const windows = [
         cloneInto: { x: 49, y: 96, z: 219 },
         scaledLeftCorner: { x: 115, y: 98, z: 219 }, //Bottom left corner of the scaled window.
         correctNumerator: 8,
+        numberOfBlocks: 20,
     },
     {
         //window 5
@@ -58,7 +62,8 @@ export const windows = [
         cloneTo: { x: -6, y: 36, z: 219 },
         cloneInto: { x: -6, y: 96, z: 219 },
         scaledLeftCorner: { x: 0, y: 98, z: 219 }, //Bottom left corner of the scaled window.
-        correctNumerator: 16,
+        correctNumerator: 6,
+        numberOfBlocks: 6,
     },
     {
         //window 6
@@ -70,12 +75,21 @@ export const windows = [
         cloneInto: { x: -6, y: 96, z: 219 },
         scaledLeftCorner: { x: -12, y: 98, z: 219 }, //Bottom left corner of the scaled window.
         correctNumerator: 32,
+        numberOfBlocks: 6,
     },
 ];
 function nextOrbTag(windowIndex) {
     overworld.runCommandAsync(`tag @e[tag=orb] remove window${windowIndex}`);
     overworld.runCommandAsync(`tag @e[tag=orb] add window${windowIndex + 1}`);
     return windowIndex + 1;
+}
+function moveWindowCharaters(newWindowIndex) {
+    overworld.runCommandAsync(`tp @e[type=blockbuilders:scale] ${windows[newWindowIndex].numerator.x + 2} 98 197 facing ${windows[newWindowIndex].numerator.x + 2} 98 94`);
+    overworld.runCommandAsync(`tp @e[type=blockbuilders:orb] ${windows[newWindowIndex].numerator.x + 4} 98 197 facing ${windows[newWindowIndex].numerator.x + 4} 98 94`);
+}
+function moveWindowEntities(newWindowIndex) {
+    overworld.runCommandAsync(`tp @e[type=blockbuilders:scale] ${windows[newWindowIndex].numerator.x + 2} 98 197 facing ${windows[newWindowIndex].numerator.x + 2} 98 94`);
+    overworld.runCommandAsync(`tp @e[type=blockbuilders:orb] ${windows[newWindowIndex].numerator.x + 4} 98 197 facing ${windows[newWindowIndex].numerator.x + 4} 98 94`);
 }
 export function nextWindow() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -88,10 +102,15 @@ export function nextWindow() {
             else if (windowIndex === 5) {
                 overworld.runCommandAsync(`dialogue open @e[tag=scaleNpc] @p scaleNpc10`);
             }
+            else if (windowIndex === 3) {
+                overworld.runCommandAsync(`tp @p 111 96 183 facing 110 102 193`);
+                moveWindowCharaters(windowIndex);
+                giveWand();
+                giveGlass();
+            }
             else {
                 let newWindowIndex = nextOrbTag(windowIndex);
-                overworld.runCommandAsync(`tp @e[type=blockbuilders:scale] ${windows[newWindowIndex].numerator.x + 2} 98 197 facing ${windows[newWindowIndex].numerator.x + 2} 98 94`);
-                overworld.runCommandAsync(`tp @e[type=blockbuilders:orb] ${windows[newWindowIndex].numerator.x + 4} 98 197 facing ${windows[newWindowIndex].numerator.x + 4} 98 94`);
+                moveWindowCharaters(newWindowIndex);
                 giveWand();
                 giveGlass();
             }
@@ -158,12 +177,17 @@ export function startWindowGame() {
         giveGlass();
     });
 }
-export function guildMasterCheck(windowIndex) {
+export function guildMasterCheck(windowIndex, enoughGlass) {
     return __awaiter(this, void 0, void 0, function* () {
         const window = windows[windowIndex]; //gets the correct window.
         let numerator = getInput([{ x: window.numerator.x, y: window.numerator.y, z: window.numerator.z }]);
         world.sendMessage(`${numerator}`);
-        if (numerator === window.correctNumerator) {
+        if (!enoughGlass) {
+            system.runTimeout(() => {
+                overworld.runCommand(`dialogue open @e[tag=scaleNpc] @p scaleNpc11`);
+            }, 20);
+        }
+        else if (numerator === window.correctNumerator) {
             system.runTimeout(() => {
                 overworld.runCommand(`dialogue open @e[tag=scaleNpc] @p scaleNpc5`);
             }, 30);
@@ -189,8 +213,8 @@ export function windowScaleHandler(windowIndex) {
     return __awaiter(this, void 0, void 0, function* () {
         const window = windows[windowIndex]; //gets the correct window.
         yield windowUndo(window.cloneTo, window.cloneFrom, window.cloneInto);
-        scale(window.pos1, window.pos2, window.numerator, window.scaledLeftCorner);
-        guildMasterCheck(windowIndex);
+        let enoughGlass = yield scale(window.pos1, window.pos2, window.numerator, window.scaledLeftCorner, window.numberOfBlocks);
+        guildMasterCheck(windowIndex, enoughGlass);
     });
 }
 export function windowUndoHandler(location) {
@@ -218,7 +242,7 @@ export function giveGlass() {
     overworld.runCommand("replaceitem entity @p slot.hotbar 7 black_stained_glass 10");
     overworld.runCommand("replaceitem entity @p slot.hotbar 8 brown_stained_glass 10");
 }
-export function scale(cubePos1, cubePos2, inputNumber, scaledLeftCorner) {
+export function scale(cubePos1, cubePos2, inputNumber, scaledLeftCorner, numberOfBlocks) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
         //if it doesn't work make sure pos1 is the bottom left corner and pos2 is the top right corner
@@ -244,6 +268,11 @@ export function scale(cubePos1, cubePos2, inputNumber, scaledLeftCorner) {
         for (const block of scaledShape) {
             setBlock({ x: block.x, y: block.y, z: block.z }, block.colour + "_stained_glass");
         }
+        let enoughGlass = false;
+        if (shape.length == numberOfBlocks) {
+            enoughGlass = true;
+        }
+        return enoughGlass;
     });
 }
 export function windowUndo(from, to, into) {

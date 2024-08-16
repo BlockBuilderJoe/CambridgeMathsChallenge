@@ -46,6 +46,7 @@ dialogue change @e[tag=scaleNpc] scaleNpc7
 dialogue change @e[tag=scaleNpc] scaleNpc8
 dialogue change @e[tag=scaleNpc] scaleNpc9
 dialogue change @e[tag=scaleNpc] scaleNpc10
+dialogue change @e[tag=scaleNpc] scaleNpc11
 dialogue change @e[tag=ratioNpc] ratioNpc0
 dialogue change @e[tag=ratioNpc] ratioNpc1
 dialogue change @e[tag=ratioNpc] ratioNpc6

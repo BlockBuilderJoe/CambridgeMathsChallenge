@@ -1659,6 +1659,37 @@
                 ]
             },
             {
+                "scene_tag": "scaleNpc11",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "Guild Master"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "Brrrrr I can feel the breeze already, make sure the window is full of glass."
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "Okay"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
                 "scene_tag": "ratioNpc0",
                 "npc_name": {
                     "rawtext": [
