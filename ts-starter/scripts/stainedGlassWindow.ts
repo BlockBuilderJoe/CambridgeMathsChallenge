@@ -65,7 +65,7 @@ export const windows = [
     cloneFrom: { x: 100, y: 10, z: 219 },
     cloneTo: { x: 49, y: 71, z: 219 },
     cloneInto: { x: 49, y: 96, z: 219 },
-    scaledLeftCorner: { x: 97, y: 98, z: 219 }, //Bottom left corner of the scaled window.
+    scaledLeftCorner: { x: 96, y: 98, z: 219 }, //Bottom left corner of the scaled window.
     correctNumerator: 6,
     numberOfBlocks: 6,
   },
@@ -116,7 +116,6 @@ function moveWindowEntities(newWindowIndex: number) {
 
 export async function nextWindow() {
   let windowIndex = await getWindowIndex();
-  world.sendMessage("windowIndex = " + windowIndex + "Senior mode = " + seniorMode);
   if (typeof windowIndex === "number") {
     if (windowIndex === 2) {
       overworld.runCommandAsync(`dialogue open @e[tag=scaleNpc] @p scaleNpc8`);
@@ -201,7 +200,6 @@ export async function startWindowGame() {
 export async function guildMasterCheck(windowIndex: number, enoughGlass: boolean) {
   const window = windows[windowIndex]; //gets the correct window.
   let numerator = getInput([{ x: window.numerator.x, y: window.numerator.y, z: window.numerator.z }]);
-  world.sendMessage(`${numerator}`);
   if (!enoughGlass) {
     system.runTimeout(() => {
       overworld.runCommand(`dialogue open @e[tag=scaleNpc] @p scaleNpc11`);
@@ -300,7 +298,7 @@ export async function scale(
   ////// special operation for the last three windows
   const divisors: { [key: number]: number } = {
     3: 4,
-    4: 3,
+    4: 2,
     5: 3,
   };
 
@@ -308,6 +306,7 @@ export async function scale(
     //divides scaleFactor by the divisor
     let tempScaleFactor = scaleFactor / divisors[windowIndex as keyof typeof divisors];
     //checks if the tempScaleFactor is a whole number
+    world.sendMessage("tempScaleFactor: " + tempScaleFactor);
     if (tempScaleFactor % 1 === 0) {
       //allows the function to continue
       scaleFactor = tempScaleFactor;

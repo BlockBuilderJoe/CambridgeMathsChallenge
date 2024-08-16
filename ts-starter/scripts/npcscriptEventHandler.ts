@@ -99,7 +99,7 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
           break;
         }
         case `6`: {
-          overworld.runCommandAsync(`Graduation ceremony coming soon!`);
+          world.sendMessage(`Graduation ceremony coming soon!`);
         }
       }
       break;

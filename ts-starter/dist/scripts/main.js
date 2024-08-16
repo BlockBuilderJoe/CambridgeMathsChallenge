@@ -145,7 +145,7 @@ var windows = [
     cloneFrom: { x: 100, y: 10, z: 219 },
     cloneTo: { x: 49, y: 71, z: 219 },
     cloneInto: { x: 49, y: 96, z: 219 },
-    scaledLeftCorner: { x: 97, y: 98, z: 219 },
+    scaledLeftCorner: { x: 96, y: 98, z: 219 },
     //Bottom left corner of the scaled window.
     correctNumerator: 6,
     numberOfBlocks: 6
@@ -179,7 +179,6 @@ function moveWindowCharaters(newWindowIndex) {
 }
 async function nextWindow() {
   let windowIndex = await getWindowIndex();
-  world4.sendMessage("windowIndex = " + windowIndex + "Senior mode = " + seniorMode);
   if (typeof windowIndex === "number") {
     if (windowIndex === 2) {
       overworld4.runCommandAsync(`dialogue open @e[tag=scaleNpc] @p scaleNpc8`);
@@ -253,7 +252,6 @@ async function startWindowTutorial() {
 async function guildMasterCheck(windowIndex, enoughGlass) {
   const window = windows[windowIndex];
   let numerator = getInput([{ x: window.numerator.x, y: window.numerator.y, z: window.numerator.z }]);
-  world4.sendMessage(`${numerator}`);
   if (!enoughGlass) {
     system.runTimeout(() => {
       overworld4.runCommand(`dialogue open @e[tag=scaleNpc] @p scaleNpc11`);
@@ -324,11 +322,12 @@ async function scale(cubePos1, cubePos2, inputNumber, scaledLeftCorner, numberOf
   }
   const divisors = {
     3: 4,
-    4: 3,
+    4: 2,
     5: 3
   };
   if (windowIndex in divisors) {
     let tempScaleFactor = scaleFactor / divisors[windowIndex];
+    world4.sendMessage("tempScaleFactor: " + tempScaleFactor);
     if (tempScaleFactor % 1 === 0) {
       scaleFactor = tempScaleFactor;
     } else {
@@ -1695,7 +1694,7 @@ system6.afterEvents.scriptEventReceive.subscribe(async (event) => {
           break;
         }
         case `6`: {
-          overworld10.runCommandAsync(`Graduation ceremony coming soon!`);
+          world10.sendMessage(`Graduation ceremony coming soon!`);
         }
       }
       break;
