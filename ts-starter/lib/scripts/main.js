@@ -12,7 +12,6 @@ let potionStart = 0;
 let potionDrank = false;
 let meters = 0;
 let playerCanSeeInDark = false;
-//PlayerInteractWithBlockBeforeEventSignal.subscribe;
 //coin
 world.afterEvents.entityHitEntity.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
@@ -38,11 +37,6 @@ world.afterEvents.entityHitEntity.subscribe((event) => __awaiter(void 0, void 0,
         (_a = cauldron.container) === null || _a === void 0 ? void 0 : _a.clearAll(); //empties the cauldron
         ({ potion, seconds } = yield potionMaker(slots)); //gets the potion and the seconds for the applyPotionEffect function.
     }
-}));
-let player = world.getAllPlayers()[0];
-world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    let block = event.block;
-    world.sendMessage("You can't do that here!");
 }));
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
