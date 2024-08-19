@@ -1,5 +1,5 @@
 {
-    "format_version": "1.17",
+    "format_version": "1.21.0",
     "minecraft:npc_dialogue": {
         "scenes": [
             {
@@ -7,14 +7,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Annie"
+                            "translate": "npc.name.rodNpc0"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Great work, the garden is 24 across and I am halfway along. So using the 12 rod is exactly right. Thank you for saving me."
+                            "translate": "npc.text.rodNpc0Win"
                         }
                     ]
                 },
@@ -23,7 +23,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "No problem!"
+                                    "translate": "npc.button.rodNpc0Win.0"
                                 }
                             ]
                         },
@@ -38,14 +38,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Annie"
+                            "translate": "npc.name.rodNpc0"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! If you want to get more students I can show you how to use the rods more efficiently."
+                            "translate": "npc.text.rodNpc0Fail"
                         }
                     ]
                 },
@@ -54,7 +54,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Show me."
+                                    "translate": "npc.button.rodNpc0Fail.0"
                                 }
                             ]
                         },
@@ -66,7 +66,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "I’ll carry on."
+                                    "translate": "npc.button.rodNpc0Fail.1"
                                 }
                             ]
                         },
@@ -81,14 +81,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Annie"
+                            "translate": "npc.name.rodNpc0"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
+                            "translate": "npc.text.rodNpc0Default"
                         }
                     ]
                 },
@@ -97,7 +97,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay."
+                                    "translate": "npc.button.rodNpc0Default.0"
                                 }
                             ]
                         },
@@ -112,14 +112,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Annie"
+                            "translate": "npc.name.rodNpc0"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Thanks for rescuing me!"
+                            "translate": "npc.text.rodNpc0Saved"
                         }
                     ]
                 },
@@ -128,7 +128,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "No problem!"
+                                    "translate": "npc.button.rodNpc0Saved.0"
                                 }
                             ]
                         },
@@ -143,14 +143,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Lisa"
+                            "translate": "npc.name.rodNpc1"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! 12 is half of 24 and you used the right rod to get here."
+                            "translate": "npc.text.rodNpc1Win"
                         }
                     ]
                 },
@@ -159,7 +159,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "You’re Welcome."
+                                    "translate": "npc.button.rodNpc1Win.0"
                                 }
                             ]
                         },
@@ -174,14 +174,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Lisa"
+                            "translate": "npc.name.rodNpc1"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! If you want to get more students I can show you how to use the rods more efficiently."
+                            "translate": "npc.text.rodNpc1Fail"
                         }
                     ]
                 },
@@ -190,7 +190,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Show me ."
+                                    "translate": "npc.button.rodNpc1Fail.0"
                                 }
                             ]
                         },
@@ -202,7 +202,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "I’ll carry on."
+                                    "translate": "npc.button.rodNpc1Fail.1"
                                 }
                             ]
                         },
@@ -217,14 +217,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Lisa"
+                            "translate": "npc.name.rodNpc1"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
+                            "translate": "npc.text.rodNpc1Default"
                         }
                     ]
                 },
@@ -233,7 +233,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay."
+                                    "translate": "npc.button.rodNpc1Default.0"
                                 }
                             ]
                         },
@@ -248,14 +248,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Lisa"
+                            "translate": "npc.name.rodNpc1"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Thanks for rescuing me!"
+                            "translate": "npc.text.rodNpc1Saved"
                         }
                     ]
                 },
@@ -264,7 +264,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "No problem!"
+                                    "translate": "npc.button.rodNpc1Saved.0"
                                 }
                             ]
                         },
@@ -279,14 +279,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Callum"
+                            "translate": "npc.name.rodNpc2"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! 4 is a sixth of 24 and you used the right rod to get here."
+                            "translate": "npc.text.rodNpc2Win"
                         }
                     ]
                 },
@@ -295,7 +295,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "You’re Welcome."
+                                    "translate": "npc.button.rodNpc2Win.0"
                                 }
                             ]
                         },
@@ -310,14 +310,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Callum"
+                            "translate": "npc.name.rodNpc2"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! If you want to get more students I can show you how to use the rods more efficiently."
+                            "translate": "npc.text.rodNpc2Fail"
                         }
                     ]
                 },
@@ -326,7 +326,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Show me ."
+                                    "translate": "npc.button.rodNpc2Fail.0"
                                 }
                             ]
                         },
@@ -338,7 +338,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "I’ll carry on."
+                                    "translate": "npc.button.rodNpc2Fail.1"
                                 }
                             ]
                         },
@@ -353,14 +353,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Callum"
+                            "translate": "npc.name.rodNpc2"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
+                            "translate": "npc.text.rodNpc2Default"
                         }
                     ]
                 },
@@ -369,7 +369,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay."
+                                    "translate": "npc.button.rodNpc2Default.0"
                                 }
                             ]
                         },
@@ -384,14 +384,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Callum"
+                            "translate": "npc.name.rodNpc2"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Thanks for rescuing me!"
+                            "translate": "npc.text.rodNpc2Saved"
                         }
                     ]
                 },
@@ -400,7 +400,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "No problem!"
+                                    "translate": "npc.button.rodNpc2Saved.0"
                                 }
                             ]
                         },
@@ -415,14 +415,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Deena"
+                            "translate": "npc.name.rodNpc3"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Great work you made ¾ in the most optimum way by combining  ½ and ¼ ."
+                            "translate": "npc.text.rodNpc3Win"
                         }
                     ]
                 },
@@ -431,7 +431,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "You’re Welcome."
+                                    "translate": "npc.button.rodNpc3Win.0"
                                 }
                             ]
                         },
@@ -446,14 +446,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Deena"
+                            "translate": "npc.name.rodNpc3"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! If you want to get more students I can show you how to use the rods more efficiently."
+                            "translate": "npc.text.rodNpc3Fail"
                         }
                     ]
                 },
@@ -462,7 +462,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Show me ."
+                                    "translate": "npc.button.rodNpc3Fail.0"
                                 }
                             ]
                         },
@@ -474,7 +474,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "I’ll carry on."
+                                    "translate": "npc.button.rodNpc3Fail.1"
                                 }
                             ]
                         },
@@ -489,14 +489,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Deena"
+                            "translate": "npc.name.rodNpc3"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
+                            "translate": "npc.text.rodNpc3Default"
                         }
                     ]
                 },
@@ -505,7 +505,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay."
+                                    "translate": "npc.button.rodNpc3Default.0"
                                 }
                             ]
                         },
@@ -520,14 +520,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Deena"
+                            "translate": "npc.name.rodNpc3"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Thanks for rescuing me!"
+                            "translate": "npc.text.rodNpc3Saved"
                         }
                     ]
                 },
@@ -536,7 +536,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "No problem!"
+                                    "translate": "npc.button.rodNpc3Saved.0"
                                 }
                             ]
                         },
@@ -551,14 +551,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Eli"
+                            "translate": "npc.name.rodNpc4"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Well done! You combined ¼ with 1/8 to make 3/8."
+                            "translate": "npc.text.rodNpc4Win"
                         }
                     ]
                 },
@@ -567,7 +567,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Great."
+                                    "translate": "npc.button.rodNpc4Win.0"
                                 }
                             ]
                         },
@@ -582,14 +582,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Eli"
+                            "translate": "npc.name.rodNpc4"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! If you want to get more students I can show you how to use the rods more efficiently."
+                            "translate": "npc.text.rodNpc4Fail"
                         }
                     ]
                 },
@@ -598,7 +598,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Show me ."
+                                    "translate": "npc.button.rodNpc4Fail.0"
                                 }
                             ]
                         },
@@ -610,7 +610,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "I’ll carry on."
+                                    "translate": "npc.button.rodNpc4Fail.1"
                                 }
                             ]
                         },
@@ -625,14 +625,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Eli"
+                            "translate": "npc.name.rodNpc4"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
+                            "translate": "npc.text.rodNpc4Default"
                         }
                     ]
                 },
@@ -641,7 +641,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay."
+                                    "translate": "npc.button.rodNpc4Default.0"
                                 }
                             ]
                         },
@@ -656,14 +656,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Eli"
+                            "translate": "npc.name.rodNpc4"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Thanks for rescuing me!"
+                            "translate": "npc.text.rodNpc4Saved"
                         }
                     ]
                 },
@@ -672,7 +672,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "No problem!"
+                                    "translate": "npc.button.rodNpc4Saved.0"
                                 }
                             ]
                         },
@@ -687,14 +687,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Isaac"
+                            "translate": "npc.name.rodNpc5"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Wow, great working going over 1 tweed."
+                            "translate": "npc.text.rodNpc5Win"
                         }
                     ]
                 },
@@ -703,7 +703,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "You’re Welcome."
+                                    "translate": "npc.button.rodNpc5Win.0"
                                 }
                             ]
                         },
@@ -718,14 +718,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Isaac"
+                            "translate": "npc.name.rodNpc5"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! If you want to get more students I can show you how to use the rods more efficiently."
+                            "translate": "npc.text.rodNpc5Fail"
                         }
                     ]
                 },
@@ -734,7 +734,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Show me ."
+                                    "translate": "npc.button.rodNpc5Fail.0"
                                 }
                             ]
                         },
@@ -746,7 +746,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "I’ll carry on."
+                                    "translate": "npc.button.rodNpc5Fail.1"
                                 }
                             ]
                         },
@@ -761,14 +761,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Isaac"
+                            "translate": "npc.name.rodNpc5"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
+                            "translate": "npc.text.rodNpc5Default"
                         }
                     ]
                 },
@@ -777,7 +777,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay."
+                                    "translate": "npc.button.rodNpc5Default.0"
                                 }
                             ]
                         },
@@ -792,14 +792,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Isaac"
+                            "translate": "npc.name.rodNpc5"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Thanks for rescuing me!"
+                            "translate": "npc.text.rodNpc5Saved"
                         }
                     ]
                 },
@@ -808,7 +808,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "No problem!"
+                                    "translate": "npc.button.rodNpc5Saved.0"
                                 }
                             ]
                         },
@@ -823,14 +823,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Tamsin"
+                            "translate": "npc.name.rodNpc6"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Well done, 3/1 is 36, great work."
+                            "translate": "npc.text.rodNpc6Win"
                         }
                     ]
                 },
@@ -839,7 +839,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Thanks."
+                                    "translate": "npc.button.rodNpc6Win.0"
                                 }
                             ]
                         },
@@ -854,14 +854,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Tamsin"
+                            "translate": "npc.name.rodNpc6"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! If you want to get more students I can show you how to use the rods more efficiently."
+                            "translate": "npc.text.rodNpc6Fail"
                         }
                     ]
                 },
@@ -870,7 +870,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Show me ."
+                                    "translate": "npc.button.rodNpc6Fail.0"
                                 }
                             ]
                         },
@@ -882,7 +882,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "I’ll carry on."
+                                    "translate": "npc.button.rodNpc6Fail.1"
                                 }
                             ]
                         },
@@ -897,14 +897,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Tamsin"
+                            "translate": "npc.name.rodNpc6"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Thanks for rescuing me!"
+                            "translate": "npc.text.rodNpc6Saved"
                         }
                     ]
                 },
@@ -913,7 +913,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "You’re Welcome."
+                                    "translate": "npc.button.rodNpc6Saved.0"
                                 }
                             ]
                         },
@@ -928,14 +928,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Tamsin"
+                            "translate": "npc.name.rodNpc6"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
+                            "translate": "npc.text.rodNpc6Default"
                         }
                     ]
                 },
@@ -944,7 +944,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay."
+                                    "translate": "npc.button.rodNpc6Default.0"
                                 }
                             ]
                         },
@@ -959,14 +959,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Fleur"
+                            "translate": "npc.name.rodNpc7"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! 3 is indeed 1/8 of 24, you used the right rod."
+                            "translate": "npc.text.rodNpc7Win"
                         }
                     ]
                 },
@@ -975,7 +975,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "You’re Welcome."
+                                    "translate": "npc.button.rodNpc7Win.0"
                                 }
                             ]
                         },
@@ -990,14 +990,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Fleur"
+                            "translate": "npc.name.rodNpc7"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You saved me! If you want to get more students I can show you how to use the rods more efficiently."
+                            "translate": "npc.text.rodNpc7Fail"
                         }
                     ]
                 },
@@ -1006,7 +1006,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Show me ."
+                                    "translate": "npc.button.rodNpc7Fail.0"
                                 }
                             ]
                         },
@@ -1018,7 +1018,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "I’ll carry on."
+                                    "translate": "npc.button.rodNpc7Fail.1"
                                 }
                             ]
                         },
@@ -1033,14 +1033,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Fleur"
+                            "translate": "npc.name.rodNpc7"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Thanks for rescuing me!"
+                            "translate": "npc.text.rodNpc7Saved"
                         }
                     ]
                 },
@@ -1049,7 +1049,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "You’re Welcome."
+                                    "translate": "npc.button.rodNpc7Saved.0"
                                 }
                             ]
                         },
@@ -1064,14 +1064,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Fleur"
+                            "translate": "npc.name.rodNpc7"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
+                            "translate": "npc.text.rodNpc7Default"
                         }
                     ]
                 },
@@ -1080,7 +1080,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay."
+                                    "translate": "npc.button.rodNpc7Default.0"
                                 }
                             ]
                         },
@@ -1095,14 +1095,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Isabella"
+                            "translate": "npc.name.rodNpc8"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You’ve completed the game and saved all the students. Great work."
+                            "translate": "npc.text.rodNpc8Win"
                         }
                     ]
                 },
@@ -1111,7 +1111,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "You’re Welcome."
+                                    "translate": "npc.button.rodNpc8Win.0"
                                 }
                             ]
                         },
@@ -1126,14 +1126,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Isabella"
+                            "translate": "npc.name.rodNpc8"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "ERROR This shouldn’t appear in the game.  It means the rods quantities are wrong. "
+                            "translate": "npc.text.rodNpc8Fail"
                         }
                     ]
                 },
@@ -1142,7 +1142,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Show me ."
+                                    "translate": "npc.button.rodNpc8Fail.0"
                                 }
                             ]
                         },
@@ -1154,7 +1154,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "I’ll carry on."
+                                    "translate": "npc.button.rodNpc8Fail.1"
                                 }
                             ]
                         },
@@ -1169,14 +1169,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Isabella"
+                            "translate": "npc.name.rodNpc8"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Thanks for rescuing me, I’m the last one. "
+                            "translate": "npc.text.rodNpc8Saved"
                         }
                     ]
                 },
@@ -1185,7 +1185,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay ."
+                                    "translate": "npc.button.rodNpc8Saved.0"
                                 }
                             ]
                         },
@@ -1200,14 +1200,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Isabella"
+                            "translate": "npc.name.rodNpc8"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof."
+                            "translate": "npc.text.rodNpc8Default"
                         }
                     ]
                 },
@@ -1216,7 +1216,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay."
+                                    "translate": "npc.button.rodNpc8Default.0"
                                 }
                             ]
                         },
@@ -1231,14 +1231,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Dean of Students"
+                            "translate": "npc.name.spawnNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Welcome! We need your help with three different maths challenges. Pick one below, then a Professor from that school will guide you from the courtyard ahead."
+                            "translate": "npc.text.spawnNpc"
                         }
                     ]
                 },
@@ -1247,7 +1247,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Fractions"
+                                    "translate": "npc.button.spawnNpc.0"
                                 }
                             ]
                         },
@@ -1259,7 +1259,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Ratios"
+                                    "translate": "npc.button.spawnNpc.1"
                                 }
                             ]
                         },
@@ -1271,7 +1271,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Scale Factors"
+                                    "translate": "npc.button.spawnNpc.2"
                                 }
                             ]
                         },
@@ -1286,14 +1286,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Guild Master"
+                            "translate": "npc.name.scaleNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "This old building desperately needs some new windows. The architecture team needs the help of a Mathmogician to scale it correctly. Follow me!"
+                            "translate": "npc.text.scaleNpc0"
                         }
                     ]
                 },
@@ -1302,7 +1302,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay"
+                                    "translate": "npc.button.scaleNpc0.0"
                                 }
                             ]
                         },
@@ -1317,14 +1317,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Guild Master"
+                            "translate": "npc.name.scaleNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Keep up, keep up."
+                            "translate": "npc.text.scaleNpc1"
                         }
                     ]
                 },
@@ -1333,7 +1333,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Sorry! "
+                                    "translate": "npc.button.scaleNpc1.0"
                                 }
                             ]
                         },
@@ -1348,14 +1348,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Guild Master"
+                            "translate": "npc.name.scaleNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "The design has already been done, but I need your help to scale it. \n\nClick on the numerator (top number) to change the scale size. You can count the number of blocks in the frame to work it out. \n\nThen click on the orb of scaling to my right, to scale the window."
+                            "translate": "npc.text.scaleNpc2"
                         }
                     ]
                 },
@@ -1364,7 +1364,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Will do"
+                                    "translate": "npc.button.scaleNpc2.0"
                                 }
                             ]
                         },
@@ -1379,14 +1379,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Guild Master"
+                            "translate": "npc.name.scaleNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "How can I help?"
+                            "translate": "npc.text.scaleNpc3"
                         }
                     ]
                 },
@@ -1395,7 +1395,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "More glass "
+                                    "translate": "npc.button.scaleNpc3.0"
                                 }
                             ]
                         },
@@ -1407,7 +1407,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "I’m stuck. "
+                                    "translate": "npc.button.scaleNpc3.1"
                                 }
                             ]
                         },
@@ -1422,14 +1422,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Guild Master"
+                            "translate": "npc.name.scaleNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "1. Place the stained glass in the frames. \n2. Left click the numerator (top number) with the wand to change it.\n3. Right click the fraction bar to make the window appear. \n4. If you’ve made a mistake left click the fraction bar to make it disappear."
+                            "translate": "npc.text.scaleNpc4"
                         }
                     ]
                 },
@@ -1438,7 +1438,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Thank you"
+                                    "translate": "npc.button.scaleNpc4.0"
                                 }
                             ]
                         },
@@ -1453,14 +1453,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Guild Master"
+                            "translate": "npc.name.scaleNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "That window fits beautifully! Do you want to keep it and move on or redesign it?"
+                            "translate": "npc.text.scaleNpc5"
                         }
                     ]
                 },
@@ -1469,7 +1469,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Carry on."
+                                    "translate": "npc.button.scaleNpc5.0"
                                 }
                             ]
                         },
@@ -1481,7 +1481,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Redesign it."
+                                    "translate": "npc.button.scaleNpc5.1"
                                 }
                             ]
                         },
@@ -1496,14 +1496,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Guild Master"
+                            "translate": "npc.name.scaleNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Oh my goodness, that’s too big! Try again. "
+                            "translate": "npc.text.scaleNpc6"
                         }
                     ]
                 },
@@ -1512,7 +1512,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay"
+                                    "translate": "npc.button.scaleNpc6.0"
                                 }
                             ]
                         },
@@ -1527,14 +1527,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Guild Master"
+                            "translate": "npc.name.scaleNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "I need it to fill the frame. Make it bigger."
+                            "translate": "npc.text.scaleNpc7"
                         }
                     ]
                 },
@@ -1543,7 +1543,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay."
+                                    "translate": "npc.button.scaleNpc7.0"
                                 }
                             ]
                         },
@@ -1558,14 +1558,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Guild Master"
+                            "translate": "npc.name.scaleNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Impressive work, if you are finished let’s take a tour of what you have created. "
+                            "translate": "npc.text.scaleNpc8"
                         }
                     ]
                 },
@@ -1574,7 +1574,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Let’s Go."
+                                    "translate": "npc.button.scaleNpc8.0"
                                 }
                             ]
                         },
@@ -1589,14 +1589,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Guild Master"
+                            "translate": "npc.name.scaleNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You’ve done really well to reach this point. The next challenges are much harder so you can graduate now if you want. "
+                            "translate": "npc.text.scaleNpc9"
                         }
                     ]
                 },
@@ -1605,7 +1605,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Carry on."
+                                    "translate": "npc.button.scaleNpc9.0"
                                 }
                             ]
                         },
@@ -1617,7 +1617,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Graduate."
+                                    "translate": "npc.button.scaleNpc9.1"
                                 }
                             ]
                         },
@@ -1632,14 +1632,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Guild Master"
+                            "translate": "npc.name.scaleNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You are true artisan, it’s time to graduate with full honours."
+                            "translate": "npc.text.scaleNpc10"
                         }
                     ]
                 },
@@ -1648,7 +1648,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Graduate"
+                                    "translate": "npc.button.scaleNpc10.0"
                                 }
                             ]
                         },
@@ -1663,14 +1663,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Guild Master"
+                            "translate": "npc.name.scaleNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Brrrrr I can feel the breeze already, make sure the window is full of glass."
+                            "translate": "npc.text.scaleNpc11"
                         }
                     ]
                 },
@@ -1679,7 +1679,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay"
+                                    "translate": "npc.button.scaleNpc11.0"
                                 }
                             ]
                         },
@@ -1694,14 +1694,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Guild Master"
+                            "translate": "npc.name.scaleNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "We’re working in blocks here, that scale factor isn’t a whole number. \n\nTry again but make it a whole number."
+                            "translate": "npc.text.scaleNpc12"
                         }
                     ]
                 },
@@ -1710,7 +1710,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "On it!"
+                                    "translate": "npc.button.scaleNpc12.0"
                                 }
                             ]
                         },
@@ -1725,14 +1725,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Professor of Alchemy"
+                            "translate": "npc.name.ratioNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "I hear you want to take on the Well diving championship, very well, follow me. "
+                            "translate": "npc.text.ratioNpc0"
                         }
                     ]
                 },
@@ -1741,7 +1741,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Let's Go"
+                                    "translate": "npc.button.ratioNpc0.0"
                                 }
                             ]
                         },
@@ -1756,14 +1756,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Professor of Alchemy"
+                            "translate": "npc.name.ratioNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "The challenge awaits, please keep up."
+                            "translate": "npc.text.ratioNpc1"
                         }
                     ]
                 },
@@ -1772,7 +1772,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "On the way!"
+                                    "translate": "npc.button.ratioNpc1.0"
                                 }
                             ]
                         },
@@ -1787,14 +1787,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Professor of Alchemy"
+                            "translate": "npc.name.ratioNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Mmmm delicious, okay lets get some coins.\n\nThe ratios for the potions you’ll need are on the wall. \n\nTo make a potion mix it in the cauldron and tap it with your wand."
+                            "translate": "npc.text.ratioNpc6"
                         }
                     ]
                 },
@@ -1803,7 +1803,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay let’s go."
+                                    "translate": "npc.button.ratioNpc6.0"
                                 }
                             ]
                         },
@@ -1818,14 +1818,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Professor of Alchemy"
+                            "translate": "npc.name.ratioNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "How can I help?"
+                            "translate": "npc.text.ratioNpc3"
                         }
                     ]
                 },
@@ -1834,7 +1834,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "More ingredients"
+                                    "translate": "npc.button.ratioNpc3.0"
                                 }
                             ]
                         },
@@ -1846,7 +1846,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "I’m stuck. "
+                                    "translate": "npc.button.ratioNpc3.1"
                                 }
                             ]
                         },
@@ -1861,14 +1861,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Professor of Alchemy"
+                            "translate": "npc.name.ratioNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Here are the steps for the game. \n1. Check the ratios on the wall.\n2. Chuck the ingredients in the cauldron to the correct ratio.\n3. Click on the cauldron with your wand.\n4. Check the bar chart to see if your ratios are correct. \n5. If they are correct, drink the potion and dive in the well. \n6. Remember to follow the rules and click on the coins to gather them. "
+                            "translate": "npc.text.ratioNpc4"
                         }
                     ]
                 },
@@ -1877,7 +1877,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Thank you"
+                                    "translate": "npc.button.ratioNpc4.0"
                                 }
                             ]
                         },
@@ -1892,14 +1892,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Professor of Alchemy"
+                            "translate": "npc.name.ratioNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "You broke rule number 2, you must let the potions do the work, no swimming or diving."
+                            "translate": "npc.text.ratioNpc5"
                         }
                     ]
                 },
@@ -1908,7 +1908,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Sorry! "
+                                    "translate": "npc.button.ratioNpc5.0"
                                 }
                             ]
                         },
@@ -1923,14 +1923,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Professor of Alchemy"
+                            "translate": "npc.name.ratioNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Before we start I need you to make me a .... I mean teach you about ratios, by making me chocolate milk. \n\nPut 2 parts Cocoa beans to 1 part Milk into the cauldron and tap it with your wand."
+                            "translate": "npc.text.ratioNpc2"
                         }
                     ]
                 },
@@ -1939,7 +1939,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "On it!"
+                                    "translate": "npc.button.ratioNpc2.0"
                                 }
                             ]
                         },
@@ -1954,14 +1954,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Professor of Alchemy"
+                            "translate": "npc.name.ratioNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Eurghhhh that is not right, \n\nYou need to put 2 parts cocoa to 1 part milk. \n"
+                            "translate": "npc.text.ratioNpc7"
                         }
                     ]
                 },
@@ -1970,7 +1970,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "On it!"
+                                    "translate": "npc.button.ratioNpc7.0"
                                 }
                             ]
                         },
@@ -1985,14 +1985,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Professor of Cartography"
+                            "translate": "npc.name.fractionNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "This is embarrassing, I’ve lost my cartography students in the walled gardens (yes I know). Please help me! Follow me to the gardens."
+                            "translate": "npc.text.fractionNpc0"
                         }
                     ]
                 },
@@ -2001,7 +2001,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Let's Go!"
+                                    "translate": "npc.button.fractionNpc0.0"
                                 }
                             ]
                         },
@@ -2016,14 +2016,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Professor of Cartography"
+                            "translate": "npc.name.fractionNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Oh dear oh dear, please keep up I cannot lose a whole class."
+                            "translate": "npc.text.fractionNpc1"
                         }
                     ]
                 },
@@ -2032,7 +2032,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Sorry! "
+                                    "translate": "npc.button.fractionNpc1.0"
                                 }
                             ]
                         },
@@ -2047,14 +2047,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Professor of Cartography"
+                            "translate": "npc.name.fractionNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "I need you to rescue each student that is trapped.  Use these magical rods to reach each student. \n\nIf you need to start again or get stuck come back to me!"
+                            "translate": "npc.text.fractionNpc2"
                         }
                     ]
                 },
@@ -2063,7 +2063,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Wish me luck"
+                                    "translate": "npc.button.fractionNpc2.0"
                                 }
                             ]
                         },
@@ -2078,14 +2078,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Professor of Cartography"
+                            "translate": "npc.name.fractionNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "How can I help?"
+                            "translate": "npc.text.fractionNpc3"
                         }
                     ]
                 },
@@ -2094,7 +2094,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Help!"
+                                    "translate": "npc.button.fractionNpc3.0"
                                 }
                             ]
                         },
@@ -2106,7 +2106,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Start Again."
+                                    "translate": "npc.button.fractionNpc3.1"
                                 }
                             ]
                         },
@@ -2121,14 +2121,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Professor of Cartography"
+                            "translate": "npc.name.fractionNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "1. There are three grids two are  24x24 blocks wide and one is 48 x24 you need to use the rods to cross them.\n2. You can place the rods by right clicking in front of the white blocks. \n3. Talk to each student as you go, they will let you know if you have placed the most optimum rod down. "
+                            "translate": "npc.text.fractionNpc4"
                         }
                     ]
                 },
@@ -2137,7 +2137,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Thank you"
+                                    "translate": "npc.button.fractionNpc4.0"
                                 }
                             ]
                         },
@@ -2152,14 +2152,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Professor of Cartography"
+                            "translate": "npc.name.fractionNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Well done you saved the student and made it to a checkpoint. Come back to me if you run out of rods."
+                            "translate": "npc.text.fractionNpc5"
                         }
                     ]
                 },
@@ -2168,7 +2168,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Okay"
+                                    "translate": "npc.button.fractionNpc5.0"
                                 }
                             ]
                         },
@@ -2180,7 +2180,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "More Rods."
+                                    "translate": "npc.button.fractionNpc5.1"
                                 }
                             ]
                         },
@@ -2195,14 +2195,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Professor of Cartography "
+                            "translate": "npc.name.fractionNpc"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Getting more rods will reset the game. \n\nAre you sure you want to reset the game?"
+                            "translate": "npc.text.fractionNpc6"
                         }
                     ]
                 },
@@ -2211,7 +2211,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "No thanks"
+                                    "translate": "npc.button.fractionNpc6.0"
                                 }
                             ]
                         },
@@ -2223,7 +2223,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Reset the game. "
+                                    "translate": "npc.button.fractionNpc6.1"
                                 }
                             ]
                         },
@@ -2238,14 +2238,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Grumpy Groundskeeper"
+                            "translate": "npc.name.groundskeeper"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "Grrrrofffff me grass"
+                            "translate": "npc.text.groundskeeper"
                         }
                     ]
                 },
@@ -2254,7 +2254,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Sorry! "
+                                    "translate": "npc.button.groundskeeper.0"
                                 }
                             ]
                         },
@@ -2269,14 +2269,14 @@
                 "npc_name": {
                     "rawtext": [
                         {
-                            "translate": "Grumpy Groundskeeper"
+                            "translate": "npc.name.groundskeeper"
                         }
                     ]
                 },
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "No jumping in the gardens."
+                            "translate": "npc.text.groundskeeper1"
                         }
                     ]
                 },
@@ -2285,7 +2285,7 @@
                         "name": {
                             "rawtext": [
                                 {
-                                    "translate": "Sorry! "
+                                    "translate": "npc.button.groundskeeper1.0"
                                 }
                             ]
                         },
