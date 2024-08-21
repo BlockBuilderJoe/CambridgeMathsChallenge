@@ -7,8 +7,8 @@ let checkPoint = "tp @p 29 96 114 facing 29 96 112";
 export function startCuisenaireTutorial() {
     return __awaiter(this, void 0, void 0, function* () {
         yield overworld.runCommandAsync(`tp @p -390 -31 126`);
-        yield overworld.runCommandAsync(`tp @e[tag=fractionNpc] -390 -31 126`);
-        yield overworld.runCommandAsync(`dialogue open @e[tag=fractionNpc] fractionNpc7`);
+        yield overworld.runCommandAsync(`tp @e[tag=fractionNpc] -391 -31 126`);
+        yield overworld.runCommandAsync(`dialogue open @e[tag=fractionNpc] @p fractionNpc7`);
         yield overworld.runCommandAsync(`replaceitem entity @p slot.weapon.offhand 0 filled_map`);
     });
 }
