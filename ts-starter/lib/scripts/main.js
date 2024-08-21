@@ -26,7 +26,14 @@ world.afterEvents.entityHitEntity.subscribe((event) => __awaiter(void 0, void 0,
     }
     if (hitEntity.typeId === `blockbuilders:coin`) {
         let tag = hitEntity.getTags();
-        let x_location = 0 - parseInt(tag[0].substring(4));
+        let coinNumber = parseInt(tag[0].substring(4));
+        let x_location = 0 - coinNumber;
+        if (coinNumber === 4) {
+            overworld.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc9 `);
+        }
+        else if (coinNumber === 10) {
+            overworld.runCommandAsync(`dialogue open @e[tag=fractionNpc] @p ratioNpc10`);
+        }
         overworld.runCommandAsync(`scoreboard players add Coins Depth 1`);
         overworld.runCommandAsync(`tp @e[type=blockbuilders:coin,tag=${tag}] ${x_location} 104 156 facing -11 104 156`);
     }
