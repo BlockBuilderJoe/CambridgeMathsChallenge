@@ -23,6 +23,7 @@ import {
 import { startPotionGame, resetPotionGame, giveIngredients } from "./potionGame";
 import { resetGame } from "./resetGame";
 import { giveWand } from "./wand";
+import { startGraduation } from "./graduation";
 
 let overworld = world.getDimension("overworld");
 //handles the scriptEventReceive from NPCs
@@ -158,7 +159,17 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
       }
       break;
     }
+    case "graduation:junior": {
+      await startGraduation("junior");
+      break;
+    }
+    case "graduation:senior": {
+      
+      await startGraduation("senior");
+      break;
+    }
   }
+    
   if (event.id === "fraction:groundskeeper") {
     await movePlayerToCheckpoint();
   }

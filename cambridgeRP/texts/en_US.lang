@@ -1,3 +1,5 @@
+#PARSE_ESCAPES
+
 tile.blockbuilders:number_1.name=Number One
 tile.blockbuilders:number_2.name=Number Two
 tile.blockbuilders:number_3.name=Number Three
@@ -170,7 +172,7 @@ npc.name.rodNpc8=Isabella
 npc.text.rodNpc8Default=Help me! You can only rescue me if you use the right amount of rods to get to this platform, otherwise I can't get back safely. If you need to start again talk to the Prof.
 npc.button.rodNpc8Default.0=Okay.
 npc.name.spawnNpc=Dean of Students
-npc.text.spawnNpc=Welcome mathmogician I am a test!                                                                 We need your help with three different maths challenges.                                                                                           Pick one below, then a Professor from that school will guide you from the courtyard ahead.        
+npc.text.spawnNpc=Welcome!                                                                                          We need your help with three different maths challenges.                                                                                           Pick one below, then a Professor from that school will guide you from the courtyard ahead.        
 npc.button.spawnNpc.0=Fractions
 npc.button.spawnNpc.1=Ratios
 npc.button.spawnNpc.2=Scale Factors

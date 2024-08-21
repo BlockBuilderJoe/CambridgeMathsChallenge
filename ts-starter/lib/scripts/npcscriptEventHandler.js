@@ -6,6 +6,7 @@ import { nextWindow, giveGlass, startWindowTutorial, redoWindowGame, } from "./s
 import { startPotionGame, giveIngredients } from "./potionGame";
 import { resetGame } from "./resetGame";
 import { giveWand } from "./wand";
+import { startGraduation } from "./graduation";
 let overworld = world.getDimension("overworld");
 //handles the scriptEventReceive from NPCs
 system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
@@ -140,6 +141,14 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
                     break;
                 }
             }
+            break;
+        }
+        case "graduation:junior": {
+            yield startGraduation("junior");
+            break;
+        }
+        case "graduation:senior": {
+            yield startGraduation("senior");
             break;
         }
     }
