@@ -327,7 +327,6 @@ async function scale(cubePos1, cubePos2, inputNumber, scaledLeftCorner, numberOf
   };
   if (windowIndex in divisors) {
     let tempScaleFactor = scaleFactor / divisors[windowIndex];
-    world4.sendMessage("tempScaleFactor: " + tempScaleFactor);
     if (tempScaleFactor % 1 === 0) {
       scaleFactor = tempScaleFactor;
     } else {
@@ -1692,18 +1691,7 @@ async function startGraduation(level) {
   overworld11.runCommandAsync(`tp @e[tag=fractionNpc] -107.49 96.00 138.56 facing -101.49 96.00 138.56`);
   overworld11.runCommandAsync(`tp @e[tag=ratioNpc] -107.39 96.00 140.05 facing -101.39 96.00 140.05`);
   overworld11.runCommandAsync(`tp @e[tag=scaleNpc] -107.31 96.00 141.96 facing -101.31 96.00 141.96`);
-  isEducation();
   startFlythrough("graduation");
-}
-async function isEducation() {
-  try {
-    overworld11.runCommand(`setblock -107.39 96.00 140.05 minecraft:camera`);
-    world11.sendMessage("You are running Education");
-    return true;
-  } finally {
-    world11.sendMessage("You are not running Education");
-    return false;
-  }
 }
 
 // scripts/npcscriptEventHandler.ts

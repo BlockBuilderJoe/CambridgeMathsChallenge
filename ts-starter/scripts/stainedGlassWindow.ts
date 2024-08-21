@@ -306,7 +306,6 @@ export async function scale(
     //divides scaleFactor by the divisor
     let tempScaleFactor = scaleFactor / divisors[windowIndex as keyof typeof divisors];
     //checks if the tempScaleFactor is a whole number
-    world.sendMessage("tempScaleFactor: " + tempScaleFactor);
     if (tempScaleFactor % 1 === 0) {
       //allows the function to continue
       scaleFactor = tempScaleFactor;

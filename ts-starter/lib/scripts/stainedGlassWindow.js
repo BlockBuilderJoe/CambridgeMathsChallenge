@@ -281,7 +281,6 @@ export function scale(cubePos1, cubePos2, inputNumber, scaledLeftCorner, numberO
             //divides scaleFactor by the divisor
             let tempScaleFactor = scaleFactor / divisors[windowIndex];
             //checks if the tempScaleFactor is a whole number
-            world.sendMessage("tempScaleFactor: " + tempScaleFactor);
             if (tempScaleFactor % 1 === 0) {
                 //allows the function to continue
                 scaleFactor = tempScaleFactor;
