@@ -1764,6 +1764,7 @@ system8.afterEvents.scriptEventReceive.subscribe(async (event) => {
           break;
         }
         case `3`: {
+          overworld12.runCommandAsync(`dialogue open @e[tag=scaleNpc] @p scaleNpc13`);
           overworld12.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc3`);
           nextWindow();
           break;
