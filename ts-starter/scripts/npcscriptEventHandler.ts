@@ -164,12 +164,11 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
       break;
     }
     case "graduation:senior": {
-      
       await startGraduation("senior");
       break;
     }
   }
-    
+
   if (event.id === "fraction:groundskeeper") {
     await movePlayerToCheckpoint();
   }

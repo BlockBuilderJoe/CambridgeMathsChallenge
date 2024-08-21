@@ -7,22 +7,8 @@ let checkPoint = "tp @p 29 96 114 facing 29 96 112";
 export function startCuisenaireTutorial() {
     return __awaiter(this, void 0, void 0, function* () {
         yield overworld.runCommandAsync(`tp @p -390 -31 126`);
-        yield overworld.runCommandAsync(`camera @p set minecraft:free pos -385 125 160 facing -385 -50 158`);
+        yield overworld.runCommandAsync(`dialogue open @e[tag=fractionNpc] fractionNpc7`);
         yield overworld.runCommandAsync(`replaceitem entity @p slot.weapon.offhand 0 filled_map`);
-        yield overworld.runCommandAsync(`title @p actionbar Around here, we measure distance in Tweeds (td).`);
-        system.runTimeout(() => __awaiter(this, void 0, void 0, function* () {
-            overworld.runCommandAsync(`title @p actionbar 1 td = 24 blocks`);
-        }), 60);
-        system.runTimeout(() => __awaiter(this, void 0, void 0, function* () {
-            overworld.runCommandAsync(`title @p actionbar We have rods that are different fractions of 1 td`);
-        }), 120);
-        system.runTimeout(() => __awaiter(this, void 0, void 0, function* () {
-            overworld.runCommandAsync(`title @p actionbar We do not have too many, so use them carefully!\nYou have just enough to rescue everyone.`);
-        }), 180);
-        system.runTimeout(() => __awaiter(this, void 0, void 0, function* () {
-            yield startCuisenaireGame();
-            overworld.runCommandAsync(`camera @p clear`);
-        }), 240);
     });
 }
 export function resetCuisenaireGame() {

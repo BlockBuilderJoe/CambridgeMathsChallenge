@@ -800,25 +800,8 @@ var rodsPlaced = [];
 var checkPoint = "tp @p 29 96 114 facing 29 96 112";
 async function startCuisenaireTutorial() {
   await overworld5.runCommandAsync(`tp @p -390 -31 126`);
-  await overworld5.runCommandAsync(`camera @p set minecraft:free pos -385 125 160 facing -385 -50 158`);
+  await overworld5.runCommandAsync(`dialogue open @e[tag=fractionNpc] fractionNpc7`);
   await overworld5.runCommandAsync(`replaceitem entity @p slot.weapon.offhand 0 filled_map`);
-  await overworld5.runCommandAsync(`title @p actionbar Around here, we measure distance in Tweeds (td).`);
-  system2.runTimeout(async () => {
-    overworld5.runCommandAsync(`title @p actionbar 1 td = 24 blocks`);
-  }, 60);
-  system2.runTimeout(async () => {
-    overworld5.runCommandAsync(`title @p actionbar We have rods that are different fractions of 1 td`);
-  }, 120);
-  system2.runTimeout(async () => {
-    overworld5.runCommandAsync(
-      `title @p actionbar We do not have too many, so use them carefully!
-You have just enough to rescue everyone.`
-    );
-  }, 180);
-  system2.runTimeout(async () => {
-    await startCuisenaireGame();
-    overworld5.runCommandAsync(`camera @p clear`);
-  }, 240);
 }
 async function resetCuisenaireGame() {
   await overworld5.runCommandAsync(`tp @p 29 96 114 facing 29 96 112`);
@@ -1712,12 +1695,12 @@ async function startGraduation(level) {
   startFlythrough("graduation");
 }
 async function isEducation() {
-  let result = overworld11.runCommand(`setblock -107.39 96.00 140.05 minecraft:camera`);
-  if (result) {
+  try {
+    overworld11.runCommand(`setblock -107.39 96.00 140.05 minecraft:camera`);
     world11.sendMessage("You are running Education");
     return true;
-  } else {
-    world11.sendMessage("You are running Bedrock");
+  } finally {
+    world11.sendMessage("You are not running Education");
     return false;
   }
 }
