@@ -574,6 +574,18 @@
                         "commands": [
                             "scriptevent rod:npcComplete 4"
                         ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.rodNpc4Win.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent graduation:junior"
+                        ]
                     }
                 ]
             },
@@ -709,6 +721,18 @@
                         },
                         "commands": [
                             "scriptevent rod:npcComplete 5"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.rodNpc5Win.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent graduation:junior"
                         ]
                     }
                 ]
@@ -846,6 +870,18 @@
                         "commands": [
                             "scriptevent rod:npcComplete 6"
                         ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.rodNpc6Win.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent graduation:junior"
+                        ]
                     }
                 ]
             },
@@ -982,6 +1018,18 @@
                         "commands": [
                             "scriptevent rod:npcComplete 7"
                         ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.rodNpc7Win.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent graduation:junior"
+                        ]
                     }
                 ]
             },
@@ -1117,6 +1165,18 @@
                         },
                         "commands": [
                             "scriptevent rod:npcComplete 8"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.rodNpc8Win.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent graduation:senior"
                         ]
                     }
                 ]
@@ -1371,6 +1431,18 @@
                         "commands": [
                             "scriptevent scale:npc 1"
                         ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.scaleNpc2.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "dialogue open @e[tag=scaleNpc] @p scaleNpc14"
+                        ]
                     }
                 ]
             },
@@ -1413,6 +1485,18 @@
                         },
                         "commands": [
                             "dialogue open @e[tag=scaleNpc] @p scaleNpc4"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.scaleNpc3.2"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "dialogue open @e[tag=scaleNpc] @p scaleNpc13"
                         ]
                     }
                 ]
@@ -1622,7 +1706,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent scale:npc 6"
+                            "scriptevent graduation:junior"
                         ]
                     }
                 ]
@@ -1653,7 +1737,7 @@
                             ]
                         },
                         "commands": [
-                            "scriptevent scale:npc 6"
+                            "scriptevent graduation:senior"
                         ]
                     }
                 ]
@@ -1711,6 +1795,99 @@
                             "rawtext": [
                                 {
                                     "translate": "npc.button.scaleNpc12.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "scaleNpc13",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.scaleNpc"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.scaleNpc13"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.scaleNpc13.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "scaleNpc14",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.scaleNpc"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.scaleNpc14"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.scaleNpc14.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "dialogue open @e[tag=scaleNpc] @p scaleNpc2"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "scaleNpc15",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.scaleNpc"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.scaleNpc15"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.scaleNpc15.0"
                                 }
                             ]
                         },
@@ -1946,6 +2123,18 @@
                         "commands": [
                             "scriptevent ratio:npc 3"
                         ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.ratioNpc2.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "dialogue open @e[tag=ratioNpc] @p ratioNpc8"
+                        ]
                     }
                 ]
             },
@@ -1976,6 +2165,123 @@
                         },
                         "commands": [
                             "scriptevent ratio:npc 3 "
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "ratioNpc8",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.ratioNpc"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.ratioNpc8"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.ratioNpc8.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "dialogue open @e[tag=ratioNpc] @p ratioNpc2"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "ratioNpc9",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.ratioNpc"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.ratioNpc9"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.ratioNpc9.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent ratio:npc 2"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.ratioNpc9.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "dialogue open @e[tag=ratioNpc] @p ratioNpc4"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.ratioNpc9.2"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent graduation:junior"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "ratioNpc10",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.ratioNpc"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.ratioNpc10"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.ratioNpc10.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent graduation:senior"
                         ]
                     }
                 ]
@@ -2069,6 +2375,18 @@
                         },
                         "commands": [
                             "scriptevent fraction:npc 1"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.fractionNpc2.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "dialogue open @e[tag=fractionNpc] @p fractionNpc8"
                         ]
                     }
                 ]
@@ -2229,6 +2547,68 @@
                         },
                         "commands": [
                             "scriptevent fraction:npc 2"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "fractionNpc7",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.fractionNpc"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.fractionNpc7"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.fractionNpc7.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent fraction:npc 2"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "fractionNpc8",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.fractionNpc"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.fractionNpc8"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.fractionNpc8.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "dialogue open @e[tag=fractionNpc] @p fractionNpc2"
                         ]
                     }
                 ]
