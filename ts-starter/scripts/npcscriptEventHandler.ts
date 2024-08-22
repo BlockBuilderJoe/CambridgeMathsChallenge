@@ -167,6 +167,14 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
       await startGraduation("senior");
       break;
     }
+    case "graduation:finale": {
+      await overworld.runCommandAsync(`tp @e[tag=spawnNpc] 63 97 146 facing 69 97 147`);
+      await overworld.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
+      await overworld.runCommandAsync(`dialogue open @e[tag=spawnNpc] @p spawnNpc5`);
+      await overworld.runCommandAsync(`replaceitem entity @p slot.weapon.mainhand 0 portfolio`);
+      await overworld.runCommandAsync(`give @p camera`);
+      await overworld.runCommandAsync(`dialogue change @e[tag=spawnNpc] spawnNpc6`);
+    }
   }
 
   if (event.id === "fraction:groundskeeper") {

@@ -1687,10 +1687,18 @@ async function generatePath2(path) {
 // scripts/graduation.ts
 var overworld11 = world11.getDimension("overworld");
 async function startGraduation(level) {
+  if (level == "junior") {
+    overworld11.runCommandAsync(`dialogue change @e[tag=spawnNpc] spawnNpc2`);
+  } else if (level == "senior") {
+    overworld11.runCommandAsync(`dialogue change @e[tag=spawnNpc] spawnNpc3`);
+  }
   overworld11.runCommandAsync(`tp @e[tag=spawnNpc] -103.02 96.06 142.69 facing -104 96 134`);
   overworld11.runCommandAsync(`tp @e[tag=fractionNpc] -107.49 96.00 138.56 facing -101.49 96.00 138.56`);
+  overworld11.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc9`);
   overworld11.runCommandAsync(`tp @e[tag=ratioNpc] -107.39 96.00 140.05 facing -101.39 96.00 140.05`);
+  overworld11.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc11`);
   overworld11.runCommandAsync(`tp @e[tag=scaleNpc] -107.31 96.00 141.96 facing -101.31 96.00 141.96`);
+  overworld11.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc16`);
   startFlythrough("graduation");
 }
 
@@ -1830,6 +1838,14 @@ system8.afterEvents.scriptEventReceive.subscribe(async (event) => {
     case "graduation:senior": {
       await startGraduation("senior");
       break;
+    }
+    case "graduation:finale": {
+      await overworld12.runCommandAsync(`tp @e[tag=spawnNpc] 63 97 146 facing 69 97 147`);
+      await overworld12.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
+      await overworld12.runCommandAsync(`dialogue open @e[tag=spawnNpc] @p spawnNpc5`);
+      await overworld12.runCommandAsync(`replaceitem entity @p slot.weapon.mainhand 0 portfolio`);
+      await overworld12.runCommandAsync(`give @p camera`);
+      await overworld12.runCommandAsync(`dialogue change @e[tag=spawnNpc] spawnNpc6`);
     }
   }
   if (event.id === "fraction:groundskeeper") {
