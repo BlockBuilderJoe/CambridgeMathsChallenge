@@ -798,7 +798,8 @@ var overworld5 = world5.getDimension("overworld");
 var rodsPlaced = [];
 var checkPoint = "tp @p 29 96 114 facing 29 96 112";
 async function startCuisenaireTutorial() {
-  await overworld5.runCommandAsync(`tp @p -390 -31 126`);
+  await overworld5.runCommandAsync(`camera @p fade time 0.1 2 0.4`);
+  await overworld5.runCommandAsync(`tp @p -386 -31 126`);
   await overworld5.runCommandAsync(`tp @e[tag=fractionNpc] -391 -31 126`);
   await overworld5.runCommandAsync(`dialogue open @e[tag=fractionNpc] @p fractionNpc7`);
   await overworld5.runCommandAsync(`replaceitem entity @p slot.weapon.offhand 0 filled_map`);
@@ -1574,6 +1575,7 @@ async function generatePath(path) {
 import { world as world9 } from "@minecraft/server";
 var overworld9 = world9.getDimension("overworld");
 async function resetGame() {
+  await overworld9.runCommandAsync(`camera @p fade time 0.1 2 0.4`);
   await overworld9.runCommandAsync(`tp @p 30 96 106`);
   await resetCuisenaireGame();
   await overworld9.runCommandAsync(`tp @p -10 97 143`);
@@ -1627,7 +1629,7 @@ async function startFlythrough(type) {
         { command: "particle blockbuilders:spell -117.93 106.88 129.75", interval: 47 },
         { command: "particle blockbuilders:spell -101.21 109.60 146.53", interval: 59 }
       ];
-      playerFlythrough(path, 0.9, commands);
+      playerFlythrough(path, 1.5, commands);
       break;
     }
     default:
@@ -1653,7 +1655,7 @@ async function playerFlythrough(path, speed, commands) {
           await overworld10.runCommandAsync(command.command);
         }
       }
-      if (path.length - 10 == i) {
+      if (path.length - 5 == i) {
         await overworld10.runCommandAsync(`camera @p fade time 0.2 0.2 0.2`);
       }
       if (path.length - 2 == i) {
@@ -1687,11 +1689,23 @@ async function generatePath2(path) {
 // scripts/graduation.ts
 var overworld11 = world11.getDimension("overworld");
 async function startGraduation(level) {
+  await overworld11.runCommandAsync(`camera @p fade time 0.1 0.2 0.2`);
+  overworld11.runCommandAsync(`clear @p`);
+  await overworld11.runCommandAsync(`tp @p -15 94 159`);
   if (level == "junior") {
+    overworld11.runCommandAsync(`fill -15 94 159 -117 96 107 green_carpet replace purple_carpet`);
+    overworld11.runCommandAsync(`fill -15 94 159 -117 96 107 yellow_carpet replace red_carpet`);
+    overworld11.runCommandAsync(`fill -106.69 111.00 164.45 -113.74 114.00 112.13 yellow_wool replace red_wool`);
+    overworld11.runCommandAsync(`fill -106.69 111.00 164.45 -113.74 114.00 112.13 green_wool replace purple_wool`);
     overworld11.runCommandAsync(`dialogue change @e[tag=spawnNpc] spawnNpc2`);
   } else if (level == "senior") {
+    overworld11.runCommandAsync(`fill -15 94 159 -117 96 107 purple_carpet replace green_carpet`);
+    overworld11.runCommandAsync(`fill -15 94 159 -117 96 107 red_carpet replace yellow_carpet`);
+    overworld11.runCommandAsync(`fill -106.69 111.00 164.45 -113.74 114.00 112.13 red_wool replace yellow_wool`);
+    overworld11.runCommandAsync(`fill -106.69 111.00 164.45 -113.74 114.00 112.13 purple_wool replace green_wool`);
     overworld11.runCommandAsync(`dialogue change @e[tag=spawnNpc] spawnNpc3`);
   }
+  overworld11.runCommandAsync(`replaceitem entity @p slot.armor.head 0 blockbuilders:mortar_board`);
   overworld11.runCommandAsync(`tp @e[tag=spawnNpc] -103.02 96.06 142.69 facing -104 96 134`);
   overworld11.runCommandAsync(`tp @e[tag=fractionNpc] -107.49 96.00 138.56 facing -101.49 96.00 138.56`);
   overworld11.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc9`);

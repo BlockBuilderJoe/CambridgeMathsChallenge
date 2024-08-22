@@ -18,9 +18,9 @@ export function startFlythrough(type) {
                     { command: "particle blockbuilders:spell -115.80 108.75 139.30", interval: 51 },
                     { command: "particle blockbuilders:spell -103.64 112.40 152.08", interval: 68 },
                     { command: "particle blockbuilders:spell -117.93 106.88 129.75", interval: 47 },
-                    { command: "particle blockbuilders:spell -101.21 109.60 146.53", interval: 59 }
+                    { command: "particle blockbuilders:spell -101.21 109.60 146.53", interval: 59 },
                 ];
-                playerFlythrough(path, 0.9, commands);
+                playerFlythrough(path, 1.5, commands);
                 break;
             }
             default:
@@ -47,7 +47,7 @@ function playerFlythrough(path, speed, commands) {
                         yield overworld.runCommandAsync(command.command);
                     }
                 }
-                if (path.length - 10 == i) {
+                if (path.length - 5 == i) {
                     yield overworld.runCommandAsync(`camera @p fade time 0.2 0.2 0.2`); // end of walk dialogue
                 }
                 if (path.length - 2 == i) {

@@ -18,7 +18,8 @@ let checkPoint: string = "tp @p 29 96 114 facing 29 96 112";
 //tickingarea add -447.91 -27.00 73.83 -326.23 -27.00 78.08 mapArea true
 
 export async function startCuisenaireTutorial() {
-  await overworld.runCommandAsync(`tp @p -390 -31 126`);
+  await overworld.runCommandAsync(`camera @p fade time 0.1 2 0.4`);
+  await overworld.runCommandAsync(`tp @p -386 -31 126`);
   await overworld.runCommandAsync(`tp @e[tag=fractionNpc] -391 -31 126`);
   await overworld.runCommandAsync(`dialogue open @e[tag=fractionNpc] @p fractionNpc7`);
   await overworld.runCommandAsync(`replaceitem entity @p slot.weapon.offhand 0 filled_map`);

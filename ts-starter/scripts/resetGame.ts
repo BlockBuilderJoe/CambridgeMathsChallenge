@@ -7,6 +7,7 @@ import { closeGate } from "./gate";
 let overworld = world.getDimension("overworld");
 
 export async function resetGame() {
+  await overworld.runCommandAsync(`camera @p fade time 0.1 2 0.4`);
   //Reset the game areas
   await overworld.runCommandAsync(`tp @p 30 96 106`);
   await resetCuisenaireGame();
