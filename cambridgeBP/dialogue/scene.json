@@ -1342,6 +1342,216 @@
                 ]
             },
             {
+                "scene_tag": "spawnNpc2",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.spawnNpc"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.spawnNpc2"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.spawnNpc2.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent graduation:finale"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "spawnNpc3",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.spawnNpc"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.spawnNpc3"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.spawnNpc3.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent graduation:finale"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "spawnNpc4",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.spawnNpc"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.spawnNpc4"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.spawnNpc4.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "spawnNpc5",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.spawnNpc"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.spawnNpc5"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.spawnNpc5.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "spawnNpc6",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.spawnNpc"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.spawnNpc6"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.spawnNpc6.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.spawnNpc6.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "dialogue open @e[tag=spawnNpc] @p spawnNpc7"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "spawnNpc7",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.spawnNpc"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.spawnNpc7"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.spawnNpc7.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "function reset"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.spawnNpc7.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
                 "scene_tag": "scaleNpc0",
                 "npc_name": {
                     "rawtext": [
@@ -1898,6 +2108,37 @@
                 ]
             },
             {
+                "scene_tag": "scaleNpc16",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.scaleNpc"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.scaleNpc16"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.scaleNpc16.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
                 "scene_tag": "ratioNpc0",
                 "npc_name": {
                     "rawtext": [
@@ -2287,6 +2528,37 @@
                 ]
             },
             {
+                "scene_tag": "ratioNpc11",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.ratioNpc"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.ratioNpc11"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.ratioNpc11.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
                 "scene_tag": "fractionNpc0",
                 "npc_name": {
                     "rawtext": [
@@ -2614,6 +2886,37 @@
                 ]
             },
             {
+                "scene_tag": "fractionNpc9",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.fractionNpc"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.fractionNpc9"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.fractionNpc9.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
                 "scene_tag": "groundskeeper",
                 "npc_name": {
                     "rawtext": [
@@ -2671,6 +2974,130 @@
                         },
                         "commands": [
                             "scriptevent fraction:groundskeeper 0"
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "gradstudent1",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.gradstudent1"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.gradstudent1"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.gradstudent1.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "gradstudent2",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.gradstudent2"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.gradstudent2"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.gradstudent2.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "gradstudent3",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.gradstudent3"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.gradstudent3"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.gradstudent3.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "gradstudent4",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.gradstudent4"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.gradstudent4"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.gradstudent4.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
                         ]
                     }
                 ]
