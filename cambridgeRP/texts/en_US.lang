@@ -1,4 +1,3 @@
-#PARSE_ESCAPES
 
 tile.blockbuilders:number_1.name=Number One
 tile.blockbuilders:number_2.name=Number Two
@@ -52,7 +51,7 @@ item.apple.name=Glowstone Dust
 item.beetroot.name=Pufferfish
 item.melon.name=Mermaid Tears
 item.potato.name=Kelp
-
+item.blockbuilders:mortar_board=Graduation Cap
 
 npc.name.rodNpc0=Annie
 npc.text.rodNpc0Win=Great work, the garden is 24 across and I am halfway along. So using the 12 rod is exactly right. Thank you for saving me.

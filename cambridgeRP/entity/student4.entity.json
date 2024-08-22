@@ -12,7 +12,9 @@
 			"geometry": {
 				"default": "geometry.student4"
 			},
-			"render_controllers": ["controller.render.default"]
+			"render_controllers": ["controller.render.default"],
+			"enable_attachables": true,
+			"hide_armor": false
 		}
 	}
 }
