@@ -99,6 +99,9 @@
 		},
 		"number_21": {
 			"textures": "textures/blocks/number_21.png"
+		},
+		"number_big_one": {
+			"textures": "textures/blocks/number_big_one.png"
 		}		
 		}
 		
