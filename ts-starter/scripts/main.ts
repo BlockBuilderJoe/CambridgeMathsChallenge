@@ -49,14 +49,16 @@ world.afterEvents.entityHitEntity.subscribe(async (event) => {
   }
   if (hitEntity.typeId === `blockbuilders:coin`) {
     let tag = hitEntity.getTags();
+    await overworld.runCommandAsync(`scoreboard players add Coins Depth 1`);
     let coinNumber = parseInt(tag[0].substring(4));
     let x_location = 0 - coinNumber;
-    if (coinNumber === 4) {
+    let coinScore = world.scoreboard.getObjective("Depth")?.getScore(`Coins`);
+    world.sendMessage(`You have ${coinScore} coins!`);
+    if (coinScore === 3) {
       overworld.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc9 `);
-    } else if (coinNumber === 10) {
+    } else if (coinScore === 6) {
       overworld.runCommandAsync(`dialogue open @e[tag=fractionNpc] @p ratioNpc10`);
     }
-    overworld.runCommandAsync(`scoreboard players add Coins Depth 1`);
     overworld.runCommandAsync(`tp @e[type=blockbuilders:coin,tag=${tag}] ${x_location} 104 156 facing -11 104 156`);
   }
   if (hitEntity.typeId === `blockbuilders:cauldron`) {
