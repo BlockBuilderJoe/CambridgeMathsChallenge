@@ -808,6 +808,7 @@ async function startCuisenaireTutorial() {
   }, 30);
 }
 async function resetCuisenaireGame() {
+  checkPoint = "tp @p 29 96 114 facing 29 96 112";
   await overworld5.runCommandAsync(`tp @p 29 96 114 facing 29 96 112`);
   await overworld5.runCommandAsync(`tp @e[tag=fractionNpc] 29 96 112 facing 29 96 114`);
   await overworld5.runCommandAsync(`scoreboard objectives setdisplay sidebar Students`);

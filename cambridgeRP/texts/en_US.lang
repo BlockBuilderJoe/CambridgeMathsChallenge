@@ -332,3 +332,6 @@ npc.button.gradstudent3.0=Okay!
 npc.name.gradstudent4=Sam
 npc.text.gradstudent4=Go and collect your degree!
 npc.button.gradstudent4.0=Okay!
+npc.button.scaleNpc1.1=Next
+npc.button.ratioNpc1.1=Next 
+npc.button.fractionNpc1.1=Next

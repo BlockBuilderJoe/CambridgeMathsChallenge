@@ -1610,6 +1610,18 @@
                         "commands": [
                             ""
                         ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.scaleNpc1.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "dialogue open @e[tag=scaleNpc] @p scaleNpc2"
+                        ]
                     }
                 ]
             },
@@ -2197,6 +2209,18 @@
                         "commands": [
                             ""
                         ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.ratioNpc1.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "dialogue open @e[tag=ratioNpc] @p ratioNpc6"
+                        ]
                     }
                 ]
             },
@@ -2616,6 +2640,18 @@
                         },
                         "commands": [
                             ""
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.fractionNpc1.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "dialogue open @e[tag=fractionNpc] @p fractionNpc2"
                         ]
                     }
                 ]
