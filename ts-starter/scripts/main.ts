@@ -198,7 +198,7 @@ function mainTick() {
         overworld.runCommand(`playsound mob.villager.no @p`);
       }
       if (player.location.x < -94){
-        if(isPlayerOutOfBounds(8, player, {x: -103, y: 96, z: 135})){
+        if(isPlayerOutOfBounds(10, player, {x: -103, y: 96, z: 135})){
           overworld.runCommand(`dialogue open @e[tag=spawnNpc] ${player.name} spawnNpc4`);
           overworld.runCommand(`tp @p -104 96 134 facing -104 96 142`)
 
