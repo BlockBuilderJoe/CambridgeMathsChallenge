@@ -28,7 +28,7 @@ export async function resetGame() {
   await closeGate("spawn");
   await closeGate("scale");
   await closeGate("scale1");
-  //await closeGate("scale2");
+  await closeGate("scale2");
   await closeGate("ratio");
   await closeGate("fraction");
   //Clean up the player

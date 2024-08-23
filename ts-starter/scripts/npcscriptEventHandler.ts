@@ -170,7 +170,7 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
     case "graduation:finale": {
       try {
         await openGate("scale1");
-        //await openGate("scale2");
+        await openGate("scale2");
         await overworld.runCommandAsync(`replaceitem entity @p slot.weapon.mainhand 0 portfolio`);
         await overworld.runCommandAsync(`tp @e[tag=spawnNpc] 63 97 146 facing 69 97 147`);
         await overworld.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
