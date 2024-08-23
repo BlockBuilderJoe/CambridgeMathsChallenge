@@ -60,6 +60,7 @@ export async function openGate(location: string) {
       overworld.runCommandAsync(`setblock 67 96 179 iron_bars`);
       overworld.runCommandAsync(`setblock 66 97 179 iron_bars`);
       overworld.runCommandAsync(`setblock 67 97 179 iron_bars`);
+      break;
     }
     case "scale2": {
       //clear
@@ -81,6 +82,7 @@ export async function openGate(location: string) {
       overworld.runCommandAsync(`setblock 8 96 188 iron_bars`);
       overworld.runCommandAsync(`setblock 8 97 187 iron_bars`);
       overworld.runCommandAsync(`setblock 8 97 188 iron_bars`);
+      break;
     }
     case "ratio": {
       //clear
@@ -179,6 +181,7 @@ export async function closeGate(location: string) {
       overworld.runCommandAsync(`setblock 67 96 179 air`);
       overworld.runCommandAsync(`setblock 66 97 179 air`);
       overworld.runCommandAsync(`setblock 67 97 179 air`);
+      break;
     }
     case "scale2": {
       //set gates
@@ -200,7 +203,8 @@ export async function closeGate(location: string) {
       overworld.runCommandAsync(`setblock 8 96 188 air`);
       overworld.runCommandAsync(`setblock 8 97 187 air`);
       overworld.runCommandAsync(`setblock 8 97 188 air`);
-    }
+      break;
+    }  
     case "ratio": {
       // set gates
       overworld.runCommandAsync(`setblock 45 96 148 iron_bars`);

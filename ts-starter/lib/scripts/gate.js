@@ -59,6 +59,7 @@ export function openGate(location) {
                 overworld.runCommandAsync(`setblock 67 96 179 iron_bars`);
                 overworld.runCommandAsync(`setblock 66 97 179 iron_bars`);
                 overworld.runCommandAsync(`setblock 67 97 179 iron_bars`);
+                break;
             }
             case "scale2": {
                 //clear
@@ -80,6 +81,7 @@ export function openGate(location) {
                 overworld.runCommandAsync(`setblock 8 96 188 iron_bars`);
                 overworld.runCommandAsync(`setblock 8 97 187 iron_bars`);
                 overworld.runCommandAsync(`setblock 8 97 188 iron_bars`);
+                break;
             }
             case "ratio": {
                 //clear
@@ -163,6 +165,10 @@ export function closeGate(location) {
                 //set gates
                 overworld.runCommandAsync(`setblock 65 96 180 iron_bars`);
                 overworld.runCommandAsync(`setblock 65 96 181 iron_bars`);
+                overworld.runCommandAsync(`setblock 65 96 182 iron_bars`);
+                overworld.runCommandAsync(`setblock 65 96 183 iron_bars`);
+                overworld.runCommandAsync(`setblock 65 97 180 iron_bars`);
+                overworld.runCommandAsync(`setblock 65 97 181 iron_bars`);
                 overworld.runCommandAsync(`setblock 65 97 182 iron_bars`);
                 overworld.runCommandAsync(`setblock 65 97 183 iron_bars`);
                 //clear right gate facing out
@@ -175,6 +181,7 @@ export function closeGate(location) {
                 overworld.runCommandAsync(`setblock 67 96 179 air`);
                 overworld.runCommandAsync(`setblock 66 97 179 air`);
                 overworld.runCommandAsync(`setblock 67 97 179 air`);
+                break;
             }
             case "scale2": {
                 //set gates
@@ -196,6 +203,7 @@ export function closeGate(location) {
                 overworld.runCommandAsync(`setblock 8 96 188 air`);
                 overworld.runCommandAsync(`setblock 8 97 187 air`);
                 overworld.runCommandAsync(`setblock 8 97 188 air`);
+                break;
             }
             case "ratio": {
                 // set gates
