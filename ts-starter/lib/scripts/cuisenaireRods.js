@@ -6,11 +6,14 @@ let checkPoint = "tp @p 29 96 114 facing 29 96 112";
 //tickingarea add -447.91 -27.00 73.83 -326.23 -27.00 78.08 mapArea true
 export function startCuisenaireTutorial() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield overworld.runCommandAsync(`camera @p fade time 0.1 2 0.4`);
+        yield overworld.runCommandAsync(`title @p actionbar Loading Map...`);
+        yield overworld.runCommandAsync(`camera @p fade time 0.1 4 0.4`);
         yield overworld.runCommandAsync(`tp @p -386 -31 126`);
         yield overworld.runCommandAsync(`tp @e[tag=fractionNpc] -391 -31 126`);
-        yield overworld.runCommandAsync(`dialogue open @e[tag=fractionNpc] @p fractionNpc7`);
         yield overworld.runCommandAsync(`replaceitem entity @p slot.weapon.offhand 0 filled_map`);
+        system.runTimeout(() => {
+            overworld.runCommandAsync(`dialogue open @e[tag=fractionNpc] @p fractionNpc7`);
+        }, 30);
     });
 }
 export function resetCuisenaireGame() {
