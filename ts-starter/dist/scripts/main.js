@@ -2037,14 +2037,14 @@ function mainTick() {
         meters = 94 - Math.floor(player.location.y);
         player.runCommand(`scoreboard players set Meters Depth ${meters}`);
       }
+      if (playerCanSeeInDark) {
+        overworld13.runCommandAsync(`effect @p night_vision ${seconds} 30 true`);
+      }
       if (potionDrank) {
         applyPotionEffect(player, potion, seconds);
         potionDrank = false;
       }
       if (player.getEffect("water_breathing")) {
-        if (playerCanSeeInDark) {
-          overworld13.runCommandAsync(`effect @p night_vision ${seconds} 1 true`);
-        }
         displayTimer(potionStart, seconds, player, "Breathing underwater");
       } else if (player.getEffect("night_vision")) {
         overworld13.runCommandAsync(`title @p actionbar You can now permanently see in the dark!`);
@@ -2070,10 +2070,7 @@ async function surface(player) {
   player.teleport({ x: -3, y: 96, z: 144 });
   player.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
   player.addEffect("instant_health", 5);
-  player.removeEffect("blindness");
-  player.removeEffect("night_vision");
-  player.removeEffect("water_breathing");
-  player.removeEffect("levitation");
+  player.runCommandAsync(`effect @p clear`);
 }
 world13.afterEvents.itemCompleteUse.subscribe(async (event) => {
   let player = event.source;
