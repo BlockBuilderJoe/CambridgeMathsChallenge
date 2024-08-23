@@ -1,5 +1,6 @@
 import {
   world,
+  Vector3,
   system,
   Player,
   BlockPermutation,
@@ -175,6 +176,16 @@ function applyPotionEffect(player: any, potion: string, seconds: number) {
   player.runCommand("clear @p minecraft:glass_bottle");
 }
 
+function isPlayerOutOfBounds(blockDistance: number, player: Player, fixedLocation: Vector3) {
+  const playerPos = player.location;
+  const dx = playerPos.x - fixedLocation.x;
+  const dy = playerPos.y - fixedLocation.y;
+  const dz = playerPos.z - fixedLocation.z;
+  // Calculate the straight-line distance using the Pythagorean theorem
+  const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+  return distance > blockDistance;
+}
+
 function mainTick() {
   //checks different things about the player each tick.
   world.getAllPlayers().forEach(async (player) => {
@@ -186,12 +197,21 @@ function mainTick() {
         overworld.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
         overworld.runCommand(`playsound mob.villager.no @p`);
       }
+      if (player.location.x < -94){
+        if(isPlayerOutOfBounds(8, player, {x: -103, y: 96, z: 135})){
+          overworld.runCommand(`dialogue open @e[tag=spawnNpc] ${player.name} spawnNpc4`);
+          overworld.runCommand(`tp @p -104 96 134 facing -104 96 142`)
+
+        }
+       
+      }
     }
     if (player.isJumping && player.location.z <= 104.99) {
       await moveGroundsKeeper(player.location);
       player.runCommandAsync(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper1`);
       overworld.runCommand(`playsound mob.villager.no @p`);
     }
+
     if (player.isInWater) {
       if (player.location.x < 0) {
         player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);

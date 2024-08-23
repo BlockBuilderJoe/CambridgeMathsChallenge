@@ -2021,6 +2021,14 @@ function applyPotionEffect(player, potion2, seconds2) {
   }
   player.runCommand("clear @p minecraft:glass_bottle");
 }
+function isPlayerOutOfBounds(blockDistance, player, fixedLocation) {
+  const playerPos = player.location;
+  const dx = playerPos.x - fixedLocation.x;
+  const dy = playerPos.y - fixedLocation.y;
+  const dz = playerPos.z - fixedLocation.z;
+  const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+  return distance > blockDistance;
+}
 function mainTick() {
   world13.getAllPlayers().forEach(async (player) => {
     if (player.isOnGround) {
@@ -2030,6 +2038,12 @@ function mainTick() {
         await moveGroundsKeeper(player.location);
         overworld13.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
         overworld13.runCommand(`playsound mob.villager.no @p`);
+      }
+      if (player.location.x < -94) {
+        if (isPlayerOutOfBounds(8, player, { x: -103, y: 96, z: 135 })) {
+          overworld13.runCommand(`dialogue open @e[tag=spawnNpc] ${player.name} spawnNpc4`);
+          overworld13.runCommand(`tp @p -104 96 134 facing -104 96 142`);
+        }
       }
     }
     if (player.isJumping && player.location.z <= 104.99) {
