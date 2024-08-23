@@ -1877,12 +1877,16 @@ system8.afterEvents.scriptEventReceive.subscribe(async (event) => {
       break;
     }
     case "graduation:finale": {
-      await overworld12.runCommandAsync(`tp @e[tag=spawnNpc] 63 97 146 facing 69 97 147`);
-      await overworld12.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
-      await overworld12.runCommandAsync(`dialogue open @e[tag=spawnNpc] @p spawnNpc5`);
-      await overworld12.runCommandAsync(`replaceitem entity @p slot.weapon.mainhand 0 portfolio`);
-      await overworld12.runCommandAsync(`give @p camera`);
-      await overworld12.runCommandAsync(`dialogue change @e[tag=spawnNpc] spawnNpc6`);
+      try {
+        await overworld12.runCommandAsync(`replaceitem entity @p slot.weapon.mainhand 0 portfolio`);
+        await overworld12.runCommandAsync(`tp @e[tag=spawnNpc] 63 97 146 facing 69 97 147`);
+        await overworld12.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
+        await overworld12.runCommandAsync(`dialogue open @e[tag=spawnNpc] @p spawnNpc5`);
+        await overworld12.runCommandAsync(`give @p camera`);
+        await overworld12.runCommandAsync(`dialogue change @e[tag=spawnNpc] spawnNpc6`);
+      } catch (error) {
+        overworld12.runCommandAsync(`function reset`);
+      }
     }
   }
   if (event.id === "fraction:groundskeeper") {
@@ -2040,7 +2044,7 @@ function mainTick() {
         overworld13.runCommand(`playsound mob.villager.no @p`);
       }
       if (player.location.x < -94) {
-        if (isPlayerOutOfBounds(10, player, { x: -103, y: 96, z: 135 })) {
+        if (isPlayerOutOfBounds(8, player, { x: -103, y: 96, z: 135 })) {
           overworld13.runCommand(`dialogue open @e[tag=spawnNpc] ${player.name} spawnNpc4`);
           overworld13.runCommand(`tp @p -104 96 134 facing -104 96 142`);
         }
