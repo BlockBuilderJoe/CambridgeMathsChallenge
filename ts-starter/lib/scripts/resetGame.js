@@ -26,6 +26,8 @@ export function resetGame() {
         //Close the gates
         yield closeGate("spawn");
         yield closeGate("scale");
+        yield closeGate("scale1");
+        //await closeGate("scale2");
         yield closeGate("ratio");
         yield closeGate("fraction");
         //Clean up the player

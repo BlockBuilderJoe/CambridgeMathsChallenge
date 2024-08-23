@@ -1360,6 +1360,24 @@ async function openGate(location) {
       overworld7.runCommandAsync(`setblock 55 97 160 iron_bars`);
       break;
     }
+    case "scale1": {
+      overworld7.runCommandAsync(`setblock 65 96 180 air`);
+      overworld7.runCommandAsync(`setblock 65 96 181 air`);
+      overworld7.runCommandAsync(`setblock 65 96 182 air`);
+      overworld7.runCommandAsync(`setblock 65 96 183 air`);
+      overworld7.runCommandAsync(`setblock 65 97 180 air`);
+      overworld7.runCommandAsync(`setblock 65 97 181 air`);
+      overworld7.runCommandAsync(`setblock 65 97 182 air`);
+      overworld7.runCommandAsync(`setblock 65 97 183 air`);
+      overworld7.runCommandAsync(`setblock 66 96 184 iron_bars`);
+      overworld7.runCommandAsync(`setblock 67 96 184 iron_bars`);
+      overworld7.runCommandAsync(`setblock 66 97 184 iron_bars`);
+      overworld7.runCommandAsync(`setblock 67 97 184 iron_bars`);
+      overworld7.runCommandAsync(`setblock 66 96 179 iron_bars`);
+      overworld7.runCommandAsync(`setblock 67 96 179 iron_bars`);
+      overworld7.runCommandAsync(`setblock 66 97 179 iron_bars`);
+      overworld7.runCommandAsync(`setblock 67 97 179 iron_bars`);
+    }
     case "ratio": {
       overworld7.runCommandAsync(`setblock 45 96 148 air`);
       overworld7.runCommandAsync(`setblock 45 96 147 air`);
@@ -1423,6 +1441,20 @@ async function closeGate(location) {
       overworld7.runCommandAsync(`setblock 55 97 159 air`);
       overworld7.runCommandAsync(`setblock 55 97 160 air`);
       break;
+    }
+    case "scale1": {
+      overworld7.runCommandAsync(`setblock 65 97 180 iron_bars`);
+      overworld7.runCommandAsync(`setblock 65 97 181 iron_bars`);
+      overworld7.runCommandAsync(`setblock 65 97 182 iron_bars`);
+      overworld7.runCommandAsync(`setblock 65 97 183 iron_bars`);
+      overworld7.runCommandAsync(`setblock 66 96 184 air`);
+      overworld7.runCommandAsync(`setblock 67 96 184 air`);
+      overworld7.runCommandAsync(`setblock 66 97 184 air`);
+      overworld7.runCommandAsync(`setblock 67 97 184 air`);
+      overworld7.runCommandAsync(`setblock 66 96 179 air`);
+      overworld7.runCommandAsync(`setblock 67 96 179 air`);
+      overworld7.runCommandAsync(`setblock 66 97 179 air`);
+      overworld7.runCommandAsync(`setblock 67 97 179 air`);
     }
     case "ratio": {
       overworld7.runCommandAsync(`setblock 45 96 148 iron_bars`);
