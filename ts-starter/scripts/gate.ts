@@ -161,8 +161,8 @@ export async function closeGate(location: string) {
     }
     case "scale1": {
       //set gates
-      overworld.runCommandAsync(`setblock 65 97 180 iron_bars`);
-      overworld.runCommandAsync(`setblock 65 97 181 iron_bars`);
+      overworld.runCommandAsync(`setblock 65 96 180 iron_bars`);
+      overworld.runCommandAsync(`setblock 65 96 181 iron_bars`);
       overworld.runCommandAsync(`setblock 65 97 182 iron_bars`);
       overworld.runCommandAsync(`setblock 65 97 183 iron_bars`);
       //clear right gate facing out
