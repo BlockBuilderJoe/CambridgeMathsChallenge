@@ -27,8 +27,8 @@
 			},
 			"minecraft:behavior.look_at_player": {
 				"priority": 0,
-				"look_distance": 6,
-				"probability": 0.02
+				"look_distance": 50,
+        		"probability": 0.8
 			},
 			"minecraft:persistent": {},
 			"minecraft:npc": {

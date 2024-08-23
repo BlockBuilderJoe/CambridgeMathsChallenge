@@ -30,3 +30,26 @@ export async function startGraduation(level: string) {
   overworld.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc16`);
   startFlythrough("graduation");
 }
+
+function getRandomNumber(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+world.afterEvents.buttonPush.subscribe(async (event) => {
+  placeStudents();
+});
+
+async function placeStudents() {
+  let startCoords = { x: -90, y: 94, z: 139 };
+
+  for (let i = 0; i < 10; i++) {
+    const randomNum = getRandomNumber(1, 8);
+    await overworld.runCommandAsync(
+      `summon blockbuilders:student${randomNum} ${startCoords.x} ${startCoords.y} ${startCoords.z}`
+    );
+    await overworld.runCommandAsync(
+      `replaceitem entity @e[type=blockbuilders:student${randomNum}] slot.armor.head 0 blockbuilders:mortar_board`
+    );
+    startCoords.z += 2;
+  }
+}

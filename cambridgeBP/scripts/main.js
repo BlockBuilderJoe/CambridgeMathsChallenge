@@ -1715,6 +1715,25 @@ async function startGraduation(level) {
   overworld11.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc16`);
   startFlythrough("graduation");
 }
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+world11.afterEvents.buttonPush.subscribe(async (event) => {
+  placeStudents();
+});
+async function placeStudents() {
+  let startCoords = { x: -90, y: 94, z: 139 };
+  for (let i = 0; i < 10; i++) {
+    const randomNum = getRandomNumber(1, 8);
+    await overworld11.runCommandAsync(
+      `summon blockbuilders:student${randomNum} ${startCoords.x} ${startCoords.y} ${startCoords.z}`
+    );
+    await overworld11.runCommandAsync(
+      `replaceitem entity @e[type=blockbuilders:student${randomNum}] slot.armor.head 0 blockbuilders:mortar_board`
+    );
+    startCoords.z += 2;
+  }
+}
 
 // scripts/npcscriptEventHandler.ts
 var overworld12 = world12.getDimension("overworld");
