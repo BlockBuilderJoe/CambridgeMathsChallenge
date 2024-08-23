@@ -1962,16 +1962,11 @@ system8.afterEvents.scriptEventReceive.subscribe(async (event) => {
     }
     case "graduation:finale": {
       try {
-        await overworld12.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
         await overworld12.runCommandAsync(`replaceitem entity @p slot.weapon.mainhand 0 portfolio`);
-        await overworld12.runCommandAsync(`tp @e[tag=spawnNpc] 63 97 146 facing 69 97 147`);
-        await overworld12.runCommandAsync(`dialogue open @e[tag=spawnNpc] @p spawnNpc5`);
-        await openGate("scale1");
-        await openGate("scale2");
         await overworld12.runCommandAsync(`give @p camera`);
-        await overworld12.runCommandAsync(`dialogue change @e[tag=spawnNpc] spawnNpc6`);
+        finalChapter();
       } catch (error) {
-        overworld12.runCommandAsync(`function reset`);
+        finalChapter();
       }
     }
   }
@@ -1979,6 +1974,16 @@ system8.afterEvents.scriptEventReceive.subscribe(async (event) => {
     await movePlayerToCheckpoint();
   }
 });
+async function finalChapter() {
+  await overworld12.runCommandAsync(`camera @p fade time 0.1 1 0.1`);
+  await overworld12.runCommandAsync(`tp @p 27.83 96.00 182.98`);
+  await overworld12.runCommandAsync(`tp @e[tag=spawnNpc] 63 97 146 facing 69 97 147`);
+  await openGate("scale1");
+  await openGate("scale2");
+  await overworld12.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
+  await overworld12.runCommandAsync(`dialogue open @e[tag=spawnNpc] @p spawnNpc5`);
+  await overworld12.runCommandAsync(`dialogue change @e[tag=spawnNpc] spawnNpc6`);
+}
 
 // scripts/main.ts
 var overworld13 = world13.getDimension("overworld");
