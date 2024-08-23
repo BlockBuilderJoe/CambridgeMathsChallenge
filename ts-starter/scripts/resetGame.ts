@@ -24,6 +24,7 @@ export async function resetGame() {
   await overworld.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc0`);
   await overworld.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc0`);
   await overworld.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc0`);
+  await overworld.runCommandAsync(`tp @p 27.83 96.00 182.98`);
   //Close the gates
   await closeGate("spawn");
   await closeGate("scale");

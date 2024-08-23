@@ -2,6 +2,11 @@ import { world } from "@minecraft/server";
 
 let overworld = world.getDimension("overworld");
 
+
+world.afterEvents.buttonPush.subscribe(async (event) => {
+  closeGate("scale2");
+});
+
 export async function openGate(location: string) {
   switch (location) {
     case "spawn": {

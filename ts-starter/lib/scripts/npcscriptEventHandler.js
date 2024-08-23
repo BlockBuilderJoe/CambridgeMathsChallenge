@@ -153,12 +153,12 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
         }
         case "graduation:finale": {
             try {
-                yield openGate("scale1");
-                yield openGate("scale2");
+                yield overworld.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
                 yield overworld.runCommandAsync(`replaceitem entity @p slot.weapon.mainhand 0 portfolio`);
                 yield overworld.runCommandAsync(`tp @e[tag=spawnNpc] 63 97 146 facing 69 97 147`);
-                yield overworld.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
                 yield overworld.runCommandAsync(`dialogue open @e[tag=spawnNpc] @p spawnNpc5`);
+                yield openGate("scale1");
+                yield openGate("scale2");
                 yield overworld.runCommandAsync(`give @p camera`);
                 yield overworld.runCommandAsync(`dialogue change @e[tag=spawnNpc] spawnNpc6`);
             }

@@ -23,6 +23,7 @@ export function resetGame() {
         yield overworld.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc0`);
         yield overworld.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc0`);
         yield overworld.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc0`);
+        yield overworld.runCommandAsync(`tp @p 27.83 96.00 182.98`);
         //Close the gates
         yield closeGate("spawn");
         yield closeGate("scale");

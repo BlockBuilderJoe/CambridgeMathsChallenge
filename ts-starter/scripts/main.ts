@@ -186,6 +186,7 @@ function isPlayerOutOfBounds(blockDistance: number, player: Player, fixedLocatio
   return distance > blockDistance;
 }
 
+
 function mainTick() {
   //checks different things about the player each tick.
   world.getAllPlayers().forEach(async (player) => {
@@ -198,7 +199,7 @@ function mainTick() {
         overworld.runCommand(`playsound mob.villager.no @p`);
       }
       //Graduation area detection.
-      if (player.location.x < -94){
+      if (player.location.x < -94 && player.location.x > -120) {
         if(isPlayerOutOfBounds(8, player, {x: -103, y: 96, z: 135})){
           overworld.runCommand(`dialogue open @e[tag=spawnNpc] ${player.name} spawnNpc4`);
           overworld.runCommand(`tp @p -104 96 134 facing -104 96 142`)

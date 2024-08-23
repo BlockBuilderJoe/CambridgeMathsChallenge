@@ -1328,6 +1328,9 @@ import { system as system8, world as world12 } from "@minecraft/server";
 // scripts/gate.ts
 import { world as world7 } from "@minecraft/server";
 var overworld7 = world7.getDimension("overworld");
+world7.afterEvents.buttonPush.subscribe(async (event) => {
+  closeGate("scale2");
+});
 async function openGate(location) {
   switch (location) {
     case "spawn": {
@@ -1670,6 +1673,7 @@ async function resetGame() {
   await overworld9.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc0`);
   await overworld9.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc0`);
   await overworld9.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc0`);
+  await overworld9.runCommandAsync(`tp @p 27.83 96.00 182.98`);
   await closeGate("spawn");
   await closeGate("scale");
   await closeGate("scale1");
@@ -1687,7 +1691,7 @@ async function resetGame() {
 }
 
 // scripts/graduation.ts
-import { world as world11 } from "@minecraft/server";
+import { system as system7, world as world11 } from "@minecraft/server";
 
 // scripts/flythroughs.ts
 import { world as world10, system as system6 } from "@minecraft/server";
@@ -1771,9 +1775,17 @@ async function generatePath2(path) {
 // scripts/graduation.ts
 var overworld11 = world11.getDimension("overworld");
 async function startGraduation(level) {
-  await overworld11.runCommandAsync(`camera @p fade time 0.1 0.2 0.2`);
+  await overworld11.runCommandAsync(`camera @p fade time 0.1 4 0.2`);
   overworld11.runCommandAsync(`clear @p`);
-  await overworld11.runCommandAsync(`tp @p -15 94 159`);
+  await overworld11.runCommandAsync(`tp @p -16.95 94.06 133.80`);
+  overworld11.runCommandAsync(`replaceitem entity @p slot.armor.head 0 blockbuilders:mortar_board`);
+  overworld11.runCommandAsync(`tp @e[tag=spawnNpc] -103.02 96.06 142.69 facing -104 96 134`);
+  overworld11.runCommandAsync(`tp @e[tag=fractionNpc] -107.49 96.00 138.56 facing -101.49 96.00 138.56`);
+  overworld11.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc9`);
+  overworld11.runCommandAsync(`tp @e[tag=ratioNpc] -107.39 96.00 140.05 facing -101.39 96.00 140.05`);
+  overworld11.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc11`);
+  overworld11.runCommandAsync(`tp @e[tag=scaleNpc] -107.31 96.00 141.96 facing -101.31 96.00 141.96`);
+  overworld11.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc16`);
   if (level == "junior") {
     overworld11.runCommandAsync(`fill -15 94 159 -117 96 107 green_carpet replace purple_carpet`);
     overworld11.runCommandAsync(`fill -15 94 159 -117 96 107 yellow_carpet replace red_carpet`);
@@ -1787,15 +1799,9 @@ async function startGraduation(level) {
     overworld11.runCommandAsync(`fill -106.69 111.00 164.45 -113.74 114.00 112.13 purple_wool replace green_wool`);
     overworld11.runCommandAsync(`dialogue change @e[tag=spawnNpc] spawnNpc3`);
   }
-  overworld11.runCommandAsync(`replaceitem entity @p slot.armor.head 0 blockbuilders:mortar_board`);
-  overworld11.runCommandAsync(`tp @e[tag=spawnNpc] -103.02 96.06 142.69 facing -104 96 134`);
-  overworld11.runCommandAsync(`tp @e[tag=fractionNpc] -107.49 96.00 138.56 facing -101.49 96.00 138.56`);
-  overworld11.runCommandAsync(`dialogue change @e[tag=fractionNpc] fractionNpc9`);
-  overworld11.runCommandAsync(`tp @e[tag=ratioNpc] -107.39 96.00 140.05 facing -101.39 96.00 140.05`);
-  overworld11.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc11`);
-  overworld11.runCommandAsync(`tp @e[tag=scaleNpc] -107.31 96.00 141.96 facing -101.31 96.00 141.96`);
-  overworld11.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc16`);
-  startFlythrough("graduation");
+  system7.runTimeout(() => {
+    startFlythrough("graduation");
+  }, 80);
 }
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -1956,12 +1962,12 @@ system8.afterEvents.scriptEventReceive.subscribe(async (event) => {
     }
     case "graduation:finale": {
       try {
-        await openGate("scale1");
-        await openGate("scale2");
+        await overworld12.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
         await overworld12.runCommandAsync(`replaceitem entity @p slot.weapon.mainhand 0 portfolio`);
         await overworld12.runCommandAsync(`tp @e[tag=spawnNpc] 63 97 146 facing 69 97 147`);
-        await overworld12.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
         await overworld12.runCommandAsync(`dialogue open @e[tag=spawnNpc] @p spawnNpc5`);
+        await openGate("scale1");
+        await openGate("scale2");
         await overworld12.runCommandAsync(`give @p camera`);
         await overworld12.runCommandAsync(`dialogue change @e[tag=spawnNpc] spawnNpc6`);
       } catch (error) {
@@ -2123,7 +2129,7 @@ function mainTick() {
         overworld13.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
         overworld13.runCommand(`playsound mob.villager.no @p`);
       }
-      if (player.location.x < -94) {
+      if (player.location.x < -94 && player.location.x > -120) {
         if (isPlayerOutOfBounds(8, player, { x: -103, y: 96, z: 135 })) {
           overworld13.runCommand(`dialogue open @e[tag=spawnNpc] ${player.name} spawnNpc4`);
           overworld13.runCommand(`tp @p -104 96 134 facing -104 96 142`);

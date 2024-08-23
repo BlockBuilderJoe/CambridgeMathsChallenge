@@ -1,5 +1,8 @@
 import { world } from "@minecraft/server";
 let overworld = world.getDimension("overworld");
+world.afterEvents.buttonPush.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
+    closeGate("scale2");
+}));
 export function openGate(location) {
     return __awaiter(this, void 0, void 0, function* () {
         switch (location) {
