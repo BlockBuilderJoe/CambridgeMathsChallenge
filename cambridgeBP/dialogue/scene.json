@@ -2219,7 +2219,7 @@
                             ]
                         },
                         "commands": [
-                            "dialogue open @e[tag=ratioNpc] @p ratioNpc6"
+                            "dialogue open @e[tag=ratioNpc] @p ratioNpc2"
                         ]
                     }
                 ]
