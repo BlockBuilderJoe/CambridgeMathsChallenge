@@ -153,13 +153,14 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
         }
         case "graduation:finale": {
             try {
+                //if passes means they are running education
                 yield overworld.runCommandAsync(`replaceitem entity @p slot.weapon.mainhand 0 portfolio`);
                 yield overworld.runCommandAsync(`give @p camera`);
                 finalChapter();
             }
             catch (error) {
-                //overworld.runCommandAsync(`function reset`);
-                finalChapter();
+                //running bedrock
+                overworld.runCommandAsync(`function reset`);
             }
         }
     }
