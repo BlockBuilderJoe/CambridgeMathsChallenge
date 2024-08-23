@@ -1916,7 +1916,9 @@ world13.afterEvents.entityHitEntity.subscribe(async (event) => {
     if (coinScore === 3) {
       overworld13.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc9 `);
     } else if (coinScore === 6) {
-      overworld13.runCommandAsync(`dialogue open @e[tag=fractionNpc] @p ratioNpc10`);
+      system9.runTimeout(async () => {
+        await overworld13.runCommandAsync(`dialogue open @e[tag=fractionNpc] @p ratioNpc10`);
+      }, 20);
     }
     overworld13.runCommandAsync(`tp @e[type=blockbuilders:coin,tag=${tag}] ${x_location} 104 156 facing -11 104 156`);
   }
