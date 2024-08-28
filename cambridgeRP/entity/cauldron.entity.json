@@ -12,7 +12,15 @@
       "geometry": {
         "default": "geometry.cauldron"
       },
-      "render_controllers": ["controller.render.default"]
+      "render_controllers": ["controller.render.default"],
+      "animations": {
+        "simmer": "animation.cauldron.simmer"
+      },
+      "scripts": {
+        "animate": [
+          "simmer"
+        ]
+      }
     }
   }
 }
