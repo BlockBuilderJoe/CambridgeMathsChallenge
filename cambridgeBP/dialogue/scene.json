@@ -1298,7 +1298,28 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "npc.text.spawnNpc"
+                            "translate": "npc.text.spawnNpc.0"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.spawnNpc.2"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.spawnNpc.4"
+                        },
+                        {
+                            "text": "\n"
                         }
                     ]
                 },
@@ -1637,7 +1658,28 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "npc.text.scaleNpc2"
+                            "translate": "npc.text.scaleNpc2.0"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.scaleNpc2.2"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.scaleNpc2.4"
+                        },
+                        {
+                            "text": "\n"
                         }
                     ]
                 },
@@ -1735,7 +1777,34 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "npc.text.scaleNpc4"
+                            "translate": "npc.text.scaleNpc4.0"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.scaleNpc4.1"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.scaleNpc4.2"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.scaleNpc4.3"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.scaleNpc4.4"
+                        },
+                        {
+                            "text": "\n"
                         }
                     ]
                 },
@@ -1902,7 +1971,28 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "npc.text.scaleNpc9"
+                            "translate": "npc.text.scaleNpc9.0"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.scaleNpc9.1"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.scaleNpc9.2"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.scaleNpc9.3"
+                        },
+                        {
+                            "text": "\n"
                         }
                     ]
                 },
@@ -2007,7 +2097,19 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "npc.text.scaleNpc12"
+                            "translate": "npc.text.scaleNpc12.0"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.scaleNpc12.2"
+                        },
+                        {
+                            "text": "\n"
                         }
                     ]
                 },
@@ -2038,7 +2140,34 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "npc.text.scaleNpc13"
+                            "translate": "npc.text.scaleNpc13.0"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.scaleNpc13.1"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.scaleNpc13.2"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.scaleNpc13.3"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.scaleNpc13.4"
+                        },
+                        {
+                            "text": "\n"
                         }
                     ]
                 },
@@ -2069,7 +2198,22 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "npc.text.scaleNpc14"
+                            "translate": "npc.text.scaleNpc14.0"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.scaleNpc14.1"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.scaleNpc14.2"
+                        },
+                        {
+                            "text": "\n"
                         }
                     ]
                 },
@@ -2100,7 +2244,28 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "npc.text.scaleNpc15"
+                            "translate": "npc.text.scaleNpc15.0"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.scaleNpc15.1"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.scaleNpc15.2"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.scaleNpc15.3"
+                        },
+                        {
+                            "text": "\n"
                         }
                     ]
                 },
@@ -2236,7 +2401,28 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "npc.text.ratioNpc6"
+                            "translate": "npc.text.ratioNpc6.0"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.ratioNpc6.2"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.ratioNpc6.4"
+                        },
+                        {
+                            "text": "\n"
                         }
                     ]
                 },
@@ -2310,7 +2496,46 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "npc.text.ratioNpc4"
+                            "translate": "npc.text.ratioNpc4.0"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.ratioNpc4.1"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.ratioNpc4.2"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.ratioNpc4.3"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.ratioNpc4.4"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.ratioNpc4.5"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.ratioNpc4.6"
+                        },
+                        {
+                            "text": "\n"
                         }
                     ]
                 },
@@ -2372,7 +2597,28 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "npc.text.ratioNpc2"
+                            "translate": "npc.text.ratioNpc2.0"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.ratioNpc2.2"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.ratioNpc2.4"
+                        },
+                        {
+                            "text": "\n"
                         }
                     ]
                 },
@@ -2415,7 +2661,22 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "npc.text.ratioNpc7"
+                            "translate": "npc.text.ratioNpc7.0"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.ratioNpc7.2"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "text": "\n"
                         }
                     ]
                 },
@@ -2446,7 +2707,22 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "npc.text.ratioNpc8"
+                            "translate": "npc.text.ratioNpc8.0"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.ratioNpc8.1"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.ratioNpc8.2"
+                        },
+                        {
+                            "text": "\n"
                         }
                     ]
                 },
@@ -2668,7 +2944,19 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "npc.text.fractionNpc2"
+                            "translate": "npc.text.fractionNpc2.0"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.fractionNpc2.2"
+                        },
+                        {
+                            "text": "\n"
                         }
                     ]
                 },
@@ -2754,7 +3042,28 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "npc.text.fractionNpc4"
+                            "translate": "npc.text.fractionNpc4.0"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.fractionNpc4.1"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.fractionNpc4.2"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.fractionNpc4.3"
+                        },
+                        {
+                            "text": "\n"
                         }
                     ]
                 },
@@ -2828,7 +3137,19 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "npc.text.fractionNpc6"
+                            "translate": "npc.text.fractionNpc6.0"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.fractionNpc6.2"
+                        },
+                        {
+                            "text": "\n"
                         }
                     ]
                 },
@@ -2871,7 +3192,16 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "npc.text.fractionNpc7"
+                            "translate": "npc.text.fractionNpc7.0"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.fractionNpc7.1"
+                        },
+                        {
+                            "text": "\n"
                         }
                     ]
                 },
@@ -2902,7 +3232,16 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "npc.text.fractionNpc8"
+                            "translate": "npc.text.fractionNpc8.0"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.fractionNpc8.1"
+                        },
+                        {
+                            "text": "\n"
                         }
                     ]
                 },
