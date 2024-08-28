@@ -74,7 +74,7 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0
                 pink: { block: "pink_concrete", value: 1, message: "1/24" },
             };
             if (!hasColour) {
-                player.runCommandAsync(`title ${player.name} actionbar Place the rod in front of the magical connector.`);
+                player.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"actionbar.main.rod.placement"}]}`);
                 //gives the rod back to the player if they place it on the grass.
                 const rod = rodPermutations[colour];
                 player.runCommandAsync(`give @p ${rod.block} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
@@ -82,7 +82,7 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0
                 return;
             }
             if (!correctDirection) {
-                player.runCommandAsync(`title ${player.name} actionbar You're facing the wrong way.`);
+                player.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"actionbar.main.rod.direction"}]}`);
                 event.block.setPermutation(BlockPermutation.resolve("tallgrass"));
                 return;
             }
@@ -197,7 +197,7 @@ function mainTick() {
             }
             else if (player.getEffect("night_vision")) {
                 //if they currently can't see in the dark.
-                overworld.runCommandAsync(`title @p actionbar You can now permanently see in the dark!`);
+                overworld.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"actionbar.main.night_vision"}]}`);
             }
             else if (player.getEffect("blindness")) {
                 displayTimer(potionStart, seconds, player, "Oh no! The ratios were wrong, you can't see anything for");
@@ -232,11 +232,11 @@ world.afterEvents.itemCompleteUse.subscribe((event) => __awaiter(void 0, void 0,
     let player = event.source;
     if (((_e = event.itemStack) === null || _e === void 0 ? void 0 : _e.typeId) === "minecraft:potion") {
         if (potion === "poison") {
-            player.runCommandAsync("title @p actionbar §fYou mixed the potion with the §2wrong ingredients. \n§fIt has had no effect.\nMake sure you're using the correct ingredients.");
+            player.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"actionbar.main.potion.wrong.0"},{"text":"\n"},{"translate":"actionbar.main.potion.wrong.1"}]}`);
         }
         else {
             potionDrank = true;
-            player.runCommandAsync("title @p actionbar You drank the potion! §2Jump in the well §fto see the effect.");
+            player.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"actionbar.main.potion.drink"}]}`);
         }
         event.source.runCommand("clear @p minecraft:glass_bottle");
     }

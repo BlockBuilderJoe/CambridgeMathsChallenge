@@ -8,7 +8,7 @@ export const perfectRun = [
         direction: "north",
         rodLength: 12,
         blockName: "orange_concrete",
-        successMessage: `Instead use a 1/2 rod as that is half of 24.`,
+        successMessage: `actionbar.perfectRun.successMessage.0`,
     },
     //Gap 2 = 1/2 td or 12 blocks | Optimum rod = 1/2 rod
     {
@@ -17,7 +17,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 12,
         blockName: "orange_concrete",
-        successMessage: `Instead use a 1/2 rod as that is half of 24.`,
+        successMessage: `actionbar.perfectRun.successMessage.1`,
     },
     //Gap 3 = 1/6 td or 4 blocks | Optimum rod = 1/6 rod
     {
@@ -26,7 +26,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 4,
         blockName: "yellow_concrete",
-        successMessage: `Instead use a 1/6 rod which equals 4 blocks.`,
+        successMessage: `actionbar.perfectRun.successMessage.2`,
     },
     //Gap 4 = 3/4 td or 18 blocks | Optimum rod = 1/2,1/4 rod
     {
@@ -35,7 +35,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 12,
         blockName: "orange_concrete",
-        successMessage: `Instead use a 1/2 rod which = 2/4`,
+        successMessage: `actionbar.perfectRun.successMessage.3`,
     },
     {
         number: 3,
@@ -43,7 +43,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 6,
         blockName: "lime_concrete",
-        successMessage: `a 1/4 rod which = 3/4.`,
+        successMessage: `actionbar.perfectRun.successMessage.4`,
     },
     //Gap 5 = 3/8 td or 9 blocks | Optimum rod = 1/4,1/8 rod
     {
@@ -52,7 +52,7 @@ export const perfectRun = [
         direction: "south",
         rodLength: 6,
         blockName: "lime_concrete",
-        successMessage: `Instead use a 1/4 rod which = 2/8.`,
+        successMessage: `actionbar.perfectRun.successMessage.5`,
     },
     {
         number: 4,
@@ -60,7 +60,7 @@ export const perfectRun = [
         direction: "south",
         rodLength: 3,
         blockName: "red_concrete",
-        successMessage: `a 1/8 rod which = 3/8`,
+        successMessage: `actionbar.perfectRun.successMessage.6`,
     },
     //Gap 6 = 1 2/3 td or 40 blocks | Optimum rod = 1, 1/3, 1/3 rod
     {
@@ -69,7 +69,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 24,
         blockName: "green_concrete",
-        successMessage: `Instead use 1 tweed`,
+        successMessage: `actionbar.perfectRun.successMessage.7`,
     },
     {
         number: 5,
@@ -77,7 +77,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 8,
         blockName: "purple_concrete",
-        successMessage: `a 1/3 rod`,
+        successMessage: `actionbar.perfectRun.successMessage.8`,
     },
     {
         number: 5,
@@ -85,7 +85,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 8,
         blockName: "purple_concrete",
-        successMessage: `a 1/3 rod to make 1 2/3`,
+        successMessage: `actionbar.perfectRun.successMessage.9`,
     },
     //Gap 7 = 3/2 td or 36 blocks | Optimum rod = 1, 1/2 rod
     {
@@ -94,7 +94,7 @@ export const perfectRun = [
         direction: "west",
         rodLength: 24,
         blockName: "green_concrete",
-        successMessage: `Instead use 1 tweed`,
+        successMessage: `actionbar.perfectRun.successMessage.10`,
     },
     {
         number: 6,
@@ -102,7 +102,7 @@ export const perfectRun = [
         direction: "west",
         rodLength: 12,
         blockName: "orange_concrete",
-        successMessage: `a 1/2 rod to make 3/2`,
+        successMessage: `actionbar.perfectRun.successMessage.11`,
     },
     //Gap 8 = 7/12 td or 14 blocks | Optimum rod = 1/3,1/4 rod
     {
@@ -111,7 +111,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 8,
         blockName: "purple_concrete",
-        successMessage: `1/3`,
+        successMessage: `actionbar.perfectRun.successMessage.12`,
     },
     {
         number: 7,
@@ -119,7 +119,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 6,
         blockName: "lime_concrete",
-        successMessage: `1/4`,
+        successMessage: `actionbar.perfectRun.successMessage.13`,
     },
     //Gap 9 = 5/24 td or 5 blocks | Optimum rod = 1/6,1/24 rod
     {
@@ -128,7 +128,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 4,
         blockName: "yellow_concrete",
-        successMessage: `1/6`,
+        successMessage: `actionbar.perfectRun.successMessage.14`,
     },
     {
         number: 8,
@@ -136,7 +136,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 1,
         blockName: "pink_concrete",
-        successMessage: `1/24`,
+        successMessage: `actionbar.perfectRun.successMessage.15`,
     },
 ];
 // The gap where the rod is placed. Change x and z depending on direction.
@@ -270,7 +270,7 @@ export const replaySettings = [
     {
         // 1/2 gap 1
         // Message to display at the beginning of the replay
-        beginningMessage: `To make 1/2 you placed: `,
+        beginningMessage: `actionbar.perfectRun.beginningMessage.0`,
         // Command to teleport the player to the starting position of the last platform they were on and set their facing direction
         tpStart: `tp @p 31 96 107 facing 31 96 100`,
         // Command to clear the rods they just placed by replacing blocks with short_grass
@@ -284,7 +284,7 @@ export const replaySettings = [
     },
     {
         // 1/2 gap 2
-        beginningMessage: `To make 1/2 you placed: `,
+        beginningMessage: `actionbar.perfectRun.beginningMessage.1`,
         tpStart: `tp @p 30 96 92 facing 38 96 92`,
         clearBlock: `fill 31 95 92 42 95 92 short_grass replace`,
         replenishGrass: `fill 31 94 92 42 94 92 grass_block replace`,
@@ -293,7 +293,7 @@ export const replaySettings = [
     },
     {
         // 1/6 gap 3
-        beginningMessage: `To make 1/6 you placed: `,
+        beginningMessage: `actionbar.perfectRun.beginningMessage.2`,
         tpStart: `tp @p 43 96 91 facing 53 96 91`,
         clearBlock: `fill 44 95 91 47 95 91 short_grass replace`,
         replenishGrass: `fill 44 94 91 47 94 91 grass_block replace`,
@@ -302,7 +302,7 @@ export const replaySettings = [
     },
     {
         // 3/4 gap 4
-        beginningMessage: `To make 3/4 you placed: `,
+        beginningMessage: `actionbar.perfectRun.beginningMessage.3`,
         tpStart: `tp @p 47 96 86 facing 67 96 86`,
         clearBlock: `fill 48 95 86 65 95 86 short_grass replace`,
         replenishGrass: `fill 48 94 86 65 94 86 grass_block replace`,
@@ -311,7 +311,7 @@ export const replaySettings = [
     },
     {
         // 3/8 gap 5
-        beginningMessage: `To make 3/8 you placed: `,
+        beginningMessage: `actionbar.perfectRun.beginningMessage.4`,
         tpStart: `tp @p 66 96 87 facing 66 96 87`,
         clearBlock: `fill 66 95 89 66 95 97 short_grass replace`,
         replenishGrass: `fill 66 94 89 66 94 97 grass_block replace`,
@@ -320,7 +320,7 @@ export const replaySettings = [
     },
     {
         // 1 2/3 gap 6
-        beginningMessage: `To make 1 2/3 you placed: `,
+        beginningMessage: `actionbar.perfectRun.beginningMessage.5`,
         tpStart: `tp @p 67 96 100 facing 108 96 100`,
         clearBlock: `fill 69 95 100 108 95 100 short_grass replace`,
         replenishGrass: `fill 69 94 100 108 94 100 grass_block replace`,
@@ -329,7 +329,7 @@ export const replaySettings = [
     },
     {
         // 3/2 gap 7
-        beginningMessage: `To make 3/2 you placed: `,
+        beginningMessage: `actionbar.perfectRun.beginningMessage.6`,
         tpStart: `tp @p 110 96 93 facing 72 96 93`,
         clearBlock: `fill 108 95 93 73 95 93 short_grass replace`,
         replenishGrass: `fill 108 94 93 73 94 93 grass_block replace`,
@@ -338,7 +338,7 @@ export const replaySettings = [
     },
     {
         // 7/12 gap 8
-        beginningMessage: `To make 7/12 you placed: `,
+        beginningMessage: `actionbar.perfectRun.beginningMessage.7`,
         tpStart: `tp @p 71 96 85 facing 86 96 85`,
         clearBlock: `fill 73 95 85 86 95 85 short_grass replace`,
         replenishGrass: `fill 73 94 85 86 94 85 grass_block replace`,
@@ -348,7 +348,7 @@ export const replaySettings = [
     // To do
     {
         // 5/24 gap 9
-        beginningMessage: `To make 5/24 you placed: `,
+        beginningMessage: `actionbar.perfectRun.beginningMessage.8`,
         tpStart: `tp @p 89 96 85 facing 95 96 85`,
         clearBlock: `fill 91 95 85 95 95 85 short_grass replace`,
         replenishGrass: `fill 91 94 85 95 94 85 grass_block replace`,

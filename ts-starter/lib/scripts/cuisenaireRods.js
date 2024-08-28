@@ -6,7 +6,7 @@ let checkPoint = "tp @p 29 96 114 facing 29 96 112";
 //tickingarea add -447.91 -27.00 73.83 -326.23 -27.00 78.08 mapArea true
 export function startCuisenaireTutorial() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield overworld.runCommandAsync(`title @p actionbar Loading Map...`);
+        yield overworld.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"actionbar.cuisenaire.loading"}]}`);
         yield overworld.runCommandAsync(`camera @p fade time 0.1 4 0.4`);
         yield overworld.runCommandAsync(`tp @p -386 -31 126`);
         yield overworld.runCommandAsync(`tp @e[tag=fractionNpc] -391 -31 126`);
@@ -103,12 +103,12 @@ export function cuisenaire(block, blockName, rodLength, successMessage, directio
         var _a, _b, _c, _d, _e;
         if ((_a = block.permutation) === null || _a === void 0 ? void 0 : _a.matches(blockName)) {
             let runPlaceRods = true;
-            overworld.runCommand(`title @p actionbar ${successMessage} placed`);
+            overworld.runCommand(`titleraw @p actionbar {"rawtext": [{"translate":"${successMessage}"}]}`);
             block.setPermutation(BlockPermutation.resolve("tallgrass"));
             for (let i = 0; i < rodLength; i++) {
                 let colour = (_c = (_b = block[direction](i)) === null || _b === void 0 ? void 0 : _b.permutation) === null || _c === void 0 ? void 0 : _c.getState("color");
                 if (colour || ((_e = (_d = block[direction](i)) === null || _d === void 0 ? void 0 : _d.permutation) === null || _e === void 0 ? void 0 : _e.matches("sandstone"))) {
-                    overworld.runCommand("title @p actionbar That rod is too long!");
+                    overworld.runCommand(`titleraw @p actionbar {"rawtext": [{"translate":"actionbar.cuisenaire.rod.toolong"}]}`);
                     overworld.runCommandAsync(`give @p ${blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
                     runPlaceRods = false;
                     break;
@@ -212,12 +212,12 @@ function replayMessage(beginningMessage, fractions) {
                 if (perfectRunFractions.length > 0) {
                     //if you've reached the end of the list
                     const perfectRunFractionsSum = perfectRunFractions.join(" + ");
-                    overworld.runCommandAsync(`title @p actionbar ${perfectRunFractionsSum}`);
+                    overworld.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"${perfectRunFractionsSum}"}]}`);
                 }
                 else if (playerPlacedFractions.length > 0) {
                     //else if there are fractions print them
                     const fractionsSum = playerPlacedFractions.join(" + ");
-                    overworld.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
+                    overworld.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"${beginningMessage}"}, {"translate":"${fractionsSum}"}]}`);
                 }
             }
         }

@@ -1,31 +1,31 @@
 import { world, system } from "@minecraft/server";
 let overworld = world.getDimension("overworld");
 const ratioMessage = [
-    { message: "You should know, no one has \nwon my well game in 50 years.", step: 0 },
+    { message: `[{"translate":"actionbar.npcWalk.ratioMessage.0.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.ratioMessage.0.1"}]`, step: 0 },
     {
-        message: "The trick to getting the coins is to mix §astronger potions §fto the \n§acorrect ratios.",
+        message: `[{"translate":"actionbar.npcWalk.ratioMessage.1.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.ratioMessage.1.1"}]`,
         step: 18,
     },
     {
-        message: "You'll need to make a §aNight Vision§f potion first.\nThen a strong §aBreathing§f potion to succeed.",
+        message: `[{"translate":"actionbar.npcWalk.ratioMessage.2.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.ratioMessage.2.1"}]`,
         step: 38,
     },
 ];
 const fractionMessage = [
-    { message: "You §acan't jump or step on the grass §fin the gardens.\nYou'll be told off if you do!", step: 0 },
-    { message: "I'll give you §adifferent sized magical rods§f\nto cross the gaps to save the students.", step: 25 },
+    { message: `[{"translate":"actionbar.npcWalk.fractionMessage.0.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.fractionMessage.0.1"}]`, step: 0 },
+    { message: `[{"translate":"actionbar.npcWalk.fractionMessage.1.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.fractionMessage.1.1"}]`, step: 25 },
     {
-        message: "Two gardens are §a24x24§f blocks wide and one is §a24x48§f.\nEach gap will be a fraction of 24. ",
+        message: `[{"translate":"actionbar.npcWalk.fractionMessage.2.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.fractionMessage.2.1"}]`,
         step: 45,
     },
 ];
 const scaleMessage = [
-    { message: "You'll need to change the §anumerator§f (the top number) \nto scale the windows.", step: 0 },
+    { message: `[{"translate":"actionbar.npcWalk.scaleMessage.0.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.scaleMessage.0.1"}]`, step: 0 },
     {
-        message: "To make the window larger you'll need to make the \n§anumerator larger§f than the denominator (bottom number).",
+        message: `[{"translate":"actionbar.npcWalk.scaleMessage.1.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.scaleMessage.1.1"}]`,
         step: 25,
     },
-    { message: "The windows must fit in the frame!\nSo make sure you don't make the windows too big.", step: 50 },
+    { message: `[{"translate":"actionbar.npcWalk.scaleMessage.2.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.scaleMessage.2.1"}]`, step: 50 },
 ];
 export function npcWalk(type) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -88,7 +88,7 @@ function moveNpc(path, type, messages) {
                     message = messageMatch.message;
                 }
                 if (message) {
-                    overworld.runCommandAsync(`title @p actionbar ${message}`);
+                    overworld.runCommandAsync(`titleraw @p actionbar {"rawtext": ${message}}`);
                 }
                 if (path.length - 2 == i) {
                     // final point.

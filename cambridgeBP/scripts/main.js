@@ -401,7 +401,7 @@ var perfectRun = [
     direction: "north",
     rodLength: 12,
     blockName: "orange_concrete",
-    successMessage: `Instead use a 1/2 rod as that is half of 24.`
+    successMessage: `actionbar.perfectRun.successMessage.0`
   },
   //Gap 2 = 1/2 td or 12 blocks | Optimum rod = 1/2 rod
   {
@@ -410,7 +410,7 @@ var perfectRun = [
     direction: "east",
     rodLength: 12,
     blockName: "orange_concrete",
-    successMessage: `Instead use a 1/2 rod as that is half of 24.`
+    successMessage: `actionbar.perfectRun.successMessage.1`
   },
   //Gap 3 = 1/6 td or 4 blocks | Optimum rod = 1/6 rod
   {
@@ -419,7 +419,7 @@ var perfectRun = [
     direction: "east",
     rodLength: 4,
     blockName: "yellow_concrete",
-    successMessage: `Instead use a 1/6 rod which equals 4 blocks.`
+    successMessage: `actionbar.perfectRun.successMessage.2`
   },
   //Gap 4 = 3/4 td or 18 blocks | Optimum rod = 1/2,1/4 rod
   {
@@ -428,7 +428,7 @@ var perfectRun = [
     direction: "east",
     rodLength: 12,
     blockName: "orange_concrete",
-    successMessage: `Instead use a 1/2 rod which = 2/4`
+    successMessage: `actionbar.perfectRun.successMessage.3`
   },
   {
     number: 3,
@@ -436,7 +436,7 @@ var perfectRun = [
     direction: "east",
     rodLength: 6,
     blockName: "lime_concrete",
-    successMessage: `a 1/4 rod which = 3/4.`
+    successMessage: `actionbar.perfectRun.successMessage.4`
   },
   //Gap 5 = 3/8 td or 9 blocks | Optimum rod = 1/4,1/8 rod
   {
@@ -445,7 +445,7 @@ var perfectRun = [
     direction: "south",
     rodLength: 6,
     blockName: "lime_concrete",
-    successMessage: `Instead use a 1/4 rod which = 2/8.`
+    successMessage: `actionbar.perfectRun.successMessage.5`
   },
   {
     number: 4,
@@ -453,7 +453,7 @@ var perfectRun = [
     direction: "south",
     rodLength: 3,
     blockName: "red_concrete",
-    successMessage: `a 1/8 rod which = 3/8`
+    successMessage: `actionbar.perfectRun.successMessage.6`
   },
   //Gap 6 = 1 2/3 td or 40 blocks | Optimum rod = 1, 1/3, 1/3 rod
   {
@@ -462,7 +462,7 @@ var perfectRun = [
     direction: "east",
     rodLength: 24,
     blockName: "green_concrete",
-    successMessage: `Instead use 1 tweed`
+    successMessage: `actionbar.perfectRun.successMessage.7`
   },
   {
     number: 5,
@@ -470,7 +470,7 @@ var perfectRun = [
     direction: "east",
     rodLength: 8,
     blockName: "purple_concrete",
-    successMessage: `a 1/3 rod`
+    successMessage: `actionbar.perfectRun.successMessage.8`
   },
   {
     number: 5,
@@ -478,7 +478,7 @@ var perfectRun = [
     direction: "east",
     rodLength: 8,
     blockName: "purple_concrete",
-    successMessage: `a 1/3 rod to make 1 2/3`
+    successMessage: `actionbar.perfectRun.successMessage.9`
   },
   //Gap 7 = 3/2 td or 36 blocks | Optimum rod = 1, 1/2 rod
   {
@@ -487,7 +487,7 @@ var perfectRun = [
     direction: "west",
     rodLength: 24,
     blockName: "green_concrete",
-    successMessage: `Instead use 1 tweed`
+    successMessage: `actionbar.perfectRun.successMessage.10`
   },
   {
     number: 6,
@@ -495,7 +495,7 @@ var perfectRun = [
     direction: "west",
     rodLength: 12,
     blockName: "orange_concrete",
-    successMessage: `a 1/2 rod to make 3/2`
+    successMessage: `actionbar.perfectRun.successMessage.11`
   },
   //Gap 8 = 7/12 td or 14 blocks | Optimum rod = 1/3,1/4 rod
   {
@@ -504,7 +504,7 @@ var perfectRun = [
     direction: "east",
     rodLength: 8,
     blockName: "purple_concrete",
-    successMessage: `1/3`
+    successMessage: `actionbar.perfectRun.successMessage.12`
   },
   {
     number: 7,
@@ -512,7 +512,7 @@ var perfectRun = [
     direction: "east",
     rodLength: 6,
     blockName: "lime_concrete",
-    successMessage: `1/4`
+    successMessage: `actionbar.perfectRun.successMessage.13`
   },
   //Gap 9 = 5/24 td or 5 blocks | Optimum rod = 1/6,1/24 rod
   {
@@ -521,7 +521,7 @@ var perfectRun = [
     direction: "east",
     rodLength: 4,
     blockName: "yellow_concrete",
-    successMessage: `1/6`
+    successMessage: `actionbar.perfectRun.successMessage.14`
   },
   {
     number: 8,
@@ -529,7 +529,7 @@ var perfectRun = [
     direction: "east",
     rodLength: 1,
     blockName: "pink_concrete",
-    successMessage: `1/24`
+    successMessage: `actionbar.perfectRun.successMessage.15`
   }
 ];
 var validRanges = [
@@ -686,7 +686,7 @@ var replaySettings = [
   {
     // 1/2 gap 1
     // Message to display at the beginning of the replay
-    beginningMessage: `To make 1/2 you placed: `,
+    beginningMessage: `actionbar.perfectRun.beginningMessage.0`,
     // Command to teleport the player to the starting position of the last platform they were on and set their facing direction
     tpStart: `tp @p 31 96 107 facing 31 96 100`,
     // Command to clear the rods they just placed by replacing blocks with short_grass
@@ -700,7 +700,7 @@ var replaySettings = [
   },
   {
     // 1/2 gap 2
-    beginningMessage: `To make 1/2 you placed: `,
+    beginningMessage: `actionbar.perfectRun.beginningMessage.1`,
     tpStart: `tp @p 30 96 92 facing 38 96 92`,
     clearBlock: `fill 31 95 92 42 95 92 short_grass replace`,
     replenishGrass: `fill 31 94 92 42 94 92 grass_block replace`,
@@ -709,7 +709,7 @@ var replaySettings = [
   },
   {
     // 1/6 gap 3
-    beginningMessage: `To make 1/6 you placed: `,
+    beginningMessage: `actionbar.perfectRun.beginningMessage.2`,
     tpStart: `tp @p 43 96 91 facing 53 96 91`,
     clearBlock: `fill 44 95 91 47 95 91 short_grass replace`,
     replenishGrass: `fill 44 94 91 47 94 91 grass_block replace`,
@@ -718,7 +718,7 @@ var replaySettings = [
   },
   {
     // 3/4 gap 4
-    beginningMessage: `To make 3/4 you placed: `,
+    beginningMessage: `actionbar.perfectRun.beginningMessage.3`,
     tpStart: `tp @p 47 96 86 facing 67 96 86`,
     clearBlock: `fill 48 95 86 65 95 86 short_grass replace`,
     replenishGrass: `fill 48 94 86 65 94 86 grass_block replace`,
@@ -727,7 +727,7 @@ var replaySettings = [
   },
   {
     // 3/8 gap 5
-    beginningMessage: `To make 3/8 you placed: `,
+    beginningMessage: `actionbar.perfectRun.beginningMessage.4`,
     tpStart: `tp @p 66 96 87 facing 66 96 87`,
     clearBlock: `fill 66 95 89 66 95 97 short_grass replace`,
     replenishGrass: `fill 66 94 89 66 94 97 grass_block replace`,
@@ -736,7 +736,7 @@ var replaySettings = [
   },
   {
     // 1 2/3 gap 6
-    beginningMessage: `To make 1 2/3 you placed: `,
+    beginningMessage: `actionbar.perfectRun.beginningMessage.5`,
     tpStart: `tp @p 67 96 100 facing 108 96 100`,
     clearBlock: `fill 69 95 100 108 95 100 short_grass replace`,
     replenishGrass: `fill 69 94 100 108 94 100 grass_block replace`,
@@ -745,7 +745,7 @@ var replaySettings = [
   },
   {
     // 3/2 gap 7
-    beginningMessage: `To make 3/2 you placed: `,
+    beginningMessage: `actionbar.perfectRun.beginningMessage.6`,
     tpStart: `tp @p 110 96 93 facing 72 96 93`,
     clearBlock: `fill 108 95 93 73 95 93 short_grass replace`,
     replenishGrass: `fill 108 94 93 73 94 93 grass_block replace`,
@@ -754,7 +754,7 @@ var replaySettings = [
   },
   {
     // 7/12 gap 8
-    beginningMessage: `To make 7/12 you placed: `,
+    beginningMessage: `actionbar.perfectRun.beginningMessage.7`,
     tpStart: `tp @p 71 96 85 facing 86 96 85`,
     clearBlock: `fill 73 95 85 86 95 85 short_grass replace`,
     replenishGrass: `fill 73 94 85 86 94 85 grass_block replace`,
@@ -764,7 +764,7 @@ var replaySettings = [
   // To do
   {
     // 5/24 gap 9
-    beginningMessage: `To make 5/24 you placed: `,
+    beginningMessage: `actionbar.perfectRun.beginningMessage.8`,
     tpStart: `tp @p 89 96 85 facing 95 96 85`,
     clearBlock: `fill 91 95 85 95 95 85 short_grass replace`,
     replenishGrass: `fill 91 94 85 95 94 85 grass_block replace`,
@@ -798,7 +798,7 @@ var overworld5 = world5.getDimension("overworld");
 var rodsPlaced = [];
 var checkPoint = "tp @p 29 96 114 facing 29 96 112";
 async function startCuisenaireTutorial() {
-  await overworld5.runCommandAsync(`title @p actionbar Loading Map...`);
+  await overworld5.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"actionbar.cuisenaire.loading"}]}`);
   await overworld5.runCommandAsync(`camera @p fade time 0.1 4 0.4`);
   await overworld5.runCommandAsync(`tp @p -386 -31 126`);
   await overworld5.runCommandAsync(`tp @e[tag=fractionNpc] -391 -31 126`);
@@ -876,12 +876,12 @@ function isInRange(value, min, max) {
 async function cuisenaire(block, blockName, rodLength, successMessage, direction) {
   if (block.permutation?.matches(blockName)) {
     let runPlaceRods = true;
-    overworld5.runCommand(`title @p actionbar ${successMessage} placed`);
+    overworld5.runCommand(`titleraw @p actionbar {"rawtext": [{"translate":"${successMessage}"}]}`);
     block.setPermutation(BlockPermutation3.resolve("tallgrass"));
     for (let i = 0; i < rodLength; i++) {
       let colour = block[direction](i)?.permutation?.getState("color");
       if (colour || block[direction](i)?.permutation?.matches("sandstone")) {
-        overworld5.runCommand("title @p actionbar That rod is too long!");
+        overworld5.runCommand(`titleraw @p actionbar {"rawtext": [{"translate":"actionbar.cuisenaire.rod.toolong"}]}`);
         overworld5.runCommandAsync(`give @p ${blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
         runPlaceRods = false;
         break;
@@ -971,10 +971,10 @@ async function replayMessage(beginningMessage, fractions) {
       const perfectRunFractions = fractions.filter((fraction) => fraction !== void 0 && !fraction.startsWith("1"));
       if (perfectRunFractions.length > 0) {
         const perfectRunFractionsSum = perfectRunFractions.join(" + ");
-        overworld5.runCommandAsync(`title @p actionbar ${perfectRunFractionsSum}`);
+        overworld5.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"${perfectRunFractionsSum}"}]}`);
       } else if (playerPlacedFractions.length > 0) {
         const fractionsSum = playerPlacedFractions.join(" + ");
-        overworld5.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
+        overworld5.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"${beginningMessage}"}, {"translate":"${fractionsSum}"}]}`);
       }
     }
   } else {
@@ -1540,31 +1540,40 @@ async function closeGate(location) {
 import { world as world8, system as system4 } from "@minecraft/server";
 var overworld8 = world8.getDimension("overworld");
 var ratioMessage = [
-  { message: "You should know, no one has \nwon my well game in 50 years.", step: 0 },
+  { message: `[{"translate":"actionbar.npcWalk.ratioMessage.0.0"},{"text":"
+"},{"translate":"actionbar.npcWalk.ratioMessage.0.1"}]`, step: 0 },
   {
-    message: "The trick to getting the coins is to mix \xA7astronger potions \xA7fto the \n\xA7acorrect ratios.",
+    message: `[{"translate":"actionbar.npcWalk.ratioMessage.1.0"},{"text":"
+"},{"translate":"actionbar.npcWalk.ratioMessage.1.1"}]`,
     step: 18
   },
   {
-    message: "You'll need to make a \xA7aNight Vision\xA7f potion first.\nThen a strong \xA7aBreathing\xA7f potion to succeed.",
+    message: `[{"translate":"actionbar.npcWalk.ratioMessage.2.0"},{"text":"
+"},{"translate":"actionbar.npcWalk.ratioMessage.2.1"}]`,
     step: 38
   }
 ];
 var fractionMessage = [
-  { message: "You \xA7acan't jump or step on the grass \xA7fin the gardens.\nYou'll be told off if you do!", step: 0 },
-  { message: "I'll give you \xA7adifferent sized magical rods\xA7f\nto cross the gaps to save the students.", step: 25 },
+  { message: `[{"translate":"actionbar.npcWalk.fractionMessage.0.0"},{"text":"
+"},{"translate":"actionbar.npcWalk.fractionMessage.0.1"}]`, step: 0 },
+  { message: `[{"translate":"actionbar.npcWalk.fractionMessage.1.0"},{"text":"
+"},{"translate":"actionbar.npcWalk.fractionMessage.1.1"}]`, step: 25 },
   {
-    message: "Two gardens are \xA7a24x24\xA7f blocks wide and one is \xA7a24x48\xA7f.\nEach gap will be a fraction of 24. ",
+    message: `[{"translate":"actionbar.npcWalk.fractionMessage.2.0"},{"text":"
+"},{"translate":"actionbar.npcWalk.fractionMessage.2.1"}]`,
     step: 45
   }
 ];
 var scaleMessage = [
-  { message: "You'll need to change the \xA7anumerator\xA7f (the top number) \nto scale the windows.", step: 0 },
+  { message: `[{"translate":"actionbar.npcWalk.scaleMessage.0.0"},{"text":"
+"},{"translate":"actionbar.npcWalk.scaleMessage.0.1"}]`, step: 0 },
   {
-    message: "To make the window larger you'll need to make the \n\xA7anumerator larger\xA7f than the denominator (bottom number).",
+    message: `[{"translate":"actionbar.npcWalk.scaleMessage.1.0"},{"text":"
+"},{"translate":"actionbar.npcWalk.scaleMessage.1.1"}]`,
     step: 25
   },
-  { message: "The windows must fit in the frame!\nSo make sure you don't make the windows too big.", step: 50 }
+  { message: `[{"translate":"actionbar.npcWalk.scaleMessage.2.0"},{"text":"
+"},{"translate":"actionbar.npcWalk.scaleMessage.2.1"}]`, step: 50 }
 ];
 async function npcWalk(type) {
   switch (type) {
@@ -1624,7 +1633,7 @@ async function moveNpc2(path, type, messages) {
         message = messageMatch.message;
       }
       if (message) {
-        overworld8.runCommandAsync(`title @p actionbar ${message}`);
+        overworld8.runCommandAsync(`titleraw @p actionbar {"rawtext": ${message}}`);
       }
       if (path.length - 2 == i) {
         await overworld8.runCommandAsync(`dialogue open @e[tag=${type}Npc] @p ${type}Npc2`);
@@ -2045,14 +2054,14 @@ world13.afterEvents.playerPlaceBlock.subscribe(async (event) => {
         pink: { block: "pink_concrete", value: 1, message: "1/24" }
       };
       if (!hasColour) {
-        player.runCommandAsync(`title ${player.name} actionbar Place the rod in front of the magical connector.`);
+        player.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"actionbar.main.rod.placement"}]}`);
         const rod2 = rodPermutations[colour];
         player.runCommandAsync(`give @p ${rod2.block} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
         event.block.setPermutation(BlockPermutation5.resolve("tallgrass"));
         return;
       }
       if (!correctDirection) {
-        player.runCommandAsync(`title ${player.name} actionbar You're facing the wrong way.`);
+        player.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"actionbar.main.rod.direction"}]}`);
         event.block.setPermutation(BlockPermutation5.resolve("tallgrass"));
         return;
       }
@@ -2155,7 +2164,7 @@ function mainTick() {
       if (player.getEffect("water_breathing")) {
         displayTimer(potionStart, seconds, player, "Breathing underwater");
       } else if (player.getEffect("night_vision")) {
-        overworld13.runCommandAsync(`title @p actionbar You can now permanently see in the dark!`);
+        overworld13.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"actionbar.main.night_vision"}]}`);
       } else if (player.getEffect("blindness")) {
         displayTimer(potionStart, seconds, player, "Oh no! The ratios were wrong, you can't see anything for");
       } else if (player.getEffect("levitation")) {
@@ -2185,11 +2194,12 @@ world13.afterEvents.itemCompleteUse.subscribe(async (event) => {
   if (event.itemStack?.typeId === "minecraft:potion") {
     if (potion === "poison") {
       player.runCommandAsync(
-        "title @p actionbar \xA7fYou mixed the potion with the \xA72wrong ingredients. \n\xA7fIt has had no effect.\nMake sure you're using the correct ingredients."
+        `titleraw @p actionbar {"rawtext": [{"translate":"actionbar.main.potion.wrong.0"},{"text":"
+"},{"translate":"actionbar.main.potion.wrong.1"}]}`
       );
     } else {
       potionDrank = true;
-      player.runCommandAsync("title @p actionbar You drank the potion! \xA72Jump in the well \xA7fto see the effect.");
+      player.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"actionbar.main.potion.drink"}]}`);
     }
     event.source.runCommand("clear @p minecraft:glass_bottle");
   }

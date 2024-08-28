@@ -18,7 +18,7 @@ let checkPoint: string = "tp @p 29 96 114 facing 29 96 112";
 //tickingarea add -447.91 -27.00 73.83 -326.23 -27.00 78.08 mapArea true
 
 export async function startCuisenaireTutorial() {
-  await overworld.runCommandAsync(`title @p actionbar Loading Map...`);
+  await overworld.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"actionbar.cuisenaire.loading"}]}`);
   await overworld.runCommandAsync(`camera @p fade time 0.1 4 0.4`);
   await overworld.runCommandAsync(`tp @p -386 -31 126`);
   await overworld.runCommandAsync(`tp @e[tag=fractionNpc] -391 -31 126`);
@@ -120,12 +120,12 @@ export async function cuisenaire(
 ) {
   if (block.permutation?.matches(blockName)) {
     let runPlaceRods = true;
-    overworld.runCommand(`title @p actionbar ${successMessage} placed`);
+    overworld.runCommand(`titleraw @p actionbar {"rawtext": [{"translate":"${successMessage}"}]}`);
     block.setPermutation(BlockPermutation.resolve("tallgrass"));
     for (let i = 0; i < rodLength; i++) {
       let colour = block[direction](i)?.permutation?.getState("color");
       if (colour || block[direction](i)?.permutation?.matches("sandstone")) {
-        overworld.runCommand("title @p actionbar That rod is too long!");
+        overworld.runCommand(`titleraw @p actionbar {"rawtext": [{"translate":"actionbar.cuisenaire.rod.toolong"}]}`);
         overworld.runCommandAsync(`give @p ${blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`);
         runPlaceRods = false;
         break;
@@ -227,11 +227,11 @@ async function replayMessage(beginningMessage: string, fractions: any[]) {
       if (perfectRunFractions.length > 0) {
         //if you've reached the end of the list
         const perfectRunFractionsSum = perfectRunFractions.join(" + ");
-        overworld.runCommandAsync(`title @p actionbar ${perfectRunFractionsSum}`);
+        overworld.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"${perfectRunFractionsSum}"}]}`);
       } else if (playerPlacedFractions.length > 0) {
         //else if there are fractions print them
         const fractionsSum = playerPlacedFractions.join(" + ");
-        overworld.runCommandAsync(`title @p actionbar ${beginningMessage} ${fractionsSum}`);
+        overworld.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"${beginningMessage}"}, {"translate":"${fractionsSum}"}]}`);
       }
     }
   } else {
