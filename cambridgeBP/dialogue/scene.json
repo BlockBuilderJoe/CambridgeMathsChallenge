@@ -1467,7 +1467,22 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "npc.text.spawnNpc5"
+                            "translate": "npc.text.spawnNpc5.0"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.spawnNpc5.1"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.spawnNpc5.2"
+                        },
+                        {
+                            "text": "\n"
                         }
                     ]
                 },
@@ -1584,7 +1599,16 @@
                 "text": {
                     "rawtext": [
                         {
-                            "translate": "npc.text.scaleNpc0"
+                            "translate": "npc.text.scaleNpc0.0"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.scaleNpc0.1"
+                        },
+                        {
+                            "text": "\n"
                         }
                     ]
                 },
@@ -1983,9 +2007,6 @@
                             "text": "\n"
                         },
                         {
-                            "translate": "npc.text.scaleNpc9.2"
-                        },
-                        {
                             "text": "\n"
                         },
                         {
@@ -2159,12 +2180,6 @@
                         },
                         {
                             "translate": "npc.text.scaleNpc13.3"
-                        },
-                        {
-                            "text": "\n"
-                        },
-                        {
-                            "translate": "npc.text.scaleNpc13.4"
                         },
                         {
                             "text": "\n"

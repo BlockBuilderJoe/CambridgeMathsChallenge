@@ -186,7 +186,6 @@ function isPlayerOutOfBounds(blockDistance: number, player: Player, fixedLocatio
   return distance > blockDistance;
 }
 
-
 function mainTick() {
   //checks different things about the player each tick.
   world.getAllPlayers().forEach(async (player) => {

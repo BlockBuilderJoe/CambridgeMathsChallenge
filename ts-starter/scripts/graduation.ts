@@ -6,7 +6,7 @@ let overworld = world.getDimension("overworld");
 export async function startGraduation(level: string) {
   await overworld.runCommandAsync(`camera @p fade time 0.1 4 0.2`);
   await overworld.runCommandAsync(`clear @p`);
-  await overworld.runCommandAsync(`tp @p -16.95 94.06 133.80`);
+  await overworld.runCommandAsync(`tp @p -76.75 94.06 135.00`);
   await overworld.runCommandAsync(`replaceitem entity @p slot.armor.head 0 blockbuilders:mortar_board`);
   await overworld.runCommandAsync(`tp @e[tag=spawnNpc] -103.02 96.06 142.69 facing -104 96 134`);
   await overworld.runCommandAsync(`tp @e[tag=fractionNpc] -107.49 96.00 138.56 facing -101.49 96.00 138.56`);
@@ -27,7 +27,7 @@ export async function startGraduation(level: string) {
     overworld.runCommandAsync(`fill -25 94 159 -93.60 94.06 138.67 green_carpet replace purple_carpet`);
     overworld.runCommandAsync(`fill -106.69 111.00 164.45 -113.74 114.00 112.13 yellow_wool replace red_wool`);
     overworld.runCommandAsync(`fill -106.69 111.00 164.45 -113.74 114.00 112.13 green_wool replace purple_wool`);
-    overworld.runCommandAsync(`dialogue change @e[tag=spawnNpc] spawnNpc3`);
+    overworld.runCommandAsync(`dialogue change @e[tag=spawnNpc] spawnNpc2`);
   } else if (level == "senior") {
     overworld.runCommandAsync(`fill -16.30 94.06 137.54 -96.95 94.06 131.43 purple_carpet replace green_carpet`);
     overworld.runCommandAsync(`fill -16.30 94.06 137.54 -96.95 94.06 131.43 red_carpet replace yellow_carpet`);
