@@ -18,9 +18,6 @@ let checkPoint: string = "tp @p 29 96 114 facing 29 96 112";
 //tickingarea add -447.91 -27.00 73.83 -326.23 -27.00 78.08 mapArea true
 
 export async function startCuisenaireTutorial() {
-  for (let i = 0 ; i < 1000; i++ ){
-    system.clearRun(i);
-  }
   await overworld.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"actionbar.cuisenaire.loading"}]}`);
   await overworld.runCommandAsync(`camera @p fade time 0.1 4 0.4`);
   await overworld.runCommandAsync(`tp @p -386 -31 126`);
