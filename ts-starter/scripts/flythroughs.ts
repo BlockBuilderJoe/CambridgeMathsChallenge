@@ -6,8 +6,20 @@ type Command = {
   command: string;
   interval: number;
 };
+
 export async function startFlythrough(type: string) {
   switch (type) {
+    case "intro": {
+      let path = await generatePath([
+        { x: 57, y: 109, z: 75 },
+        { x: 57, y: 109, z: 155 },
+      ]);
+      let commands = [
+        { command: `kill @e[type=blockbuilders:titlescreen]`, interval: 987654321 },
+      ]
+      await playerFlythrough(path, 1.4, commands);
+      break; 
+    }
     case "graduation": {
       let path = await generatePath([
         { x: -25, y: 98, z: 134 },
@@ -25,7 +37,7 @@ export async function startFlythrough(type: string) {
         { command: "particle blockbuilders:spell -117.93 106.88 129.75", interval: 47 },
         { command: "particle blockbuilders:spell -101.21 109.60 146.53", interval: 59 },
       ];
-      playerFlythrough(path, 1.5, commands);
+      playerFlythrough(path, 1, commands);
       break;
     }
     default:
@@ -34,7 +46,7 @@ export async function startFlythrough(type: string) {
   }
 }
 
-async function playerFlythrough(path: { x: number; y: number; z: number }[], speed: number, commands: Command[]) {
+async function playerFlythrough(path: { x: number; y: number; z: number }[], speed: number, commands?: Command[]) {
   let player = world.getAllPlayers()[0];
   let message = "";
   for (let i = 0; i < path.length - 1; i++) {
@@ -45,20 +57,26 @@ async function playerFlythrough(path: { x: number; y: number; z: number }[], spe
     system.runTimeout(async () => {
       await overworld.runCommandAsync(
         `camera @p set minecraft:free pos ${location.x} ${location.y} ${location.z} facing ${facingLocation.x} ${facingLocation.y} ${facingLocation.z}`
-      ); // start of walk dialogue
-      for (const command of commands) {
-        if (command.interval === 0) {
-          await overworld.runCommandAsync(command.command);
-        } else if (i % command.interval === 0) {
-          await overworld.runCommandAsync(command.command);
+      ); 
+      if (commands) { 
+        for (const command of commands) { 
+          if (command.interval === 0) {
+            await overworld.runCommandAsync(command.command);
+          } else if (i % command.interval === 0 && command.interval !== 987654321) {
+            await overworld.runCommandAsync(command.command);
+          } else if ( path.length - 5 == i && command.interval === 987654321) {
+            await overworld.runCommandAsync(command.command);
+          }
         }
       }
+      
       if (path.length - 5 == i) {
-        await overworld.runCommandAsync(`camera @p fade time 0.2 0.2 0.2`); // end of walk dialogue
+        await overworld.runCommandAsync(`camera @p fade time 0.2 0.2 0.2`);
       }
       if (path.length - 2 == i) {
+        
         // final point.
-        await overworld.runCommandAsync(`camera @p clear`); // end of walk dialogue
+        await overworld.runCommandAsync(`camera @p clear`);
       }
     }, i * speed);
   }

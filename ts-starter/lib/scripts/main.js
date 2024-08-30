@@ -5,6 +5,7 @@ import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
 import { potionMaker, displayTimer, getSlots } from "./potionGame";
 import "./npcscriptEventHandler"; //handles the NPC script events
+import { startFlythrough } from "./flythroughs";
 let overworld = world.getDimension("overworld");
 let potion = "";
 let seconds = 0;
@@ -12,9 +13,25 @@ let potionStart = 0;
 let potionDrank = false;
 let meters = 0;
 let playerCanSeeInDark = false;
+world.afterEvents.playerSpawn.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    let joinedAlready = (_a = overworld.getBlock({ x: 68, y: 91, z: 147 })) === null || _a === void 0 ? void 0 : _a.matches("diamond_block");
+    if (!joinedAlready) {
+        yield overworld.runCommandAsync(`camera @p fade time 0.2 1 0.2`);
+        yield overworld.runCommandAsync(`summon blockbuilders:titlescreen 57 109 155`);
+        yield overworld.runCommandAsync(`tp @p 57.32 128.00 212.70`);
+        system.runTimeout(() => __awaiter(void 0, void 0, void 0, function* () {
+            yield overworld.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
+        }), 10);
+        system.runTimeout(() => __awaiter(void 0, void 0, void 0, function* () {
+            yield startFlythrough("intro");
+        }), 20);
+    }
+    (_b = overworld.getBlock({ x: 68, y: 91, z: 147 })) === null || _b === void 0 ? void 0 : _b.setPermutation(BlockPermutation.resolve("minecraft:diamond_block"));
+}));
 //coin
 world.afterEvents.entityHitEntity.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
+    var _c, _d;
     let hitEntity = event.hitEntity;
     if (hitEntity.typeId === `blockbuilders:orb`) {
         let tag = hitEntity.getTags();
@@ -29,7 +46,7 @@ world.afterEvents.entityHitEntity.subscribe((event) => __awaiter(void 0, void 0,
         yield overworld.runCommandAsync(`scoreboard players add Coins Depth 1`);
         let coinNumber = parseInt(tag[0].substring(4));
         let x_location = 0 - coinNumber;
-        let coinScore = (_a = world.scoreboard.getObjective("Depth")) === null || _a === void 0 ? void 0 : _a.getScore(`Coins`);
+        let coinScore = (_c = world.scoreboard.getObjective("Depth")) === null || _c === void 0 ? void 0 : _c.getScore(`Coins`);
         world.sendMessage(`You have ${coinScore} coins!`);
         if (coinScore === 3) {
             overworld.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc9 `);
@@ -45,16 +62,16 @@ world.afterEvents.entityHitEntity.subscribe((event) => __awaiter(void 0, void 0,
         let cauldron = hitEntity.getComponent("inventory");
         overworld.runCommand(`particle minecraft:cauldron_explosion_emitter ${hitEntity.location.x} ${hitEntity.location.y} ${hitEntity.location.z}`);
         let slots = yield getSlots(cauldron);
-        (_b = cauldron.container) === null || _b === void 0 ? void 0 : _b.clearAll(); //empties the cauldron
+        (_d = cauldron.container) === null || _d === void 0 ? void 0 : _d.clearAll(); //empties the cauldron
         ({ potion, seconds } = yield potionMaker(slots)); //gets the potion and the seconds for the applyPotionEffect function.
     }
 }));
 //listens for the block place event.
 world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _c;
+    var _e;
     let block = event.block;
     let player = event.player;
-    let colour = (_c = block.permutation) === null || _c === void 0 ? void 0 : _c.getState("color");
+    let colour = (_e = block.permutation) === null || _e === void 0 ? void 0 : _e.getState("color");
     if (colour) {
         //is it a rod block?
         if (block.location.y === 95) {
@@ -95,8 +112,8 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => __awaiter(void 0, void 0
 }));
 //left click after break
 world.afterEvents.playerBreakBlock.subscribe((clickEvent) => __awaiter(void 0, void 0, void 0, function* () {
-    var _d;
-    let hand_item = (_d = clickEvent.itemStackAfterBreak) === null || _d === void 0 ? void 0 : _d.typeId; //gets the item in the players hand
+    var _f;
+    let hand_item = (_f = clickEvent.itemStackAfterBreak) === null || _f === void 0 ? void 0 : _f.typeId; //gets the item in the players hand
     let block = clickEvent.block;
     let brokenBlock = clickEvent.brokenBlockPermutation;
     if (hand_item === "blockbuilders:mathmogicians_wand") {
@@ -228,9 +245,9 @@ function surface(player) {
 }
 //listens for the potion to be fully drunk.
 world.afterEvents.itemCompleteUse.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
-    var _e;
+    var _g;
     let player = event.source;
-    if (((_e = event.itemStack) === null || _e === void 0 ? void 0 : _e.typeId) === "minecraft:potion") {
+    if (((_g = event.itemStack) === null || _g === void 0 ? void 0 : _g.typeId) === "minecraft:potion") {
         if (potion === "poison") {
             player.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"actionbar.main.potion.wrong.0"},{"text":"\n"},{"translate":"actionbar.main.potion.wrong.1"}]}`);
         }

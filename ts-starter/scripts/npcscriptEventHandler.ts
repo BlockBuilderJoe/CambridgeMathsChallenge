@@ -25,6 +25,7 @@ import { resetGame } from "./resetGame";
 import { giveWand } from "./wand";
 import { startGraduation } from "./graduation";
 
+
 let overworld = world.getDimension("overworld");
 //handles the scriptEventReceive from NPCs
 system.afterEvents.scriptEventReceive.subscribe(async (event) => {

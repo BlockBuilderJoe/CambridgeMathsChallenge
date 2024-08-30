@@ -7,6 +7,7 @@ let overworld = world.getDimension("overworld");
 export function resetGame() {
     return __awaiter(this, void 0, void 0, function* () {
         yield overworld.runCommandAsync(`camera @p fade time 0.1 2 0.4`);
+        yield overworld.runCommandAsync(`setblock 68 91 147 air`);
         //Reset the game areas
         yield overworld.runCommandAsync(`tp @p 30 96 106`);
         yield resetCuisenaireGame();

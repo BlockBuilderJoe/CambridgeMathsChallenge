@@ -3,6 +3,17 @@ let overworld = world.getDimension("overworld");
 export function startFlythrough(type) {
     return __awaiter(this, void 0, void 0, function* () {
         switch (type) {
+            case "intro": {
+                let path = yield generatePath([
+                    { x: 57, y: 109, z: 75 },
+                    { x: 57, y: 109, z: 155 },
+                ]);
+                let commands = [
+                    { command: `kill @e[type=blockbuilders:titlescreen]`, interval: 987654321 },
+                ];
+                yield playerFlythrough(path, 1.4, commands);
+                break;
+            }
             case "graduation": {
                 let path = yield generatePath([
                     { x: -25, y: 98, z: 134 },
@@ -20,7 +31,7 @@ export function startFlythrough(type) {
                     { command: "particle blockbuilders:spell -117.93 106.88 129.75", interval: 47 },
                     { command: "particle blockbuilders:spell -101.21 109.60 146.53", interval: 59 },
                 ];
-                playerFlythrough(path, 1.5, commands);
+                playerFlythrough(path, 1, commands);
                 break;
             }
             default:
@@ -38,21 +49,26 @@ function playerFlythrough(path, speed, commands) {
             const nextPoint = path[i + 1];
             const facingLocation = { x: nextPoint.x, y: nextPoint.y, z: nextPoint.z };
             system.runTimeout(() => __awaiter(this, void 0, void 0, function* () {
-                yield overworld.runCommandAsync(`camera @p set minecraft:free pos ${location.x} ${location.y} ${location.z} facing ${facingLocation.x} ${facingLocation.y} ${facingLocation.z}`); // start of walk dialogue
-                for (const command of commands) {
-                    if (command.interval === 0) {
-                        yield overworld.runCommandAsync(command.command);
-                    }
-                    else if (i % command.interval === 0) {
-                        yield overworld.runCommandAsync(command.command);
+                yield overworld.runCommandAsync(`camera @p set minecraft:free pos ${location.x} ${location.y} ${location.z} facing ${facingLocation.x} ${facingLocation.y} ${facingLocation.z}`);
+                if (commands) {
+                    for (const command of commands) {
+                        if (command.interval === 0) {
+                            yield overworld.runCommandAsync(command.command);
+                        }
+                        else if (i % command.interval === 0 && command.interval !== 987654321) {
+                            yield overworld.runCommandAsync(command.command);
+                        }
+                        else if (path.length - 5 == i && command.interval === 987654321) {
+                            yield overworld.runCommandAsync(command.command);
+                        }
                     }
                 }
                 if (path.length - 5 == i) {
-                    yield overworld.runCommandAsync(`camera @p fade time 0.2 0.2 0.2`); // end of walk dialogue
+                    yield overworld.runCommandAsync(`camera @p fade time 0.2 0.2 0.2`);
                 }
                 if (path.length - 2 == i) {
                     // final point.
-                    yield overworld.runCommandAsync(`camera @p clear`); // end of walk dialogue
+                    yield overworld.runCommandAsync(`camera @p clear`);
                 }
             }), i * speed);
         }

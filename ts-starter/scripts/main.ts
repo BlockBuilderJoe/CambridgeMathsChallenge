@@ -20,12 +20,14 @@ import {
   startCuisenaireGame,
   moveGroundsKeeper,
 } from "./cuisenaireRods";
+
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
 import { potionMaker, displayTimer, getSlots, giveIngredients, startPotionGame } from "./potionGame";
 import { giveWand } from "./wand";
 import "./npcscriptEventHandler"; //handles the NPC script events
 import { isCoordinateWithinRange } from "./input";
+import { startFlythrough } from "./flythroughs";
 
 let overworld = world.getDimension("overworld");
 let potion: string = "";
@@ -35,6 +37,24 @@ let potionDrank = false;
 let meters = 0;
 let playerCanSeeInDark = false;
 
+world.afterEvents.playerSpawn.subscribe(async (event) => {
+  let joinedAlready = overworld.getBlock({ x: 68, y: 91, z: 147 })?.matches("diamond_block");
+  if (!joinedAlready){
+    await overworld.runCommandAsync(`camera @p fade time 0.2 1 0.2`);
+    await overworld.runCommandAsync(`summon blockbuilders:titlescreen 57 109 155`);
+    await overworld.runCommandAsync(`tp @p 57.32 128.00 212.70`);
+    system.runTimeout(async () => {
+      await overworld.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
+
+    }, 10);
+    system.runTimeout(async () => {
+      await startFlythrough("intro");
+      
+    }, 20);
+  }
+  overworld.getBlock({ x: 68, y: 91, z: 147 })?.setPermutation(BlockPermutation.resolve("minecraft:diamond_block"));
+}
+);
 //coin
 world.afterEvents.entityHitEntity.subscribe(async (event) => {
   let hitEntity = event.hitEntity;
