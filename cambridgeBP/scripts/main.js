@@ -1714,7 +1714,7 @@ async function startFlythrough(type) {
         { x: 57, y: 109, z: 155 }
       ]);
       let commands = [
-        { command: `kill @e[type=blockbuilders:titlescreen]`, interval: 987654321 }
+        { command: `tp @e[type=blockbuilders:titlescreen] 69.50 72.00 147.67`, interval: 987654321 }
       ];
       await playerFlythrough(path, 1.4, commands);
       break;
@@ -2016,7 +2016,7 @@ world13.afterEvents.playerSpawn.subscribe(
     let joinedAlready = overworld13.getBlock({ x: 68, y: 91, z: 147 })?.matches("diamond_block");
     if (!joinedAlready) {
       await overworld13.runCommandAsync(`camera @p fade time 0.2 1 0.2`);
-      await overworld13.runCommandAsync(`summon blockbuilders:titlescreen 57 109 155`);
+      await overworld13.runCommandAsync(`tp @e[type=blockbuilders:titlescreen] 57 109 155`);
       await overworld13.runCommandAsync(`tp @p 57.32 128.00 212.70`);
       system9.runTimeout(async () => {
         await overworld13.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);

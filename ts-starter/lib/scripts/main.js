@@ -18,7 +18,7 @@ world.afterEvents.playerSpawn.subscribe((event) => __awaiter(void 0, void 0, voi
     let joinedAlready = (_a = overworld.getBlock({ x: 68, y: 91, z: 147 })) === null || _a === void 0 ? void 0 : _a.matches("diamond_block");
     if (!joinedAlready) {
         yield overworld.runCommandAsync(`camera @p fade time 0.2 1 0.2`);
-        yield overworld.runCommandAsync(`summon blockbuilders:titlescreen 57 109 155`);
+        yield overworld.runCommandAsync(`tp @e[type=blockbuilders:titlescreen] 57 109 155`);
         yield overworld.runCommandAsync(`tp @p 57.32 128.00 212.70`);
         system.runTimeout(() => __awaiter(void 0, void 0, void 0, function* () {
             yield overworld.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);

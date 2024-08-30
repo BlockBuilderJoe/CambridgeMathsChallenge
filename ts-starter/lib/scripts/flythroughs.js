@@ -9,7 +9,7 @@ export function startFlythrough(type) {
                     { x: 57, y: 109, z: 155 },
                 ]);
                 let commands = [
-                    { command: `kill @e[type=blockbuilders:titlescreen]`, interval: 987654321 },
+                    { command: `tp @e[type=blockbuilders:titlescreen] 69.50 72.00 147.67`, interval: 987654321 },
                 ];
                 yield playerFlythrough(path, 1.4, commands);
                 break;
