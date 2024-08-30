@@ -1668,6 +1668,7 @@ import { world as world9 } from "@minecraft/server";
 var overworld9 = world9.getDimension("overworld");
 async function resetGame() {
   await overworld9.runCommandAsync(`camera @p fade time 0.1 2 0.4`);
+  await overworld9.runCommandAsync(`setblock 68 91 147 air`);
   await overworld9.runCommandAsync(`tp @p 30 96 106`);
   await resetCuisenaireGame();
   await overworld9.runCommandAsync(`tp @p -10 97 143`);
@@ -1707,6 +1708,17 @@ import { world as world10, system as system6 } from "@minecraft/server";
 var overworld10 = world10.getDimension("overworld");
 async function startFlythrough(type) {
   switch (type) {
+    case "intro": {
+      let path = await generatePath2([
+        { x: 57, y: 109, z: 75 },
+        { x: 57, y: 109, z: 155 }
+      ]);
+      let commands = [
+        { command: `kill @e[type=blockbuilders:titlescreen]`, interval: 987654321 }
+      ];
+      await playerFlythrough(path, 1.4, commands);
+      break;
+    }
     case "graduation": {
       let path = await generatePath2([
         { x: -25, y: 98, z: 134 },
@@ -1724,7 +1736,7 @@ async function startFlythrough(type) {
         { command: "particle blockbuilders:spell -117.93 106.88 129.75", interval: 47 },
         { command: "particle blockbuilders:spell -101.21 109.60 146.53", interval: 59 }
       ];
-      playerFlythrough(path, 1.5, commands);
+      playerFlythrough(path, 1, commands);
       break;
     }
     default:
@@ -1743,11 +1755,15 @@ async function playerFlythrough(path, speed, commands) {
       await overworld10.runCommandAsync(
         `camera @p set minecraft:free pos ${location.x} ${location.y} ${location.z} facing ${facingLocation.x} ${facingLocation.y} ${facingLocation.z}`
       );
-      for (const command of commands) {
-        if (command.interval === 0) {
-          await overworld10.runCommandAsync(command.command);
-        } else if (i % command.interval === 0) {
-          await overworld10.runCommandAsync(command.command);
+      if (commands) {
+        for (const command of commands) {
+          if (command.interval === 0) {
+            await overworld10.runCommandAsync(command.command);
+          } else if (i % command.interval === 0 && command.interval !== 987654321) {
+            await overworld10.runCommandAsync(command.command);
+          } else if (path.length - 5 == i && command.interval === 987654321) {
+            await overworld10.runCommandAsync(command.command);
+          }
         }
       }
       if (path.length - 5 == i) {
@@ -1995,6 +2011,23 @@ var potionStart = 0;
 var potionDrank = false;
 var meters = 0;
 var playerCanSeeInDark = false;
+world13.afterEvents.playerSpawn.subscribe(
+  async (event) => {
+    let joinedAlready = overworld13.getBlock({ x: 68, y: 91, z: 147 })?.matches("diamond_block");
+    if (!joinedAlready) {
+      await overworld13.runCommandAsync(`camera @p fade time 0.2 1 0.2`);
+      await overworld13.runCommandAsync(`summon blockbuilders:titlescreen 57 109 155`);
+      await overworld13.runCommandAsync(`tp @p 57.32 128.00 212.70`);
+      system9.runTimeout(async () => {
+        await overworld13.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
+      }, 10);
+      system9.runTimeout(async () => {
+        await startFlythrough("intro");
+      }, 20);
+    }
+    overworld13.getBlock({ x: 68, y: 91, z: 147 })?.setPermutation(BlockPermutation5.resolve("minecraft:diamond_block"));
+  }
+);
 world13.afterEvents.entityHitEntity.subscribe(async (event) => {
   let hitEntity = event.hitEntity;
   if (hitEntity.typeId === `blockbuilders:orb`) {
