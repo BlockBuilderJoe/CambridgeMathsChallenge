@@ -798,12 +798,15 @@ var overworld5 = world5.getDimension("overworld");
 var rodsPlaced = [];
 var checkPoint = "tp @p 29 96 114 facing 29 96 112";
 async function startCuisenaireTutorial() {
+  for (let i = 0; i < 1e3; i++) {
+    system2.clearRun(i);
+  }
   await overworld5.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"actionbar.cuisenaire.loading"}]}`);
   await overworld5.runCommandAsync(`camera @p fade time 0.1 4 0.4`);
   await overworld5.runCommandAsync(`tp @p -386 -31 126`);
   await overworld5.runCommandAsync(`tp @e[tag=fractionNpc] -391 -31 126`);
   await overworld5.runCommandAsync(`replaceitem entity @p slot.weapon.offhand 0 filled_map`);
-  system2.runTimeout(() => {
+  let id = system2.runTimeout(() => {
     overworld5.runCommandAsync(`dialogue open @e[tag=fractionNpc] @p fractionNpc7`);
   }, 30);
 }
