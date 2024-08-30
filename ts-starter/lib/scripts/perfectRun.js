@@ -8,7 +8,7 @@ export const perfectRun = [
         direction: "north",
         rodLength: 12,
         blockName: "orange_concrete",
-        successMessage: `actionbar.perfectRun.successMessage.0`,
+        successMessage: `{"translate":"actionbar.perfectRun.successMessage.0"}`,
     },
     //Gap 2 = 1/2 td or 12 blocks | Optimum rod = 1/2 rod
     {
@@ -17,7 +17,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 12,
         blockName: "orange_concrete",
-        successMessage: `actionbar.perfectRun.successMessage.1`,
+        successMessage: `{"translate":"actionbar.perfectRun.successMessage.1"}`,
     },
     //Gap 3 = 1/6 td or 4 blocks | Optimum rod = 1/6 rod
     {
@@ -26,7 +26,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 4,
         blockName: "yellow_concrete",
-        successMessage: `actionbar.perfectRun.successMessage.2`,
+        successMessage: `{"translate":"actionbar.perfectRun.successMessage.2"}`,
     },
     //Gap 4 = 3/4 td or 18 blocks | Optimum rod = 1/2,1/4 rod
     {
@@ -35,7 +35,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 12,
         blockName: "orange_concrete",
-        successMessage: `actionbar.perfectRun.successMessage.3`,
+        successMessage: `{"translate":"actionbar.perfectRun.successMessage.3"}`,
     },
     {
         number: 3,
@@ -43,7 +43,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 6,
         blockName: "lime_concrete",
-        successMessage: `actionbar.perfectRun.successMessage.4`,
+        successMessage: `{"translate":"actionbar.perfectRun.successMessage.4"}`,
     },
     //Gap 5 = 3/8 td or 9 blocks | Optimum rod = 1/4,1/8 rod
     {
@@ -52,7 +52,7 @@ export const perfectRun = [
         direction: "south",
         rodLength: 6,
         blockName: "lime_concrete",
-        successMessage: `actionbar.perfectRun.successMessage.5`,
+        successMessage: `{"translate":"actionbar.perfectRun.successMessage.5"}`,
     },
     {
         number: 4,
@@ -60,7 +60,7 @@ export const perfectRun = [
         direction: "south",
         rodLength: 3,
         blockName: "red_concrete",
-        successMessage: `actionbar.perfectRun.successMessage.6`,
+        successMessage: `{"translate":"actionbar.perfectRun.successMessage.6"}`,
     },
     //Gap 6 = 1 2/3 td or 40 blocks | Optimum rod = 1, 1/3, 1/3 rod
     {
@@ -69,7 +69,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 24,
         blockName: "green_concrete",
-        successMessage: `actionbar.perfectRun.successMessage.7`,
+        successMessage: `{"translate":"actionbar.perfectRun.successMessage.7"}`,
     },
     {
         number: 5,
@@ -77,7 +77,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 8,
         blockName: "purple_concrete",
-        successMessage: `actionbar.perfectRun.successMessage.8`,
+        successMessage: `{"translate":"actionbar.perfectRun.successMessage.8"}`,
     },
     {
         number: 5,
@@ -85,7 +85,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 8,
         blockName: "purple_concrete",
-        successMessage: `actionbar.perfectRun.successMessage.9`,
+        successMessage: `{"translate":"actionbar.perfectRun.successMessage.9"}`,
     },
     //Gap 7 = 3/2 td or 36 blocks | Optimum rod = 1, 1/2 rod
     {
@@ -94,7 +94,7 @@ export const perfectRun = [
         direction: "west",
         rodLength: 24,
         blockName: "green_concrete",
-        successMessage: `actionbar.perfectRun.successMessage.10`,
+        successMessage: `{"translate":"actionbar.perfectRun.successMessage.10"}`,
     },
     {
         number: 6,
@@ -102,7 +102,7 @@ export const perfectRun = [
         direction: "west",
         rodLength: 12,
         blockName: "orange_concrete",
-        successMessage: `actionbar.perfectRun.successMessage.11`,
+        successMessage: `{"translate":"actionbar.perfectRun.successMessage.11"}`,
     },
     //Gap 8 = 7/12 td or 14 blocks | Optimum rod = 1/3,1/4 rod
     {
@@ -111,7 +111,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 8,
         blockName: "purple_concrete",
-        successMessage: `actionbar.perfectRun.successMessage.12`,
+        successMessage: `{"translate":"actionbar.perfectRun.successMessage.12"}`,
     },
     {
         number: 7,
@@ -119,7 +119,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 6,
         blockName: "lime_concrete",
-        successMessage: `actionbar.perfectRun.successMessage.13`,
+        successMessage: `{"translate":"actionbar.perfectRun.successMessage.13"}`,
     },
     //Gap 9 = 5/24 td or 5 blocks | Optimum rod = 1/6,1/24 rod
     {
@@ -128,7 +128,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 4,
         blockName: "yellow_concrete",
-        successMessage: `actionbar.perfectRun.successMessage.14`,
+        successMessage: `{"translate":"actionbar.perfectRun.successMessage.14"}`,
     },
     {
         number: 8,
@@ -136,7 +136,7 @@ export const perfectRun = [
         direction: "east",
         rodLength: 1,
         blockName: "pink_concrete",
-        successMessage: `actionbar.perfectRun.successMessage.15`,
+        successMessage: `{"translate":"actionbar.perfectRun.successMessage.15"}`,
     },
 ];
 // The gap where the rod is placed. Change x and z depending on direction.

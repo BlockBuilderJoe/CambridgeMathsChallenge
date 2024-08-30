@@ -225,8 +225,8 @@ async function replayMessage(beginningMessage: string, fractions: any[]) {
 
       if (perfectRunFractions.length > 0) {
         //if you've reached the end of the list
-        const perfectRunFractionsSum = perfectRunFractions.join(" + ");
-        overworld.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"${perfectRunFractionsSum}"}]}`);
+        const perfectRunFractionsSum = perfectRunFractions.join(`, {"text":" + "}, `);
+        overworld.runCommandAsync(`titleraw @p actionbar {"rawtext": [${perfectRunFractionsSum}]}`);
       } else if (playerPlacedFractions.length > 0) {
         //else if there are fractions print them
         const fractionsSum = playerPlacedFractions.join(" + ");
