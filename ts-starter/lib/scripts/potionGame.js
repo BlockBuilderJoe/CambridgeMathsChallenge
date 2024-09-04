@@ -119,7 +119,7 @@ function barChart(slots) {
                     break;
                 }
                 case "minecraft:apple": {
-                    yield setGlass(slot, "red_stained_glass");
+                    yield setGlass(slot, "yellow_stained_glass");
                     yield setItemFrame(0, slot.slotNumber);
                     ingredients.apple = (ingredients.apple || 0) + slot.amount;
                     break;
@@ -131,19 +131,19 @@ function barChart(slots) {
                     break;
                 }
                 case "minecraft:potato": {
-                    yield setGlass(slot, "yellow_stained_glass");
+                    yield setGlass(slot, "green_stained_glass");
                     yield setItemFrame(2, slot.slotNumber);
                     ingredients.potato = (ingredients.potato || 0) + slot.amount;
                     break;
                 }
                 case "minecraft:beetroot": {
-                    yield setGlass(slot, "purple_stained_glass");
+                    yield setGlass(slot, "white_stained_glass");
                     yield setItemFrame(3, slot.slotNumber);
                     ingredients.beetroot = (ingredients.beetroot || 0) + slot.amount;
                     break;
                 }
                 case "minecraft:melon_slice": {
-                    yield setGlass(slot, "green_stained_glass");
+                    yield setGlass(slot, "light_blue_stained_glass");
                     yield setItemFrame(4, slot.slotNumber);
                     ingredients.melon = (ingredients.melon || 0) + slot.amount;
                     break;

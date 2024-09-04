@@ -135,6 +135,18 @@
                         "commands": [
                             ""
                         ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.rodNpc0Saved.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent graduation:junior"
+                        ]
                     }
                 ]
             },
@@ -270,6 +282,18 @@
                         },
                         "commands": [
                             ""
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.rodNpc1Saved.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent graduation:junior"
                         ]
                     }
                 ]
@@ -407,6 +431,18 @@
                         "commands": [
                             ""
                         ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.rodNpc2Saved.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent graduation:junior"
+                        ]
                     }
                 ]
             },
@@ -542,6 +578,18 @@
                         },
                         "commands": [
                             ""
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.rodNpc3Saved.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent graduation:junior"
                         ]
                     }
                 ]
@@ -691,6 +739,18 @@
                         "commands": [
                             ""
                         ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.rodNpc4Saved.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent graduation:junior"
+                        ]
                     }
                 ]
             },
@@ -838,6 +898,18 @@
                         },
                         "commands": [
                             ""
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.rodNpc5Saved.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent graduation:junior"
                         ]
                     }
                 ]
@@ -1103,6 +1175,18 @@
                         },
                         "commands": [
                             ""
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.rodNpc7Saved.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent graduation:junior"
                         ]
                     }
                 ]
@@ -2484,6 +2568,18 @@
                         "commands": [
                             "dialogue open @e[tag=ratioNpc] @p ratioNpc4"
                         ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.ratioNpc3.2"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "dialogue open @e[tag=ratioNpc] @p ratioNpc8"
+                        ]
                     }
                 ]
             },
@@ -3125,6 +3221,18 @@
                         },
                         "commands": [
                             "dialogue open @e[tag=fractionNpc] @p fractionNpc6"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.fractionNpc5.2"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "dialogue open @e[tag=fractionNpc] @p fractionNpc8"
                         ]
                     }
                 ]

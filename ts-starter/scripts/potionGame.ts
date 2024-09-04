@@ -113,7 +113,7 @@ async function barChart(slots: any) {
         break;
       }
       case "minecraft:apple": {
-        await setGlass(slot, "red_stained_glass");
+        await setGlass(slot, "yellow_stained_glass");
         await setItemFrame(0, slot.slotNumber);
         ingredients.apple = (ingredients.apple || 0) + slot.amount;
         break;
@@ -125,19 +125,19 @@ async function barChart(slots: any) {
         break;
       }
       case "minecraft:potato": {
-        await setGlass(slot, "yellow_stained_glass");
+        await setGlass(slot, "green_stained_glass");
         await setItemFrame(2, slot.slotNumber);
         ingredients.potato = (ingredients.potato || 0) + slot.amount;
         break;
       }
       case "minecraft:beetroot": {
-        await setGlass(slot, "purple_stained_glass");
+        await setGlass(slot, "white_stained_glass");
         await setItemFrame(3, slot.slotNumber);
         ingredients.beetroot = (ingredients.beetroot || 0) + slot.amount;
         break;
       }
       case "minecraft:melon_slice": {
-        await setGlass(slot, "green_stained_glass");
+        await setGlass(slot, "light_blue_stained_glass");
         await setItemFrame(4, slot.slotNumber);
         ingredients.melon = (ingredients.melon || 0) + slot.amount;
         break;

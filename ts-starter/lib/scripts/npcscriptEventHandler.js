@@ -102,7 +102,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
                 }
                 // start of main game.
                 case "1": {
-                    overworld.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc3`);
+                    yield overworld.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc3`);
                     startPotionGame();
                     break;
                 }
