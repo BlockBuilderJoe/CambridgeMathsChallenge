@@ -179,7 +179,6 @@ export const finalBlock = [
     startBlockName: "yellow_concrete",
     number: 2,
   }, //1/6 gap 3
-
   {
     location: { z: 86, y: 95, x: 65 },
     blockName: "orange_concrete",
@@ -194,7 +193,6 @@ export const finalBlock = [
     startBlockName: "orange_concrete",
     number: 3,
   }, //3/4 gap 4
-
   {
     location: { z: 97, y: 95, x: 66 },
     blockName: "lime_concrete",
@@ -209,7 +207,20 @@ export const finalBlock = [
     startBlockName: "lime_concrete",
     number: 4,
   }, //3/8 gap 5
-
+  {
+    location: { z: 97, y: 95, x: 66 },
+    blockName: "purple_concrete",
+    startLocation: { z: 89, y: 95, x: 66 },
+    startBlockName: "pink_concrete",
+    number: 4,
+  }, //3/8 gap 5
+  {
+    location: { z: 97, y: 95, x: 66 },
+    blockName: "pink_concrete",
+    startLocation: { z: 89, y: 95, x: 66 },
+    startBlockName: "purple_concrete",
+    number: 4,
+  }, //3/8 gap 5
   {
     location: { z: 100, y: 95, x: 108 },
     blockName: "purple_concrete",
@@ -229,6 +240,48 @@ export const finalBlock = [
     blockName: "purple_concrete",
     startLocation: { z: 100, y: 95, x: 69 },
     startBlockName: "purple_concrete",
+    number: 5,
+  }, //1 2/3 gap 6
+  {
+    location: { z: 100, y: 95, x: 108 },
+    blockName: "yellow_concrete",
+    startLocation: { z: 100, y: 95, x: 69 },
+    startBlockName: "orange_concrete",
+    number: 5,
+  }, //1 2/3 gap 6
+  {
+    location: { z: 100, y: 95, x: 108 },
+    blockName: "yellow_concrete",
+    startLocation: { z: 100, y: 95, x: 69 },
+    startBlockName: "green_concrete",
+    number: 5,
+  }, //1 2/3 gap 6
+  {
+    location: { z: 100, y: 95, x: 108 },
+    blockName: "orange_concrete",
+    startLocation: { z: 100, y: 95, x: 69 },
+    startBlockName: "yellow_concrete",
+    number: 5,
+  }, //1 2/3 gap 6
+  {
+    location: { z: 100, y: 95, x: 108 },
+    blockName: "orange_concrete",
+    startLocation: { z: 100, y: 95, x: 69 },
+    startBlockName: "green_concrete",
+    number: 5,
+  }, //1 2/3 gap 6
+  {
+    location: { z: 100, y: 95, x: 108 },
+    blockName: "green_concrete",
+    startLocation: { z: 100, y: 95, x: 69 },
+    startBlockName: "yellow_concrete",
+    number: 5,
+  }, //1 2/3 gap 6
+  {
+    location: { z: 100, y: 95, x: 108 },
+    blockName: "green_concrete",
+    startLocation: { z: 100, y: 95, x: 69 },
+    startBlockName: "orange_concrete",
     number: 5,
   }, //1 2/3 gap 6
   {

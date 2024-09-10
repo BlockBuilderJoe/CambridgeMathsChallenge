@@ -340,12 +340,12 @@ export async function resetGrid(location: Vector3) {
 export async function giveRods() {
   let rods = [
     { block: "green_concrete", amount: 2 },
-    { block: "orange_concrete", amount: 4 },
-    { block: "purple_concrete", amount: 3 },
+    { block: "orange_concrete", amount: 5 },
+    { block: "purple_concrete", amount: 4 },
     { block: "lime_concrete", amount: 3 },
-    { block: "yellow_concrete", amount: 2 },
+    { block: "yellow_concrete", amount: 3 },
     { block: "red_concrete", amount: 1 },
-    { block: "pink_concrete", amount: 1 },
+    { block: "pink_concrete", amount: 2 },
   ];
   //overworld.runCommandAsync(`clear @p`);
   overworld.runCommandAsync(`gamemode adventure`);
