@@ -1045,6 +1045,21 @@ async function replayMessage(beginningMessage, fractions) {
     world5.sendMessage(`Error: No fractions found`);
   }
 }
+async function noReplay(index) {
+  let replayConfig = replaySettings[index];
+  const direction = replayConfig.cartesianDirection;
+  const value = replayConfig.cartesionValue;
+  let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location[direction] === value);
+  rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location[direction] === value));
+  for (let i = 0; i < rodsPlacedToReplay.length; i++) {
+    overworld5.runCommandAsync(
+      `give @p ${rodsPlacedToReplay[i].blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
+    );
+  }
+  overworld5.runCommandAsync(replayConfig.tpStart);
+  overworld5.runCommandAsync(replayConfig.clearBlock);
+  overworld5.runCommandAsync(replayConfig.replenishGrass);
+}
 async function replay(index) {
   overworld5.runCommandAsync(`dialogue change @e[tag=rodNpc${index}] rodNpc${index}Default`);
   overworld5.runCommandAsync(`tp @p 31 96 116`);
@@ -1915,6 +1930,10 @@ system8.afterEvents.scriptEventReceive.subscribe(async (event) => {
     }
     case "rod:npcReplay": {
       replay(parseInt(event.message));
+      break;
+    }
+    case "rod:noReplay": {
+      noReplay(parseInt(event.message));
       break;
     }
     case "rod:npcComplete": {

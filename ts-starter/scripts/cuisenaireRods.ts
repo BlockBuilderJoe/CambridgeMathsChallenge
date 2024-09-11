@@ -238,6 +238,25 @@ async function replayMessage(beginningMessage: string, fractions: any[]) {
   }
 }
 
+export async function noReplay(index: number){
+  let replayConfig = replaySettings[index]; //stores all the replay settings for the different rods based on the npc index
+  const direction = replayConfig.cartesianDirection;
+  const value = replayConfig.cartesionValue;
+  //gets the rods they just placed.
+  let rodsPlacedToReplay = rodsPlaced.filter((rod) => rod.location && rod.location[direction] === value);
+  //removes the rods that were just placed from the rodsPlaced array.
+  rodsPlaced = rodsPlaced.filter((rod) => !(rod.location && rod.location[direction] === value));
+  for (let i = 0; i < rodsPlacedToReplay.length; i++) {
+    //gives the player the rods they placed back before replay.
+    overworld.runCommandAsync(
+      `give @p ${rodsPlacedToReplay[i].blockName} 1 0 {"minecraft:can_place_on":{"blocks":["tallgrass"]}}`
+    );
+  }
+  overworld.runCommandAsync(replayConfig.tpStart);
+  overworld.runCommandAsync(replayConfig.clearBlock);
+  overworld.runCommandAsync(replayConfig.replenishGrass);
+}
+
 export async function replay(index: number) {
   overworld.runCommandAsync(`dialogue change @e[tag=rodNpc${index}] rodNpc${index}Default`);
   overworld.runCommandAsync(`tp @p 31 96 116`); //moves the player out of frame.
@@ -303,6 +322,8 @@ export async function replay(index: number) {
     }
   }
 }
+
+
 
 function endReplay(player: any, tpStart: string, clearCommand: string, replenishGrass: string, combinedRods: any[]) {
   system.runTimeout(() => {

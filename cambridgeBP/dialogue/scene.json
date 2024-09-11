@@ -71,6 +71,18 @@
                             ]
                         },
                         "commands": [
+                            "scriptevent rod:noReplay 0"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.rodNpc0Fail.2"
+                                }
+                            ]
+                        },
+                        "commands": [
                             "scriptevent rod:npcComplete 0"
                         ]
                     }
@@ -215,6 +227,18 @@
                             "rawtext": [
                                 {
                                     "translate": "npc.button.rodNpc1Fail.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent rod:noReplay 1"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.rodNpc1Fail.2"
                                 }
                             ]
                         },
@@ -367,6 +391,18 @@
                             ]
                         },
                         "commands": [
+                            "scriptevent rod:noReplay 2"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.rodNpc2Fail.2"
+                                }
+                            ]
+                        },
+                        "commands": [
                             "scriptevent rod:npcComplete 2"
                         ]
                     }
@@ -511,6 +547,18 @@
                             "rawtext": [
                                 {
                                     "translate": "npc.button.rodNpc3Fail.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent rod:noReplay 3"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.rodNpc3Fail.2"
                                 }
                             ]
                         },
@@ -675,6 +723,18 @@
                             ]
                         },
                         "commands": [
+                            "scriptevent rod:noReplay 4"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.rodNpc4Fail.2"
+                                }
+                            ]
+                        },
+                        "commands": [
                             "scriptevent rod:npcComplete 4"
                         ]
                     }
@@ -831,6 +891,18 @@
                             "rawtext": [
                                 {
                                     "translate": "npc.button.rodNpc5Fail.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent rod:noReplay 5"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.rodNpc5Fail.2"
                                 }
                             ]
                         },
@@ -995,6 +1067,18 @@
                             ]
                         },
                         "commands": [
+                            "scriptevent rod:noReplay 6"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.rodNpc6Fail.2"
+                                }
+                            ]
+                        },
+                        "commands": [
                             "scriptevent rod:npcComplete 6"
                         ]
                     }
@@ -1143,6 +1227,18 @@
                             ]
                         },
                         "commands": [
+                            "scriptevent rod:noReplay 7"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.rodNpc7Fail.2"
+                                }
+                            ]
+                        },
+                        "commands": [
                             "scriptevent rod:npcComplete 7"
                         ]
                     }
@@ -1287,6 +1383,18 @@
                             "rawtext": [
                                 {
                                     "translate": "npc.button.rodNpc8Fail.1"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            "scriptevent rod:noReplay 8"
+                        ]
+                    },
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.rodNpc8Fail.2"
                                 }
                             ]
                         },
@@ -2249,12 +2357,6 @@
                         },
                         {
                             "text": "\n"
-                        },
-                        {
-                            "translate": "npc.text.scaleNpc13.3"
-                        },
-                        {
-                            "text": "\n"
                         }
                     ]
                 },
@@ -2338,18 +2440,6 @@
                         },
                         {
                             "translate": "npc.text.scaleNpc15.1"
-                        },
-                        {
-                            "text": "\n"
-                        },
-                        {
-                            "translate": "npc.text.scaleNpc15.2"
-                        },
-                        {
-                            "text": "\n"
-                        },
-                        {
-                            "translate": "npc.text.scaleNpc15.3"
                         },
                         {
                             "text": "\n"
@@ -2632,6 +2722,12 @@
                         },
                         {
                             "translate": "npc.text.ratioNpc4.6"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.ratioNpc4.7"
                         },
                         {
                             "text": "\n"
@@ -3164,6 +3260,18 @@
                         },
                         {
                             "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.fractionNpc4.4"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.fractionNpc4.5"
+                        },
+                        {
+                            "text": "\n"
                         }
                     ]
                 },
@@ -3255,10 +3363,16 @@
                             "text": "\n"
                         },
                         {
+                            "translate": "npc.text.fractionNpc6.1"
+                        },
+                        {
                             "text": "\n"
                         },
                         {
-                            "translate": "npc.text.fractionNpc6.2"
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.fractionNpc6.3"
                         },
                         {
                             "text": "\n"

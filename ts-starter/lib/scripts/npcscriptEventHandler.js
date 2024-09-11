@@ -1,5 +1,5 @@
 import { system, world } from "@minecraft/server";
-import { moveNpc, replay, startCuisenaireGame, movePlayerToCheckpoint, startCuisenaireTutorial, } from "./cuisenaireRods";
+import { moveNpc, replay, startCuisenaireGame, movePlayerToCheckpoint, startCuisenaireTutorial, noReplay, } from "./cuisenaireRods";
 import { openGate, closeGate } from "./gate";
 import { npcWalk } from "./npcWalk";
 import { nextWindow, giveGlass, startWindowTutorial, redoWindowGame, } from "./stainedGlassWindow";
@@ -17,6 +17,10 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
         }
         case "rod:npcReplay": {
             replay(parseInt(event.message));
+            break;
+        }
+        case "rod:noReplay": {
+            noReplay(parseInt(event.message));
             break;
         }
         case "rod:npcComplete": {

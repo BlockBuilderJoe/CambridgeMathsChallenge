@@ -8,6 +8,7 @@ import {
   giveRods,
   movePlayerToCheckpoint,
   startCuisenaireTutorial,
+  noReplay,
 } from "./cuisenaireRods";
 import { perfectRun } from "./perfectRun";
 import { openGate, closeGate } from "./gate";
@@ -36,6 +37,10 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
     }
     case "rod:npcReplay": {
       replay(parseInt(event.message));
+      break;
+    }
+    case "rod:noReplay": {
+      noReplay(parseInt(event.message));
       break;
     }
     case "rod:npcComplete": {
