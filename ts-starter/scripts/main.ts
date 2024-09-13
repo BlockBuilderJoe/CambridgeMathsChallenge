@@ -28,6 +28,7 @@ import { giveWand } from "./wand";
 import "./npcscriptEventHandler"; //handles the NPC script events
 import { isCoordinateWithinRange } from "./input";
 import { startFlythrough } from "./flythroughs";
+import { MinecraftBlockTypes } from "@minecraft/vanilla-data";
 
 let overworld = world.getDimension("overworld");
 let potion: string = "";
@@ -146,6 +147,8 @@ world.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId; //gets the item in the players hand
   let block = clickEvent.block;
   let brokenBlock = clickEvent.brokenBlockPermutation;
+
+  
   if (hand_item === "blockbuilders:mathmogicians_wand") {
     if (
       //cycles the numerators for the window game as they are the only ones that need to change.
@@ -158,10 +161,13 @@ world.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
     ) {
       // if it is the window numerator cycle the number.
       cycleNumberBlock(clickEvent);
-    } else {
+    } else if (brokenBlock.type.id.includes("stained_glass") && clickEvent.block.location.z === 192 && clickEvent.block.location.x <= 116 && clickEvent.block.location.x >= 16 )
+    { }
+    else {
       //if it is anything else replace the block.
       block.setPermutation(brokenBlock);
     }
+    
   }
 });
 

@@ -2200,6 +2200,7 @@ world13.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
       )
     ) {
       cycleNumberBlock(clickEvent);
+    } else if (brokenBlock.type.id.includes("stained_glass") && clickEvent.block.location.z === 192 && clickEvent.block.location.x <= 116 && clickEvent.block.location.x >= 16) {
     } else {
       block.setPermutation(brokenBlock);
     }
