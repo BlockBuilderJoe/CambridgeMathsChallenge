@@ -174,6 +174,13 @@ function mainTick() {
     //checks different things about the player each tick.
     world.getAllPlayers().forEach((player) => __awaiter(this, void 0, void 0, function* () {
         var _a, _b, _c;
+        //Graduation area detection.
+        if (player.location.x < -94 && player.location.x > -120) {
+            if (isPlayerOutOfBounds(8, player, { x: -103, y: 96, z: 135 })) {
+                overworld.runCommand(`dialogue open @e[tag=spawnNpc] ${player.name} spawnNpc4`);
+                overworld.runCommand(`tp @p -104 96 134 facing -104 96 142`);
+            }
+        }
         if (player.isOnGround) {
             let isOnGrass = (_b = (_a = overworld.getBlock(player.location)) === null || _a === void 0 ? void 0 : _a.permutation) === null || _b === void 0 ? void 0 : _b.matches("minecraft:short_grass");
             if (isOnGrass && player.location.z <= 104.99) {
@@ -181,13 +188,6 @@ function mainTick() {
                 yield moveGroundsKeeper(player.location);
                 overworld.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
                 overworld.runCommand(`playsound mob.villager.no @p`);
-            }
-            //Graduation area detection.
-            if (player.location.x < -94 && player.location.x > -120) {
-                if (isPlayerOutOfBounds(8, player, { x: -103, y: 96, z: 135 })) {
-                    overworld.runCommand(`dialogue open @e[tag=spawnNpc] ${player.name} spawnNpc4`);
-                    overworld.runCommand(`tp @p -104 96 134 facing -104 96 142`);
-                }
             }
         }
         if (player.isJumping && player.location.z <= 104.99) {

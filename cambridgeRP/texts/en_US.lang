@@ -151,8 +151,8 @@ actionbar.main.potion.drink=You drank the potion! Jump in the well to see the ef
 
 actionbar.npcWalk.ratioMessage.0.0=You should know, no one has won my well game
 actionbar.npcWalk.ratioMessage.0.1=in 50 years.
-actionbar.npcWalk.ratioMessage.1.0=The trick to getting the coins is to mix §1each potion §0in the §1correct ratio.
-actionbar.npcWalk.ratioMessage1.1= If it isn't strong enough, make a bigger batch!
+actionbar.npcWalk.ratioMessage.1.0=The trick to getting the coins is to mix §aeach potion§f in the §acorrect ratio§f.
+actionbar.npcWalk.ratioMessage.1.1=If it isn't strong enough, make a bigger batch!
 actionbar.npcWalk.ratioMessage.2.0=You'll need to make a §aNight Vision§f potion first.
 actionbar.npcWalk.ratioMessage.2.1=Then a big batch of §aBreathing§f potion to succeed.
 

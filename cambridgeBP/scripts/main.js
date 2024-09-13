@@ -2244,6 +2244,12 @@ function isPlayerOutOfBounds(blockDistance, player, fixedLocation) {
 }
 function mainTick() {
   world13.getAllPlayers().forEach(async (player) => {
+    if (player.location.x < -94 && player.location.x > -120) {
+      if (isPlayerOutOfBounds(8, player, { x: -103, y: 96, z: 135 })) {
+        overworld13.runCommand(`dialogue open @e[tag=spawnNpc] ${player.name} spawnNpc4`);
+        overworld13.runCommand(`tp @p -104 96 134 facing -104 96 142`);
+      }
+    }
     if (player.isOnGround) {
       let isOnGrass = overworld13.getBlock(player.location)?.permutation?.matches("minecraft:short_grass");
       if (isOnGrass && player.location.z <= 104.99) {
@@ -2251,12 +2257,6 @@ function mainTick() {
         await moveGroundsKeeper(player.location);
         overworld13.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
         overworld13.runCommand(`playsound mob.villager.no @p`);
-      }
-      if (player.location.x < -94 && player.location.x > -120) {
-        if (isPlayerOutOfBounds(8, player, { x: -103, y: 96, z: 135 })) {
-          overworld13.runCommand(`dialogue open @e[tag=spawnNpc] ${player.name} spawnNpc4`);
-          overworld13.runCommand(`tp @p -104 96 134 facing -104 96 142`);
-        }
       }
     }
     if (player.isJumping && player.location.z <= 104.99) {
