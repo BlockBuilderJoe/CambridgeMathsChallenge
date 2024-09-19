@@ -4,7 +4,7 @@ import { startFlythrough } from "./flythroughs";
 let overworld = world.getDimension("overworld");
 
 export async function startGraduation(level: string) {
-  await overworld.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
+  world.getAllPlayers()[0].runCommandAsync(`scoreboard objectives setdisplay sidebar`);
   await overworld.runCommandAsync(`camera @p fade time 0.1 4 0.2`);
   await overworld.runCommandAsync(`clear @p`);
   await overworld.runCommandAsync(`tp @p -76.75 94.06 135.00`);
