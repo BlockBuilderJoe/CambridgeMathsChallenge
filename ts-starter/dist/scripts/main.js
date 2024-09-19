@@ -1879,6 +1879,7 @@ async function generatePath2(path) {
 // scripts/graduation.ts
 var overworld11 = world11.getDimension("overworld");
 async function startGraduation(level) {
+  await overworld11.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
   await overworld11.runCommandAsync(`camera @p fade time 0.1 4 0.2`);
   await overworld11.runCommandAsync(`clear @p`);
   await overworld11.runCommandAsync(`tp @p -76.75 94.06 135.00`);

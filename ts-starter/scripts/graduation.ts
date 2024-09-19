@@ -4,6 +4,7 @@ import { startFlythrough } from "./flythroughs";
 let overworld = world.getDimension("overworld");
 
 export async function startGraduation(level: string) {
+  await overworld.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
   await overworld.runCommandAsync(`camera @p fade time 0.1 4 0.2`);
   await overworld.runCommandAsync(`clear @p`);
   await overworld.runCommandAsync(`tp @p -76.75 94.06 135.00`);
@@ -15,7 +16,7 @@ export async function startGraduation(level: string) {
   await overworld.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc11`);
   await overworld.runCommandAsync(`tp @e[tag=scaleNpc] -107.31 96.00 141.96 facing -101.31 96.00 141.96`);
   await overworld.runCommandAsync(`dialogue change @e[tag=scaleNpc] scaleNpc16`);
-  
+
   if (level == "junior") {
     overworld.runCommandAsync(`fill -16.30 94.06 137.54 -96.95 94.06 131.43 green_carpet replace purple_carpet`);
     overworld.runCommandAsync(`fill -16.30 94.06 137.54 -96.95 94.06 131.43 yellow_carpet replace red_carpet`);
@@ -44,6 +45,4 @@ export async function startGraduation(level: string) {
   system.runTimeout(() => {
     startFlythrough("graduation");
   }, 40);
-  
 }
-
