@@ -1,0 +1,6 @@
+# Configuration for mcworld_creator.py
+existing_mcworld=mathmogicianWorld.mcworld
+resource_pack=cambridgeRP
+behavior_pack=cambridgeBP
+output_name=RatioRiddles.mcworld
+world_directory=mathmogicianWorld
