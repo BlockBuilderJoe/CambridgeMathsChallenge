@@ -160,7 +160,7 @@ actionbar.npcWalk.fractionMessage.0.0=You §acan't jump or step on the grass §f
 actionbar.npcWalk.fractionMessage.0.1=You'll be told off if you do!
 actionbar.npcWalk.fractionMessage.1.0=I'll give you §adifferent sized magical rods
 actionbar.npcWalk.fractionMessage.1.1=§fto cross the gaps to save the students.
-actionbar.npcWalk.fractionMessage.2.0=Two gardens are §a1 td x 1 td§f blocks wide and one is §a1 td x2 td§f.
+actionbar.npcWalk.fractionMessage.2.0=Two gardens are §a1 td x 1 td§f wide and one is §a1 td x2 td§f.
 actionbar.npcWalk.fractionMessage.2.1=The length of each rod will be a fraction of 1 td.
 
 actionbar.npcWalk.scaleMessage.0.0=You'll need to change the §anumerator
