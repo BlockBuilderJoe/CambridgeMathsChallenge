@@ -3340,7 +3340,7 @@
                             ]
                         },
                         "commands": [
-                            "dialogue open @e[tag=fractionNpc] @p fractionNpc8"
+                            "dialogue open @e[tag=fractionNpc] @p fractionNpc10"
                         ]
                     }
                 ]
@@ -3508,6 +3508,46 @@
                             "rawtext": [
                                 {
                                     "translate": "npc.button.fractionNpc9.0"
+                                }
+                            ]
+                        },
+                        "commands": [
+                            ""
+                        ]
+                    }
+                ]
+            },
+            {
+                "scene_tag": "fractionNpc10",
+                "npc_name": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.name.fractionNpc"
+                        }
+                    ]
+                },
+                "text": {
+                    "rawtext": [
+                        {
+                            "translate": "npc.text.fractionNpc10.0"
+                        },
+                        {
+                            "text": "\n"
+                        },
+                        {
+                            "translate": "npc.text.fractionNpc10.1"
+                        },
+                        {
+                            "text": "\n"
+                        }
+                    ]
+                },
+                "buttons": [
+                    {
+                        "name": {
+                            "rawtext": [
+                                {
+                                    "translate": "npc.button.fractionNpc10.0"
                                 }
                             ]
                         },

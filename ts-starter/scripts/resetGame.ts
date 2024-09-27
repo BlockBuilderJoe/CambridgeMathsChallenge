@@ -7,6 +7,7 @@ import { closeGate } from "./gate";
 let overworld = world.getDimension("overworld");
 
 export async function resetGame() {
+  await overworld.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
   await overworld.runCommandAsync(`camera @p fade time 0.1 2 0.4`);
   await overworld.runCommandAsync(`setblock 68 91 147 air`);
   //Reset the game areas
@@ -36,7 +37,6 @@ export async function resetGame() {
   //Clean up the player
   await overworld.runCommandAsync(`gamemode adventure @p`);
   await overworld.runCommandAsync(`gamerule showcoordinates false`);
-  await overworld.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
   await overworld.runCommandAsync(`scoreboard players set Coins Depth 0`);
   await overworld.runCommandAsync(`clear @p`);
   await overworld.runCommandAsync(`effect @p clear`);

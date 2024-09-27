@@ -3,19 +3,13 @@ import {
   moveNpc,
   replay,
   startCuisenaireGame,
-  resetCuisenaireGame,
-  giveMap,
-  giveRods,
   movePlayerToCheckpoint,
   startCuisenaireTutorial,
   noReplay,
 } from "./cuisenaireRods";
-import { perfectRun } from "./perfectRun";
 import { openGate, closeGate } from "./gate";
 import { npcWalk } from "./npcWalk";
 import {
-  startWindowGame,
-  resetWindowGame,
   nextWindow,
   giveGlass,
   startWindowTutorial,

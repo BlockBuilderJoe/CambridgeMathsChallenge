@@ -213,7 +213,7 @@ async function redoWindowGame() {
   let windowIndex = await getWindowIndex();
   if (typeof windowIndex === "number") {
     let player = overworld4.getPlayers()[0];
-    player.runCommandAsync(`tp @p ~ ~ 190`);
+    player.runCommandAsync(`tp @p ~ 98 190`);
     await windowUndo(windows[windowIndex].cloneFrom, windows[windowIndex].cloneTo, windows[windowIndex].cloneInto);
     await giveWand();
     giveGlass();
@@ -875,7 +875,6 @@ async function resetCuisenaireGame() {
   checkPoint = "tp @p 29 96 114 facing 29 96 112";
   await overworld5.runCommandAsync(`tp @p 29 96 114 facing 29 96 112`);
   await overworld5.runCommandAsync(`tp @e[tag=fractionNpc] 29 96 112 facing 29 96 114`);
-  await overworld5.runCommandAsync(`scoreboard objectives setdisplay sidebar Students`);
   await overworld5.runCommandAsync(`scoreboard players set Saved Students 0`);
   await resetNPC(9);
   await resetGrid({ x: 19, y: 95, z: 81 });
@@ -884,6 +883,7 @@ async function startCuisenaireGame() {
   await giveRods();
   await giveMap();
   await resetCuisenaireGame();
+  await overworld5.runCommandAsync(`scoreboard objectives setdisplay sidebar Students`);
 }
 async function giveMap() {
   let chest = overworld5.getBlock({ x: 30, y: 91, z: 107 })?.getComponent("inventory");
@@ -1797,6 +1797,7 @@ async function generatePath(path) {
 import { world as world10 } from "@minecraft/server";
 var overworld9 = world10.getDimension("overworld");
 async function resetGame() {
+  await overworld9.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
   await overworld9.runCommandAsync(`camera @p fade time 0.1 2 0.4`);
   await overworld9.runCommandAsync(`setblock 68 91 147 air`);
   await overworld9.runCommandAsync(`tp @p 30 96 106`);
@@ -1822,7 +1823,6 @@ async function resetGame() {
   await closeGate("fraction");
   await overworld9.runCommandAsync(`gamemode adventure @p`);
   await overworld9.runCommandAsync(`gamerule showcoordinates false`);
-  await overworld9.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
   await overworld9.runCommandAsync(`scoreboard players set Coins Depth 0`);
   await overworld9.runCommandAsync(`clear @p`);
   await overworld9.runCommandAsync(`effect @p clear`);
@@ -1930,7 +1930,9 @@ async function generatePath2(path) {
 // scripts/graduation.ts
 var overworld11 = world12.getDimension("overworld");
 async function startGraduation(level) {
-  world12.getAllPlayers()[0].runCommandAsync(`scoreboard objectives setdisplay sidebar`);
+  world12.getAllPlayers().forEach((player) => {
+    player.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
+  });
   await overworld11.runCommandAsync(`camera @p fade time 0.1 4 0.2`);
   await overworld11.runCommandAsync(`clear @p`);
   await overworld11.runCommandAsync(`tp @p -76.75 94.06 135.00`);
@@ -2186,7 +2188,7 @@ world14.afterEvents.entityHitEntity.subscribe(async (event) => {
       overworld13.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc9 `);
     } else if (coinScore === 6) {
       system10.runTimeout(async () => {
-        await overworld13.runCommandAsync(`dialogue open @e[tag=fractionNpc] @p ratioNpc10`);
+        await overworld13.runCommandAsync(`dialogue open @e[tag=ratioNpc] @p ratioNpc10`);
       }, 20);
     }
     overworld13.runCommandAsync(`tp @e[type=blockbuilders:coin,tag=${tag}] ${x_location} 104 156 facing -11 104 156`);
@@ -2253,6 +2255,7 @@ world14.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
     ) {
       cycleNumberBlock(clickEvent);
     } else if (brokenBlock.type.id.includes("stained_glass") && clickEvent.block.location.z === 192 && clickEvent.block.location.x <= 116 && clickEvent.block.location.x >= 16) {
+      clickEvent.player.runCommandAsync(`give @p ${brokenBlock.type.id}`);
     } else {
       block.setPermutation(brokenBlock);
     }

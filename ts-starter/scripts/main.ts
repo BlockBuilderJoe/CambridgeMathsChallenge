@@ -39,11 +39,9 @@ world.afterEvents.playerSpawn.subscribe(async (event) => {
     await overworld.runCommandAsync(`tp @p 57.32 128.00 212.70`);
     system.runTimeout(async () => {
       await overworld.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
-
     }, 10);
     system.runTimeout(async () => {
       await startFlythrough("intro");
-      
     }, 20);
   }
   overworld.getBlock({ x: 68, y: 91, z: 147 })?.setPermutation(BlockPermutation.resolve("minecraft:diamond_block"));
@@ -73,7 +71,7 @@ world.afterEvents.entityHitEntity.subscribe(async (event) => {
       overworld.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc9 `);
     } else if (coinScore === 6) {
       system.runTimeout(async () => {
-        await overworld.runCommandAsync(`dialogue open @e[tag=fractionNpc] @p ratioNpc10`);
+        await overworld.runCommandAsync(`dialogue open @e[tag=ratioNpc] @p ratioNpc10`);
       }, 20);
     }
     overworld.runCommandAsync(`tp @e[type=blockbuilders:coin,tag=${tag}] ${x_location} 104 156 facing -11 104 156`);
@@ -155,7 +153,9 @@ world.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
       // if it is the window numerator cycle the number.
       cycleNumberBlock(clickEvent);
     } else if (brokenBlock.type.id.includes("stained_glass") && clickEvent.block.location.z === 192 && clickEvent.block.location.x <= 116 && clickEvent.block.location.x >= 16 )
-    { }
+    { 
+      clickEvent.player.runCommandAsync(`give @p ${brokenBlock.type.id}`);
+    }
     else {
       //if it is anything else replace the block.
       block.setPermutation(brokenBlock);

@@ -1,4 +1,5 @@
 import { world, GameMode } from "@minecraft/server";
+//sets the default game rules
 const setDefaultGameRules = () => {
     //stops all mob events
     world.getDimension("overworld").runCommandAsync(`mobevent events_enabled false`);

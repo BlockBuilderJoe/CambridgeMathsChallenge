@@ -1,7 +1,7 @@
 // scripts/main.ts
 import {
-  world as world13,
-  system as system9,
+  world as world14,
+  system as system10,
   BlockPermutation as BlockPermutation5
 } from "@minecraft/server";
 
@@ -213,7 +213,7 @@ async function redoWindowGame() {
   let windowIndex = await getWindowIndex();
   if (typeof windowIndex === "number") {
     let player = overworld4.getPlayers()[0];
-    player.runCommandAsync(`tp @p ~ ~ 190`);
+    player.runCommandAsync(`tp @p ~ 98 190`);
     await windowUndo(windows[windowIndex].cloneFrom, windows[windowIndex].cloneTo, windows[windowIndex].cloneInto);
     await giveWand();
     giveGlass();
@@ -875,7 +875,6 @@ async function resetCuisenaireGame() {
   checkPoint = "tp @p 29 96 114 facing 29 96 112";
   await overworld5.runCommandAsync(`tp @p 29 96 114 facing 29 96 112`);
   await overworld5.runCommandAsync(`tp @e[tag=fractionNpc] 29 96 112 facing 29 96 114`);
-  await overworld5.runCommandAsync(`scoreboard objectives setdisplay sidebar Students`);
   await overworld5.runCommandAsync(`scoreboard players set Saved Students 0`);
   await resetNPC(9);
   await resetGrid({ x: 19, y: 95, z: 81 });
@@ -884,6 +883,7 @@ async function startCuisenaireGame() {
   await giveRods();
   await giveMap();
   await resetCuisenaireGame();
+  await overworld5.runCommandAsync(`scoreboard objectives setdisplay sidebar Students`);
 }
 async function giveMap() {
   let chest = overworld5.getBlock({ x: 30, y: 91, z: 107 })?.getComponent("inventory");
@@ -1202,6 +1202,57 @@ function calculateDistance(a, b) {
   return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2) + Math.pow(a.z - b.z, 2));
 }
 
+// scripts/worldLock.ts
+import { world as world6, GameMode } from "@minecraft/server";
+var setDefaultGameRules = () => {
+  world6.getDimension("overworld").runCommandAsync(`mobevent events_enabled false`);
+  world6.gameRules.commandBlockOutput = false;
+  world6.gameRules.commandBlocksEnabled = false;
+  world6.gameRules.doDayLightCycle = false;
+  world6.gameRules.doEntityDrops = false;
+  world6.gameRules.doFireTick = false;
+  world6.gameRules.doImmediateRespawn = true;
+  world6.gameRules.doInsomnia = false;
+  world6.gameRules.doLimitedCrafting = false;
+  world6.gameRules.doMobLoot = false;
+  world6.gameRules.doMobSpawning = false;
+  world6.gameRules.doTileDrops = false;
+  world6.gameRules.doWeatherCycle = false;
+  world6.gameRules.drowningDamage = true;
+  world6.gameRules.fallDamage = false;
+  world6.gameRules.fireDamage = false;
+  world6.gameRules.freezeDamage = false;
+  world6.gameRules.functionCommandLimit = 100;
+  world6.gameRules.keepInventory = true;
+  world6.gameRules.maxCommandChainLength = 65536;
+  world6.gameRules.mobGriefing = false;
+  world6.gameRules.naturalRegeneration = false;
+  world6.gameRules.playersSleepingPercentage = 0;
+  world6.gameRules.projectilesCanBreakBlocks = false;
+  world6.gameRules.pvp = false;
+  world6.gameRules.randomTickSpeed = 3;
+  world6.gameRules.recipesUnlock = false;
+  world6.gameRules.respawnBlocksExplode = false;
+  world6.gameRules.sendCommandFeedback = false;
+  world6.gameRules.showBorderEffect = false;
+  world6.gameRules.showCoordinates = false;
+  world6.gameRules.showDeathMessages = false;
+  world6.gameRules.showRecipeMessages = false;
+  world6.gameRules.showTags = false;
+  world6.gameRules.spawnRadius = 0;
+  world6.gameRules.tntExplodes = false;
+  world6.gameRules.tntExplosionDropDecay = false;
+};
+world6.afterEvents.playerGameModeChange.subscribe(async (event) => {
+  if (event.toGameMode !== GameMode.adventure) {
+    event.player.setGameMode(GameMode.adventure);
+  }
+});
+world6.afterEvents.gameRuleChange.subscribe(async (event) => {
+  setDefaultGameRules();
+});
+setDefaultGameRules();
+
 // scripts/playerFacing.ts
 async function facing(blockLocation) {
   const xDiff = Math.abs(blockLocation.x);
@@ -1223,8 +1274,8 @@ async function facing(blockLocation) {
 }
 
 // scripts/potionGame.ts
-import { BlockPermutation as BlockPermutation4, system as system3, world as world6 } from "@minecraft/server";
-var overworld6 = world6.getDimension("overworld");
+import { BlockPermutation as BlockPermutation4, system as system4, world as world7 } from "@minecraft/server";
+var overworld6 = world7.getDimension("overworld");
 async function resetPotionGame() {
   await overworld6.runCommandAsync("tp @e[tag=coin0] -6 90 155");
   await overworld6.runCommandAsync("tp @e[tag=coin2] -5 86 154");
@@ -1255,8 +1306,8 @@ async function getSlots(hopper) {
   return slots;
 }
 async function givePotion() {
-  world6.getDimension("overworld").runCommandAsync(`clear @p minecraft:potion`);
-  world6.getDimension("overworld").runCommandAsync(`give @p minecraft:potion 1`);
+  world7.getDimension("overworld").runCommandAsync(`clear @p minecraft:potion`);
+  world7.getDimension("overworld").runCommandAsync(`give @p minecraft:potion 1`);
 }
 async function calculateRatio(ingredients) {
   let carrot = ingredients.carrot;
@@ -1372,7 +1423,7 @@ async function setGlass(slot, blockName) {
 async function setItemFrame(offset_z, slotNumber) {
   let cloneFrom = -7 + offset_z;
   let cloneTo = -7 + slotNumber;
-  world6.getDimension("overworld").runCommandAsync(`clone ${cloneFrom} 121 139 ${cloneFrom} 121 139 ${cloneTo} 97 139 replace`);
+  world7.getDimension("overworld").runCommandAsync(`clone ${cloneFrom} 121 139 ${cloneFrom} 121 139 ${cloneTo} 97 139 replace`);
 }
 async function potionMaker(slots) {
   await resetArea();
@@ -1384,7 +1435,7 @@ async function potionMaker(slots) {
   return { potion: potion2, seconds: seconds2 };
 }
 async function resetArea() {
-  await world6.getDimension("overworld").runCommandAsync("fill -7 96 138 -3 116 138 black_stained_glass replace");
+  await world7.getDimension("overworld").runCommandAsync("fill -7 96 138 -3 116 138 black_stained_glass replace");
 }
 async function giveIngredients() {
   overworld6.runCommand("replaceitem entity @p slot.hotbar 1 apple 20");
@@ -1394,7 +1445,7 @@ async function giveIngredients() {
   overworld6.runCommand("replaceitem entity @p slot.hotbar 5 melon_slice 20");
 }
 function displayTimer(potionStart2, seconds2, player, potionDescription) {
-  let timeLeft = (potionStart2 + seconds2 * 20 - system3.currentTick) / 20;
+  let timeLeft = (potionStart2 + seconds2 * 20 - system4.currentTick) / 20;
   if (timeLeft % 1 === 0) {
     player.onScreenDisplay.setActionBar(`Time left:
  ${potionDescription} ${timeLeft} seconds`);
@@ -1402,12 +1453,12 @@ function displayTimer(potionStart2, seconds2, player, potionDescription) {
 }
 
 // scripts/npcscriptEventHandler.ts
-import { system as system8, world as world12 } from "@minecraft/server";
+import { system as system9, world as world13 } from "@minecraft/server";
 
 // scripts/gate.ts
-import { world as world7 } from "@minecraft/server";
-var overworld7 = world7.getDimension("overworld");
-world7.afterEvents.buttonPush.subscribe(async (event) => {
+import { world as world8 } from "@minecraft/server";
+var overworld7 = world8.getDimension("overworld");
+world8.afterEvents.buttonPush.subscribe(async (event) => {
   closeGate("scale2");
 });
 async function openGate(location) {
@@ -1616,8 +1667,8 @@ async function closeGate(location) {
 }
 
 // scripts/npcWalk.ts
-import { world as world8, system as system4 } from "@minecraft/server";
-var overworld8 = world8.getDimension("overworld");
+import { world as world9, system as system5 } from "@minecraft/server";
+var overworld8 = world9.getDimension("overworld");
 var ratioMessage = [
   { message: `[{"translate":"actionbar.npcWalk.ratioMessage.0.0"},{"text":"
 "},{"translate":"actionbar.npcWalk.ratioMessage.0.1"}]`, step: 0 },
@@ -1705,7 +1756,7 @@ async function moveNpc2(path, type, messages) {
     const facingX = nextPoint.x;
     const facingY = nextPoint.y;
     const facingZ = nextPoint.z;
-    system4.runTimeout(async () => {
+    system5.runTimeout(async () => {
       await overworld8.runCommandAsync(`tp @e[tag=${type}Npc] ${x} ${y} ${z} facing ${facingX} ${facingY} ${facingZ}`);
       const messageMatch = messages.find((msg) => msg.step === i);
       if (messageMatch) {
@@ -1743,9 +1794,10 @@ async function generatePath(path) {
 }
 
 // scripts/resetGame.ts
-import { world as world9 } from "@minecraft/server";
-var overworld9 = world9.getDimension("overworld");
+import { world as world10 } from "@minecraft/server";
+var overworld9 = world10.getDimension("overworld");
 async function resetGame() {
+  await overworld9.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
   await overworld9.runCommandAsync(`camera @p fade time 0.1 2 0.4`);
   await overworld9.runCommandAsync(`setblock 68 91 147 air`);
   await overworld9.runCommandAsync(`tp @p 30 96 106`);
@@ -1771,7 +1823,6 @@ async function resetGame() {
   await closeGate("fraction");
   await overworld9.runCommandAsync(`gamemode adventure @p`);
   await overworld9.runCommandAsync(`gamerule showcoordinates false`);
-  await overworld9.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
   await overworld9.runCommandAsync(`scoreboard players set Coins Depth 0`);
   await overworld9.runCommandAsync(`clear @p`);
   await overworld9.runCommandAsync(`effect @p clear`);
@@ -1780,11 +1831,11 @@ async function resetGame() {
 }
 
 // scripts/graduation.ts
-import { system as system7, world as world11 } from "@minecraft/server";
+import { system as system8, world as world12 } from "@minecraft/server";
 
 // scripts/flythroughs.ts
-import { world as world10, system as system6 } from "@minecraft/server";
-var overworld10 = world10.getDimension("overworld");
+import { world as world11, system as system7 } from "@minecraft/server";
+var overworld10 = world11.getDimension("overworld");
 async function startFlythrough(type) {
   switch (type) {
     case "intro": {
@@ -1819,18 +1870,18 @@ async function startFlythrough(type) {
       break;
     }
     default:
-      world10.sendMessage("Flythough type: " + type + " not found");
+      world11.sendMessage("Flythough type: " + type + " not found");
       break;
   }
 }
 async function playerFlythrough(path, speed, commands) {
-  let player = world10.getAllPlayers()[0];
+  let player = world11.getAllPlayers()[0];
   let message = "";
   for (let i = 0; i < path.length - 1; i++) {
     let location = path[i];
     const nextPoint = path[i + 1];
     const facingLocation = { x: nextPoint.x, y: nextPoint.y, z: nextPoint.z };
-    system6.runTimeout(async () => {
+    system7.runTimeout(async () => {
       await overworld10.runCommandAsync(
         `camera @p set minecraft:free pos ${location.x} ${location.y} ${location.z} facing ${facingLocation.x} ${facingLocation.y} ${facingLocation.z}`
       );
@@ -1877,9 +1928,11 @@ async function generatePath2(path) {
 }
 
 // scripts/graduation.ts
-var overworld11 = world11.getDimension("overworld");
+var overworld11 = world12.getDimension("overworld");
 async function startGraduation(level) {
-  world11.getAllPlayers()[0].runCommandAsync(`scoreboard objectives setdisplay sidebar`);
+  world12.getAllPlayers().forEach((player) => {
+    player.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
+  });
   await overworld11.runCommandAsync(`camera @p fade time 0.1 4 0.2`);
   await overworld11.runCommandAsync(`clear @p`);
   await overworld11.runCommandAsync(`tp @p -76.75 94.06 135.00`);
@@ -1916,14 +1969,14 @@ async function startGraduation(level) {
     overworld11.runCommandAsync(`fill -106.69 111.00 164.45 -113.74 114.00 112.13 purple_wool replace green_wool`);
     overworld11.runCommandAsync(`dialogue change @e[tag=spawnNpc] spawnNpc3`);
   }
-  system7.runTimeout(() => {
+  system8.runTimeout(() => {
     startFlythrough("graduation");
   }, 40);
 }
 
 // scripts/npcscriptEventHandler.ts
-var overworld12 = world12.getDimension("overworld");
-system8.afterEvents.scriptEventReceive.subscribe(async (event) => {
+var overworld12 = world13.getDimension("overworld");
+system9.afterEvents.scriptEventReceive.subscribe(async (event) => {
   switch (event.id) {
     case "game:reset": {
       await resetGame();
@@ -1953,7 +2006,7 @@ system8.afterEvents.scriptEventReceive.subscribe(async (event) => {
         overworld12.runCommandAsync(`tp @e[tag=scaleNpc] 57 96 148 facing 66 97 148`);
         overworld12.runCommandAsync(`tp @e[tag=spawnNpc] 63 92 146`);
       } else {
-        world12.sendMessage(`spawnNpc triggered with invalid message`);
+        world13.sendMessage(`spawnNpc triggered with invalid message`);
       }
       break;
     }
@@ -2000,7 +2053,7 @@ system8.afterEvents.scriptEventReceive.subscribe(async (event) => {
           break;
         }
         case `6`: {
-          world12.sendMessage(`Graduation ceremony coming soon!`);
+          world13.sendMessage(`Graduation ceremony coming soon!`);
         }
       }
       break;
@@ -2088,31 +2141,31 @@ async function finalChapter() {
 }
 
 // scripts/main.ts
-var overworld13 = world13.getDimension("overworld");
+var overworld13 = world14.getDimension("overworld");
 var potion = "";
 var seconds = 0;
 var potionStart = 0;
 var potionDrank = false;
 var meters = 0;
 var playerCanSeeInDark = false;
-world13.afterEvents.playerSpawn.subscribe(
+world14.afterEvents.playerSpawn.subscribe(
   async (event) => {
     let joinedAlready = overworld13.getBlock({ x: 68, y: 91, z: 147 })?.matches("diamond_block");
     if (!joinedAlready) {
       await overworld13.runCommandAsync(`camera @p fade time 0.2 1 0.2`);
       await overworld13.runCommandAsync(`tp @e[type=blockbuilders:titlescreen] 57 109 155`);
       await overworld13.runCommandAsync(`tp @p 57.32 128.00 212.70`);
-      system9.runTimeout(async () => {
+      system10.runTimeout(async () => {
         await overworld13.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
       }, 10);
-      system9.runTimeout(async () => {
+      system10.runTimeout(async () => {
         await startFlythrough("intro");
       }, 20);
     }
     overworld13.getBlock({ x: 68, y: 91, z: 147 })?.setPermutation(BlockPermutation5.resolve("minecraft:diamond_block"));
   }
 );
-world13.afterEvents.entityHitEntity.subscribe(async (event) => {
+world14.afterEvents.entityHitEntity.subscribe(async (event) => {
   let hitEntity = event.hitEntity;
   if (hitEntity.typeId === `blockbuilders:orb`) {
     let tag = hitEntity.getTags();
@@ -2129,13 +2182,13 @@ world13.afterEvents.entityHitEntity.subscribe(async (event) => {
     await overworld13.runCommandAsync(`scoreboard players add Coins Depth 1`);
     let coinNumber = parseInt(tag[0].substring(4));
     let x_location = 0 - coinNumber;
-    let coinScore = world13.scoreboard.getObjective("Depth")?.getScore(`Coins`);
-    world13.sendMessage(`You have ${coinScore} coins!`);
+    let coinScore = world14.scoreboard.getObjective("Depth")?.getScore(`Coins`);
+    world14.sendMessage(`You have ${coinScore} coins!`);
     if (coinScore === 3) {
       overworld13.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc9 `);
     } else if (coinScore === 6) {
-      system9.runTimeout(async () => {
-        await overworld13.runCommandAsync(`dialogue open @e[tag=fractionNpc] @p ratioNpc10`);
+      system10.runTimeout(async () => {
+        await overworld13.runCommandAsync(`dialogue open @e[tag=ratioNpc] @p ratioNpc10`);
       }, 20);
     }
     overworld13.runCommandAsync(`tp @e[type=blockbuilders:coin,tag=${tag}] ${x_location} 104 156 facing -11 104 156`);
@@ -2150,7 +2203,7 @@ world13.afterEvents.entityHitEntity.subscribe(async (event) => {
     ({ potion, seconds } = await potionMaker(slots));
   }
 });
-world13.afterEvents.playerPlaceBlock.subscribe(async (event) => {
+world14.afterEvents.playerPlaceBlock.subscribe(async (event) => {
   let block = event.block;
   let player = event.player;
   let colour = block.permutation?.getState("color");
@@ -2189,7 +2242,7 @@ world13.afterEvents.playerPlaceBlock.subscribe(async (event) => {
     }
   }
 });
-world13.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
+world14.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId;
   let block = clickEvent.block;
   let brokenBlock = clickEvent.brokenBlockPermutation;
@@ -2202,6 +2255,7 @@ world13.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
     ) {
       cycleNumberBlock(clickEvent);
     } else if (brokenBlock.type.id.includes("stained_glass") && clickEvent.block.location.z === 192 && clickEvent.block.location.x <= 116 && clickEvent.block.location.x >= 16) {
+      clickEvent.player.runCommandAsync(`give @p ${brokenBlock.type.id}`);
     } else {
       block.setPermutation(brokenBlock);
     }
@@ -2210,7 +2264,7 @@ world13.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
 function applyPotionEffect(player, potion2, seconds2) {
   player.runCommand("scoreboard objectives setdisplay sidebar Depth");
   let tick = seconds2 * 20;
-  potionStart = system9.currentTick;
+  potionStart = system10.currentTick;
   switch (potion2) {
     case "water_breathing": {
       player.addEffect("water_breathing", tick);
@@ -2245,7 +2299,7 @@ function isPlayerOutOfBounds(blockDistance, player, fixedLocation) {
   return distance > blockDistance;
 }
 function mainTick() {
-  world13.getAllPlayers().forEach(async (player) => {
+  world14.getAllPlayers().forEach(async (player) => {
     if (player.location.x < -94 && player.location.x > -120) {
       if (isPlayerOutOfBounds(8, player, { x: -103, y: 96, z: 135 })) {
         overworld13.runCommand(`dialogue open @e[tag=spawnNpc] ${player.name} spawnNpc4`);
@@ -2298,7 +2352,7 @@ function mainTick() {
       }
     }
   });
-  system9.run(mainTick);
+  system10.run(mainTick);
 }
 async function surface(player) {
   player.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
@@ -2307,7 +2361,7 @@ async function surface(player) {
   player.addEffect("instant_health", 5);
   player.runCommandAsync(`effect @p clear`);
 }
-world13.afterEvents.itemCompleteUse.subscribe(async (event) => {
+world14.afterEvents.itemCompleteUse.subscribe(async (event) => {
   let player = event.source;
   if (event.itemStack?.typeId === "minecraft:potion") {
     if (potion === "poison") {
@@ -2322,7 +2376,7 @@ world13.afterEvents.itemCompleteUse.subscribe(async (event) => {
     event.source.runCommand("clear @p minecraft:glass_bottle");
   }
 });
-world13.afterEvents.entityHealthChanged.subscribe(async (event) => {
+world14.afterEvents.entityHealthChanged.subscribe(async (event) => {
   if (event.entity.typeId === "minecraft:player") {
     let player = event.entity;
     if (player.isInWater == true) {
@@ -2337,6 +2391,6 @@ world13.afterEvents.entityHealthChanged.subscribe(async (event) => {
     }
   }
 });
-system9.run(mainTick);
+system10.run(mainTick);
 
 //# sourceMappingURL=../debug/main.js.map

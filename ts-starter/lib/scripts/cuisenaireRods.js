@@ -21,7 +21,6 @@ export function resetCuisenaireGame() {
         checkPoint = "tp @p 29 96 114 facing 29 96 112";
         yield overworld.runCommandAsync(`tp @p 29 96 114 facing 29 96 112`);
         yield overworld.runCommandAsync(`tp @e[tag=fractionNpc] 29 96 112 facing 29 96 114`);
-        yield overworld.runCommandAsync(`scoreboard objectives setdisplay sidebar Students`);
         yield overworld.runCommandAsync(`scoreboard players set Saved Students 0`);
         yield resetNPC(9);
         yield resetGrid({ x: 19, y: 95, z: 81 }); //top left corner of the area.
@@ -32,6 +31,7 @@ export function startCuisenaireGame() {
         yield giveRods();
         yield giveMap();
         yield resetCuisenaireGame();
+        yield overworld.runCommandAsync(`scoreboard objectives setdisplay sidebar Students`);
     });
 }
 export function giveMap() {

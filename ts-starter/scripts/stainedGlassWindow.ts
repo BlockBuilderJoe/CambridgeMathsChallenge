@@ -152,7 +152,7 @@ export async function redoWindowGame() {
   let windowIndex = await getWindowIndex();
   if (typeof windowIndex === "number") {
     let player = overworld.getPlayers()[0];
-    player.runCommandAsync(`tp @p ~ ~ 190`); //moves the player in front of the window design.
+    player.runCommandAsync(`tp @p ~ 98 190`); //moves the player in front of the window design.
     await windowUndo(windows[windowIndex].cloneFrom, windows[windowIndex].cloneTo, windows[windowIndex].cloneInto);
     await giveWand();
     giveGlass();

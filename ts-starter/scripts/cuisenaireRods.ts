@@ -32,7 +32,6 @@ export async function resetCuisenaireGame() {
   checkPoint = "tp @p 29 96 114 facing 29 96 112";
   await overworld.runCommandAsync(`tp @p 29 96 114 facing 29 96 112`);
   await overworld.runCommandAsync(`tp @e[tag=fractionNpc] 29 96 112 facing 29 96 114`);
-  await overworld.runCommandAsync(`scoreboard objectives setdisplay sidebar Students`);
   await overworld.runCommandAsync(`scoreboard players set Saved Students 0`);
   await resetNPC(9);
   await resetGrid({ x: 19, y: 95, z: 81 }); //top left corner of the area.
@@ -42,6 +41,7 @@ export async function startCuisenaireGame() {
   await giveRods();
   await giveMap();
   await resetCuisenaireGame();
+  await overworld.runCommandAsync(`scoreboard objectives setdisplay sidebar Students`);
 }
 
 export async function giveMap() {
