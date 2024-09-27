@@ -4,31 +4,23 @@ import {
   system,
   Player,
   BlockPermutation,
-  Block,
-  Entity,
-  Scoreboard,
   EntityInventoryComponent,
 } from "@minecraft/server";
-import { windows, windowUndoHandler, windowScaleHandler, startWindowGame } from "./stainedGlassWindow";
+import { windows, windowScaleHandler} from "./stainedGlassWindow";
 import {
   cuisenaire,
   getBlockBehind,
-  resetGrid,
-  giveRods,
-  resetNPC,
   directionCheck,
-  startCuisenaireGame,
   moveGroundsKeeper,
 } from "./cuisenaireRods";
 
+import "./worldLock";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
-import { potionMaker, displayTimer, getSlots, giveIngredients, startPotionGame } from "./potionGame";
-import { giveWand } from "./wand";
+import { potionMaker, displayTimer, getSlots} from "./potionGame";
 import "./npcscriptEventHandler"; //handles the NPC script events
-import { isCoordinateWithinRange } from "./input";
 import { startFlythrough } from "./flythroughs";
-import { MinecraftBlockTypes } from "@minecraft/vanilla-data";
+
 
 let overworld = world.getDimension("overworld");
 let potion: string = "";
@@ -37,6 +29,7 @@ let potionStart = 0;
 let potionDrank = false;
 let meters = 0;
 let playerCanSeeInDark = false;
+
 
 world.afterEvents.playerSpawn.subscribe(async (event) => {
   let joinedAlready = overworld.getBlock({ x: 68, y: 91, z: 147 })?.matches("diamond_block");

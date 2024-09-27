@@ -1,6 +1,7 @@
 import { world, system, BlockPermutation, } from "@minecraft/server";
 import { windows, windowScaleHandler } from "./stainedGlassWindow";
 import { cuisenaire, getBlockBehind, directionCheck, moveGroundsKeeper, } from "./cuisenaireRods";
+import "./worldLock";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
 import { potionMaker, displayTimer, getSlots } from "./potionGame";
