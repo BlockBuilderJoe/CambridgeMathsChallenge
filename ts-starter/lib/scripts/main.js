@@ -54,6 +54,8 @@ world.afterEvents.entityHitEntity.subscribe((event) => __awaiter(void 0, void 0,
         }
         else if (coinScore === 6) {
             system.runTimeout(() => __awaiter(void 0, void 0, void 0, function* () {
+                event.damagingEntity.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
+                event.damagingEntity.removeEffect("minecraft:night_vision");
                 yield overworld.runCommandAsync(`dialogue open @e[tag=ratioNpc] @p ratioNpc10`);
             }), 20);
         }

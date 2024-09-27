@@ -93,6 +93,9 @@ function moveNpc(path, type, messages) {
                 if (path.length - 2 == i) {
                     // final point.
                     yield overworld.runCommandAsync(`dialogue open @e[tag=${type}Npc] @p ${type}Npc2`); // end of walk dialogue
+                    if (type == "ratio") {
+                        yield overworld.runCommandAsync(`dialogue change @e[tag=${type}Npc] ${type}Npc2`);
+                    }
                 }
             }), i * 5);
         }

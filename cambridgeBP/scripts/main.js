@@ -1767,6 +1767,9 @@ async function moveNpc2(path, type, messages) {
       }
       if (path.length - 2 == i) {
         await overworld8.runCommandAsync(`dialogue open @e[tag=${type}Npc] @p ${type}Npc2`);
+        if (type == "ratio") {
+          await overworld8.runCommandAsync(`dialogue change @e[tag=${type}Npc] ${type}Npc2`);
+        }
       }
     }, i * 5);
   }
@@ -2188,6 +2191,8 @@ world14.afterEvents.entityHitEntity.subscribe(async (event) => {
       overworld13.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc9 `);
     } else if (coinScore === 6) {
       system10.runTimeout(async () => {
+        event.damagingEntity.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
+        event.damagingEntity.removeEffect("minecraft:night_vision");
         await overworld13.runCommandAsync(`dialogue open @e[tag=ratioNpc] @p ratioNpc10`);
       }, 20);
     }

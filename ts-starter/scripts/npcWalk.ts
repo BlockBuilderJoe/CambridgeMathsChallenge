@@ -100,6 +100,9 @@ async function moveNpc(
       if (path.length - 2 == i) {
         // final point.
         await overworld.runCommandAsync(`dialogue open @e[tag=${type}Npc] @p ${type}Npc2`); // end of walk dialogue
+        if (type == "ratio"){
+          await overworld.runCommandAsync(`dialogue change @e[tag=${type}Npc] ${type}Npc2`);
+        }
       }
     }, i * 5);
   }

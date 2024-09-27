@@ -2931,7 +2931,7 @@
                             ]
                         },
                         "commands": [
-                            "dialogue open @e[tag=ratioNpc] @p ratioNpc2"
+                            ""
                         ]
                     }
                 ]

@@ -71,6 +71,8 @@ world.afterEvents.entityHitEntity.subscribe(async (event) => {
       overworld.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc9 `);
     } else if (coinScore === 6) {
       system.runTimeout(async () => {
+        event.damagingEntity.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
+        event.damagingEntity.removeEffect("minecraft:night_vision");
         await overworld.runCommandAsync(`dialogue open @e[tag=ratioNpc] @p ratioNpc10`);
       }, 20);
     }
