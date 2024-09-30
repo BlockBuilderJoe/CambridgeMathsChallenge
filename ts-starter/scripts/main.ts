@@ -1,26 +1,13 @@
-import {
-  world,
-  Vector3,
-  system,
-  Player,
-  BlockPermutation,
-  EntityInventoryComponent,
-} from "@minecraft/server";
-import { windows, windowScaleHandler} from "./stainedGlassWindow";
-import {
-  cuisenaire,
-  getBlockBehind,
-  directionCheck,
-  moveGroundsKeeper,
-} from "./cuisenaireRods";
+import { world, Vector3, system, Player, BlockPermutation, EntityInventoryComponent } from "@minecraft/server";
+import { windows, windowScaleHandler } from "./stainedGlassWindow";
+import { cuisenaire, getBlockBehind, directionCheck, moveGroundsKeeper } from "./cuisenaireRods";
 
 import "./worldLock";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
-import { potionMaker, displayTimer, getSlots} from "./potionGame";
+import { potionMaker, displayTimer, getSlots } from "./potionGame";
 import "./npcscriptEventHandler"; //handles the NPC script events
 import { startFlythrough } from "./flythroughs";
-
 
 let overworld = world.getDimension("overworld");
 let potion: string = "";
@@ -30,10 +17,10 @@ let potionDrank = false;
 let meters = 0;
 let playerCanSeeInDark = false;
 
-
 world.afterEvents.playerSpawn.subscribe(async (event) => {
+  event.initialSpawn = false;
   let joinedAlready = overworld.getBlock({ x: 68, y: 91, z: 147 })?.matches("diamond_block");
-  if (!joinedAlready){
+  if (!joinedAlready) {
     await overworld.runCommandAsync(`camera @p fade time 0.2 1 0.2`);
     await overworld.runCommandAsync(`tp @e[type=blockbuilders:titlescreen] 57 109 155`);
     await overworld.runCommandAsync(`tp @p 57.32 128.00 212.70`);
@@ -45,8 +32,8 @@ world.afterEvents.playerSpawn.subscribe(async (event) => {
     }, 20);
   }
   overworld.getBlock({ x: 68, y: 91, z: 147 })?.setPermutation(BlockPermutation.resolve("minecraft:diamond_block"));
-}
-);
+});
+
 //coin
 world.afterEvents.entityHitEntity.subscribe(async (event) => {
   let hitEntity = event.hitEntity;
@@ -141,7 +128,6 @@ world.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
   let block = clickEvent.block;
   let brokenBlock = clickEvent.brokenBlockPermutation;
 
-  
   if (hand_item === "blockbuilders:mathmogicians_wand") {
     if (
       //cycles the numerators for the window game as they are the only ones that need to change.
@@ -154,15 +140,17 @@ world.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
     ) {
       // if it is the window numerator cycle the number.
       cycleNumberBlock(clickEvent);
-    } else if (brokenBlock.type.id.includes("stained_glass") && clickEvent.block.location.z === 192 && clickEvent.block.location.x <= 116 && clickEvent.block.location.x >= 16 )
-    { 
+    } else if (
+      brokenBlock.type.id.includes("stained_glass") &&
+      clickEvent.block.location.z === 192 &&
+      clickEvent.block.location.x <= 116 &&
+      clickEvent.block.location.x >= 16
+    ) {
       clickEvent.player.runCommandAsync(`give @p ${brokenBlock.type.id}`);
-    }
-    else {
+    } else {
       //if it is anything else replace the block.
       block.setPermutation(brokenBlock);
     }
-    
   }
 });
 
@@ -212,9 +200,9 @@ function mainTick() {
   world.getAllPlayers().forEach(async (player) => {
     //Graduation area detection.
     if (player.location.x < -94 && player.location.x > -120) {
-      if(isPlayerOutOfBounds(8, player, {x: -103, y: 96, z: 135})){
+      if (isPlayerOutOfBounds(8, player, { x: -103, y: 96, z: 135 })) {
         overworld.runCommand(`dialogue open @e[tag=spawnNpc] ${player.name} spawnNpc4`);
-        overworld.runCommand(`tp @p -104 96 134 facing -104 96 142`)
+        overworld.runCommand(`tp @p -104 96 134 facing -104 96 142`);
       }
     }
     if (player.isOnGround) {
@@ -225,7 +213,6 @@ function mainTick() {
         overworld.runCommand(`dialogue open @e[tag=groundskeeper] ${player.name} groundskeeper`);
         overworld.runCommand(`playsound mob.villager.no @p`);
       }
-      
     }
     if (player.isJumping && player.location.z <= 104.99) {
       await moveGroundsKeeper(player.location);
@@ -275,7 +262,6 @@ async function surface(player: any) {
   player.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
   player.addEffect("instant_health", 5);
   player.runCommandAsync(`effect @p clear`);
-  
 }
 
 //listens for the potion to be fully drunk.

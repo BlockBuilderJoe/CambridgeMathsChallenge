@@ -1,9 +1,5 @@
 // scripts/main.ts
-import {
-  world as world14,
-  system as system10,
-  BlockPermutation as BlockPermutation5
-} from "@minecraft/server";
+import { world as world14, system as system10, BlockPermutation as BlockPermutation5 } from "@minecraft/server";
 
 // scripts/stainedGlassWindow.ts
 import { world as world4, system } from "@minecraft/server";
@@ -2151,23 +2147,22 @@ var potionStart = 0;
 var potionDrank = false;
 var meters = 0;
 var playerCanSeeInDark = false;
-world14.afterEvents.playerSpawn.subscribe(
-  async (event) => {
-    let joinedAlready = overworld13.getBlock({ x: 68, y: 91, z: 147 })?.matches("diamond_block");
-    if (!joinedAlready) {
-      await overworld13.runCommandAsync(`camera @p fade time 0.2 1 0.2`);
-      await overworld13.runCommandAsync(`tp @e[type=blockbuilders:titlescreen] 57 109 155`);
-      await overworld13.runCommandAsync(`tp @p 57.32 128.00 212.70`);
-      system10.runTimeout(async () => {
-        await overworld13.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
-      }, 10);
-      system10.runTimeout(async () => {
-        await startFlythrough("intro");
-      }, 20);
-    }
-    overworld13.getBlock({ x: 68, y: 91, z: 147 })?.setPermutation(BlockPermutation5.resolve("minecraft:diamond_block"));
+world14.afterEvents.playerSpawn.subscribe(async (event) => {
+  event.initialSpawn = false;
+  let joinedAlready = overworld13.getBlock({ x: 68, y: 91, z: 147 })?.matches("diamond_block");
+  if (!joinedAlready) {
+    await overworld13.runCommandAsync(`camera @p fade time 0.2 1 0.2`);
+    await overworld13.runCommandAsync(`tp @e[type=blockbuilders:titlescreen] 57 109 155`);
+    await overworld13.runCommandAsync(`tp @p 57.32 128.00 212.70`);
+    system10.runTimeout(async () => {
+      await overworld13.runCommandAsync(`tp @p 69 97 147 facing 41 97 147`);
+    }, 10);
+    system10.runTimeout(async () => {
+      await startFlythrough("intro");
+    }, 20);
   }
-);
+  overworld13.getBlock({ x: 68, y: 91, z: 147 })?.setPermutation(BlockPermutation5.resolve("minecraft:diamond_block"));
+});
 world14.afterEvents.entityHitEntity.subscribe(async (event) => {
   let hitEntity = event.hitEntity;
   if (hitEntity.typeId === `blockbuilders:orb`) {

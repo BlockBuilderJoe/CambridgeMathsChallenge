@@ -1,6 +1,6 @@
-import { world, system, BlockPermutation, } from "@minecraft/server";
+import { world, system, BlockPermutation } from "@minecraft/server";
 import { windows, windowScaleHandler } from "./stainedGlassWindow";
-import { cuisenaire, getBlockBehind, directionCheck, moveGroundsKeeper, } from "./cuisenaireRods";
+import { cuisenaire, getBlockBehind, directionCheck, moveGroundsKeeper } from "./cuisenaireRods";
 import "./worldLock";
 import { cycleNumberBlock } from "./output";
 import { facing } from "./playerFacing";
@@ -16,6 +16,7 @@ let meters = 0;
 let playerCanSeeInDark = false;
 world.afterEvents.playerSpawn.subscribe((event) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
+    event.initialSpawn = false;
     let joinedAlready = (_a = overworld.getBlock({ x: 68, y: 91, z: 147 })) === null || _a === void 0 ? void 0 : _a.matches("diamond_block");
     if (!joinedAlready) {
         yield overworld.runCommandAsync(`camera @p fade time 0.2 1 0.2`);
@@ -128,7 +129,10 @@ world.afterEvents.playerBreakBlock.subscribe((clickEvent) => __awaiter(void 0, v
             // if it is the window numerator cycle the number.
             cycleNumberBlock(clickEvent);
         }
-        else if (brokenBlock.type.id.includes("stained_glass") && clickEvent.block.location.z === 192 && clickEvent.block.location.x <= 116 && clickEvent.block.location.x >= 16) {
+        else if (brokenBlock.type.id.includes("stained_glass") &&
+            clickEvent.block.location.z === 192 &&
+            clickEvent.block.location.x <= 116 &&
+            clickEvent.block.location.x >= 16) {
             clickEvent.player.runCommandAsync(`give @p ${brokenBlock.type.id}`);
         }
         else {
