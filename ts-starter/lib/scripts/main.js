@@ -49,14 +49,15 @@ world.afterEvents.entityHitEntity.subscribe((event) => __awaiter(void 0, void 0,
         let coinNumber = parseInt(tag[0].substring(4));
         let x_location = 0 - coinNumber;
         let coinScore = (_c = world.scoreboard.getObjective("Depth")) === null || _c === void 0 ? void 0 : _c.getScore(`Coins`);
-        world.sendMessage(`You have ${coinScore} coins!`);
         if (coinScore === 3) {
             overworld.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc9 `);
         }
         else if (coinScore === 6) {
             system.runTimeout(() => __awaiter(void 0, void 0, void 0, function* () {
-                event.damagingEntity.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
-                event.damagingEntity.removeEffect("minecraft:night_vision");
+                overworld.getPlayers().forEach((player) => {
+                    player.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
+                    player.runCommandAsync(`effect @p clear`);
+                });
                 yield overworld.runCommandAsync(`dialogue open @e[tag=ratioNpc] @p ratioNpc10`);
             }), 20);
         }
@@ -183,7 +184,7 @@ function isPlayerOutOfBounds(blockDistance, player, fixedLocation) {
 function mainTick() {
     //checks different things about the player each tick.
     world.getAllPlayers().forEach((player) => __awaiter(this, void 0, void 0, function* () {
-        var _a, _b, _c;
+        var _a, _b, _c, _d;
         //Graduation area detection.
         if (player.location.x < -94 && player.location.x > -120) {
             if (isPlayerOutOfBounds(8, player, { x: -103, y: 96, z: 135 })) {
@@ -207,7 +208,10 @@ function mainTick() {
         }
         if (player.isInWater) {
             if (player.location.x < 0) {
-                player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
+                let coinScore = (_d = world.scoreboard.getObjective("Depth")) === null || _d === void 0 ? void 0 : _d.getScore(`Coins`);
+                if (coinScore != 6) {
+                    player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
+                }
                 meters = 94 - Math.floor(player.location.y);
                 player.runCommand(`scoreboard players set Meters Depth ${meters}`);
             }

@@ -53,13 +53,14 @@ world.afterEvents.entityHitEntity.subscribe(async (event) => {
     let coinNumber = parseInt(tag[0].substring(4));
     let x_location = 0 - coinNumber;
     let coinScore = world.scoreboard.getObjective("Depth")?.getScore(`Coins`);
-    world.sendMessage(`You have ${coinScore} coins!`);
     if (coinScore === 3) {
       overworld.runCommandAsync(`dialogue change @e[tag=ratioNpc] ratioNpc9 `);
     } else if (coinScore === 6) {
       system.runTimeout(async () => {
-        event.damagingEntity.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
-        event.damagingEntity.removeEffect("minecraft:night_vision");
+        overworld.getPlayers().forEach((player) => {
+          player.runCommandAsync(`scoreboard objectives setdisplay sidebar`);
+          player.runCommandAsync(`effect @p clear`);
+        });
         await overworld.runCommandAsync(`dialogue open @e[tag=ratioNpc] @p ratioNpc10`);
       }, 20);
     }
@@ -222,7 +223,10 @@ function mainTick() {
 
     if (player.isInWater) {
       if (player.location.x < 0) {
-        player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
+        let coinScore = world.scoreboard.getObjective("Depth")?.getScore(`Coins`);
+        if (coinScore != 6) {
+          player.runCommand(`scoreboard objectives setdisplay sidebar Depth`);
+        }
         meters = 94 - Math.floor(player.location.y);
         player.runCommand(`scoreboard players set Meters Depth ${meters}`);
       }
