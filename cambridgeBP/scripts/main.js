@@ -244,6 +244,7 @@ async function resetWindowGame() {
 async function startWindowTutorial() {
   overworld4.runCommandAsync(`clear @p`);
   await giveWand();
+  giveGlass();
 }
 async function guildMasterCheck(windowIndex, enoughGlass) {
   const window = windows[windowIndex];
@@ -2043,7 +2044,6 @@ system9.afterEvents.scriptEventReceive.subscribe(async (event) => {
           break;
         }
         case "1": {
-          giveGlass();
           startWindowTutorial();
           break;
         }
