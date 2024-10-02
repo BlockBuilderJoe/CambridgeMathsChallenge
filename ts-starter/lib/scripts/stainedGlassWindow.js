@@ -170,6 +170,7 @@ export function startWindowTutorial() {
     return __awaiter(this, void 0, void 0, function* () {
         overworld.runCommandAsync(`clear @p`);
         yield giveWand();
+        giveGlass();
     });
 }
 export function startWindowGame() {

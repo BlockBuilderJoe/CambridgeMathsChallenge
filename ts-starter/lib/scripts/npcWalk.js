@@ -1,7 +1,10 @@
 import { world, system } from "@minecraft/server";
 let overworld = world.getDimension("overworld");
 const ratioMessage = [
-    { message: `[{"translate":"actionbar.npcWalk.ratioMessage.0.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.ratioMessage.0.1"}]`, step: 0 },
+    {
+        message: `[{"translate":"actionbar.npcWalk.ratioMessage.0.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.ratioMessage.0.1"}]`,
+        step: 0,
+    },
     {
         message: `[{"translate":"actionbar.npcWalk.ratioMessage.1.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.ratioMessage.1.1"}]`,
         step: 18,
@@ -12,20 +15,32 @@ const ratioMessage = [
     },
 ];
 const fractionMessage = [
-    { message: `[{"translate":"actionbar.npcWalk.fractionMessage.0.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.fractionMessage.0.1"}]`, step: 0 },
-    { message: `[{"translate":"actionbar.npcWalk.fractionMessage.1.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.fractionMessage.1.1"}]`, step: 25 },
+    {
+        message: `[{"translate":"actionbar.npcWalk.fractionMessage.0.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.fractionMessage.0.1"}]`,
+        step: 0,
+    },
+    {
+        message: `[{"translate":"actionbar.npcWalk.fractionMessage.1.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.fractionMessage.1.1"}]`,
+        step: 25,
+    },
     {
         message: `[{"translate":"actionbar.npcWalk.fractionMessage.2.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.fractionMessage.2.1"}]`,
         step: 45,
     },
 ];
 const scaleMessage = [
-    { message: `[{"translate":"actionbar.npcWalk.scaleMessage.0.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.scaleMessage.0.1"}]`, step: 0 },
+    {
+        message: `[{"translate":"actionbar.npcWalk.scaleMessage.0.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.scaleMessage.0.1"}]`,
+        step: 0,
+    },
     {
         message: `[{"translate":"actionbar.npcWalk.scaleMessage.1.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.scaleMessage.1.1"}]`,
         step: 25,
     },
-    { message: `[{"translate":"actionbar.npcWalk.scaleMessage.2.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.scaleMessage.2.1"}]`, step: 50 },
+    {
+        message: `[{"translate":"actionbar.npcWalk.scaleMessage.2.0"},{"text":"\n"},{"translate":"actionbar.npcWalk.scaleMessage.2.1"}]`,
+        step: 50,
+    },
 ];
 export function npcWalk(type) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -92,10 +107,8 @@ function moveNpc(path, type, messages) {
                 }
                 if (path.length - 2 == i) {
                     // final point.
-                    yield overworld.runCommandAsync(`dialogue open @e[tag=${type}Npc] @p ${type}Npc2`); // end of walk dialogue
-                    if (type == "ratio") {
-                        yield overworld.runCommandAsync(`dialogue change @e[tag=${type}Npc] ${type}Npc2`);
-                    }
+                    yield overworld.runCommandAsync(`dialogue open @e[tag=${type}Npc] @p ${type}Npc2`); // end of walk dialoguez
+                    yield overworld.runCommandAsync(`dialogue change @e[tag=${type}Npc] ${type}Npc2`);
                 }
             }), i * 5);
         }

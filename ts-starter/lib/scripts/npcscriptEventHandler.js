@@ -2,7 +2,7 @@ import { system, world } from "@minecraft/server";
 import { moveNpc, replay, startCuisenaireGame, movePlayerToCheckpoint, startCuisenaireTutorial, noReplay, } from "./cuisenaireRods";
 import { openGate, closeGate } from "./gate";
 import { npcWalk } from "./npcWalk";
-import { nextWindow, giveGlass, startWindowTutorial, redoWindowGame, } from "./stainedGlassWindow";
+import { nextWindow, giveGlass, startWindowTutorial, redoWindowGame } from "./stainedGlassWindow";
 import { startPotionGame, giveIngredients } from "./potionGame";
 import { resetGame } from "./resetGame";
 import { giveWand } from "./wand";
@@ -61,6 +61,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => __awaiter(void 0, voi
                     closeGate("ratio");
                     closeGate("fraction");
                     yield npcWalk("scale");
+                    overworld.runCommandAsync(`clear @a`);
                     break;
                 }
                 case "1": {

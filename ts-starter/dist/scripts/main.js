@@ -244,6 +244,7 @@ async function resetWindowGame() {
 async function startWindowTutorial() {
   overworld4.runCommandAsync(`clear @p`);
   await giveWand();
+  giveGlass();
 }
 async function guildMasterCheck(windowIndex, enoughGlass) {
   const window = windows[windowIndex];
@@ -1034,7 +1035,9 @@ async function replayMessage(beginningMessage, fractions) {
         overworld5.runCommandAsync(`titleraw @p actionbar {"rawtext": [${perfectRunFractionsSum}]}`);
       } else if (playerPlacedFractions.length > 0) {
         const fractionsSum = playerPlacedFractions.join(" + ");
-        overworld5.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"${beginningMessage}"}, {"translate":"${fractionsSum}"}]}`);
+        overworld5.runCommandAsync(
+          `titleraw @p actionbar {"rawtext": [{"translate":"${beginningMessage}"}, {"translate":"${fractionsSum}"}]}`
+        );
       }
     }
   } else {
@@ -1666,8 +1669,11 @@ async function closeGate(location) {
 import { world as world9, system as system5 } from "@minecraft/server";
 var overworld8 = world9.getDimension("overworld");
 var ratioMessage = [
-  { message: `[{"translate":"actionbar.npcWalk.ratioMessage.0.0"},{"text":"
-"},{"translate":"actionbar.npcWalk.ratioMessage.0.1"}]`, step: 0 },
+  {
+    message: `[{"translate":"actionbar.npcWalk.ratioMessage.0.0"},{"text":"
+"},{"translate":"actionbar.npcWalk.ratioMessage.0.1"}]`,
+    step: 0
+  },
   {
     message: `[{"translate":"actionbar.npcWalk.ratioMessage.1.0"},{"text":"
 "},{"translate":"actionbar.npcWalk.ratioMessage.1.1"}]`,
@@ -1680,10 +1686,16 @@ var ratioMessage = [
   }
 ];
 var fractionMessage = [
-  { message: `[{"translate":"actionbar.npcWalk.fractionMessage.0.0"},{"text":"
-"},{"translate":"actionbar.npcWalk.fractionMessage.0.1"}]`, step: 0 },
-  { message: `[{"translate":"actionbar.npcWalk.fractionMessage.1.0"},{"text":"
-"},{"translate":"actionbar.npcWalk.fractionMessage.1.1"}]`, step: 25 },
+  {
+    message: `[{"translate":"actionbar.npcWalk.fractionMessage.0.0"},{"text":"
+"},{"translate":"actionbar.npcWalk.fractionMessage.0.1"}]`,
+    step: 0
+  },
+  {
+    message: `[{"translate":"actionbar.npcWalk.fractionMessage.1.0"},{"text":"
+"},{"translate":"actionbar.npcWalk.fractionMessage.1.1"}]`,
+    step: 25
+  },
   {
     message: `[{"translate":"actionbar.npcWalk.fractionMessage.2.0"},{"text":"
 "},{"translate":"actionbar.npcWalk.fractionMessage.2.1"}]`,
@@ -1691,15 +1703,21 @@ var fractionMessage = [
   }
 ];
 var scaleMessage = [
-  { message: `[{"translate":"actionbar.npcWalk.scaleMessage.0.0"},{"text":"
-"},{"translate":"actionbar.npcWalk.scaleMessage.0.1"}]`, step: 0 },
+  {
+    message: `[{"translate":"actionbar.npcWalk.scaleMessage.0.0"},{"text":"
+"},{"translate":"actionbar.npcWalk.scaleMessage.0.1"}]`,
+    step: 0
+  },
   {
     message: `[{"translate":"actionbar.npcWalk.scaleMessage.1.0"},{"text":"
 "},{"translate":"actionbar.npcWalk.scaleMessage.1.1"}]`,
     step: 25
   },
-  { message: `[{"translate":"actionbar.npcWalk.scaleMessage.2.0"},{"text":"
-"},{"translate":"actionbar.npcWalk.scaleMessage.2.1"}]`, step: 50 }
+  {
+    message: `[{"translate":"actionbar.npcWalk.scaleMessage.2.0"},{"text":"
+"},{"translate":"actionbar.npcWalk.scaleMessage.2.1"}]`,
+    step: 50
+  }
 ];
 async function npcWalk(type) {
   switch (type) {
@@ -1763,9 +1781,7 @@ async function moveNpc2(path, type, messages) {
       }
       if (path.length - 2 == i) {
         await overworld8.runCommandAsync(`dialogue open @e[tag=${type}Npc] @p ${type}Npc2`);
-        if (type == "ratio") {
-          await overworld8.runCommandAsync(`dialogue change @e[tag=${type}Npc] ${type}Npc2`);
-        }
+        await overworld8.runCommandAsync(`dialogue change @e[tag=${type}Npc] ${type}Npc2`);
       }
     }, i * 5);
   }
@@ -2024,6 +2040,7 @@ system9.afterEvents.scriptEventReceive.subscribe(async (event) => {
           closeGate("ratio");
           closeGate("fraction");
           await npcWalk("scale");
+          overworld12.runCommandAsync(`clear @a`);
           break;
         }
         case "1": {
@@ -2247,6 +2264,9 @@ world14.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
   let hand_item = clickEvent.itemStackAfterBreak?.typeId;
   let block = clickEvent.block;
   let brokenBlock = clickEvent.brokenBlockPermutation;
+  if (brokenBlock.type.id.includes("stained_glass") && clickEvent.block.location.z === 192 && clickEvent.block.location.x <= 116 && clickEvent.block.location.x >= 16) {
+    clickEvent.player.runCommandAsync(`give @p ${brokenBlock.type.id}`);
+  }
   if (hand_item === "blockbuilders:mathmogicians_wand") {
     if (
       //cycles the numerators for the window game as they are the only ones that need to change.
@@ -2255,8 +2275,6 @@ world14.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
       )
     ) {
       cycleNumberBlock(clickEvent);
-    } else if (brokenBlock.type.id.includes("stained_glass") && clickEvent.block.location.z === 192 && clickEvent.block.location.x <= 116 && clickEvent.block.location.x >= 16) {
-      clickEvent.player.runCommandAsync(`give @p ${brokenBlock.type.id}`);
     } else {
       block.setPermutation(brokenBlock);
     }

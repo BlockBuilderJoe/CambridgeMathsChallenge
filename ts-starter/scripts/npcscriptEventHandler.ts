@@ -9,17 +9,11 @@ import {
 } from "./cuisenaireRods";
 import { openGate, closeGate } from "./gate";
 import { npcWalk } from "./npcWalk";
-import {
-  nextWindow,
-  giveGlass,
-  startWindowTutorial,
-  redoWindowGame,
-} from "./stainedGlassWindow";
+import { nextWindow, giveGlass, startWindowTutorial, redoWindowGame } from "./stainedGlassWindow";
 import { startPotionGame, resetPotionGame, giveIngredients } from "./potionGame";
 import { resetGame } from "./resetGame";
 import { giveWand } from "./wand";
 import { startGraduation } from "./graduation";
-
 
 let overworld = world.getDimension("overworld");
 //handles the scriptEventReceive from NPCs
@@ -72,6 +66,7 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
           closeGate("ratio");
           closeGate("fraction");
           await npcWalk("scale");
+          overworld.runCommandAsync(`clear @a`);
           break;
         }
         case "1": {
@@ -173,13 +168,10 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
         await overworld.runCommandAsync(`replaceitem entity @p slot.weapon.mainhand 0 portfolio`);
         await overworld.runCommandAsync(`give @p camera`);
         finalChapter();
-    
       } catch (error) {
         //running bedrock
         overworld.runCommandAsync(`function reset`);
-        
       }
-
     }
   }
 
@@ -188,8 +180,7 @@ system.afterEvents.scriptEventReceive.subscribe(async (event) => {
   }
 });
 
-
-async function finalChapter(){
+async function finalChapter() {
   await overworld.runCommandAsync(`camera @p fade time 0.1 1 0.1`);
   await overworld.runCommandAsync(`tp @p 27.83 96.00 182.98`);
   await overworld.runCommandAsync(`tp @e[tag=spawnNpc] 63 97 146 facing 69 97 147`);

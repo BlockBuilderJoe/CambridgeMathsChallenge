@@ -121,6 +121,12 @@ world.afterEvents.playerBreakBlock.subscribe((clickEvent) => __awaiter(void 0, v
     let hand_item = (_f = clickEvent.itemStackAfterBreak) === null || _f === void 0 ? void 0 : _f.typeId; //gets the item in the players hand
     let block = clickEvent.block;
     let brokenBlock = clickEvent.brokenBlockPermutation;
+    if (brokenBlock.type.id.includes("stained_glass") &&
+        clickEvent.block.location.z === 192 &&
+        clickEvent.block.location.x <= 116 &&
+        clickEvent.block.location.x >= 16) {
+        clickEvent.player.runCommandAsync(`give @p ${brokenBlock.type.id}`);
+    }
     if (hand_item === "blockbuilders:mathmogicians_wand") {
         if (
         //cycles the numerators for the window game as they are the only ones that need to change.
@@ -129,12 +135,6 @@ world.afterEvents.playerBreakBlock.subscribe((clickEvent) => __awaiter(void 0, v
             block.location.z === window.numerator.z)) {
             // if it is the window numerator cycle the number.
             cycleNumberBlock(clickEvent);
-        }
-        else if (brokenBlock.type.id.includes("stained_glass") &&
-            clickEvent.block.location.z === 192 &&
-            clickEvent.block.location.x <= 116 &&
-            clickEvent.block.location.x >= 16) {
-            clickEvent.player.runCommandAsync(`give @p ${brokenBlock.type.id}`);
         }
         else {
             //if it is anything else replace the block.

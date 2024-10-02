@@ -230,7 +230,9 @@ async function replayMessage(beginningMessage: string, fractions: any[]) {
       } else if (playerPlacedFractions.length > 0) {
         //else if there are fractions print them
         const fractionsSum = playerPlacedFractions.join(" + ");
-        overworld.runCommandAsync(`titleraw @p actionbar {"rawtext": [{"translate":"${beginningMessage}"}, {"translate":"${fractionsSum}"}]}`);
+        overworld.runCommandAsync(
+          `titleraw @p actionbar {"rawtext": [{"translate":"${beginningMessage}"}, {"translate":"${fractionsSum}"}]}`
+        );
       }
     }
   } else {
@@ -238,7 +240,7 @@ async function replayMessage(beginningMessage: string, fractions: any[]) {
   }
 }
 
-export async function noReplay(index: number){
+export async function noReplay(index: number) {
   let replayConfig = replaySettings[index]; //stores all the replay settings for the different rods based on the npc index
   const direction = replayConfig.cartesianDirection;
   const value = replayConfig.cartesionValue;
@@ -322,8 +324,6 @@ export async function replay(index: number) {
     }
   }
 }
-
-
 
 function endReplay(player: any, tpStart: string, clearCommand: string, replenishGrass: string, combinedRods: any[]) {
   system.runTimeout(() => {

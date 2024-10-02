@@ -189,6 +189,7 @@ export async function resetWindowGame() {
 export async function startWindowTutorial() {
   overworld.runCommandAsync(`clear @p`);
   await giveWand();
+  giveGlass();
 }
 
 export async function startWindowGame() {
