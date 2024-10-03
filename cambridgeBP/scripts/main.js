@@ -2275,6 +2275,8 @@ world14.afterEvents.playerBreakBlock.subscribe(async (clickEvent) => {
       )
     ) {
       cycleNumberBlock(clickEvent);
+    } else if (brokenBlock.type.id.includes("stained_glass") && clickEvent.block.location.z === 192 && clickEvent.block.location.x <= 116 && clickEvent.block.location.x >= 16) {
+      clickEvent.player.runCommandAsync(`give @p ${brokenBlock.type.id}`);
     } else {
       block.setPermutation(brokenBlock);
     }

@@ -136,6 +136,12 @@ world.afterEvents.playerBreakBlock.subscribe((clickEvent) => __awaiter(void 0, v
             // if it is the window numerator cycle the number.
             cycleNumberBlock(clickEvent);
         }
+        else if (brokenBlock.type.id.includes("stained_glass") &&
+            clickEvent.block.location.z === 192 &&
+            clickEvent.block.location.x <= 116 &&
+            clickEvent.block.location.x >= 16) {
+            clickEvent.player.runCommandAsync(`give @p ${brokenBlock.type.id}`);
+        }
         else {
             //if it is anything else replace the block.
             block.setPermutation(brokenBlock);
